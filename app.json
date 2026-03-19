@@ -1,0 +1,45 @@
+{
+  "expo": {
+    "name": "Food For You",
+    "slug": "food-for-you",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "scheme": "foodforyou",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0f0f0f"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.wyattrommel.foodforyou"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#0f0f0f"
+      },
+      "package": "com.wyattrommel.foodforyou"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/icon.png"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-font"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "6c25c5be-379b-4cb9-8565-9f865c891877"
+      }
+    }
+  }
+}
