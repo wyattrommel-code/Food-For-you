@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { Colors } from '@/constants/Colors';
+import { useTheme } from '@/context/ThemeContext';
 
 interface TagChipProps {
   label: string;
@@ -11,6 +11,8 @@ interface TagChipProps {
 }
 
 export function TagChip({ label, onRemove, variant = 'neutral', small }: TagChipProps) {
+  const { Colors } = useTheme();
+
   const bg =
     variant === 'dislike'
       ? 'rgba(255,58,45,0.15)'

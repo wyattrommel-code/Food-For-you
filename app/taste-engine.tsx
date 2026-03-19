@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback, useRef, useMemo } from 'react';
 import {
   View,
   Text,
@@ -8,12 +8,13 @@ import {
   StyleSheet,
   KeyboardAvoidingView,
   Platform,
-  Alert,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
-import { Colors } from '@/constants/Colors';
+import { useTheme } from '@/context/ThemeContext';
+import type { AppColors } from '@/constants/Colors';
 import { useSession } from '@/hooks/useSession';
 import { usePreferences } from '@/hooks/usePreferences';
 import { TagChip } from '@/components/TagChip';
@@ -32,14 +33,17 @@ const SUGGESTED_CUISINES = [
 
 // ─── Inline text input with add button ───────────────────────
 interface AddInputProps {
-  placeholder: string;
-  onAdd: (value: string) => void;
-  accentColor: string;
+  placeholder:  string;
+  onAdd:        (value: string) => void;
+  accentColor:  string;
 }
 
 function AddInput({ placeholder, onAdd, accentColor }: AddInputProps) {
+  const { Colors } = useTheme();
+  const styles     = useMemo(() => makeStyles(Colors), [Colors]);
+
   const [text, setText] = useState('');
-  const inputRef = useRef<TextInput>(null);
+  const inputRef        = useRef<TextInput>(null);
 
   const handleAdd = useCallback(() => {
     const trimmed = text.trim();
@@ -76,31 +80,26 @@ function AddInput({ placeholder, onAdd, accentColor }: AddInputProps) {
 
 // ─── A single preference section card ────────────────────────
 interface PrefSectionProps {
-  icon: React.ComponentProps<typeof Ionicons>['name'];
-  title: string;
-  description: string;
-  tags: string[];
-  onRemove: (tag: string) => void;
-  onAdd: (tag: string) => void;
-  suggestions?: string[];
-  variant: 'dislike' | 'like';
+  icon:           React.ComponentProps<typeof Ionicons>['name'];
+  title:          string;
+  description:    string;
+  tags:           string[];
+  onRemove:       (tag: string) => void;
+  onAdd:          (tag: string) => void;
+  suggestions?:   string[];
+  variant:        'dislike' | 'like';
   addPlaceholder: string;
 }
 
 function PrefSection({
-  icon,
-  title,
-  description,
-  tags,
-  onRemove,
-  onAdd,
-  suggestions,
-  variant,
-  addPlaceholder,
+  icon, title, description, tags,
+  onRemove, onAdd, suggestions, variant, addPlaceholder,
 }: PrefSectionProps) {
+  const { Colors } = useTheme();
+  const styles     = useMemo(() => makeStyles(Colors), [Colors]);
+
   const accentColor = variant === 'dislike' ? '#FF3A2D' : Colors.success;
 
-  // Filter out already-added suggestions
   const filteredSuggestions = suggestions?.filter(
     (s) => !tags.includes(s.toLowerCase())
   );
@@ -117,7 +116,6 @@ function PrefSection({
         </View>
       </View>
 
-      {/* Current tags */}
       {tags.length > 0 && (
         <View style={styles.tagsWrap}>
           {tags.map((tag) => (
@@ -131,14 +129,12 @@ function PrefSection({
         </View>
       )}
 
-      {/* Add input */}
       <AddInput
         placeholder={addPlaceholder}
         onAdd={onAdd}
         accentColor={accentColor}
       />
 
-      {/* Quick suggestions */}
       {filteredSuggestions && filteredSuggestions.length > 0 && (
         <View>
           <Text style={styles.suggestLabel}>Quick add:</Text>
@@ -162,8 +158,12 @@ function PrefSection({
   );
 }
 
-// ─── Main Preferences Screen ──────────────────────────────────
-export default function PreferencesScreen() {
+// ─── Taste Engine Screen ──────────────────────────────────────
+export default function TasteEngineScreen() {
+  const router     = useRouter();
+  const { Colors } = useTheme();
+  const styles     = useMemo(() => makeStyles(Colors), [Colors]);
+
   const { userId } = useSession();
   const {
     preferences,
@@ -188,14 +188,26 @@ export default function PreferencesScreen() {
         style={{ flex: 1 }}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       >
+        {/* ── Top nav bar ───────────────────────────────────── */}
+        <View style={styles.navBar}>
+          <Pressable
+            style={styles.backBtn}
+            onPress={() => router.back()}
+            hitSlop={10}
+          >
+            <Ionicons name="chevron-back" size={24} color={Colors.textPrimary} />
+          </Pressable>
+          <Text style={styles.navTitle}>Food Preferences</Text>
+          <View style={styles.backBtn} />
+        </View>
+
         <ScrollView
           style={styles.scroll}
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
         >
-          {/* ── Header ──────────────────────────────────────── */}
+          {/* ── Subtitle ────────────────────────────────────── */}
           <View style={styles.pageHeader}>
-            <Text style={styles.pageTitle}>Taste Engine</Text>
             <Text style={styles.pageSubtitle}>
               Tell us what you love and what to hide — the app learns your palate.
             </Text>
@@ -205,7 +217,9 @@ export default function PreferencesScreen() {
           <View style={styles.banner}>
             <Ionicons name="shield-checkmark" size={18} color={Colors.accent} />
             <Text style={styles.bannerText}>
-              Disliked items are <Text style={{ color: Colors.accent, fontWeight: '700' }}>strictly banned</Text> — those recipes will never appear.
+              Disliked items are{' '}
+              <Text style={{ color: Colors.accent, fontWeight: '700' }}>strictly banned</Text>
+              {' '}— those recipes will never appear.
             </Text>
           </View>
 
@@ -236,7 +250,7 @@ export default function PreferencesScreen() {
             addPlaceholder="e.g. Thai, Indian, Mexican..."
           />
 
-          {/* ── LIKES ────────────────────────────────────────── */}
+          {/* ── LIKES ───────────────────────────────────────── */}
           <Text style={[styles.groupLabel, { marginTop: 32 }]}>💚 SHOW ME MORE OF THIS</Text>
 
           <PrefSection
@@ -297,161 +311,181 @@ export default function PreferencesScreen() {
 }
 
 // ─── Styles ───────────────────────────────────────────────────
-const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: Colors.background,
-  },
-  scroll: {
-    flex: 1,
-  },
-  pageHeader: {
-    paddingHorizontal: 20,
-    paddingTop: 16,
-    paddingBottom: 16,
-  },
-  pageTitle: {
-    color: Colors.textPrimary,
-    fontSize: 30,
-    fontWeight: '800',
-    letterSpacing: -0.5,
-  },
-  pageSubtitle: {
-    color: Colors.textSecondary,
-    fontSize: 14,
-    lineHeight: 20,
-    marginTop: 6,
-    fontWeight: '500',
-  },
-  banner: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    gap: 10,
-    backgroundColor: Colors.accentSoft,
-    marginHorizontal: 20,
-    borderRadius: 12,
-    padding: 14,
-    marginBottom: 24,
-    borderWidth: 1,
-    borderColor: Colors.accent + '30',
-  },
-  bannerText: {
-    color: Colors.textSecondary,
-    fontSize: 13,
-    lineHeight: 18,
-    flex: 1,
-  },
-  groupLabel: {
-    color: Colors.textMuted,
-    fontSize: 11,
-    fontWeight: '800',
-    letterSpacing: 1.2,
-    textTransform: 'uppercase',
-    paddingHorizontal: 20,
-    marginBottom: 12,
-  },
-  section: {
-    marginHorizontal: 20,
-    backgroundColor: Colors.surface,
-    borderRadius: 18,
-    padding: 18,
-    marginBottom: 12,
-    borderWidth: 1,
-    borderColor: Colors.border,
-    gap: 14,
-  },
-  sectionHeader: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    gap: 12,
-  },
-  iconBg: {
-    width: 38,
-    height: 38,
-    borderRadius: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  sectionHeaderText: {
-    flex: 1,
-  },
-  sectionTitle: {
-    color: Colors.textPrimary,
-    fontSize: 16,
-    fontWeight: '700',
-  },
-  sectionDesc: {
-    color: Colors.textSecondary,
-    fontSize: 12,
-    lineHeight: 17,
-    marginTop: 3,
-  },
-  tagsWrap: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 8,
-  },
-  addRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
-    backgroundColor: Colors.surfaceElevated,
-    borderRadius: 12,
-    borderWidth: 1,
-    paddingLeft: 14,
-    paddingRight: 6,
-    paddingVertical: 6,
-  },
-  addInput: {
-    flex: 1,
-    color: Colors.textPrimary,
-    fontSize: 14,
-    fontWeight: '500',
-    paddingVertical: 6,
-  },
-  addBtn: {
-    width: 36,
-    height: 36,
-    borderRadius: 9,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  suggestLabel: {
-    color: Colors.textMuted,
-    fontSize: 11,
-    fontWeight: '600',
-    marginBottom: 8,
-  },
-  suggestRow: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 8,
-  },
-  suggestPill: {
-    backgroundColor: Colors.surfaceElevated,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: Colors.border,
-  },
-  suggestText: {
-    color: Colors.textSecondary,
-    fontSize: 12,
-    fontWeight: '600',
-    textTransform: 'capitalize',
-  },
-  bottomNote: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-    justifyContent: 'center',
-    marginTop: 24,
-    paddingHorizontal: 20,
-  },
-  bottomNoteText: {
-    color: Colors.textMuted,
-    fontSize: 12,
-    fontWeight: '500',
-  },
-});
+function makeStyles(Colors: AppColors) {
+  return StyleSheet.create({
+    safeArea: {
+      flex: 1,
+      backgroundColor: Colors.background,
+    },
+    scroll: {
+      flex: 1,
+    },
+
+    // ── Nav bar ──────────────────────────────────────────────
+    navBar: {
+      flexDirection:  'row',
+      alignItems:     'center',
+      justifyContent: 'space-between',
+      paddingHorizontal: 16,
+      paddingVertical: 12,
+      borderBottomWidth: 1,
+      borderBottomColor: Colors.border,
+    },
+    backBtn: {
+      width: 36,
+      height: 36,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    navTitle: {
+      color:         Colors.textPrimary,
+      fontSize:      18,
+      fontWeight:    '800',
+      letterSpacing: -0.3,
+    },
+
+    pageHeader: {
+      paddingHorizontal: 20,
+      paddingTop:        16,
+      paddingBottom:     16,
+    },
+    pageSubtitle: {
+      color:      Colors.textSecondary,
+      fontSize:   14,
+      lineHeight: 20,
+      fontWeight: '500',
+    },
+
+    banner: {
+      flexDirection:   'row',
+      alignItems:      'flex-start',
+      gap:             10,
+      backgroundColor: Colors.accentSoft,
+      marginHorizontal: 20,
+      borderRadius:    12,
+      padding:         14,
+      marginBottom:    24,
+      borderWidth:     1,
+      borderColor:     Colors.accent + '30',
+    },
+    bannerText: {
+      color:      Colors.textSecondary,
+      fontSize:   13,
+      lineHeight: 18,
+      flex:       1,
+    },
+    groupLabel: {
+      color:          Colors.textMuted,
+      fontSize:       11,
+      fontWeight:     '800',
+      letterSpacing:  1.2,
+      textTransform:  'uppercase',
+      paddingHorizontal: 20,
+      marginBottom:   12,
+    },
+    section: {
+      marginHorizontal: 20,
+      backgroundColor:  Colors.surface,
+      borderRadius:     18,
+      padding:          18,
+      marginBottom:     12,
+      borderWidth:      1,
+      borderColor:      Colors.border,
+      gap:              14,
+    },
+    sectionHeader: {
+      flexDirection: 'row',
+      alignItems:    'flex-start',
+      gap:           12,
+    },
+    iconBg: {
+      width:          38,
+      height:         38,
+      borderRadius:   10,
+      alignItems:     'center',
+      justifyContent: 'center',
+    },
+    sectionHeaderText: {
+      flex: 1,
+    },
+    sectionTitle: {
+      color:      Colors.textPrimary,
+      fontSize:   16,
+      fontWeight: '700',
+    },
+    sectionDesc: {
+      color:      Colors.textSecondary,
+      fontSize:   12,
+      lineHeight: 17,
+      marginTop:  3,
+    },
+    tagsWrap: {
+      flexDirection: 'row',
+      flexWrap:      'wrap',
+      gap:           8,
+    },
+    addRow: {
+      flexDirection:  'row',
+      alignItems:     'center',
+      gap:            10,
+      backgroundColor: Colors.surfaceElevated,
+      borderRadius:   12,
+      borderWidth:    1,
+      paddingLeft:    14,
+      paddingRight:   6,
+      paddingVertical: 6,
+    },
+    addInput: {
+      flex:       1,
+      color:      Colors.textPrimary,
+      fontSize:   14,
+      fontWeight: '500',
+      paddingVertical: 6,
+    },
+    addBtn: {
+      width:          36,
+      height:         36,
+      borderRadius:   9,
+      alignItems:     'center',
+      justifyContent: 'center',
+    },
+    suggestLabel: {
+      color:        Colors.textMuted,
+      fontSize:     11,
+      fontWeight:   '600',
+      marginBottom: 8,
+    },
+    suggestRow: {
+      flexDirection: 'row',
+      flexWrap:      'wrap',
+      gap:           8,
+    },
+    suggestPill: {
+      backgroundColor: Colors.surfaceElevated,
+      paddingHorizontal: 10,
+      paddingVertical: 5,
+      borderRadius:    20,
+      borderWidth:     1,
+      borderColor:     Colors.border,
+    },
+    suggestText: {
+      color:         Colors.textSecondary,
+      fontSize:      12,
+      fontWeight:    '600',
+      textTransform: 'capitalize',
+    },
+    bottomNote: {
+      flexDirection:  'row',
+      alignItems:     'center',
+      gap:            8,
+      justifyContent: 'center',
+      marginTop:      24,
+      paddingHorizontal: 20,
+    },
+    bottomNoteText: {
+      color:      Colors.textMuted,
+      fontSize:   12,
+      fontWeight: '500',
+    },
+  });
+}

@@ -11,7 +11,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 import { useRouter } from 'expo-router';
-import { Colors } from '@/constants/Colors';
+import { useTheme } from '@/context/ThemeContext';
 import { Recipe, effortSpoons } from '@/lib/types';
 
 const { width: SCREEN_W } = Dimensions.get('window');
@@ -27,7 +27,8 @@ interface RecipeCardProps {
 }
 
 export function RecipeCard({ recipe, onFavoriteToggle, style }: RecipeCardProps) {
-  const router = useRouter();
+  const router     = useRouter();
+  const { Colors } = useTheme();
 
   const handlePress = useCallback(() => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -45,7 +46,7 @@ export function RecipeCard({ recipe, onFavoriteToggle, style }: RecipeCardProps)
 
   return (
     <Pressable
-      style={[styles.card, style]}
+      style={[styles.card, { backgroundColor: Colors.surface }, style]}
       onPress={handlePress}
       android_ripple={{ color: 'rgba(255,255,255,0.05)' }}
     >
@@ -89,7 +90,7 @@ export function RecipeCard({ recipe, onFavoriteToggle, style }: RecipeCardProps)
 
         <View style={styles.meta}>
           <View style={styles.metaItem}>
-            <Ionicons name="time-outline" size={12} color={Colors.textSecondary} />
+            <Ionicons name="time-outline" size={12} color="rgba(255,255,255,0.7)" />
             <Text style={styles.metaText}>{recipe.prep_time_mins} min</Text>
           </View>
           <View style={styles.metaDot} />
@@ -111,7 +112,8 @@ interface HeroCardProps {
 }
 
 export function HeroCard({ recipe, onFavoriteToggle }: HeroCardProps) {
-  const router = useRouter();
+  const router     = useRouter();
+  const { Colors } = useTheme();
 
   const handlePress = useCallback(() => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -128,7 +130,7 @@ export function HeroCard({ recipe, onFavoriteToggle }: HeroCardProps) {
   );
 
   return (
-    <Pressable style={styles.hero} onPress={handlePress}>
+    <Pressable style={[styles.hero, { backgroundColor: Colors.surface }]} onPress={handlePress}>
       <Image
         source={{ uri: recipe.image_url }}
         style={styles.heroImage}
@@ -143,7 +145,7 @@ export function HeroCard({ recipe, onFavoriteToggle }: HeroCardProps) {
       />
 
       {/* ROTD badge */}
-      <View style={styles.rotdBadge}>
+      <View style={[styles.rotdBadge, { backgroundColor: Colors.accent }]}>
         <Text style={styles.rotdBadgeText}>⭐ Recipe of the Day</Text>
       </View>
 
@@ -196,7 +198,8 @@ interface ChoiceCardProps {
 }
 
 export function ChoiceCard({ recipe, index, onFavoriteToggle }: ChoiceCardProps) {
-  const router = useRouter();
+  const router     = useRouter();
+  const { Colors } = useTheme();
 
   const handlePress = useCallback(() => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -204,7 +207,7 @@ export function ChoiceCard({ recipe, index, onFavoriteToggle }: ChoiceCardProps)
   }, [recipe.id, router]);
 
   return (
-    <Pressable style={styles.choice} onPress={handlePress}>
+    <Pressable style={[styles.choice, { backgroundColor: Colors.surface }]} onPress={handlePress}>
       <Image
         source={{ uri: recipe.image_url }}
         style={styles.choiceImage}
@@ -217,7 +220,7 @@ export function ChoiceCard({ recipe, index, onFavoriteToggle }: ChoiceCardProps)
         end={{ x: 0, y: 1 }}
       />
       {/* Number badge */}
-      <View style={styles.numberBadge}>
+      <View style={[styles.numberBadge, { backgroundColor: Colors.accent }]}>
         <Text style={styles.numberText}>{index + 1}</Text>
       </View>
 
@@ -242,7 +245,6 @@ const styles = StyleSheet.create({
     height: CARD_HEIGHT,
     borderRadius: 20,
     overflow: 'hidden',
-    backgroundColor: Colors.surface,
     marginRight: 14,
   },
   image: {
@@ -331,7 +333,6 @@ const styles = StyleSheet.create({
     borderRadius: 24,
     overflow: 'hidden',
     alignSelf: 'center',
-    backgroundColor: Colors.surface,
   },
   heroImage: {
     width: '100%',
@@ -349,7 +350,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 18,
     left: 18,
-    backgroundColor: Colors.accent,
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 20,
@@ -407,7 +407,6 @@ const styles = StyleSheet.create({
     height: 160,
     borderRadius: 18,
     overflow: 'hidden',
-    backgroundColor: Colors.surface,
     marginBottom: 12,
   },
   choiceImage: {
@@ -422,7 +421,6 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     borderRadius: 15,
-    backgroundColor: Colors.accent,
     alignItems: 'center',
     justifyContent: 'center',
   },

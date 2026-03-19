@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback, useRef, useMemo } from 'react';
 import {
   View,
   Text,
@@ -16,17 +16,21 @@ import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
 import { supabase } from '@/lib/supabase';
-import { Colors } from '@/constants/Colors';
+import { useTheme } from '@/context/ThemeContext';
+import type { AppColors } from '@/constants/Colors';
 
 type Mode = 'login' | 'signup';
 
 export default function LoginScreen() {
-  const [mode, setMode] = useState<Mode>('login');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const { Colors } = useTheme();
+  const styles = useMemo(() => makeStyles(Colors), [Colors]);
+
+  const [mode, setMode]                     = useState<Mode>('login');
+  const [email, setEmail]                   = useState('');
+  const [password, setPassword]             = useState('');
+  const [showPassword, setShowPassword]     = useState(false);
+  const [loading, setLoading]               = useState(false);
+  const [error, setError]                   = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   const passwordRef = useRef<RNTextInput>(null);
@@ -39,7 +43,7 @@ export default function LoginScreen() {
   const handleSubmit = useCallback(async () => {
     clearMessages();
 
-    const trimmedEmail = email.trim();
+    const trimmedEmail    = email.trim();
     const trimmedPassword = password;
 
     if (!trimmedEmail || !trimmedPassword) {
@@ -55,14 +59,13 @@ export default function LoginScreen() {
     try {
       if (mode === 'login') {
         const { error } = await supabase.auth.signInWithPassword({
-          email: trimmedEmail,
+          email:    trimmedEmail,
           password: trimmedPassword,
         });
         if (error) throw error;
-        // onAuthStateChange in useSession will fire → _layout redirects to tabs
       } else {
         const { error } = await supabase.auth.signUp({
-          email: trimmedEmail,
+          email:    trimmedEmail,
           password: trimmedPassword,
         });
         if (error) throw error;
@@ -235,193 +238,195 @@ export default function LoginScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  safe: {
-    flex: 1,
-    backgroundColor: Colors.background,
-  },
-  flex: {
-    flex: 1,
-  },
-  scroll: {
-    flexGrow: 1,
-    paddingHorizontal: 24,
-    paddingTop: 48,
-    paddingBottom: 32,
-    alignItems: 'center',
-  },
+function makeStyles(Colors: AppColors) {
+  return StyleSheet.create({
+    safe: {
+      flex: 1,
+      backgroundColor: Colors.background,
+    },
+    flex: {
+      flex: 1,
+    },
+    scroll: {
+      flexGrow: 1,
+      paddingHorizontal: 24,
+      paddingTop: 48,
+      paddingBottom: 32,
+      alignItems: 'center',
+    },
 
-  // ── Branding ─────────────────────────────────
-  brandRow: {
-    marginBottom: 16,
-  },
-  logoMark: {
-    width: 64,
-    height: 64,
-    borderRadius: 18,
-    backgroundColor: Colors.accent,
-    alignItems: 'center',
-    justifyContent: 'center',
-    shadowColor: Colors.accent,
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.4,
-    shadowRadius: 16,
-    elevation: 12,
-  },
-  logoMarkText: {
-    color: '#fff',
-    fontSize: 34,
-    fontWeight: '900',
-    letterSpacing: -1,
-  },
-  appName: {
-    color: Colors.textPrimary,
-    fontSize: 28,
-    fontWeight: '800',
-    letterSpacing: -0.5,
-    marginBottom: 6,
-  },
-  tagline: {
-    color: Colors.textSecondary,
-    fontSize: 15,
-    fontWeight: '500',
-    marginBottom: 40,
-  },
+    // ── Branding ─────────────────────────────────
+    brandRow: {
+      marginBottom: 16,
+    },
+    logoMark: {
+      width: 64,
+      height: 64,
+      borderRadius: 18,
+      backgroundColor: Colors.accent,
+      alignItems: 'center',
+      justifyContent: 'center',
+      shadowColor: Colors.accent,
+      shadowOffset: { width: 0, height: 8 },
+      shadowOpacity: 0.4,
+      shadowRadius: 16,
+      elevation: 12,
+    },
+    logoMarkText: {
+      color: '#fff',
+      fontSize: 34,
+      fontWeight: '900',
+      letterSpacing: -1,
+    },
+    appName: {
+      color: Colors.textPrimary,
+      fontSize: 28,
+      fontWeight: '800',
+      letterSpacing: -0.5,
+      marginBottom: 6,
+    },
+    tagline: {
+      color: Colors.textSecondary,
+      fontSize: 15,
+      fontWeight: '500',
+      marginBottom: 40,
+    },
 
-  // ── Card ──────────────────────────────────────
-  card: {
-    width: '100%',
-    backgroundColor: Colors.surface,
-    borderRadius: 24,
-    padding: 24,
-    borderWidth: 1,
-    borderColor: Colors.border,
-  },
-  cardTitle: {
-    color: Colors.textPrimary,
-    fontSize: 22,
-    fontWeight: '800',
-    letterSpacing: -0.4,
-    marginBottom: 6,
-  },
-  cardSubtitle: {
-    color: Colors.textSecondary,
-    fontSize: 13,
-    fontWeight: '500',
-    lineHeight: 18,
-    marginBottom: 20,
-  },
+    // ── Card ──────────────────────────────────────
+    card: {
+      width: '100%',
+      backgroundColor: Colors.surface,
+      borderRadius: 24,
+      padding: 24,
+      borderWidth: 1,
+      borderColor: Colors.border,
+    },
+    cardTitle: {
+      color: Colors.textPrimary,
+      fontSize: 22,
+      fontWeight: '800',
+      letterSpacing: -0.4,
+      marginBottom: 6,
+    },
+    cardSubtitle: {
+      color: Colors.textSecondary,
+      fontSize: 13,
+      fontWeight: '500',
+      lineHeight: 18,
+      marginBottom: 20,
+    },
 
-  // ── Banners ───────────────────────────────────
-  banner: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-    backgroundColor: Colors.accentSoft,
-    borderRadius: 10,
-    paddingHorizontal: 12,
-    paddingVertical: 10,
-    marginBottom: 16,
-    borderWidth: 1,
-    borderColor: 'rgba(255,58,45,0.25)',
-  },
-  successBanner: {
-    backgroundColor: 'rgba(34,197,94,0.1)',
-    borderColor: 'rgba(34,197,94,0.25)',
-  },
-  bannerText: {
-    color: Colors.accent,
-    fontSize: 13,
-    fontWeight: '600',
-    flex: 1,
-    lineHeight: 18,
-  },
-  successBannerText: {
-    color: Colors.success,
-  },
+    // ── Banners ───────────────────────────────────
+    banner: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 8,
+      backgroundColor: Colors.accentSoft,
+      borderRadius: 10,
+      paddingHorizontal: 12,
+      paddingVertical: 10,
+      marginBottom: 16,
+      borderWidth: 1,
+      borderColor: 'rgba(255,58,45,0.25)',
+    },
+    successBanner: {
+      backgroundColor: 'rgba(34,197,94,0.1)',
+      borderColor: 'rgba(34,197,94,0.25)',
+    },
+    bannerText: {
+      color: Colors.accent,
+      fontSize: 13,
+      fontWeight: '600',
+      flex: 1,
+      lineHeight: 18,
+    },
+    successBannerText: {
+      color: Colors.success,
+    },
 
-  // ── Fields ────────────────────────────────────
-  fieldGroup: {
-    marginBottom: 16,
-  },
-  label: {
-    color: Colors.textSecondary,
-    fontSize: 12,
-    fontWeight: '700',
-    letterSpacing: 0.5,
-    textTransform: 'uppercase',
-    marginBottom: 8,
-  },
-  inputWrapper: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: Colors.surfaceElevated,
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: Colors.border,
-    paddingHorizontal: 14,
-    height: 52,
-  },
-  inputIcon: {
-    marginRight: 10,
-  },
-  input: {
-    flex: 1,
-    color: Colors.textPrimary,
-    fontSize: 15,
-    fontWeight: '500',
-  },
-  inputWithToggle: {
-    marginRight: 8,
-  },
-  eyeBtn: {
-    padding: 4,
-  },
+    // ── Fields ────────────────────────────────────
+    fieldGroup: {
+      marginBottom: 16,
+    },
+    label: {
+      color: Colors.textSecondary,
+      fontSize: 12,
+      fontWeight: '700',
+      letterSpacing: 0.5,
+      textTransform: 'uppercase',
+      marginBottom: 8,
+    },
+    inputWrapper: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      backgroundColor: Colors.surfaceElevated,
+      borderRadius: 12,
+      borderWidth: 1,
+      borderColor: Colors.border,
+      paddingHorizontal: 14,
+      height: 52,
+    },
+    inputIcon: {
+      marginRight: 10,
+    },
+    input: {
+      flex: 1,
+      color: Colors.textPrimary,
+      fontSize: 15,
+      fontWeight: '500',
+    },
+    inputWithToggle: {
+      marginRight: 8,
+    },
+    eyeBtn: {
+      padding: 4,
+    },
 
-  // ── Submit ────────────────────────────────────
-  submitBtn: {
-    height: 54,
-    backgroundColor: Colors.accent,
-    borderRadius: 14,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 8,
-    marginBottom: 20,
-    shadowColor: Colors.accent,
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.35,
-    shadowRadius: 10,
-    elevation: 6,
-  },
-  submitBtnPressed: {
-    opacity: 0.85,
-    transform: [{ scale: 0.98 }],
-  },
-  submitBtnDisabled: {
-    opacity: 0.6,
-  },
-  submitBtnText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '800',
-    letterSpacing: 0.2,
-  },
+    // ── Submit ────────────────────────────────────
+    submitBtn: {
+      height: 54,
+      backgroundColor: Colors.accent,
+      borderRadius: 14,
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginTop: 8,
+      marginBottom: 20,
+      shadowColor: Colors.accent,
+      shadowOffset: { width: 0, height: 4 },
+      shadowOpacity: 0.35,
+      shadowRadius: 10,
+      elevation: 6,
+    },
+    submitBtnPressed: {
+      opacity: 0.85,
+      transform: [{ scale: 0.98 }],
+    },
+    submitBtnDisabled: {
+      opacity: 0.6,
+    },
+    submitBtnText: {
+      color: '#fff',
+      fontSize: 16,
+      fontWeight: '800',
+      letterSpacing: 0.2,
+    },
 
-  // ── Toggle ────────────────────────────────────
-  toggleRow: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: 6,
-  },
-  togglePrompt: {
-    color: Colors.textSecondary,
-    fontSize: 14,
-    fontWeight: '500',
-  },
-  toggleLink: {
-    color: Colors.accent,
-    fontSize: 14,
-    fontWeight: '700',
-  },
-});
+    // ── Toggle ────────────────────────────────────
+    toggleRow: {
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+      gap: 6,
+    },
+    togglePrompt: {
+      color: Colors.textSecondary,
+      fontSize: 14,
+      fontWeight: '500',
+    },
+    toggleLink: {
+      color: Colors.accent,
+      fontSize: 14,
+      fontWeight: '700',
+    },
+  });
+}

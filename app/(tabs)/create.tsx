@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback, useRef, useMemo } from 'react';
 import {
   View,
   Text,
@@ -19,7 +19,8 @@ import * as Haptics from 'expo-haptics';
 import * as ImagePicker from 'expo-image-picker';
 
 import { supabase } from '@/lib/supabase';
-import { Colors } from '@/constants/Colors';
+import { useTheme } from '@/context/ThemeContext';
+import type { AppColors } from '@/constants/Colors';
 import { useSession } from '@/hooks/useSession';
 import { MealTime, EffortScore } from '@/lib/types';
 
@@ -38,17 +39,20 @@ const DIFFICULTIES: { label: string; score: EffortScore; color: string }[] = [
   { label: 'Hard',   score: 5, color: '#EF4444' },
 ];
 
-// Fallback image when the user skips the photo picker
 const FALLBACK_IMAGE =
   'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&q=80';
 
 // ─── Sub-components ───────────────────────────────────────────
 
 function FormLabel({ children }: { children: string }) {
+  const { Colors } = useTheme();
+  const styles = useMemo(() => makeStyles(Colors), [Colors]);
   return <Text style={styles.label}>{children}</Text>;
 }
 
 function SectionDivider({ title }: { title: string }) {
+  const { Colors } = useTheme();
+  const styles = useMemo(() => makeStyles(Colors), [Colors]);
   return (
     <View style={styles.sectionDivider}>
       <View style={styles.sectionDividerLine} />
@@ -75,6 +79,9 @@ function DynamicItem({
   multiline?: boolean;
   onSubmitEditing?: () => void;
 }) {
+  const { Colors } = useTheme();
+  const styles = useMemo(() => makeStyles(Colors), [Colors]);
+
   return (
     <View style={styles.dynamicItem}>
       <View style={styles.dynamicIndex}>
@@ -99,6 +106,8 @@ function DynamicItem({
 }
 
 function AddButton({ label, onPress }: { label: string; onPress: () => void }) {
+  const { Colors } = useTheme();
+  const styles = useMemo(() => makeStyles(Colors), [Colors]);
   return (
     <Pressable
       style={({ pressed }) => [styles.addBtn, pressed && styles.addBtnPressed]}
@@ -113,29 +122,26 @@ function AddButton({ label, onPress }: { label: string; onPress: () => void }) {
 // ─── Main Screen ──────────────────────────────────────────────
 
 export default function CreateScreen() {
+  const { Colors } = useTheme();
+  const styles = useMemo(() => makeStyles(Colors), [Colors]);
+
   const { userId } = useSession();
 
-  // ── Core fields ───────────────────────────────────────────
-  const [title, setTitle]           = useState('');
+  const [title, setTitle]             = useState('');
   const [description, setDescription] = useState('');
-  const [photoUri, setPhotoUri]     = useState<string | null>(null);
-  const [cuisine, setCuisine]       = useState('');
-  const [cookTime, setCookTime]     = useState('');
+  const [photoUri, setPhotoUri]       = useState<string | null>(null);
+  const [cuisine, setCuisine]         = useState('');
+  const [cookTime, setCookTime]       = useState('');
 
-  // ── Multi-select state ────────────────────────────────────
   const [selectedMealTimes, setSelectedMealTimes] = useState<Set<MealTime>>(new Set());
-  const [difficulty, setDifficulty] = useState<EffortScore>(1);
+  const [difficulty, setDifficulty]               = useState<EffortScore>(1);
 
-  // ── Dynamic lists ─────────────────────────────────────────
   const [ingredients, setIngredients] = useState<string[]>(['']);
   const [steps, setSteps]             = useState<string[]>(['']);
-
-  // ── Submit state ─────────────────────────────────────────
-  const [submitting, setSubmitting] = useState(false);
+  const [submitting, setSubmitting]   = useState(false);
 
   const scrollRef = useRef<ScrollView>(null);
 
-  // ── Photo picker ─────────────────────────────────────────
   const handlePickPhoto = useCallback(async () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -149,7 +155,6 @@ export default function CreateScreen() {
     }
   }, []);
 
-  // ── Meal time toggle ─────────────────────────────────────
   const toggleMealTime = useCallback((key: MealTime) => {
     Haptics.selectionAsync();
     setSelectedMealTimes((prev) => {
@@ -159,7 +164,6 @@ export default function CreateScreen() {
     });
   }, []);
 
-  // ── Ingredient helpers ────────────────────────────────────
   const updateIngredient = useCallback((index: number, value: string) => {
     setIngredients((prev) => prev.map((v, i) => (i === index ? value : v)));
   }, []);
@@ -175,7 +179,6 @@ export default function CreateScreen() {
     );
   }, []);
 
-  // ── Step helpers ─────────────────────────────────────────
   const updateStep = useCallback((index: number, value: string) => {
     setSteps((prev) => prev.map((v, i) => (i === index ? value : v)));
   }, []);
@@ -191,7 +194,6 @@ export default function CreateScreen() {
     );
   }, []);
 
-  // ── Submit (no required fields) ───────────────────────────
   const handleSubmit = useCallback(async () => {
     if (!userId) {
       Alert.alert('Not signed in', 'Please sign in to publish a recipe.');
@@ -201,11 +203,10 @@ export default function CreateScreen() {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     setSubmitting(true);
 
-    // Smart defaults — every field is truly optional
-    const finalTitle    = title.trim() || 'Untitled Recipe';
-    const finalImage    = photoUri ?? FALLBACK_IMAGE;
-    const parsedTime    = parseInt(cookTime, 10);
-    const finalCookTime = isNaN(parsedTime) ? 0 : parsedTime;
+    const finalTitle     = title.trim() || 'Untitled Recipe';
+    const finalImage     = photoUri ?? FALLBACK_IMAGE;
+    const parsedTime     = parseInt(cookTime, 10);
+    const finalCookTime  = isNaN(parsedTime) ? 0 : parsedTime;
     const finalMealTimes =
       selectedMealTimes.size > 0 ? [...selectedMealTimes] : (['dinner'] as MealTime[]);
 
@@ -230,7 +231,6 @@ export default function CreateScreen() {
 
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
 
-      // Reset form
       setTitle('');
       setDescription('');
       setPhotoUri(null);
@@ -249,16 +249,8 @@ export default function CreateScreen() {
       setSubmitting(false);
     }
   }, [
-    userId,
-    title,
-    description,
-    photoUri,
-    selectedMealTimes,
-    cookTime,
-    difficulty,
-    cuisine,
-    ingredients,
-    steps,
+    userId, title, description, photoUri,
+    selectedMealTimes, cookTime, difficulty, cuisine, ingredients, steps,
   ]);
 
   return (
@@ -512,354 +504,356 @@ export default function CreateScreen() {
 }
 
 // ─── Styles ───────────────────────────────────────────────────
-const styles = StyleSheet.create({
-  safe: {
-    flex: 1,
-    backgroundColor: Colors.background,
-  },
-  flex: {
-    flex: 1,
-  },
+function makeStyles(Colors: AppColors) {
+  return StyleSheet.create({
+    safe: {
+      flex: 1,
+      backgroundColor: Colors.background,
+    },
+    flex: {
+      flex: 1,
+    },
 
-  // Header
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 20,
-    paddingTop: 16,
-    paddingBottom: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: Colors.border,
-  },
-  headerTitle: {
-    color: Colors.textPrimary,
-    fontSize: 26,
-    fontWeight: '800',
-    letterSpacing: -0.5,
-  },
-  headerSub: {
-    color: Colors.textMuted,
-    fontSize: 12,
-    fontWeight: '500',
-    marginTop: 2,
-  },
-  publishBtn: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-    backgroundColor: Colors.accent,
-    paddingHorizontal: 16,
-    paddingVertical: 10,
-    borderRadius: 20,
-    shadowColor: Colors.accent,
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.35,
-    shadowRadius: 6,
-    elevation: 4,
-  },
-  publishBtnText: {
-    color: '#fff',
-    fontSize: 14,
-    fontWeight: '800',
-  },
-  publishBtnDisabled: {
-    opacity: 0.55,
-  },
-  publishBtnPressed: {
-    opacity: 0.8,
-    transform: [{ scale: 0.97 }],
-  },
+    // Header
+    header: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      paddingHorizontal: 20,
+      paddingTop: 16,
+      paddingBottom: 12,
+      borderBottomWidth: 1,
+      borderBottomColor: Colors.border,
+    },
+    headerTitle: {
+      color: Colors.textPrimary,
+      fontSize: 26,
+      fontWeight: '800',
+      letterSpacing: -0.5,
+    },
+    headerSub: {
+      color: Colors.textMuted,
+      fontSize: 12,
+      fontWeight: '500',
+      marginTop: 2,
+    },
+    publishBtn: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 6,
+      backgroundColor: Colors.accent,
+      paddingHorizontal: 16,
+      paddingVertical: 10,
+      borderRadius: 20,
+      shadowColor: Colors.accent,
+      shadowOffset: { width: 0, height: 3 },
+      shadowOpacity: 0.35,
+      shadowRadius: 6,
+      elevation: 4,
+    },
+    publishBtnText: {
+      color: '#fff',
+      fontSize: 14,
+      fontWeight: '800',
+    },
+    publishBtnDisabled: {
+      opacity: 0.55,
+    },
+    publishBtnPressed: {
+      opacity: 0.8,
+      transform: [{ scale: 0.97 }],
+    },
 
-  scroll: {
-    flex: 1,
-  },
-  scrollContent: {
-    paddingTop: 8,
-  },
+    scroll: {
+      flex: 1,
+    },
+    scrollContent: {
+      paddingTop: 8,
+    },
 
-  // Photo picker
-  photoSection: {
-    marginHorizontal: 20,
-    marginTop: 16,
-    marginBottom: 20,
-  },
-  photoEmpty: {
-    height: 160,
-    backgroundColor: Colors.surface,
-    borderRadius: 20,
-    borderWidth: 1.5,
-    borderColor: Colors.border,
-    borderStyle: 'dashed',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 8,
-  },
-  photoEmptyPressed: {
-    opacity: 0.7,
-    transform: [{ scale: 0.985 }],
-  },
-  photoIconWrap: {
-    width: 56,
-    height: 56,
-    borderRadius: 16,
-    backgroundColor: Colors.accentSoft,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 4,
-  },
-  photoEmptyTitle: {
-    color: Colors.textPrimary,
-    fontSize: 16,
-    fontWeight: '700',
-  },
-  photoEmptyHint: {
-    color: Colors.textMuted,
-    fontSize: 12,
-    fontWeight: '500',
-  },
-  photoPreviewWrap: {
-    borderRadius: 20,
-    overflow: 'hidden',
-    position: 'relative',
-  },
-  photoPreview: {
-    height: 200,
-    width: '100%',
-    borderRadius: 20,
-    overflow: 'hidden',
-  },
-  photoImage: {
-    width: '100%',
-    height: '100%',
-    resizeMode: 'cover',
-  },
-  photoClearBtn: {
-    position: 'absolute',
-    top: 10,
-    right: 10,
-  },
+    // Photo picker
+    photoSection: {
+      marginHorizontal: 20,
+      marginTop: 16,
+      marginBottom: 20,
+    },
+    photoEmpty: {
+      height: 160,
+      backgroundColor: Colors.surface,
+      borderRadius: 20,
+      borderWidth: 1.5,
+      borderColor: Colors.border,
+      borderStyle: 'dashed',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: 8,
+    },
+    photoEmptyPressed: {
+      opacity: 0.7,
+      transform: [{ scale: 0.985 }],
+    },
+    photoIconWrap: {
+      width: 56,
+      height: 56,
+      borderRadius: 16,
+      backgroundColor: Colors.accentSoft,
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginBottom: 4,
+    },
+    photoEmptyTitle: {
+      color: Colors.textPrimary,
+      fontSize: 16,
+      fontWeight: '700',
+    },
+    photoEmptyHint: {
+      color: Colors.textMuted,
+      fontSize: 12,
+      fontWeight: '500',
+    },
+    photoPreviewWrap: {
+      borderRadius: 20,
+      overflow: 'hidden',
+      position: 'relative',
+    },
+    photoPreview: {
+      height: 200,
+      width: '100%',
+      borderRadius: 20,
+      overflow: 'hidden',
+    },
+    photoImage: {
+      width: '100%',
+      height: '100%',
+      resizeMode: 'cover',
+    },
+    photoClearBtn: {
+      position: 'absolute',
+      top: 10,
+      right: 10,
+    },
 
-  // Label
-  label: {
-    color: Colors.textSecondary,
-    fontSize: 11,
-    fontWeight: '700',
-    letterSpacing: 0.6,
-    textTransform: 'uppercase',
-    marginBottom: 8,
-  },
+    // Label
+    label: {
+      color: Colors.textSecondary,
+      fontSize: 11,
+      fontWeight: '700',
+      letterSpacing: 0.6,
+      textTransform: 'uppercase',
+      marginBottom: 8,
+    },
 
-  // Generic field group
-  fieldGroup: {
-    paddingHorizontal: 20,
-    marginBottom: 16,
-  },
-  input: {
-    backgroundColor: Colors.surfaceElevated,
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: Colors.border,
-    paddingHorizontal: 14,
-    paddingVertical: 13,
-    color: Colors.textPrimary,
-    fontSize: 15,
-    fontWeight: '500',
-  },
-  titleInput: {
-    backgroundColor: Colors.surfaceElevated,
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: Colors.border,
-    paddingHorizontal: 14,
-    paddingVertical: 13,
-    color: Colors.textPrimary,
-    fontSize: 18,
-    fontWeight: '700',
-  },
-  textArea: {
-    minHeight: 80,
-    paddingTop: 13,
-    textAlignVertical: 'top',
-  },
+    // Generic field group
+    fieldGroup: {
+      paddingHorizontal: 20,
+      marginBottom: 16,
+    },
+    input: {
+      backgroundColor: Colors.surfaceElevated,
+      borderRadius: 12,
+      borderWidth: 1,
+      borderColor: Colors.border,
+      paddingHorizontal: 14,
+      paddingVertical: 13,
+      color: Colors.textPrimary,
+      fontSize: 15,
+      fontWeight: '500',
+    },
+    titleInput: {
+      backgroundColor: Colors.surfaceElevated,
+      borderRadius: 12,
+      borderWidth: 1,
+      borderColor: Colors.border,
+      paddingHorizontal: 14,
+      paddingVertical: 13,
+      color: Colors.textPrimary,
+      fontSize: 18,
+      fontWeight: '700',
+    },
+    textArea: {
+      minHeight: 80,
+      paddingTop: 13,
+      textAlignVertical: 'top',
+    },
 
-  // Row layout for side-by-side fields
-  rowFields: {
-    flexDirection: 'row',
-    gap: 12,
-    paddingHorizontal: 20,
-    marginBottom: 16,
-  },
+    // Row layout
+    rowFields: {
+      flexDirection: 'row',
+      gap: 12,
+      paddingHorizontal: 20,
+      marginBottom: 16,
+    },
 
-  // Section divider
-  sectionDivider: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 20,
-    gap: 12,
-    marginTop: 8,
-    marginBottom: 16,
-  },
-  sectionDividerLine: {
-    flex: 1,
-    height: 1,
-    backgroundColor: Colors.border,
-  },
-  sectionDividerText: {
-    color: Colors.textMuted,
-    fontSize: 11,
-    fontWeight: '700',
-    letterSpacing: 0.8,
-    textTransform: 'uppercase',
-  },
+    // Section divider
+    sectionDivider: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingHorizontal: 20,
+      gap: 12,
+      marginTop: 8,
+      marginBottom: 16,
+    },
+    sectionDividerLine: {
+      flex: 1,
+      height: 1,
+      backgroundColor: Colors.border,
+    },
+    sectionDividerText: {
+      color: Colors.textMuted,
+      fontSize: 11,
+      fontWeight: '700',
+      letterSpacing: 0.8,
+      textTransform: 'uppercase',
+    },
 
-  // Meal time chips
-  chipRow: {
-    flexDirection: 'row',
-    gap: 8,
-    flexWrap: 'wrap',
-  },
-  chip: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 5,
-    paddingHorizontal: 14,
-    paddingVertical: 9,
-    borderRadius: 20,
-    backgroundColor: Colors.surface,
-    borderWidth: 1,
-    borderColor: Colors.border,
-  },
-  chipActive: {
-    backgroundColor: Colors.accentSoft,
-    borderColor: Colors.accent,
-  },
-  chipEmoji: {
-    fontSize: 13,
-  },
-  chipText: {
-    color: Colors.textSecondary,
-    fontSize: 13,
-    fontWeight: '700',
-  },
-  chipTextActive: {
-    color: Colors.accent,
-  },
+    // Meal time chips
+    chipRow: {
+      flexDirection: 'row',
+      gap: 8,
+      flexWrap: 'wrap',
+    },
+    chip: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 5,
+      paddingHorizontal: 14,
+      paddingVertical: 9,
+      borderRadius: 20,
+      backgroundColor: Colors.surface,
+      borderWidth: 1,
+      borderColor: Colors.border,
+    },
+    chipActive: {
+      backgroundColor: Colors.accentSoft,
+      borderColor: Colors.accent,
+    },
+    chipEmoji: {
+      fontSize: 13,
+    },
+    chipText: {
+      color: Colors.textSecondary,
+      fontSize: 13,
+      fontWeight: '700',
+    },
+    chipTextActive: {
+      color: Colors.accent,
+    },
 
-  // Difficulty buttons
-  difficultyRow: {
-    flexDirection: 'row',
-    gap: 10,
-  },
-  difficultyBtn: {
-    flex: 1,
-    paddingVertical: 12,
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: Colors.border,
-    backgroundColor: Colors.surface,
-    alignItems: 'center',
-  },
-  difficultyText: {
-    color: Colors.textSecondary,
-    fontSize: 14,
-    fontWeight: '700',
-  },
+    // Difficulty buttons
+    difficultyRow: {
+      flexDirection: 'row',
+      gap: 10,
+    },
+    difficultyBtn: {
+      flex: 1,
+      paddingVertical: 12,
+      borderRadius: 12,
+      borderWidth: 1,
+      borderColor: Colors.border,
+      backgroundColor: Colors.surface,
+      alignItems: 'center',
+    },
+    difficultyText: {
+      color: Colors.textSecondary,
+      fontSize: 14,
+      fontWeight: '700',
+    },
 
-  // Dynamic list items
-  dynamicSection: {
-    paddingHorizontal: 20,
-    gap: 10,
-    marginBottom: 8,
-  },
-  dynamicItem: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    gap: 10,
-  },
-  dynamicIndex: {
-    width: 28,
-    height: 28,
-    borderRadius: 8,
-    backgroundColor: Colors.surfaceElevated,
-    borderWidth: 1,
-    borderColor: Colors.border,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 10,
-  },
-  dynamicIndexText: {
-    color: Colors.textMuted,
-    fontSize: 12,
-    fontWeight: '700',
-  },
-  dynamicInput: {
-    flex: 1,
-    backgroundColor: Colors.surfaceElevated,
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: Colors.border,
-    paddingHorizontal: 14,
-    paddingVertical: 10,
-    color: Colors.textPrimary,
-    fontSize: 14,
-    fontWeight: '500',
-    minHeight: 44,
-  },
-  dynamicInputMulti: {
-    minHeight: 72,
-    paddingTop: 10,
-    textAlignVertical: 'top',
-  },
-  removeBtn: {
-    marginTop: 12,
-  },
+    // Dynamic list items
+    dynamicSection: {
+      paddingHorizontal: 20,
+      gap: 10,
+      marginBottom: 8,
+    },
+    dynamicItem: {
+      flexDirection: 'row',
+      alignItems: 'flex-start',
+      gap: 10,
+    },
+    dynamicIndex: {
+      width: 28,
+      height: 28,
+      borderRadius: 8,
+      backgroundColor: Colors.surfaceElevated,
+      borderWidth: 1,
+      borderColor: Colors.border,
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginTop: 10,
+    },
+    dynamicIndexText: {
+      color: Colors.textMuted,
+      fontSize: 12,
+      fontWeight: '700',
+    },
+    dynamicInput: {
+      flex: 1,
+      backgroundColor: Colors.surfaceElevated,
+      borderRadius: 12,
+      borderWidth: 1,
+      borderColor: Colors.border,
+      paddingHorizontal: 14,
+      paddingVertical: 10,
+      color: Colors.textPrimary,
+      fontSize: 14,
+      fontWeight: '500',
+      minHeight: 44,
+    },
+    dynamicInputMulti: {
+      minHeight: 72,
+      paddingTop: 10,
+      textAlignVertical: 'top',
+    },
+    removeBtn: {
+      marginTop: 12,
+    },
 
-  // Add pill button
-  addBtn: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    alignSelf: 'flex-start',
-    gap: 6,
-    paddingHorizontal: 14,
-    paddingVertical: 9,
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: Colors.accent,
-    backgroundColor: Colors.accentSoft,
-    marginTop: 4,
-  },
-  addBtnPressed: {
-    opacity: 0.7,
-    transform: [{ scale: 0.97 }],
-  },
-  addBtnText: {
-    color: Colors.accent,
-    fontSize: 13,
-    fontWeight: '700',
-  },
+    // Add pill button
+    addBtn: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      alignSelf: 'flex-start',
+      gap: 6,
+      paddingHorizontal: 14,
+      paddingVertical: 9,
+      borderRadius: 20,
+      borderWidth: 1,
+      borderColor: Colors.accent,
+      backgroundColor: Colors.accentSoft,
+      marginTop: 4,
+    },
+    addBtnPressed: {
+      opacity: 0.7,
+      transform: [{ scale: 0.97 }],
+    },
+    addBtnText: {
+      color: Colors.accent,
+      fontSize: 13,
+      fontWeight: '700',
+    },
 
-  // Bottom publish
-  bottomPublishBtn: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 8,
-    marginHorizontal: 20,
-    marginTop: 24,
-    height: 56,
-    borderRadius: 16,
-    backgroundColor: Colors.accent,
-    shadowColor: Colors.accent,
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.35,
-    shadowRadius: 10,
-    elevation: 6,
-  },
-  bottomPublishBtnText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '800',
-    letterSpacing: 0.2,
-  },
-});
+    // Bottom publish
+    bottomPublishBtn: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: 8,
+      marginHorizontal: 20,
+      marginTop: 24,
+      height: 56,
+      borderRadius: 16,
+      backgroundColor: Colors.accent,
+      shadowColor: Colors.accent,
+      shadowOffset: { width: 0, height: 4 },
+      shadowOpacity: 0.35,
+      shadowRadius: 10,
+      elevation: 6,
+    },
+    bottomPublishBtnText: {
+      color: '#fff',
+      fontSize: 16,
+      fontWeight: '800',
+      letterSpacing: 0.2,
+    },
+  });
+}

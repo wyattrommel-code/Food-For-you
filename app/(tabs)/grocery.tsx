@@ -14,7 +14,8 @@ import { useFocusEffect } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 
-import { Colors } from '@/constants/Colors';
+import { useTheme } from '@/context/ThemeContext';
+import type { AppColors } from '@/constants/Colors';
 import { useGroceryList } from '@/hooks/useGroceryList';
 import {
   GroceryCategory,
@@ -35,12 +36,14 @@ function Checkbox({
   color: string;
   onPress: () => void;
 }) {
+  const { Colors } = useTheme();
+
   return (
     <Pressable
       onPress={onPress}
       hitSlop={10}
       style={[
-        styles.checkbox,
+        checkboxStyle.box,
         checked
           ? { backgroundColor: color, borderColor: color }
           : { borderColor: Colors.border },
@@ -66,6 +69,9 @@ function GroceryRow({
   onToggle: () => void;
   onRemove: () => void;
 }) {
+  const { Colors } = useTheme();
+  const styles = useMemo(() => makeStyles(Colors), [Colors]);
+
   return (
     <View style={styles.row}>
       <Checkbox
@@ -110,9 +116,12 @@ function CategorySection({
   onToggle: (id: string) => void;
   onRemove: (id: string) => void;
 }) {
+  const { Colors } = useTheme();
+  const styles = useMemo(() => makeStyles(Colors), [Colors]);
+
   if (items.length === 0) return null;
 
-  const meta = CATEGORY_META[category];
+  const meta         = CATEGORY_META[category];
   const checkedCount = items.filter((i) => i.checked).length;
 
   return (
@@ -171,6 +180,9 @@ function CategorySection({
 // ─── Empty state ──────────────────────────────────────────────
 
 function EmptyState() {
+  const { Colors } = useTheme();
+  const styles = useMemo(() => makeStyles(Colors), [Colors]);
+
   return (
     <View style={styles.empty}>
       <Text style={styles.emptyEmoji}>🛒</Text>
@@ -189,6 +201,9 @@ function EmptyState() {
 // ─── Main Screen ──────────────────────────────────────────────
 
 export default function GroceryScreen() {
+  const { Colors } = useTheme();
+  const styles = useMemo(() => makeStyles(Colors), [Colors]);
+
   const {
     items,
     loading,
@@ -214,8 +229,6 @@ export default function GroceryScreen() {
     inputRef.current?.blur();
   }, [inputText, addItem]);
 
-  // Re-read AsyncStorage every time this tab comes into focus so items
-  // added from the Recipe screen (a different hook instance) are visible.
   useFocusEffect(
     useCallback(() => {
       reload();
@@ -277,7 +290,6 @@ export default function GroceryScreen() {
           </Text>
         </View>
 
-        {/* Action buttons */}
         {items.length > 0 && (
           <View style={styles.headerActions}>
             {checkedCount > 0 && (
@@ -372,160 +384,253 @@ export default function GroceryScreen() {
 }
 
 // ─── Styles ───────────────────────────────────────────────────
-const styles = StyleSheet.create({
-  safe: {
-    flex: 1,
-    backgroundColor: Colors.background,
-  },
+function makeStyles(Colors: AppColors) {
+  return StyleSheet.create({
+    safe: {
+      flex: 1,
+      backgroundColor: Colors.background,
+    },
 
-  // Header
-  header: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    justifyContent: 'space-between',
-    paddingHorizontal: 20,
-    paddingTop: 16,
-    paddingBottom: 14,
-  },
-  headerTitle: {
-    color: Colors.textPrimary,
-    fontSize: 28,
-    fontWeight: '800',
-    letterSpacing: -0.5,
-  },
-  headerSub: {
-    color: Colors.textSecondary,
-    fontSize: 13,
-    fontWeight: '500',
-    marginTop: 3,
-  },
-  headerActions: {
-    flexDirection: 'row',
-    gap: 8,
-    paddingTop: 4,
-  },
-  headerActionBtn: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 5,
-    paddingHorizontal: 12,
-    paddingVertical: 7,
-    borderRadius: 20,
-    backgroundColor: Colors.surfaceElevated,
-    borderWidth: 1,
-    borderColor: Colors.border,
-  },
-  headerActionBtnPressed: {
-    opacity: 0.7,
-    transform: [{ scale: 0.96 }],
-  },
-  headerActionText: {
-    fontSize: 12,
-    fontWeight: '700',
-  },
+    // Header
+    header: {
+      flexDirection: 'row',
+      alignItems: 'flex-start',
+      justifyContent: 'space-between',
+      paddingHorizontal: 20,
+      paddingTop: 16,
+      paddingBottom: 14,
+    },
+    headerTitle: {
+      color: Colors.textPrimary,
+      fontSize: 28,
+      fontWeight: '800',
+      letterSpacing: -0.5,
+    },
+    headerSub: {
+      color: Colors.textSecondary,
+      fontSize: 13,
+      fontWeight: '500',
+      marginTop: 3,
+    },
+    headerActions: {
+      flexDirection: 'row',
+      gap: 8,
+      paddingTop: 4,
+    },
+    headerActionBtn: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 5,
+      paddingHorizontal: 12,
+      paddingVertical: 7,
+      borderRadius: 20,
+      backgroundColor: Colors.surfaceElevated,
+      borderWidth: 1,
+      borderColor: Colors.border,
+    },
+    headerActionBtnPressed: {
+      opacity: 0.7,
+      transform: [{ scale: 0.96 }],
+    },
+    headerActionText: {
+      fontSize: 12,
+      fontWeight: '700',
+    },
 
-  // Overall progress bar
-  totalProgressTrack: {
-    height: 3,
-    backgroundColor: Colors.border,
-    marginHorizontal: 20,
-    borderRadius: 2,
-    marginBottom: 8,
-  },
-  totalProgressFill: {
-    height: '100%',
-    backgroundColor: Colors.accent,
-    borderRadius: 2,
-  },
+    // Overall progress bar
+    totalProgressTrack: {
+      height: 3,
+      backgroundColor: Colors.border,
+      marginHorizontal: 20,
+      borderRadius: 2,
+      marginBottom: 8,
+    },
+    totalProgressFill: {
+      height: '100%',
+      backgroundColor: Colors.accent,
+      borderRadius: 2,
+    },
 
-  scroll: {
-    flex: 1,
-  },
-  scrollContent: {
-    paddingTop: 8,
-  },
+    scroll: {
+      flex: 1,
+    },
+    scrollContent: {
+      paddingTop: 8,
+    },
 
-  // Category section
-  section: {
-    marginHorizontal: 16,
-    marginBottom: 20,
-    backgroundColor: Colors.surface,
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: Colors.border,
-    overflow: 'hidden',
-  },
-  sectionHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 16,
-    paddingTop: 14,
-    paddingBottom: 10,
-  },
-  sectionHeaderLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
-  },
-  sectionEmojiContainer: {
-    width: 36,
-    height: 36,
-    borderRadius: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  sectionEmoji: {
-    fontSize: 18,
-  },
-  sectionLabel: {
-    color: Colors.textPrimary,
-    fontSize: 16,
-    fontWeight: '800',
-    letterSpacing: -0.2,
-  },
-  sectionBadge: {
-    backgroundColor: Colors.surfaceElevated,
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: Colors.border,
-  },
-  sectionBadgeText: {
-    fontSize: 12,
-    fontWeight: '800',
-  },
+    // Category section
+    section: {
+      marginHorizontal: 16,
+      marginBottom: 20,
+      backgroundColor: Colors.surface,
+      borderRadius: 20,
+      borderWidth: 1,
+      borderColor: Colors.border,
+      overflow: 'hidden',
+    },
+    sectionHeader: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      paddingHorizontal: 16,
+      paddingTop: 14,
+      paddingBottom: 10,
+    },
+    sectionHeaderLeft: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 10,
+    },
+    sectionEmojiContainer: {
+      width: 36,
+      height: 36,
+      borderRadius: 10,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    sectionEmoji: {
+      fontSize: 18,
+    },
+    sectionLabel: {
+      color: Colors.textPrimary,
+      fontSize: 16,
+      fontWeight: '800',
+      letterSpacing: -0.2,
+    },
+    sectionBadge: {
+      backgroundColor: Colors.surfaceElevated,
+      paddingHorizontal: 10,
+      paddingVertical: 4,
+      borderRadius: 20,
+      borderWidth: 1,
+      borderColor: Colors.border,
+    },
+    sectionBadgeText: {
+      fontSize: 12,
+      fontWeight: '800',
+    },
 
-  // Section progress bar
-  progressTrack: {
-    height: 2,
-    backgroundColor: Colors.border,
-    marginHorizontal: 16,
-    borderRadius: 1,
-    marginBottom: 6,
-  },
-  progressFill: {
-    height: '100%',
-    borderRadius: 1,
-  },
+    // Section progress bar
+    progressTrack: {
+      height: 2,
+      backgroundColor: Colors.border,
+      marginHorizontal: 16,
+      borderRadius: 1,
+      marginBottom: 6,
+    },
+    progressFill: {
+      height: '100%',
+      borderRadius: 1,
+    },
 
-  // Item list
-  itemList: {
-    paddingBottom: 6,
-  },
+    // Item list
+    itemList: {
+      paddingBottom: 6,
+    },
 
-  // Grocery row
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 16,
-    paddingVertical: 11,
-    gap: 12,
-    borderTopWidth: 1,
-    borderTopColor: Colors.border,
-  },
-  checkbox: {
+    // Grocery row
+    row: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingHorizontal: 16,
+      paddingVertical: 11,
+      gap: 12,
+      borderTopWidth: 1,
+      borderTopColor: Colors.border,
+    },
+    rowContent: {
+      flex: 1,
+      gap: 2,
+    },
+    rowText: {
+      color: Colors.textPrimary,
+      fontSize: 14,
+      fontWeight: '600',
+      textTransform: 'capitalize',
+    },
+    rowTextChecked: {
+      textDecorationLine: 'line-through',
+      color: Colors.textMuted,
+    },
+    rowSource: {
+      color: Colors.textMuted,
+      fontSize: 11,
+      fontWeight: '500',
+    },
+    removeBtn: {
+      width: 28,
+      height: 28,
+      alignItems: 'center',
+      justifyContent: 'center',
+      flexShrink: 0,
+    },
+
+    // Manual add row
+    addRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginHorizontal: 16,
+      marginBottom: 12,
+      gap: 10,
+    },
+    addInput: {
+      flex: 1,
+      height: 46,
+      backgroundColor: Colors.surfaceElevated,
+      borderWidth: 1,
+      borderColor: Colors.border,
+      borderRadius: 14,
+      paddingHorizontal: 16,
+      color: Colors.textPrimary,
+      fontSize: 15,
+      fontWeight: '500',
+    },
+    addBtn: {
+      width: 46,
+      height: 46,
+      borderRadius: 14,
+      backgroundColor: Colors.accent,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    addBtnPressed: {
+      opacity: 0.75,
+      transform: [{ scale: 0.93 }],
+    },
+
+    // Empty state
+    empty: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingHorizontal: 40,
+      gap: 12,
+      paddingBottom: 60,
+    },
+    emptyEmoji: {
+      fontSize: 64,
+      marginBottom: 8,
+    },
+    emptyTitle: {
+      color: Colors.textPrimary,
+      fontSize: 22,
+      fontWeight: '800',
+      textAlign: 'center',
+      letterSpacing: -0.3,
+    },
+    emptySub: {
+      color: Colors.textSecondary,
+      fontSize: 14,
+      textAlign: 'center',
+      lineHeight: 20,
+      fontWeight: '500',
+    },
+  });
+}
+
+// Static styles used by Checkbox (no color references)
+const checkboxStyle = StyleSheet.create({
+  box: {
     width: 24,
     height: 24,
     borderRadius: 12,
@@ -533,92 +638,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flexShrink: 0,
-  },
-  rowContent: {
-    flex: 1,
-    gap: 2,
-  },
-  rowText: {
-    color: Colors.textPrimary,
-    fontSize: 14,
-    fontWeight: '600',
-    textTransform: 'capitalize',
-  },
-  rowTextChecked: {
-    textDecorationLine: 'line-through',
-    color: Colors.textMuted,
-  },
-  rowSource: {
-    color: Colors.textMuted,
-    fontSize: 11,
-    fontWeight: '500',
-  },
-  removeBtn: {
-    width: 28,
-    height: 28,
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexShrink: 0,
-  },
-
-  // Manual add row
-  addRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginHorizontal: 16,
-    marginBottom: 12,
-    gap: 10,
-  },
-  addInput: {
-    flex: 1,
-    height: 46,
-    backgroundColor: Colors.surfaceElevated,
-    borderWidth: 1,
-    borderColor: Colors.border,
-    borderRadius: 14,
-    paddingHorizontal: 16,
-    color: Colors.textPrimary,
-    fontSize: 15,
-    fontWeight: '500',
-  },
-  addBtn: {
-    width: 46,
-    height: 46,
-    borderRadius: 14,
-    backgroundColor: Colors.accent,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  addBtnPressed: {
-    opacity: 0.75,
-    transform: [{ scale: 0.93 }],
-  },
-
-  // Empty state
-  empty: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 40,
-    gap: 12,
-    paddingBottom: 60,
-  },
-  emptyEmoji: {
-    fontSize: 64,
-    marginBottom: 8,
-  },
-  emptyTitle: {
-    color: Colors.textPrimary,
-    fontSize: 22,
-    fontWeight: '800',
-    textAlign: 'center',
-    letterSpacing: -0.3,
-  },
-  emptySub: {
-    color: Colors.textSecondary,
-    fontSize: 14,
-    textAlign: 'center',
-    lineHeight: 20,
-    fontWeight: '500',
   },
 });

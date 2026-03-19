@@ -1,7 +1,8 @@
 import { Tabs } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { Colors } from '@/constants/Colors';
 import { Platform } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useTheme } from '@/context/ThemeContext';
 
 type IoniconsName = React.ComponentProps<typeof Ionicons>['name'];
 
@@ -38,14 +39,17 @@ const TABS: TabConfig[] = [
     activeIcon: 'add-circle',
   },
   {
-    name: 'preferences',
-    title: 'Taste',
-    icon: 'options-outline',
-    activeIcon: 'options',
+    name: 'settings',
+    title: 'Settings',
+    icon: 'settings-outline',
+    activeIcon: 'settings',
   },
 ];
 
 export default function TabLayout() {
+  const insets        = useSafeAreaInsets();
+  const { Colors }    = useTheme();
+
   return (
     <Tabs
       screenOptions={{
@@ -54,8 +58,8 @@ export default function TabLayout() {
           backgroundColor: Colors.surface,
           borderTopColor: Colors.border,
           borderTopWidth: 1,
-          height: Platform.OS === 'ios' ? 84 : 64,
-          paddingBottom: Platform.OS === 'ios' ? 24 : 8,
+          height: Platform.OS === 'ios' ? 84 : 56 + insets.bottom,
+          paddingBottom: Platform.OS === 'ios' ? 24 : insets.bottom + 8,
           paddingTop: 8,
         },
         tabBarActiveTintColor: Colors.accent,

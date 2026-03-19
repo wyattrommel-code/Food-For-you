@@ -16,7 +16,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 
-import { Colors } from '@/constants/Colors';
+import { useTheme } from '@/context/ThemeContext';
+import type { AppColors } from '@/constants/Colors';
 import { EFFORT_LABELS, MEAL_TIME_META, effortSpoons } from '@/lib/types';
 import { useSession } from '@/hooks/useSession';
 import { usePreferences } from '@/hooks/usePreferences';
@@ -30,17 +31,18 @@ const { width: SCREEN_W } = Dimensions.get('window');
 const HERO_H = SCREEN_W * 0.85;
 
 export default function RecipeDetailScreen() {
+  const { Colors } = useTheme();
+  const styles = useMemo(() => makeStyles(Colors), [Colors]);
+
   const { id } = useLocalSearchParams<{ id: string }>();
-  const router = useRouter();
-  const { userId } = useSession();
+  const router  = useRouter();
+  const { userId }    = useSession();
   const { preferences } = usePreferences(userId);
   const { loading, getRecipeById, toggleFavorite } = useRecipes(userId, preferences);
   const { addRecipe, removeRecipe, hasRecipe, reload: reloadGrocery } = useGroceryList();
 
   const [groceryFeedback, setGroceryFeedback] = useState<'idle' | 'added' | 'already'>('idle');
 
-  // Re-read AsyncStorage every time we navigate to this screen so that
-  // hasRecipe reflects any additions made since the hook first mounted.
   useFocusEffect(
     useCallback(() => {
       reloadGrocery();
@@ -89,7 +91,7 @@ export default function RecipeDetailScreen() {
     try {
       await Share.share({
         message: `Check out this recipe: ${recipe.title} — Food For You app`,
-        title: recipe.title,
+        title:   recipe.title,
       });
     } catch {
       // silently ignore
@@ -281,240 +283,242 @@ export default function RecipeDetailScreen() {
 }
 
 // ─── Styles ───────────────────────────────────────────────────
-const styles = StyleSheet.create({
-  root: {
-    flex: 1,
-    backgroundColor: Colors.background,
-  },
-  hero: {
-    width: SCREEN_W,
-    height: HERO_H,
-  },
-  heroImage: {
-    width: '100%',
-    height: '100%',
-  },
-  topBar: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 16,
-  },
-  topBarRight: {
-    flexDirection: 'row',
-    gap: 10,
-  },
-  iconBtn: {
-    width: 42,
-    height: 42,
-    borderRadius: 21,
-    backgroundColor: 'rgba(0,0,0,0.45)',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  rotdBadge: {
-    position: 'absolute',
-    bottom: 20,
-    left: 20,
-    backgroundColor: Colors.accent,
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 20,
-  },
-  rotdText: {
-    color: '#fff',
-    fontSize: 12,
-    fontWeight: '800',
-  },
-  content: {
-    backgroundColor: Colors.background,
-    borderTopLeftRadius: 28,
-    borderTopRightRadius: 28,
-    marginTop: -28,
-    paddingHorizontal: 22,
-    paddingTop: 28,
-  },
-  mealTimeRow: {
-    flexDirection: 'row',
-    gap: 8,
-    marginBottom: 14,
-  },
-  mealBadge: {
-    paddingHorizontal: 12,
-    paddingVertical: 5,
-    borderRadius: 20,
-  },
-  mealBadgeText: {
-    fontSize: 12,
-    fontWeight: '700',
-    textTransform: 'capitalize',
-  },
-  title: {
-    color: Colors.textPrimary,
-    fontSize: 30,
-    fontWeight: '800',
-    letterSpacing: -0.5,
-    lineHeight: 36,
-    marginBottom: 10,
-  },
-  description: {
-    color: Colors.textSecondary,
-    fontSize: 15,
-    lineHeight: 22,
-    marginBottom: 22,
-  },
-  statsRow: {
-    flexDirection: 'row',
-    backgroundColor: Colors.surface,
-    borderRadius: 16,
-    padding: 18,
-    marginBottom: 20,
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: Colors.border,
-  },
-  stat: {
-    flex: 1,
-    alignItems: 'center',
-    gap: 4,
-  },
-  statValue: {
-    color: Colors.textPrimary,
-    fontSize: 16,
-    fontWeight: '800',
-  },
-  statSpoons: {
-    fontSize: 18,
-    letterSpacing: 2,
-  },
-  statLabel: {
-    color: Colors.textMuted,
-    fontSize: 11,
-    fontWeight: '600',
-    textTransform: 'capitalize',
-  },
-  statDivider: {
-    width: 1,
-    height: 40,
-    backgroundColor: Colors.border,
-  },
-  tagsRow: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 8,
-    marginBottom: 24,
-  },
-  sectionCard: {
-    backgroundColor: Colors.surface,
-    borderRadius: 18,
-    padding: 18,
-    marginBottom: 14,
-    borderWidth: 1,
-    borderColor: Colors.border,
-    gap: 14,
-  },
-  sectionCardHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
-  },
-  sectionCardTitle: {
-    color: Colors.textPrimary,
-    fontSize: 17,
-    fontWeight: '800',
-  },
-  ingredientsGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 8,
-  },
-  ingredientItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 7,
-    width: '47%',
-  },
-  ingredientDot: {
-    width: 6,
-    height: 6,
-    borderRadius: 3,
-    backgroundColor: Colors.accent,
-  },
-  ingredientText: {
-    color: Colors.textSecondary,
-    fontSize: 13,
-    fontWeight: '500',
-    flex: 1,
-    textTransform: 'capitalize',
-  },
-  shoppingLine: {
-    color: Colors.textSecondary,
-    fontSize: 13,
-    lineHeight: 20,
-    fontWeight: '500',
-  },
-  notFound: {
-    flex: 1,
-    backgroundColor: Colors.background,
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 16,
-  },
-  notFoundText: {
-    color: Colors.textSecondary,
-    fontSize: 18,
-    fontWeight: '600',
-  },
-  backBtn: {
-    backgroundColor: Colors.accent,
-    paddingHorizontal: 24,
-    paddingVertical: 12,
-    borderRadius: 12,
-  },
-  backBtnText: {
-    color: '#fff',
-    fontWeight: '700',
-    fontSize: 15,
-  },
+function makeStyles(Colors: AppColors) {
+  return StyleSheet.create({
+    root: {
+      flex: 1,
+      backgroundColor: Colors.background,
+    },
+    hero: {
+      width: SCREEN_W,
+      height: HERO_H,
+    },
+    heroImage: {
+      width: '100%',
+      height: '100%',
+    },
+    topBar: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      paddingHorizontal: 16,
+    },
+    topBarRight: {
+      flexDirection: 'row',
+      gap: 10,
+    },
+    iconBtn: {
+      width: 42,
+      height: 42,
+      borderRadius: 21,
+      backgroundColor: 'rgba(0,0,0,0.45)',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    rotdBadge: {
+      position: 'absolute',
+      bottom: 20,
+      left: 20,
+      backgroundColor: Colors.accent,
+      paddingHorizontal: 12,
+      paddingVertical: 6,
+      borderRadius: 20,
+    },
+    rotdText: {
+      color: '#fff',
+      fontSize: 12,
+      fontWeight: '800',
+    },
+    content: {
+      backgroundColor: Colors.background,
+      borderTopLeftRadius: 28,
+      borderTopRightRadius: 28,
+      marginTop: -28,
+      paddingHorizontal: 22,
+      paddingTop: 28,
+    },
+    mealTimeRow: {
+      flexDirection: 'row',
+      gap: 8,
+      marginBottom: 14,
+    },
+    mealBadge: {
+      paddingHorizontal: 12,
+      paddingVertical: 5,
+      borderRadius: 20,
+    },
+    mealBadgeText: {
+      fontSize: 12,
+      fontWeight: '700',
+      textTransform: 'capitalize',
+    },
+    title: {
+      color: Colors.textPrimary,
+      fontSize: 30,
+      fontWeight: '800',
+      letterSpacing: -0.5,
+      lineHeight: 36,
+      marginBottom: 10,
+    },
+    description: {
+      color: Colors.textSecondary,
+      fontSize: 15,
+      lineHeight: 22,
+      marginBottom: 22,
+    },
+    statsRow: {
+      flexDirection: 'row',
+      backgroundColor: Colors.surface,
+      borderRadius: 16,
+      padding: 18,
+      marginBottom: 20,
+      alignItems: 'center',
+      borderWidth: 1,
+      borderColor: Colors.border,
+    },
+    stat: {
+      flex: 1,
+      alignItems: 'center',
+      gap: 4,
+    },
+    statValue: {
+      color: Colors.textPrimary,
+      fontSize: 16,
+      fontWeight: '800',
+    },
+    statSpoons: {
+      fontSize: 18,
+      letterSpacing: 2,
+    },
+    statLabel: {
+      color: Colors.textMuted,
+      fontSize: 11,
+      fontWeight: '600',
+      textTransform: 'capitalize',
+    },
+    statDivider: {
+      width: 1,
+      height: 40,
+      backgroundColor: Colors.border,
+    },
+    tagsRow: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      gap: 8,
+      marginBottom: 24,
+    },
+    sectionCard: {
+      backgroundColor: Colors.surface,
+      borderRadius: 18,
+      padding: 18,
+      marginBottom: 14,
+      borderWidth: 1,
+      borderColor: Colors.border,
+      gap: 14,
+    },
+    sectionCardHeader: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 10,
+    },
+    sectionCardTitle: {
+      color: Colors.textPrimary,
+      fontSize: 17,
+      fontWeight: '800',
+    },
+    ingredientsGrid: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      gap: 8,
+    },
+    ingredientItem: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 7,
+      width: '47%',
+    },
+    ingredientDot: {
+      width: 6,
+      height: 6,
+      borderRadius: 3,
+      backgroundColor: Colors.accent,
+    },
+    ingredientText: {
+      color: Colors.textSecondary,
+      fontSize: 13,
+      fontWeight: '500',
+      flex: 1,
+      textTransform: 'capitalize',
+    },
+    shoppingLine: {
+      color: Colors.textSecondary,
+      fontSize: 13,
+      lineHeight: 20,
+      fontWeight: '500',
+    },
+    notFound: {
+      flex: 1,
+      backgroundColor: Colors.background,
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: 16,
+    },
+    notFoundText: {
+      color: Colors.textSecondary,
+      fontSize: 18,
+      fontWeight: '600',
+    },
+    backBtn: {
+      backgroundColor: Colors.accent,
+      paddingHorizontal: 24,
+      paddingVertical: 12,
+      borderRadius: 12,
+    },
+    backBtnText: {
+      color: '#fff',
+      fontWeight: '700',
+      fontSize: 15,
+    },
 
-  // Grocery button
-  groceryBtn: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 10,
-    backgroundColor: Colors.accent,
-    borderRadius: 16,
-    paddingVertical: 16,
-    marginBottom: 24,
-    shadowColor: Colors.accent,
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 5,
-  },
-  groceryBtnAdded: {
-    backgroundColor: 'rgba(34,197,94,0.12)',
-    borderWidth: 1.5,
-    borderColor: Colors.success,
-    shadowColor: Colors.success,
-    shadowOpacity: 0.2,
-  },
-  groceryBtnPressed: {
-    opacity: 0.82,
-    transform: [{ scale: 0.98 }],
-  },
-  groceryBtnText: {
-    color: '#fff',
-    fontSize: 15,
-    fontWeight: '800',
-    letterSpacing: 0.1,
-  },
-  groceryBtnTextAdded: {
-    color: Colors.success,
-  },
-});
+    // Grocery button
+    groceryBtn: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: 10,
+      backgroundColor: Colors.accent,
+      borderRadius: 16,
+      paddingVertical: 16,
+      marginBottom: 24,
+      shadowColor: Colors.accent,
+      shadowOffset: { width: 0, height: 4 },
+      shadowOpacity: 0.3,
+      shadowRadius: 8,
+      elevation: 5,
+    },
+    groceryBtnAdded: {
+      backgroundColor: 'rgba(34,197,94,0.12)',
+      borderWidth: 1.5,
+      borderColor: Colors.success,
+      shadowColor: Colors.success,
+      shadowOpacity: 0.2,
+    },
+    groceryBtnPressed: {
+      opacity: 0.82,
+      transform: [{ scale: 0.98 }],
+    },
+    groceryBtnText: {
+      color: '#fff',
+      fontSize: 15,
+      fontWeight: '800',
+      letterSpacing: 0.1,
+    },
+    groceryBtnTextAdded: {
+      color: Colors.success,
+    },
+  });
+}

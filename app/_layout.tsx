@@ -3,49 +3,44 @@ import { useEffect } from 'react';
 import { Stack, useRouter, useSegments } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import * as SplashScreen from 'expo-splash-screen';
-import { Colors } from '@/constants/Colors';
+import { ThemeProvider, useTheme } from '@/context/ThemeContext';
 import { useSession } from '@/hooks/useSession';
 
 SplashScreen.preventAutoHideAsync();
 
-export default function RootLayout() {
+function RootLayoutInner() {
+  const { Colors, isDark } = useTheme();
   const { session, loading } = useSession();
   const segments = useSegments();
-  const router = useRouter();
+  const router   = useRouter();
 
-  // Hide splash only after we know the auth state, so unauthenticated users
-  // never see a flash of the protected tabs screen.
   useEffect(() => {
     if (!loading) SplashScreen.hideAsync();
   }, [loading]);
 
-  // Redirect based on auth state whenever session or current route changes.
   useEffect(() => {
     if (loading) return;
 
-    const inTabsGroup = segments[0] === '(tabs)';
+    const inTabsGroup  = segments[0] === '(tabs)';
     const onLoginScreen = segments[0] === 'login';
 
     if (!session && inTabsGroup) {
-      // User is not authenticated but is trying to view a protected screen.
       router.replace('/login');
     } else if (session && onLoginScreen) {
-      // User just logged in — push them into the app.
       router.replace('/(tabs)');
     }
   }, [session, loading, segments]);
 
-  // Keep the splash visible while auth state resolves.
   if (loading) return null;
 
   return (
     <>
-      <StatusBar style="light" backgroundColor={Colors.background} />
+      <StatusBar style={isDark ? 'light' : 'dark'} backgroundColor={Colors.background} />
       <Stack
         screenOptions={{
-          headerShown: false,
+          headerShown:  false,
           contentStyle: { backgroundColor: Colors.background },
-          animation: 'fade',
+          animation:    'fade',
         }}
       >
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
@@ -56,12 +51,27 @@ export default function RootLayout() {
         <Stack.Screen
           name="recipe/[id]"
           options={{
-            headerShown: false,
+            headerShown:  false,
             presentation: 'card',
-            animation: 'slide_from_bottom',
+            animation:    'slide_from_bottom',
+          }}
+        />
+        <Stack.Screen
+          name="taste-engine"
+          options={{
+            headerShown: false,
+            animation:   'slide_from_right',
           }}
         />
       </Stack>
     </>
+  );
+}
+
+export default function RootLayout() {
+  return (
+    <ThemeProvider>
+      <RootLayoutInner />
+    </ThemeProvider>
   );
 }

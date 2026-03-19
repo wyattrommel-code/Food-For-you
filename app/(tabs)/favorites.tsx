@@ -8,7 +8,8 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { Colors } from '@/constants/Colors';
+import { useTheme } from '@/context/ThemeContext';
+import type { AppColors } from '@/constants/Colors';
 import { useSession } from '@/hooks/useSession';
 import { usePreferences } from '@/hooks/usePreferences';
 import { useRecipes } from '@/hooks/useRecipes';
@@ -21,6 +22,9 @@ const NUM_COLS = 2;
 const ITEM_W = (SCREEN_W - 20 * 2 - 12) / 2;
 
 export default function FavoritesScreen() {
+  const { Colors } = useTheme();
+  const styles = useMemo(() => makeStyles(Colors), [Colors]);
+
   const { userId } = useSession();
   const { preferences } = usePreferences(userId);
   const { loading, visibleRecipes, toggleFavorite } = useRecipes(userId, preferences);
@@ -68,53 +72,55 @@ export default function FavoritesScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: Colors.background,
-  },
-  header: {
-    paddingHorizontal: 20,
-    paddingTop: 16,
-    paddingBottom: 20,
-  },
-  title: {
-    color: Colors.textPrimary,
-    fontSize: 30,
-    fontWeight: '800',
-    letterSpacing: -0.5,
-  },
-  subtitle: {
-    color: Colors.textSecondary,
-    fontSize: 14,
-    marginTop: 3,
-    fontWeight: '500',
-  },
-  grid: {
-    paddingHorizontal: 20,
-    paddingBottom: 40,
-    gap: 12,
-  },
-  row: {
-    gap: 12,
-  },
-  empty: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 40,
-    gap: 14,
-  },
-  emptyTitle: {
-    color: Colors.textPrimary,
-    fontSize: 20,
-    fontWeight: '700',
-    textAlign: 'center',
-  },
-  emptyBody: {
-    color: Colors.textSecondary,
-    fontSize: 15,
-    textAlign: 'center',
-    lineHeight: 22,
-  },
-});
+function makeStyles(Colors: AppColors) {
+  return StyleSheet.create({
+    safeArea: {
+      flex: 1,
+      backgroundColor: Colors.background,
+    },
+    header: {
+      paddingHorizontal: 20,
+      paddingTop: 16,
+      paddingBottom: 20,
+    },
+    title: {
+      color: Colors.textPrimary,
+      fontSize: 30,
+      fontWeight: '800',
+      letterSpacing: -0.5,
+    },
+    subtitle: {
+      color: Colors.textSecondary,
+      fontSize: 14,
+      marginTop: 3,
+      fontWeight: '500',
+    },
+    grid: {
+      paddingHorizontal: 20,
+      paddingBottom: 40,
+      gap: 12,
+    },
+    row: {
+      gap: 12,
+    },
+    empty: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingHorizontal: 40,
+      gap: 14,
+    },
+    emptyTitle: {
+      color: Colors.textPrimary,
+      fontSize: 20,
+      fontWeight: '700',
+      textAlign: 'center',
+    },
+    emptyBody: {
+      color: Colors.textSecondary,
+      fontSize: 15,
+      textAlign: 'center',
+      lineHeight: 22,
+    },
+  });
+}
