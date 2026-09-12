@@ -26,3 +26,9 @@ The 13 files total 1,687,367 bytes (about 1.6 MiB). They use stable, content-nam
 GitHub raw hosting is not a dedicated production image CDN and has no app-specific delivery guarantee. Before a large public launch, use the existing Supabase Storage allowance if sufficient, or another explicitly approved host. The same optimized files and manifest can be migrated by changing URLs in a reviewed overlay. Check current storage and bandwidth allowances before expanding; do not silently enable paid overages. A phone photo of a cooked test meal is also a useful free replacement and validates the actual presentation.
 
 There is no new Google Play binary or production release from this photo change. Refresh the recipe library to receive live photo data. Full camera originals are not bundled into the app; only the optimized delivery copies are committed. Built-in image generation was used for the existing 12 illustrations; prompts and provenance are recorded in the manifest. No more generation was requested after the budget concern.
+
+## Validation of this delivery
+
+All 47 tests passed, TypeScript completed without errors, and the Android production bundle exported successfully. All 13 public JPEGs returned HTTP success with the expected MIME type, byte length and SHA-256. The SQL was trialed with rollback, applied, and repeated without rewriting any recipe rows. The app's anonymous API verified all 19 reviewed recipe additions/revisions plus 13 photo overlays, with private recipe access returning zero rows.
+
+Live totals after this update: 170 recipes, 169 shared, 13 newly assigned/repaired photos, 16 shared recipes still without photos (four recent and 12 older). This is an API/build verification; the installed Google Play binary was not replaced or device-tested in this delivery.
