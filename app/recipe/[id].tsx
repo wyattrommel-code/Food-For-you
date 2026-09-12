@@ -27,7 +27,7 @@ import {
   type Recipe,
   type DbRecipe,
 } from '@/lib/types';
-import { getRecipeSource } from '@/lib/recipeSource';
+import { getRecipeSource, splitRecipeDescription } from '@/lib/recipeSource';
 import { RecipeImage } from '@/components/RecipeImage';
 import { supabase } from '@/lib/supabase';
 import { useSession } from '@/hooks/useSession';
@@ -81,6 +81,9 @@ export default function RecipeDetailScreen() {
   const [selectedServings, setSelectedServings] = useState(SERVING_SLIDER_MIN);
   const [fetchedRecipe, setFetchedRecipe] = useState<Recipe | null>(null);
   const [detailReady, setDetailReady] = useState(false);
+  const [creditsExpanded, setCreditsExpanded] = useState(false);
+
+  useEffect(() => setCreditsExpanded(false), [id]);
 
   const fromPantry = fromPantryMatch === '1';
 
@@ -507,6 +510,10 @@ export default function RecipeDetailScreen() {
   );
 
   const source = getRecipeSource(recipe);
+  const { summary, photoCredits } = splitRecipeDescription(recipe.description);
+  const openCreditLink = (url: string) => Linking.openURL(url).catch(() =>
+    Alert.alert('Could not open source', 'Please try again when your connection is available.')
+  );
 
   const introSection = (
     <>
@@ -527,18 +534,44 @@ export default function RecipeDetailScreen() {
       </View>
 
       <Text style={styles.title}>{recipe.title}</Text>
-      <Text style={styles.description}>{recipe.description}</Text>
-      {source && (
-        <Pressable
-          accessibilityRole="link"
-          accessibilityLabel={`Recipe inspiration: ${source.label}. Opens a website.`}
-          onPress={() => Linking.openURL(source.url).catch(() =>
-            Alert.alert('Could not open source', 'Please try again when your connection is available.')
+      {!!summary && <Text style={styles.description}>{summary}</Text>}
+      {(source || photoCredits) && (
+        <View style={styles.creditsSection}>
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel="Sources & photo credits"
+            accessibilityState={{ expanded: creditsExpanded }}
+            onPress={() => setCreditsExpanded((expanded) => !expanded)}
+            style={styles.creditsToggle}
+          >
+            <Text style={styles.creditsLabel}>Sources & photo credits</Text>
+            <Ionicons name={creditsExpanded ? 'chevron-up' : 'chevron-down'} size={16} color={Colors.textSecondary} />
+          </Pressable>
+          {creditsExpanded && (
+            <View>
+              {source && (
+                <Pressable
+                  accessibilityRole="link"
+                  accessibilityLabel={`Recipe source: ${source.label}. Opens a website.`}
+                  onPress={() => openCreditLink(source.url)}
+                  style={styles.sourceLink}
+                >
+                  <Text style={styles.sourceText}>Recipe source: {source.label} ↗</Text>
+                </Pressable>
+              )}
+              {!!photoCredits && (
+                <Text selectable style={styles.creditText}>
+                  {photoCredits.split(/(https:\/\/[^\s)]+)/g).map((part, index) => {
+                    const link = getRecipeSource({ source_url: part });
+                    return link ? (
+                      <Text key={index} accessibilityRole="link" style={styles.sourceText} onPress={() => openCreditLink(link.url)}>{part}</Text>
+                    ) : part;
+                  })}
+                </Text>
+              )}
+            </View>
           )}
-          style={styles.sourceLink}
-        >
-          <Text style={styles.sourceText}>Recipe inspiration: {source.label} ↗</Text>
-        </Pressable>
+        </View>
       )}
     </>
   );
@@ -803,8 +836,12 @@ function makeStyles(Colors: AppColors) {
     sourceLink: {
       minHeight: 44,
       justifyContent: 'center',
-      marginBottom: 16,
+      marginBottom: 8,
     },
+    creditsSection: { marginBottom: 16 },
+    creditsToggle: { minHeight: 44, flexDirection: 'row', alignItems: 'center', gap: 8 },
+    creditsLabel: { color: Colors.textSecondary, fontSize: 13, lineHeight: 20, flexShrink: 1 },
+    creditText: { color: Colors.textSecondary, fontSize: 13, lineHeight: 20 },
     sourceText: {
       color: Colors.accent,
       fontSize: 14,

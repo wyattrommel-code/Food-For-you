@@ -9,7 +9,23 @@ const compiled = ts.transpileModule(require('node:fs').readFileSync(file, 'utf8'
 });
 const mod = new Module(file, module);
 mod._compile(compiled.outputText, file);
-const { getRecipeSource } = mod.exports;
+const { getRecipeSource, splitRecipeDescription } = mod.exports;
+
+test('photo disclosure preserves full attribution, licenses and variation notes', () => {
+  for (const credit of [
+    'Photo: Dish by Cook. Source: https://example.com/photo License: CC BY 2.0 (https://creativecommons.org/licenses/by/2.0/). Resized.',
+    'Representative photo: Dish by Cook. Serving toppings differ.',
+    'Serving illustration from the existing Mealsolved image library. Garnish varies.',
+    'Serving illustration from the Mealsolved image library. Garnish varies.',
+  ]) {
+    for (const separator of [' ', '\n\n']) {
+      assert.deepEqual(splitRecipeDescription(`Easy dinner.${separator}${credit}`), { summary: 'Easy dinner.', photoCredits: credit });
+    }
+    assert.deepEqual(splitRecipeDescription(credit), { summary: '', photoCredits: credit });
+  }
+  const ordinary = 'A simple dinner. Take a photo to share it.';
+  assert.deepEqual(splitRecipeDescription(ordinary), { summary: ordinary, photoCredits: '' });
+});
 test('existing recipes without attribution remain supported', () => {
   assert.equal(getRecipeSource({}), null);
 });
