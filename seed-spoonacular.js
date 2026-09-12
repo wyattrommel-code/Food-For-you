@@ -53,7 +53,10 @@ const supabase = createClient(SUPABASE_URL, SERVICE_ROLE_KEY, {
 });
 
 // ─── Config ───────────────────────────────────────────────────
-const SPOONACULAR_KEY = '30382dac7e57466992652231b76b9d4b';
+const SPOONACULAR_KEY = process.env.SPOONACULAR_API_KEY || '';
+if (!SPOONACULAR_KEY) {
+  throw new Error('Legacy Spoonacular import is disabled. Use the free community CSV workflow, or explicitly configure SPOONACULAR_API_KEY.');
+}
 const SEARCH_BASE     = 'https://api.spoonacular.com/recipes/complexSearch';
 const INFO_BASE       = 'https://api.spoonacular.com/recipes';
 const DELAY_MS        = 500;
@@ -254,7 +257,6 @@ async function main() {
   console.log('🍽️   Food For You — Spoonacular Seed Script');
   console.log('─'.repeat(54));
   console.log(`📡  Supabase:     ${SUPABASE_URL}`);
-  console.log(`🔑  API key:      ${SPOONACULAR_KEY.slice(0, 8)}…`);
   console.log(`🎯  Recipes:      ${RECIPE_QUERIES.length}`);
   console.log('─'.repeat(54));
   console.log('');

@@ -10,6 +10,7 @@ import {
   Platform,
   useWindowDimensions,
   Alert,
+  Linking,
 } from 'react-native';
 import Slider from '@react-native-community/slider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -28,6 +29,7 @@ import {
   type DbRecipe,
 } from '@/lib/types';
 import { recipeImageUri } from '@/lib/recipeImageUri';
+import { getRecipeSource } from '@/lib/recipeSource';
 import { RecipeImagePlaceholder } from '@/components/RecipeImagePlaceholder';
 import { supabase } from '@/lib/supabase';
 import { useSession } from '@/hooks/useSession';
@@ -502,6 +504,8 @@ export default function RecipeDetailScreen() {
     </View>
   );
 
+  const source = getRecipeSource(recipe);
+
   const introSection = (
     <>
       <View style={styles.mealTimeRow}>
@@ -522,6 +526,18 @@ export default function RecipeDetailScreen() {
 
       <Text style={styles.title}>{recipe.title}</Text>
       <Text style={styles.description}>{recipe.description}</Text>
+      {source && (
+        <Pressable
+          accessibilityRole="link"
+          accessibilityLabel={`Recipe inspiration: ${source.label}. Opens a website.`}
+          onPress={() => Linking.openURL(source.url).catch(() =>
+            Alert.alert('Could not open source', 'Please try again when your connection is available.')
+          )}
+          style={styles.sourceLink}
+        >
+          <Text style={styles.sourceText}>Recipe inspiration: {source.label} ↗</Text>
+        </Pressable>
+      )}
     </>
   );
 
@@ -803,6 +819,17 @@ function makeStyles(Colors: AppColors) {
       fontSize: 15,
       lineHeight: 22,
       marginBottom: 22,
+    },
+    sourceLink: {
+      minHeight: 44,
+      justifyContent: 'center',
+      marginBottom: 16,
+    },
+    sourceText: {
+      color: Colors.accent,
+      fontSize: 14,
+      lineHeight: 20,
+      textDecorationLine: 'underline',
     },
     statsRow: {
       flexDirection: 'row',

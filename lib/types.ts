@@ -55,7 +55,10 @@ export interface DbRecipe {
   shopping_list: string[];
   recipe_steps: string[];
   cuisine: string | null;
-  created_by: string | null;
+  created_by?: string | null;
+  /** Original recipe or meal idea behind a Mealsolved adaptation. */
+  source_url?: string | null;
+  source_name?: string | null;
   /** Present after user-recipes migration; matches auth user when is_user_created */
   user_id?: string | null;
   /** When true, recipe is private to user_id and excluded from catalog queries in the app */
