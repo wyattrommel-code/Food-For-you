@@ -2,6 +2,20 @@ const { test } = require('node:test');
 const assert = require('node:assert/strict');
 const { spawnSync } = require('node:child_process');
 
+test('lockfile links resolve to packaged source in a clean checkout', () => {
+  const fs = require('node:fs');
+  const path = require('node:path');
+  const root = path.resolve(__dirname, '..');
+  const lock = require('../package-lock.json');
+  for (const [name, entry] of Object.entries(lock.packages)) {
+    if (!entry.link) continue;
+    assert.ok(entry.resolved && !entry.resolved.split('/').includes('node_modules'), `${name} points into installed dependencies`);
+    const target = path.resolve(root, entry.resolved);
+    assert.ok(target.startsWith(root + path.sep), `${name} points outside the packaged project`);
+    assert.ok(fs.existsSync(path.join(target, 'package.json')), `${name} has no packaged source`);
+  }
+});
+
 function isolated(code) {
   const result = spawnSync(process.execPath, ['-e', code], { cwd: require('node:path').resolve(__dirname, '..'), timeout: 5000, encoding: 'utf8' });
   assert.equal(result.error, undefined, 'Dependency check timed out: ' + result.error);

@@ -12,6 +12,7 @@
     "recipes:check": "node scripts/recipe-batch.cjs data/recipes/community-001.json && node scripts/recipe-batch.cjs data/recipes/comfort-002.json && node scripts/recipe-revisions.cjs data/recipes/comfort-revisions-001.json"
   },
   "dependencies": {
+    "decode-uri-component": "file:vendor/decode-uri-component",
     "@expo/vector-icons": "^15.0.3",
     "@react-native-async-storage/async-storage": "2.2.0",
     "@react-native-community/slider": "^5.0.1",
@@ -49,6 +50,6 @@
     "xcode": {
       "uuid": "11.1.1"
     },
-    "decode-uri-component": "file:./vendor/decode-uri-component"
+    "decode-uri-component": "$decode-uri-component"
   }
 }
