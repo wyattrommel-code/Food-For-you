@@ -1,5 +1,7 @@
 # Recipe photos without a paid photo API
 
+Latest full-library results and outstanding photo work are in [the 169-recipe audit](photo-audit-2026-09-12.md). The first-delivery notes and pending list below are historical; `data/recipes/photo-audit-2026-09-12.json` is the current complete checklist.
+
 The default is an owned photo or a visually reviewed photo whose license permits reuse. No script generates images or spends API credits. Twelve illustrations created earlier in this work are reused as saved files. Opening a recipe does not generate an image.
 
 ## Current review

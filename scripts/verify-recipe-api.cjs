@@ -6,7 +6,8 @@ const revisions = require('../data/recipes/comfort-revisions-001.json');
 const { validateBatch } = require('./recipe-batch.cjs');
 const photos = require('../data/recipes/photo-manifest.json');
 const { validateManifest, photoAfter } = require('./recipe-photos.cjs');
-const reviewedPhotos = validateManifest(photos);
+const repairs = require('../data/recipes/photo-repairs-002.json');
+const reviewedPhotos = [...new Map([...validateManifest(photos), ...validateManifest(repairs)].map(e => [e.id, e])).values()];
 const env = {};
 for (const line of fs.readFileSync('.env', 'utf8').split(/\r?\n/)) {
   const match = line.match(/^(EXPO_PUBLIC_SUPABASE_(?:URL|ANON_KEY))=(.*)$/);
@@ -45,6 +46,12 @@ async function get(query) {
     const { created_at, ...expected } = photoAfter(photo);
     for (const field of Object.keys(expected)) assert.deepEqual(actual[field], expected[field], photo.title + ': ' + field);
   }
+  const audit = require('../data/recipes/photo-audit-2026-09-12.json');
+  assert.deepEqual(catalog.map(r => r.id).sort(), audit.entries.map(r => r.id).sort(), 'Shared catalog changed since full photo audit');
+  for (const reviewed of audit.entries) {
+    const actual = catalog.find(r => r.id === reviewed.id);
+    assert.equal(actual.image_url, reviewed.final_image_url, reviewed.title + ': full-audit photo URL');
+  }
   assert.deepEqual(await get('recipes?select=id&is_user_created=eq.true'), [], 'Anonymous clients must not see private recipes');
-  console.log(`Public API verified ${expectedRows.length} reviewed recipes and revisions plus ${reviewedPhotos.length} photo overlays; private recipe access returned zero rows.`);
+  console.log(`Public API verified ${expectedRows.length} reviewed recipes and revisions plus ${reviewedPhotos.length} photo overlays and ${audit.entries.length} audited image assignments; private recipe access returned zero rows.`);
 })().catch(error => { console.error(error.message); process.exitCode = 1; });
