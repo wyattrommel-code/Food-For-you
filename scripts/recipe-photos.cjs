@@ -11,6 +11,35 @@ function httpsUrl(value) {
 function photoAfter(entry) {
   return { ...entry.before, image_url: entry.image.url, description: entry.image.credit ? entry.before.description.trimEnd() + '\n\n' + entry.image.credit : entry.before.description };
 }
+function validateImageAsset(image) {
+    assert.match(image.file, /^assets\/recipe-photos\/[a-z0-9-]+-[a-f0-9]{12}\.jpg$/);
+    assert.equal(image.url, origin + image.file);
+    assert.match(image.sha256, /^[a-f0-9]{64}$/);
+    assert.ok(image.file.endsWith('-' + image.sha256.slice(0,12) + '.jpg'));
+    assert.ok(Number.isInteger(image.bytes) && image.bytes > 0 && image.bytes <= 300000, 'Photo must be at most 300 KB');
+    for (const dimension of ['width', 'height']) assert.ok(Number.isInteger(image[dimension]) && image[dimension] > 0 && image[dimension] <= 900);
+    assert.ok(image.credit && image.creator, 'Visible credit and creator required');
+    assert.ok(['generated', 'licensed-photo', 'owned-photo', 'existing-library-image'].includes(image.kind));
+    if (image.kind === 'generated') {
+      assert.ok(image.prompt?.trim()); assert.match(image.credit, /AI-generated/);
+    } else if (image.kind === 'licensed-photo') {
+      assert.ok(['CC0', 'CC BY 2.0', 'CC BY 3.0', 'CC BY 4.0', 'CC BY-SA 2.0', 'CC BY-SA 3.0', 'CC BY-SA 4.0', 'Pexels License', 'Unsplash License'].includes(image.license), 'Review the reuse license');
+      httpsUrl(image.source_url); httpsUrl(image.license_url);
+      assert.ok(image.credit.includes(image.creator) && image.credit.includes(image.source_url) && image.credit.includes(image.license_url) && image.credit.includes(image.changes), 'Attribution and changes must be visible in the recipe');
+    } else if (image.kind === 'existing-library-image') {
+      assert.match(image.storage_object, /^[a-z0-9_/.-]+\.jpg$/);
+      assert.ok(!image.storage_object.includes('..'));
+      assert.equal(image.source_url, 'https://yhfqlvblqlpacjdkltfi.supabase.co/storage/v1/object/public/meal-photos/' + image.storage_object);
+      assert.ok(image.provenance_note?.trim(), 'Record the existing library origin without inventing a license');
+    } else assert.ok(image.permission?.trim(), 'Record ownership or creator permission');
+  return image;
+}
+function validateImageFile(image, root) {
+  validateImageAsset(image);
+  const bytes = fs.readFileSync(path.join(root, image.file));
+  assert.equal(bytes.length, image.bytes); assert.equal(digest(bytes), image.sha256);
+  assert.ok(bytes[0] === 255 && bytes[1] === 216 && bytes[2] === 255, 'JPEG required');
+}
 function validateManifest(manifest) {
   assert.equal(manifest.schema_version, 1);
   assert.ok(Array.isArray(manifest.entries) && manifest.entries.length);
@@ -30,26 +59,7 @@ function validateManifest(manifest) {
       continue;
     }
     assert.equal(e.review.status, 'visually-reviewed');
-    assert.match(e.image.file, /^assets\/recipe-photos\/[a-z0-9-]+-[a-f0-9]{12}\.jpg$/);
-    assert.equal(e.image.url, origin + e.image.file);
-    assert.match(e.image.sha256, /^[a-f0-9]{64}$/);
-    assert.ok(e.image.file.endsWith('-' + e.image.sha256.slice(0,12) + '.jpg'));
-    assert.ok(Number.isInteger(e.image.bytes) && e.image.bytes > 0 && e.image.bytes <= 300000, 'Photo must be at most 300 KB');
-    for (const dimension of ['width', 'height']) assert.ok(Number.isInteger(e.image[dimension]) && e.image[dimension] > 0 && e.image[dimension] <= 900);
-    assert.ok(e.image.credit && e.image.creator, 'Visible credit and creator required');
-    assert.ok(['generated', 'licensed-photo', 'owned-photo', 'existing-library-image'].includes(e.image.kind));
-    if (e.image.kind === 'generated') {
-      assert.ok(e.image.prompt?.trim()); assert.match(e.image.credit, /AI-generated/);
-    } else if (e.image.kind === 'licensed-photo') {
-      assert.ok(['CC0', 'CC BY 2.0', 'CC BY 3.0', 'CC BY 4.0', 'CC BY-SA 2.0', 'CC BY-SA 3.0', 'CC BY-SA 4.0', 'Pexels License', 'Unsplash License'].includes(e.image.license), 'Review the reuse license');
-      httpsUrl(e.image.source_url); httpsUrl(e.image.license_url);
-      assert.ok(e.image.credit.includes(e.image.creator) && e.image.credit.includes(e.image.source_url) && e.image.credit.includes(e.image.license_url) && e.image.credit.includes(e.image.changes), 'Attribution and changes must be visible in the recipe');
-    } else if (e.image.kind === 'existing-library-image') {
-      assert.match(e.image.storage_object, /^[a-z0-9_/.-]+\.jpg$/);
-      assert.ok(!e.image.storage_object.includes('..'));
-      assert.equal(e.image.source_url, 'https://yhfqlvblqlpacjdkltfi.supabase.co/storage/v1/object/public/meal-photos/' + e.image.storage_object);
-      assert.ok(e.image.provenance_note?.trim(), 'Record the existing library origin without inventing a license');
-    } else assert.ok(e.image.permission?.trim(), 'Record ownership or creator permission');
+    validateImageAsset(e.image);
   }
   return manifest.entries;
 }
@@ -89,4 +99,4 @@ if (require.main === module) {
   if (process.argv.includes('--verify-remote')) verifyRemote(manifest).then(()=>console.log(`Verified ${published} published JPEGs and hashes.`)).catch(e=>{ console.error(e.message);process.exitCode=1; });
   else console.log(`Validated ${manifest.entries.length} reviewed photo changes (${published} images). No network calls or database writes.`);
 }
-module.exports = { validateManifest, validateFiles, photoAfter, importSql, verifyRemote };
+module.exports = { validateImageAsset, validateImageFile, validateManifest, validateFiles, photoAfter, importSql, verifyRemote };

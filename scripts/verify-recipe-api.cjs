@@ -1,7 +1,7 @@
 // Read-only smoke check using the app's public key. Never prints credentials.
 const fs = require('node:fs');
 const assert = require('node:assert/strict');
-const batches = ['community-001', 'comfort-002'].map(name => require('../data/recipes/' + name + '.json'));
+const batches = ['community-001', 'comfort-002', 'easy-050'].map(name => require('../data/recipes/' + name + '.json'));
 const revisions = require('../data/recipes/comfort-revisions-001.json');
 const { validateBatch } = require('./recipe-batch.cjs');
 const photos = require('../data/recipes/photo-manifest.json');
@@ -48,11 +48,14 @@ async function get(query) {
     for (const field of Object.keys(expected)) assert.deepEqual(actual[field], expected[field], photo.title + ': ' + field);
   }
   const audit = require('../data/recipes/photo-audit-2026-09-12.json');
-  assert.deepEqual(catalog.map(r => r.id).sort(), audit.entries.map(r => r.id).sort(), 'Shared catalog changed since full photo audit');
+  const newBatch = batches.find(b => b.batch_id === 'easy-050');
+  const reviewedTitles = [...audit.entries.map(r => r.title), ...newBatch.recipes.map(r => r.title)];
+  assert.deepEqual(catalog.map(r => r.title).sort(), reviewedTitles.sort(), 'Shared catalog differs from reviewed recipes');
+  assert.ok(catalog.every(r => r.image_url?.trim()), 'Every shared recipe must have a photo');
   for (const reviewed of audit.entries) {
     const actual = catalog.find(r => r.id === reviewed.id);
     assert.equal(actual.image_url, reviewed.final_image_url, reviewed.title + ': full-audit photo URL');
   }
   assert.deepEqual(await get('recipes?select=id&is_user_created=eq.true'), [], 'Anonymous clients must not see private recipes');
-  console.log(`Public API verified ${expectedRows.length} reviewed recipes and revisions plus ${reviewedPhotos.length} photo overlays and ${audit.entries.length} audited image assignments; private recipe access returned zero rows.`);
+  console.log(`Public API verified ${expectedRows.length} reviewed recipes and revisions plus ${reviewedPhotos.length} photo overlays and ${audit.entries.length} audited image assignments (${catalog.length} shared recipes, zero missing photos); private recipe access returned zero rows.`);
 })().catch(error => { console.error(error.message); process.exitCode = 1; });

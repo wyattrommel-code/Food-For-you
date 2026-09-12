@@ -2,6 +2,8 @@ const fs = require('node:fs');
 const path = require('node:path');
 const assert = require('node:assert/strict');
 
+const { validateImageAsset, validateImageFile } = require('./recipe-photos.cjs');
+
 const columns = ['title', 'description', 'meal_time', 'prep_time_mins', 'effort_score',
   'servings', 'tags', 'image_url', 'ingredients_list', 'shopping_list', 'recipe_steps',
   'cuisine', 'user_id', 'is_user_created', 'source_url', 'source_name'];
@@ -15,6 +17,8 @@ function validateBatch(batch) {
   const kind = batch.batch_kind ?? 'quick';
   assert.ok(['quick', 'easy-comfort'].includes(kind), 'Unknown batch kind');
   const comfort = kind === 'easy-comfort';
+  assert.ok(batch.photo_policy === undefined || batch.photo_policy === 'reviewed-local-assets', 'Unknown photo policy');
+  const photoReady = batch.photo_policy === 'reviewed-local-assets';
   const titles = new Set();
   for (const row of batch.recipes) {
     for (const field of columns) assert.ok(Object.hasOwn(row, field), `${row.title}: missing ${field}`);
@@ -48,7 +52,14 @@ function validateBatch(batch) {
     assert.ok(row.recipe_steps.length >= 3 && row.recipe_steps.length <= 6, `${row.title}: review step count`);
     assert.ok(row.shopping_list.every(x => row.ingredients_list.includes(x)), `${row.title}: unexpected shopping item`);
     assert.deepEqual(row.shopping_list, row.ingredients_list.filter(x => !/\bwater$/.test(x)), `${row.title}: shopping items missing`);
-    assert.equal(row.image_url, '', 'Unverified images must remain blank');
+    if (photoReady) {
+      assert.equal(row.review?.photo_review?.status, 'visually-reviewed', row.title + ': photo review required');
+      assert.ok(row.review.photo_review.notes?.trim());
+      assert.match(row.review.photo_review.reviewed_on, /^\d{4}-\d{2}-\d{2}$/);
+      const image = validateImageAsset(row.review.photo);
+      assert.equal(row.image_url, image.url, row.title + ': photo URL mismatch');
+      assert.ok(row.description.includes(image.credit), row.title + ': visible photo credit required');
+    } else assert.equal(row.image_url, '', 'Unverified images must remain blank');
     assert.equal(row.user_id, null);
     assert.equal(row.is_user_created, false);
     const source = new URL(row.source_url);
@@ -84,6 +95,7 @@ if (require.main === module) {
   assert.ok(input, 'Usage: node scripts/recipe-batch.cjs data/recipes/community-001.json');
   const batch = JSON.parse(fs.readFileSync(input, 'utf8'));
   const rows = validateBatch(batch);
+  if (batch.photo_policy === 'reviewed-local-assets') for (const row of batch.recipes) validateImageFile(row.review.photo, path.resolve(__dirname, '..')); 
   assert.ok(rows.every(row => Object.values(row).flat().every(x => typeof x !== 'string' || !/[\r\n]/.test(x))), 'Use separate steps instead of embedded newlines');
   const stem = path.join(path.dirname(input), batch.batch_id);
   fs.writeFileSync(stem + '.csv', toCsv(rows));
