@@ -7,23 +7,55 @@ export function useSession() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Hydrate from the persisted session in AsyncStorage first so the
-    // splash screen can be hidden without waiting for a network round-trip.
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setLoading(false);
-    });
+    let mounted = true;
 
-    // Keep session in sync with any auth state changes (sign-in, sign-out,
-    // token refresh, etc.)
+    /**
+     * `getSession()` returns AsyncStorage immediately — often with an expired
+     * access_token. PostgREST then returns PGRST303 until refresh runs. We
+     * await a refresh (or sign out) before exposing the session to the app.
+     */
+    async function boot() {
+      try {
+        const {
+          data: { session: local },
+        } = await supabase.auth.getSession();
+        if (!mounted) return;
+
+        if (local?.refresh_token) {
+          const { data, error } = await supabase.auth.refreshSession();
+          if (!mounted) return;
+          if (error || !data.session) {
+            await supabase.auth.signOut();
+            setSession(null);
+          } else {
+            setSession(data.session);
+          }
+        } else {
+          setSession(local);
+        }
+      } catch {
+        if (mounted) setSession(null);
+      } finally {
+        if (mounted) setLoading(false);
+      }
+    }
+
+    void boot();
+
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
+    } = supabase.auth.onAuthStateChange((event, next) => {
+      if (!mounted) return;
+      // First load is handled by `boot()` so we never apply a stale INITIAL_SESSION.
+      if (event === 'INITIAL_SESSION') return;
+      setSession(next);
       setLoading(false);
     });
 
-    return () => subscription.unsubscribe();
+    return () => {
+      mounted = false;
+      subscription.unsubscribe();
+    };
   }, []);
 
   return {

@@ -27,10 +27,19 @@ export interface DbUserFavorite {
   created_at: string;
 }
 
-export type MealTime = 'breakfast' | 'lunch' | 'dinner' | 'snack';
+export type MealTime = 'breakfast' | 'lunch' | 'dinner' | 'snack' | 'dessert' | 'sides';
 
 /** effort_score: 1 = very easy → 5 = weekend project */
 export type EffortScore = 1 | 2 | 3 | 4 | 5;
+
+/** Optional cooking-step photo; step_number is 1-based (matches step list order). */
+export interface DbStepImage {
+  id: string;
+  recipe_id: string;
+  step_number: number;
+  image_url: string;
+  created_at: string;
+}
 
 export interface DbRecipe {
   id: string;
@@ -39,7 +48,7 @@ export interface DbRecipe {
   meal_time: MealTime[];
   prep_time_mins: number;
   effort_score: EffortScore;
-  is_recipe_of_the_day: boolean;
+  servings: number | null;
   tags: string[];
   image_url: string;
   ingredients_list: string[];
@@ -47,6 +56,10 @@ export interface DbRecipe {
   recipe_steps: string[];
   cuisine: string | null;
   created_by: string | null;
+  /** Present after user-recipes migration; matches auth user when is_user_created */
+  user_id?: string | null;
+  /** When true, recipe is private to user_id and excluded from catalog queries in the app */
+  is_user_created?: boolean;
   created_at: string;
 }
 
@@ -55,6 +68,8 @@ export interface DbRecipe {
 /** Recipe enriched with whether the current user has favorited it */
 export interface Recipe extends DbRecipe {
   is_favorited: boolean;
+  /** Ephemeral affinity weight from useRecipes (not from DB) */
+  _score?: number;
 }
 
 /** Full preferences object — front-end facing */
@@ -108,8 +123,12 @@ const SHELLFISH_TRIGGERS = [
   'mussel', 'prawn', 'crayfish', 'crawfish',
 ];
 
+const SEAFOOD_TRIGGERS = [...SHELLFISH_TRIGGERS, 'fish', 'salmon', 'tuna',
+  'cod', 'tilapia', 'anchovy', 'sardine', 'mahi', 'bass', 'trout', 'halibut',
+  'snapper', 'catfish', 'squid', 'octopus', 'herring', 'mackerel'];
+
 const EGG_TRIGGERS = [
-  'egg', 'yolk', 'egg white', 'meringue', 'mayonnaise', 'aioli',
+  'egg', 'yolk', 'egg white', 'meringue', 'mayonnaise', 'mayo', 'aioli',
 ];
 
 /**
@@ -119,8 +138,8 @@ const EGG_TRIGGERS = [
  * trigger keywords.  Multiple alias keys point to the same trigger array
  * so that "gluten free", "gluten-free", and "celiac" all expand identically.
  *
- * Keys and values are lowercase.  Matching is done via String.includes()
- * so "macaroni" triggers the "pasta" check even though it doesn't say "pasta".
+ * Keys and values are lowercase. Matching uses complete words and plurals.
+ * Category aliases expand into the ingredient terms listed below.
  */
 export const ALLERGY_MAP: Record<string, string[]> = {
   // ── Gluten — all common user phrasings ───────────────────────
@@ -160,8 +179,8 @@ export const ALLERGY_MAP: Record<string, string[]> = {
   // ── Meat ──────────────────────────────────────────────────────
   meat:             MEAT_TRIGGERS,
   'no meat':        MEAT_TRIGGERS,
-  vegetarian:       MEAT_TRIGGERS,
-  vegan:            [...MEAT_TRIGGERS, ...DAIRY_TRIGGERS, ...EGG_TRIGGERS],
+  vegetarian:       [...MEAT_TRIGGERS, ...SEAFOOD_TRIGGERS, 'gelatin'],
+  vegan:            [...MEAT_TRIGGERS, ...SEAFOOD_TRIGGERS, ...DAIRY_TRIGGERS, ...EGG_TRIGGERS, 'honey', 'gelatin'],
   pork:             ['pork', 'bacon', 'ham', 'prosciutto', 'salami', 'chorizo',
                      'sausage', 'pepperoni', 'lard', 'pancetta'],
   beef:             ['beef', 'steak', 'brisket', 'ground beef', 'patty',
@@ -205,88 +224,46 @@ const ALLERGY_KEYS_DESC = Object.keys(ALLERGY_MAP).sort(
   (a, b) => b.length - a.length
 );
 
-/**
- * Expands a single user-entered dislike string into every ingredient
- * keyword that should trigger a ban.
- *
- * Resolution order (stops at the first match):
- *  1. Exact key  — "gluten" → ALLERGY_MAP["gluten"]
- *  2. Key-in-term scan (longest key first) —
- *     "gluten free" contains key "gluten" → ALLERGY_MAP["gluten"]
- *     "no dairy"    contains key "dairy"  → ALLERGY_MAP["dairy"]
- *  3. No match — return [term] so the raw word still bans exact ingredient
- *     occurrences (e.g. disliking "salmon" still hides "Smoked Salmon Fillet").
- *
- * Input is always trimmed and lowercased before any comparison.
- */
+/** Match complete words and common plurals, never egg inside eggplant. */
+function containsIngredient(text: string, term: string): boolean {
+  const normalize = (value: string) => value.toLowerCase().replace(/[-_]/g, ' ').trim();
+  const words = normalize(term).split(/\s+/).filter(Boolean);
+  if (!words.length) return false;
+  const escaped = words.map((word) => word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+  const last = escaped.pop()!;
+  const ending = last.endsWith('y') ? last.slice(0, -1) + '(?:y|ies)' : last + '(?:s|es)?';
+  return new RegExp('(?:^|[^a-z])' + [...escaped, ending].join('\\s+') + '(?=$|[^a-z])', 'i').test(normalize(text));
+}
+
 function expandDislike(raw: string): string[] {
   const term = raw.trim().toLowerCase();
-
-  // 1. Exact dictionary key
+  if (!term) return [];
   const exact = ALLERGY_MAP[term];
-  if (exact) return [term, ...exact];
-
-  // 2. Longest-key-first substring scan
-  //    Finds the most specific key embedded in the user's phrase,
-  //    e.g. "gluten-free diet" → matched by key "gluten-free" → GLUTEN_TRIGGERS
-  for (const key of ALLERGY_KEYS_DESC) {
-    if (term.includes(key)) {
-      return [term, ...ALLERGY_MAP[key]];
-    }
-  }
-
-  // 3. Literal fallback — the word itself is still useful as a substring
-  return [term];
+  if (exact) return exact;
+  // Expand dietary phrases only. A specific food such as peanut butter must
+  // not become a ban on all dairy just because its name contains butter.
+  const key = ALLERGY_KEYS_DESC.find((key) =>
+    ['no ' + key, key + ' allergy', key + ' intolerance', key + ' diet'].includes(term)
+  );
+  return key ? ALLERGY_MAP[key] : [term];
 }
 
-/**
- * Returns true if the recipe must be HIDDEN based on a user's dislikes.
- *
- * Matching rules (all case-insensitive, substring):
- *  1. Cuisine ban     — recipe.cuisine contains any disliked_cuisine.
- *  2. Direct ban      — any ingredient text contains the raw dislike word.
- *  3. Category ban    — dislike maps to ALLERGY_MAP; all trigger keywords
- *                       are checked against every ingredient entry.
- *
- * Examples of what now works:
- *   "gluten"       → hides Hamburger Bun, All-Purpose Flour, Macaroni, Spaghetti
- *   "gluten free"  → same as "gluten" (fuzzy scan finds the key)
- *   "gluten-free"  → same
- *   "celiac"       → same (explicit alias key)
- *   "dairy"        → hides Parmesan, Heavy Cream, Cheddar, Ghee
- *   "dairy-free"   → same (fuzzy scan finds "dairy")
- *   "shellfish"    → hides Shrimp, Lobster Tail, Scallops
- *   "salmon"       → hides "Smoked Salmon Fillet" (literal substring)
- */
-export function isRecipeBanned(
-  recipe: DbRecipe,
-  prefs: UserPreferences
-): boolean {
-  // ── 1. Cuisine ban ────────────────────────────────────────────
-  if (recipe.cuisine) {
-    const cuisineLower = recipe.cuisine.toLowerCase();
-    if (
-      prefs.disliked_cuisines.some((c) =>
-        cuisineLower.includes(c.trim().toLowerCase())
-      )
-    ) {
-      return true;
+export function isRecipeBanned(recipe: DbRecipe, prefs: UserPreferences): boolean {
+  if (recipe.cuisine && prefs.disliked_cuisines.some((c) =>
+    containsIngredient(recipe.cuisine!, c))) return true;
+  const terms = prefs.disliked_ingredients.flatMap(expandDislike);
+  return recipe.ingredients_list.some((ingredient) => terms.some((term) => {
+    let text = ingredient;
+    // Remove only named substitutes, leaving any additional dairy in the line.
+    if (['milk', 'cream', 'butter', 'cheese', 'yogurt'].includes(term)) {
+      text = text.replace(/\b(?:almond|oat|soy|soya|coconut|rice|cashew|hemp)\s+(?:milk|cream|yogurt)\b/gi, ' ')
+        .replace(/\b(?:peanut|almond|cashew|sunflower)\s+butter\b/gi, ' ');
     }
-  }
-
-  if (prefs.disliked_ingredients.length === 0) return false;
-
-  // ── 2 & 3. Ingredient ban with category expansion ─────────────
-  // Build the full term list once per isRecipeBanned call (not per ingredient).
-  // Each user dislike expands to itself + all mapped trigger keywords.
-  // Using a flat array is faster than nested Sets for the small set sizes here.
-  const allTerms = prefs.disliked_ingredients.flatMap(expandDislike);
-
-  return recipe.ingredients_list.some((ing) => {
-    const ingLower = ing.trim().toLowerCase();
-    return allTerms.some((term) => ingLower.includes(term));
-  });
+    return containsIngredient(text, term);
+  }));
 }
+
+
 
 /**
  * Returns a 0–N affinity score for a recipe based on a user's likes.
@@ -306,7 +283,7 @@ export function recipeAffinityScore(
   // Cuisine match is a strong signal
   if (
     recipe.cuisine &&
-    likedCuisines.some((c) => recipe.cuisine!.toLowerCase().includes(c))
+    likedCuisines.some((c) => containsIngredient(recipe.cuisine!, c))
   ) {
     score += 3;
   }
@@ -314,7 +291,7 @@ export function recipeAffinityScore(
   // Each ingredient that contains a liked term adds a point
   recipe.ingredients_list.forEach((ing) => {
     const ingLower = ing.toLowerCase();
-    if (likedIngredients.some((liked) => ingLower.includes(liked))) score += 1;
+    if (likedIngredients.some((liked) => containsIngredient(ingLower, liked))) score += 1;
   });
 
   // Tags shared with favorites boost score significantly
@@ -339,6 +316,44 @@ export function getMealTimeForHour(hour: number): MealTime {
   if (hour >= 5 && hour < 11) return 'breakfast';
   if (hour >= 11 && hour < 17) return 'lunch';
   return 'dinner';
+}
+
+/**
+ * Preferred `meal_time` tags for quick-pick buttons (I'm Hungry / Pick For Me).
+ * Returns `null` during late night — caller should use the full recipe pool.
+ *
+ * Windows: 5:00–10:59, 11:00–14:59, 15:00–16:59, 17:00–21:59, else no filter.
+ */
+export function getPreferredMealTimesForHour(hour: number): MealTime[] | null {
+  if (hour >= 22 || hour < 5) return null;
+  if (hour >= 5 && hour < 11) return ['breakfast', 'snack'];
+  if (hour >= 11 && hour < 15) return ['lunch', 'snack', 'sides'];
+  if (hour >= 15 && hour < 17) return ['snack', 'dessert'];
+  if (hour >= 17 && hour < 22) return ['dinner', 'sides', 'lunch'];
+  return null;
+}
+
+/**
+ * Prefer recipes whose `meal_time` overlaps the current window.
+ * If fewer than `minCount` matches, returns a copy of the full list (never empty
+ * when `recipes` is non-empty).
+ */
+export function applyMealTimePreferencePool<T extends { meal_time: MealTime[] }>(
+  recipes: T[],
+  hour: number,
+  minCount = 5
+): T[] {
+  if (recipes.length === 0) return [];
+  const preferred = getPreferredMealTimesForHour(hour);
+  if (preferred === null) return [...recipes];
+
+  const filtered = recipes.filter(
+    (r) =>
+      Array.isArray(r.meal_time) &&
+      r.meal_time.some((mt) => preferred.includes(mt))
+  );
+
+  return filtered.length >= minCount ? filtered : [...recipes];
 }
 
 export const MEAL_TIME_META: Record<
@@ -369,6 +384,18 @@ export const MEAL_TIME_META: Record<
     emoji: "✨",
     color: "#10B981",
   },
+  dessert: {
+    label: "Dessert",
+    greeting: "Time for something sweet!",
+    emoji: "🍰",
+    color: "#EC4899",
+  },
+  sides: {
+    label: "Sides",
+    greeting: "What's on the side?",
+    emoji: "🥗",
+    color: "#06B6D4",
+  },
 };
 
 export const EFFORT_LABELS: Record<EffortScore, string> = {
@@ -390,4 +417,28 @@ export function effortSpoons(score: EffortScore | number): string {
   if (score <= 1) return '🥄';
   if (score <= 3) return '🥄🥄';
   return '🥄🥄🥄';
+}
+
+/**
+ * Maps effort_score to a 3-level human-readable difficulty label.
+ *   1   → "Quick"
+ *   2   → "Moderate"
+ *   ≥3  → "Challenge"
+ */
+export function difficultyLabel(score: EffortScore | number): string {
+  if (score <= 1) return 'Quick';
+  if (score <= 2) return 'Moderate';
+  return 'Challenge';
+}
+
+/**
+ * Returns one 🥄 emoji per serving, capped at 6.
+ * Appends '+' when servings > 6.
+ * Defaults to 2 servings when value is null / undefined.
+ */
+export function servingSpoons(servings: number | null | undefined): string {
+  const n      = servings ?? 2;
+  const capped = Math.min(n, 6);
+  const spoons = '🥄'.repeat(capped);
+  return n > 6 ? spoons + '+' : spoons;
 }

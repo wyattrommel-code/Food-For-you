@@ -12,7 +12,7 @@ import {
   TextInput as RNTextInput,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { router } from 'expo-router';
+import { router, type Href } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
 import { supabase } from '@/lib/supabase';
@@ -67,6 +67,9 @@ export default function LoginScreen() {
         const { error } = await supabase.auth.signUp({
           email:    trimmedEmail,
           password: trimmedPassword,
+          options: {
+            emailRedirectTo: 'foodforyou://auth/callback',
+          },
         });
         if (error) throw error;
         setSuccessMessage(
@@ -102,10 +105,10 @@ export default function LoginScreen() {
           {/* ── Branding ─────────────────────────────────── */}
           <View style={styles.brandRow}>
             <View style={styles.logoMark}>
-              <Text style={styles.logoMarkText}>F</Text>
+              <Text style={styles.logoMarkText}>M</Text>
             </View>
           </View>
-          <Text style={styles.appName}>Food For You</Text>
+          <Text style={styles.appName}>Mealsolved</Text>
           <Text style={styles.tagline}>Recipes that match your taste.</Text>
 
           {/* ── Card ────────────────────────────────────── */}
@@ -200,6 +203,17 @@ export default function LoginScreen() {
                 </Pressable>
               </View>
             </View>
+
+            {mode === 'login' && (
+              <Pressable
+                style={styles.forgotRow}
+                onPress={() => router.push('/forgot-password' as Href)}
+                disabled={loading}
+                hitSlop={8}
+              >
+                <Text style={styles.forgotLink}>Forgot your password?</Text>
+              </Pressable>
+            )}
 
             {/* ── Submit ──────────────────────────────── */}
             <Pressable
@@ -345,6 +359,15 @@ function makeStyles(Colors: AppColors) {
     },
 
     // ── Fields ────────────────────────────────────
+    forgotRow: {
+      alignSelf: 'flex-end',
+      marginBottom: 4,
+    },
+    forgotLink: {
+      color: Colors.accent,
+      fontSize: 13,
+      fontWeight: '700',
+    },
     fieldGroup: {
       marginBottom: 16,
     },

@@ -1,39 +1,58 @@
 import React, { useCallback } from 'react';
-import {
-  View,
-  Text,
-  Image,
-  Pressable,
-  StyleSheet,
-  Dimensions,
-} from 'react-native';
+import { View, Text, Image, Pressable, StyleSheet, useWindowDimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 import { useRouter } from 'expo-router';
 import { useTheme } from '@/context/ThemeContext';
-import { Recipe, effortSpoons } from '@/lib/types';
+import { Recipe, difficultyLabel } from '@/lib/types';
+import { recipeImageUri } from '@/lib/recipeImageUri';
+import { RecipeImagePlaceholder } from '@/components/RecipeImagePlaceholder';
+import { TABLET_BREAKPOINT } from '@/hooks/useIsTablet';
 
-const { width: SCREEN_W } = Dimensions.get('window');
+/** Default horizontal carousel card width — phone / tablet per layout spec. */
+export const CAROUSEL_CARD_WIDTH_PHONE  = 160;
+export const CAROUSEL_CARD_WIDTH_TABLET = 220;
 
-// ─── Carousel card (used in horizontal lists) ────────────────
-export const CARD_WIDTH = SCREEN_W * 0.72;
-export const CARD_HEIGHT = CARD_WIDTH * 1.18;
+/** @deprecated Use {@link CAROUSEL_CARD_WIDTH_PHONE} + explicit sizing from `useWindowDimensions`. */
+export const CARD_WIDTH  = CAROUSEL_CARD_WIDTH_PHONE;
+export const CARD_HEIGHT = CAROUSEL_CARD_WIDTH_PHONE * 1.18;
 
 interface RecipeCardProps {
   recipe: Recipe;
   onFavoriteToggle?: (id: string) => void;
   style?: object;
+  /** Fixed carousel width (e.g. 160 phone / 220 tablet). Defaults from window width. */
+  carouselWidth?: number;
+  /** Optional badge (e.g. pantry "Missing N ingredients"). */
+  badgeText?: string;
+  /** If set, called instead of default `/recipe/[id]` navigation. */
+  onNavigate?: (recipe: Recipe) => void;
 }
 
-export function RecipeCard({ recipe, onFavoriteToggle, style }: RecipeCardProps) {
+export function RecipeCard({
+  recipe,
+  onFavoriteToggle,
+  style,
+  carouselWidth,
+  badgeText,
+  onNavigate,
+}: RecipeCardProps) {
   const router     = useRouter();
   const { Colors } = useTheme();
+  const { width: winW } = useWindowDimensions();
+  const w =
+    carouselWidth ??
+    (winW >= TABLET_BREAKPOINT ? CAROUSEL_CARD_WIDTH_TABLET : CAROUSEL_CARD_WIDTH_PHONE);
+  const h = w * 1.18;
+  const imageUri = recipeImageUri(recipe.image_url);
+  const placeholderIcon = Math.max(28, Math.min(52, Math.round(w * 0.26)));
 
   const handlePress = useCallback(() => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    router.push(`/recipe/${recipe.id}`);
-  }, [recipe.id, router]);
+    if (onNavigate) onNavigate(recipe);
+    else router.push(`/recipe/${recipe.id}`);
+  }, [recipe, router, onNavigate]);
 
   const handleFav = useCallback(
     (e: { stopPropagation: () => void }) => {
@@ -46,15 +65,19 @@ export function RecipeCard({ recipe, onFavoriteToggle, style }: RecipeCardProps)
 
   return (
     <Pressable
-      style={[styles.card, { backgroundColor: Colors.surface }, style]}
+      style={[
+        styles.card,
+        { width: w, height: h, backgroundColor: Colors.surface },
+        style,
+      ]}
       onPress={handlePress}
       android_ripple={{ color: 'rgba(255,255,255,0.05)' }}
     >
-      <Image
-        source={{ uri: recipe.image_url }}
-        style={styles.image}
-        resizeMode="cover"
-      />
+      {imageUri ? (
+        <Image source={{ uri: imageUri }} style={styles.image} resizeMode="cover" />
+      ) : (
+        <RecipeImagePlaceholder style={styles.image} iconSize={placeholderIcon} />
+      )}
 
       {/* Bottom gradient overlay */}
       <LinearGradient
@@ -75,7 +98,6 @@ export function RecipeCard({ recipe, onFavoriteToggle, style }: RecipeCardProps)
 
       {/* Text content */}
       <View style={styles.textContainer}>
-        {/* Tags row */}
         <View style={styles.tagsRow}>
           {recipe.tags.slice(0, 2).map((tag) => (
             <View key={tag} style={styles.tag}>
@@ -83,6 +105,19 @@ export function RecipeCard({ recipe, onFavoriteToggle, style }: RecipeCardProps)
             </View>
           ))}
         </View>
+
+        {badgeText ? (
+          <View
+            style={[
+              styles.matchBadge,
+              { borderColor: Colors.accent, backgroundColor: '#FFFFFF' },
+            ]}
+          >
+            <Text style={styles.matchBadgeText} numberOfLines={1}>
+              {badgeText}
+            </Text>
+          </View>
+        ) : null}
 
         <Text style={styles.title} numberOfLines={2}>
           {recipe.title}
@@ -94,17 +129,20 @@ export function RecipeCard({ recipe, onFavoriteToggle, style }: RecipeCardProps)
             <Text style={styles.metaText}>{recipe.prep_time_mins} min</Text>
           </View>
           <View style={styles.metaDot} />
+          <View style={styles.diffBadge}>
+            <Text style={styles.diffBadgeText}>
+              {difficultyLabel(recipe.effort_score)}
+            </Text>
+          </View>
+          <View style={styles.metaDot} />
           <Text style={styles.metaText}>
-            {effortSpoons(recipe.effort_score)}
+            {`${recipe.servings ?? 2} Servings`}
           </Text>
         </View>
       </View>
     </Pressable>
   );
 }
-
-// ─── Hero card — full-width, used for Recipe of the Day ──────
-export const HERO_HEIGHT = SCREEN_W * 0.9;
 
 interface HeroCardProps {
   recipe: Recipe;
@@ -114,6 +152,14 @@ interface HeroCardProps {
 export function HeroCard({ recipe, onFavoriteToggle }: HeroCardProps) {
   const router     = useRouter();
   const { Colors } = useTheme();
+  const { width: winW } = useWindowDimensions();
+  const heroWidth  = Math.min(winW - 32, winW >= TABLET_BREAKPOINT ? 560 : winW - 32);
+  const heroHeight = heroWidth * 0.9;
+  const imageUri = recipeImageUri(recipe.image_url);
+  const placeholderIcon = Math.max(
+    48,
+    Math.min(80, Math.round(Math.min(heroWidth, heroHeight) * 0.14))
+  );
 
   const handlePress = useCallback(() => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -130,12 +176,22 @@ export function HeroCard({ recipe, onFavoriteToggle }: HeroCardProps) {
   );
 
   return (
-    <Pressable style={[styles.hero, { backgroundColor: Colors.surface }]} onPress={handlePress}>
-      <Image
-        source={{ uri: recipe.image_url }}
-        style={styles.heroImage}
-        resizeMode="cover"
-      />
+    <Pressable
+      style={[
+        styles.hero,
+        {
+          width: heroWidth,
+          height: heroHeight,
+          backgroundColor: Colors.surface,
+        },
+      ]}
+      onPress={handlePress}
+    >
+      {imageUri ? (
+        <Image source={{ uri: imageUri }} style={styles.heroImage} resizeMode="cover" />
+      ) : (
+        <RecipeImagePlaceholder style={styles.heroImage} iconSize={placeholderIcon} />
+      )}
 
       <LinearGradient
         colors={['rgba(0,0,0,0.1)', 'rgba(0,0,0,0.75)']}
@@ -143,11 +199,6 @@ export function HeroCard({ recipe, onFavoriteToggle }: HeroCardProps) {
         start={{ x: 0, y: 0 }}
         end={{ x: 0, y: 1 }}
       />
-
-      {/* ROTD badge */}
-      <View style={[styles.rotdBadge, { backgroundColor: Colors.accent }]}>
-        <Text style={styles.rotdBadgeText}>⭐ Recipe of the Day</Text>
-      </View>
 
       {/* Fav button */}
       <Pressable style={styles.heroFavBtn} onPress={handleFav} hitSlop={12}>
@@ -177,7 +228,13 @@ export function HeroCard({ recipe, onFavoriteToggle }: HeroCardProps) {
             <Text style={styles.heroMetaText}>{recipe.prep_time_mins} min</Text>
           </View>
           <View style={styles.metaDot} />
-          <Text style={styles.heroMetaText}>{effortSpoons(recipe.effort_score)}</Text>
+          <View style={styles.diffBadge}>
+            <Text style={styles.diffBadgeText}>
+              {difficultyLabel(recipe.effort_score)}
+            </Text>
+          </View>
+          <View style={styles.metaDot} />
+          <Text style={styles.heroMetaText}>{`${recipe.servings ?? 2} Servings`}</Text>
           {recipe.cuisine ? (
             <>
               <View style={styles.metaDot} />
@@ -200,6 +257,7 @@ interface ChoiceCardProps {
 export function ChoiceCard({ recipe, index, onFavoriteToggle }: ChoiceCardProps) {
   const router     = useRouter();
   const { Colors } = useTheme();
+  const imageUri = recipeImageUri(recipe.image_url);
 
   const handlePress = useCallback(() => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -208,11 +266,11 @@ export function ChoiceCard({ recipe, index, onFavoriteToggle }: ChoiceCardProps)
 
   return (
     <Pressable style={[styles.choice, { backgroundColor: Colors.surface }]} onPress={handlePress}>
-      <Image
-        source={{ uri: recipe.image_url }}
-        style={styles.choiceImage}
-        resizeMode="cover"
-      />
+      {imageUri ? (
+        <Image source={{ uri: imageUri }} style={styles.choiceImage} resizeMode="cover" />
+      ) : (
+        <RecipeImagePlaceholder style={styles.choiceImage} iconSize={44} />
+      )}
       <LinearGradient
         colors={['transparent', 'rgba(0,0,0,0.88)']}
         style={StyleSheet.absoluteFillObject}
@@ -239,10 +297,8 @@ export function ChoiceCard({ recipe, index, onFavoriteToggle }: ChoiceCardProps)
 
 // ─── Styles ───────────────────────────────────────────────────
 const styles = StyleSheet.create({
-  // RecipeCard
+  // RecipeCard (width/height set per layout via inline styles)
   card: {
-    width: CARD_WIDTH,
-    height: CARD_HEIGHT,
     borderRadius: 20,
     overflow: 'hidden',
     marginRight: 14,
@@ -269,6 +325,21 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.45)',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  matchBadge: {
+    alignSelf: 'flex-start',
+    marginBottom: 6,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 999,
+    borderWidth: 1.5,
+    maxWidth: '100%',
+  },
+  matchBadgeText: {
+    color: '#111111',
+    fontSize: 9,
+    fontWeight: '800',
+    letterSpacing: 0.1,
   },
   textContainer: {
     position: 'absolute',
@@ -325,11 +396,21 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '500',
   },
+  diffBadge: {
+    backgroundColor: 'rgba(255,255,255,0.18)',
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 6,
+  },
+  diffBadgeText: {
+    color: '#fff',
+    fontSize: 10,
+    fontWeight: '700',
+    letterSpacing: 0.3,
+  },
 
-  // HeroCard
+  // HeroCard (width/height from useWindowDimensions)
   hero: {
-    width: SCREEN_W - 32,
-    height: HERO_HEIGHT,
     borderRadius: 24,
     overflow: 'hidden',
     alignSelf: 'center',
@@ -345,20 +426,6 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     height: '70%',
-  },
-  rotdBadge: {
-    position: 'absolute',
-    top: 18,
-    left: 18,
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 20,
-  },
-  rotdBadgeText: {
-    color: '#fff',
-    fontSize: 12,
-    fontWeight: '800',
-    letterSpacing: 0.3,
   },
   heroFavBtn: {
     position: 'absolute',

@@ -57,20 +57,16 @@ export function useRecipes(
 
   // ── Fetch all recipes from Supabase + favorites from AsyncStorage ──
   const fetchData = useCallback(async () => {
-    // ── DEBUG 1: env vars ────────────────────────────────────────
-    console.log('[useRecipes] EXPO_PUBLIC_SUPABASE_URL =', process.env.EXPO_PUBLIC_SUPABASE_URL ?? '(undefined)');
-    console.log('[useRecipes] EXPO_PUBLIC_SUPABASE_ANON_KEY present =', !!process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY);
-
     try {
       setLoading(true);
+      setError(null);
 
-      // ── DEBUG 2: about to fire query ─────────────────────────
-      console.log('[useRecipes] Firing supabase.from("recipes").select("*")...');
-
-      const recipesPromise = supabase
-        .from('recipes')
-        .select('*')
-        .order('created_at', { ascending: false });
+      const runQuery = () =>
+        supabase
+          .from('recipes')
+          .select('*')
+          .eq('is_user_created', false)
+          .order('created_at', { ascending: false });
 
       const favsPromise = favsKey
         ? AsyncStorage.getItem(favsKey).then((raw) =>
@@ -78,26 +74,32 @@ export function useRecipes(
           )
         : Promise.resolve([] as string[]);
 
-      const [recipesRes, favIds] = await Promise.all([
-        recipesPromise,
+      let [recipesRes, favIds] = await Promise.all([
+        runQuery(),
         favsPromise,
       ]);
 
-      // ── DEBUG 3: raw Supabase response ───────────────────────
-      console.log('[useRecipes] recipesRes.error =', JSON.stringify(recipesRes.error));
-      console.log('[useRecipes] recipesRes.status =', (recipesRes as any).status);
-      console.log('[useRecipes] recipesRes.data length =', recipesRes.data?.length ?? 'null');
-      console.log('[useRecipes] recipesRes.data (first item) =', JSON.stringify(recipesRes.data?.[0] ?? null));
+      // PGRST303 / JWT expired: refresh session once and retry (e.g. after app resume).
+      const msg = recipesRes.error?.message ?? '';
+      const code = (recipesRes.error as { code?: string } | null)?.code;
+      if (
+        recipesRes.error &&
+        (code === 'PGRST303' || msg.includes('JWT expired'))
+      ) {
+        const { data, error: refreshErr } = await supabase.auth.refreshSession();
+        if (!refreshErr && data.session) {
+          recipesRes = await runQuery();
+        } else {
+          await supabase.auth.signOut();
+          recipesRes = await runQuery();
+        }
+      }
 
       if (recipesRes.error) throw recipesRes.error;
 
       setAllRecipes(recipesRes.data ?? []);
       setFavoriteIds(new Set(favIds));
-
-      // ── DEBUG 4: what was stored in state ────────────────────
-      console.log('[useRecipes] allRecipes set — count:', recipesRes.data?.length ?? 0);
     } catch (err) {
-      console.error('[useRecipes] FETCH ERROR:', err);
       setError(err instanceof Error ? err.message : 'Failed to load recipes');
     } finally {
       setLoading(false);
@@ -119,35 +121,14 @@ export function useRecipes(
 
   // ── Filter: apply strict bans, then attach affinity score ────
   const visibleRecipes = useMemo((): Recipe[] => {
-    // ── DEBUG 5: filter pipeline ─────────────────────────────
-    console.log('[useRecipes] visibleRecipes memo — allRecipes.length:', allRecipes.length);
-    console.log('[useRecipes] preferences:', JSON.stringify(preferences));
-
-    const banned = allRecipes.filter((r) => isRecipeBanned(r, preferences));
-    console.log('[useRecipes] banned count:', banned.length, banned.map((r) => r.title));
-
-    const result = allRecipes
+    return allRecipes
       .filter((r) => !isRecipeBanned(r, preferences))
       .map((r) => ({
         ...r,
         is_favorited: favoriteIds.has(r.id),
         _score: recipeAffinityScore(r, preferences, favoriteTags),
       }));
-
-    console.log('[useRecipes] visibleRecipes.length:', result.length);
-    console.log('[useRecipes] ROTD candidate:', result.find((r) => r.is_recipe_of_the_day)?.title ?? 'none');
-    console.log('[useRecipes] dinner count:', result.filter((r) => r.meal_time.includes('dinner')).length);
-    console.log('[useRecipes] lunch count:', result.filter((r) => r.meal_time.includes('lunch')).length);
-    console.log('[useRecipes] breakfast count:', result.filter((r) => r.meal_time.includes('breakfast')).length);
-
-    return result;
   }, [allRecipes, preferences, favoriteIds, favoriteTags]);
-
-  // ── Recipe of the Day ────────────────────────────────────────
-  const recipeOfTheDay = useMemo(
-    () => visibleRecipes.find((r) => r.is_recipe_of_the_day) ?? null,
-    [visibleRecipes]
-  );
 
   // ── RNG: 3 weighted random recipes for a given meal time ─────
   const getRNGChoices = useCallback(
@@ -157,8 +138,10 @@ export function useRecipes(
       );
 
       // Sort by affinity score descending so the top picks dominate the pool
-      const scored = eligible
-        .map((r) => ({ ...r, _score: r._score ?? 0 }))
+      const scored = eligible.map((r) => ({
+        ...r,
+        _score: r._score ?? 0,
+      }))
         .sort((a, b) => b._score - a._score);
 
       return weightedSample(scored, 3);
@@ -166,14 +149,11 @@ export function useRecipes(
     [visibleRecipes]
   );
 
-  // ── Carousel: recipes for a meal time (excludes ROTD) ────────
+  // ── Carousel: recipes for a meal time ─────────────────────────
   const getCarouselRecipes = useCallback(
     (mealTime: MealTime): Recipe[] => {
       return visibleRecipes
-        .filter(
-          (r) =>
-            r.meal_time.includes(mealTime) && !r.is_recipe_of_the_day
-        )
+        .filter((r) => r.meal_time.includes(mealTime))
         .sort((a, b) => (b._score ?? 0) - (a._score ?? 0));
     },
     [visibleRecipes]
@@ -201,6 +181,11 @@ export function useRecipes(
     [favsKey, favoriteIds]
   );
 
+  const isFavorited = useCallback(
+    (recipeId: string) => favoriteIds.has(recipeId),
+    [favoriteIds]
+  );
+
   // ── Get single recipe by id (from local cache) ───────────────
   const getRecipeById = useCallback(
     (id: string): Recipe | null => {
@@ -212,11 +197,11 @@ export function useRecipes(
   return {
     loading,
     error,
-    recipeOfTheDay,
     visibleRecipes,
     getRNGChoices,
     getCarouselRecipes,
     toggleFavorite,
+    isFavorited,
     getRecipeById,
     refresh: fetchData,
   };

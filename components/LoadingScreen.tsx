@@ -20,6 +20,8 @@ export function LoadingScreen({ message = 'Loading...' }: LoadingScreenProps) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    width: '100%',
+    alignSelf: 'stretch',
     alignItems: 'center',
     justifyContent: 'center',
     gap: 16,

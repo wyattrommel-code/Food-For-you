@@ -22,6 +22,8 @@ export const DarkColors = {
   lunch:            '#EAB308',
   dinner:           '#8B5CF6',
   snack:            '#10B981',
+  dessert:          '#EC4899',
+  sides:            '#06B6D4',
   tagBg:            '#1f1f1f',
   tagText:          '#cccccc',
 } as const;
@@ -45,11 +47,13 @@ export const LightColors = {
   lunch:            '#CA8A04',
   dinner:           '#7C3AED',
   snack:            '#059669',
+  dessert:          '#DB2777',
+  sides:            '#0891B2',
   tagBg:            '#eeeeee',
   tagText:          '#333333',
 } as const;
 
-export type AppColors = typeof DarkColors;
+export type AppColors = { [K in keyof typeof DarkColors]: string };
 export type ColorKey  = keyof AppColors;
 
 // Kept for any static imports that don't need dynamic theming

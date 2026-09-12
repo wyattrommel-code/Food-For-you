@@ -3,46 +3,40 @@ import {
   View,
   Text,
   TextInput,
-  Image,
   ScrollView,
   Pressable,
   StyleSheet,
   KeyboardAvoidingView,
   Platform,
   ActivityIndicator,
-  Alert,
+  Animated,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
-import * as ImagePicker from 'expo-image-picker';
 
 import { supabase } from '@/lib/supabase';
 import { useTheme } from '@/context/ThemeContext';
 import type { AppColors } from '@/constants/Colors';
-import { useSession } from '@/hooks/useSession';
-import { MealTime, EffortScore } from '@/lib/types';
+import { MealTime, EffortScore, MEAL_TIME_META } from '@/lib/types';
 
-// ─── Constants ────────────────────────────────────────────────
+const SAVE_RED = '#FF3A2D';
 
-const MEAL_TIMES: { key: MealTime; label: string; emoji: string }[] = [
-  { key: 'breakfast', label: 'Breakfast', emoji: '🌅' },
-  { key: 'lunch',     label: 'Lunch',     emoji: '☀️' },
-  { key: 'dinner',    label: 'Dinner',    emoji: '🌙' },
-  { key: 'snack',     label: 'Snack',     emoji: '✨' },
+const MEAL_TIME_KEYS: MealTime[] = [
+  'breakfast',
+  'lunch',
+  'dinner',
+  'snack',
+  'dessert',
+  'sides',
 ];
 
 const DIFFICULTIES: { label: string; score: EffortScore; color: string }[] = [
-  { label: 'Easy',   score: 1, color: '#22C55E' },
-  { label: 'Medium', score: 3, color: '#F59E0B' },
-  { label: 'Hard',   score: 5, color: '#EF4444' },
+  { label: 'Quick', score: 1, color: '#22C55E' },
+  { label: 'Moderate', score: 2, color: '#F59E0B' },
+  { label: 'Challenge', score: 3, color: '#EF4444' },
 ];
-
-const FALLBACK_IMAGE =
-  'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&q=80';
-
-// ─── Sub-components ───────────────────────────────────────────
 
 function FormLabel({ children }: { children: string }) {
   const { Colors } = useTheme();
@@ -119,41 +113,44 @@ function AddButton({ label, onPress }: { label: string; onPress: () => void }) {
   );
 }
 
-// ─── Main Screen ──────────────────────────────────────────────
-
 export default function CreateScreen() {
   const { Colors } = useTheme();
   const styles = useMemo(() => makeStyles(Colors), [Colors]);
 
-  const { userId } = useSession();
-
-  const [title, setTitle]             = useState('');
+  const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [photoUri, setPhotoUri]       = useState<string | null>(null);
-  const [cuisine, setCuisine]         = useState('');
-  const [cookTime, setCookTime]       = useState('');
-
   const [selectedMealTimes, setSelectedMealTimes] = useState<Set<MealTime>>(new Set());
-  const [difficulty, setDifficulty]               = useState<EffortScore>(1);
-
+  const [prepTime, setPrepTime] = useState('');
+  const [servings, setServings] = useState('');
+  const [difficulty, setDifficulty] = useState<EffortScore>(1);
   const [ingredients, setIngredients] = useState<string[]>(['']);
-  const [steps, setSteps]             = useState<string[]>(['']);
-  const [submitting, setSubmitting]   = useState(false);
+  const [steps, setSteps] = useState<string[]>(['']);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
+  const toastOpacity = useRef(new Animated.Value(0)).current;
+  const [toastMounted, setToastMounted] = useState(false);
 
   const scrollRef = useRef<ScrollView>(null);
 
-  const handlePickPhoto = useCallback(async () => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: 'images',
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 0.85,
+  const showToast = useCallback(() => {
+    setToastMounted(true);
+    toastOpacity.setValue(0);
+    Animated.sequence([
+      Animated.timing(toastOpacity, {
+        toValue: 1,
+        duration: 180,
+        useNativeDriver: true,
+      }),
+      Animated.delay(1200),
+      Animated.timing(toastOpacity, {
+        toValue: 0,
+        duration: 220,
+        useNativeDriver: true,
+      }),
+    ]).start(({ finished }) => {
+      if (finished) setToastMounted(false);
     });
-    if (!result.canceled && result.assets.length > 0) {
-      setPhotoUri(result.assets[0].uri);
-    }
-  }, []);
+  }, [toastOpacity]);
 
   const toggleMealTime = useCallback((key: MealTime) => {
     Haptics.selectionAsync();
@@ -195,162 +192,153 @@ export default function CreateScreen() {
   }, []);
 
   const handleSubmit = useCallback(async () => {
-    if (!userId) {
-      Alert.alert('Not signed in', 'Please sign in to publish a recipe.');
+    setSubmitError('');
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+
+    const titleTrim = title.trim();
+    if (!titleTrim) {
+      setSubmitError('Please enter a recipe title.');
       return;
     }
 
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    const ingLines = ingredients.map((s) => s.trim()).filter(Boolean);
+    if (ingLines.length < 1) {
+      setSubmitError('Add at least one ingredient.');
+      return;
+    }
+
+    const stepLines = steps.map((s) => s.trim()).filter(Boolean);
+    if (stepLines.length < 1) {
+      setSubmitError('Add at least one step.');
+      return;
+    }
+
+    if (selectedMealTimes.size < 1) {
+      setSubmitError('Select at least one meal type.');
+      return;
+    }
+
+    const prepParsed = parseInt(prepTime.replace(/[^0-9]/g, ''), 10);
+    if (Number.isNaN(prepParsed) || prepParsed < 1) {
+      setSubmitError('Prep time must be at least 1 minute.');
+      return;
+    }
+
+    const servParsed = parseInt(servings.replace(/[^0-9]/g, ''), 10);
+    if (Number.isNaN(servParsed) || servParsed < 1) {
+      setSubmitError('Servings must be at least 1.');
+      return;
+    }
+
     setSubmitting(true);
 
-    const finalTitle     = title.trim() || 'Untitled Recipe';
-    const finalImage     = photoUri ?? FALLBACK_IMAGE;
-    const parsedTime     = parseInt(cookTime, 10);
-    const finalCookTime  = isNaN(parsedTime) ? 0 : parsedTime;
-    const finalMealTimes =
-      selectedMealTimes.size > 0 ? [...selectedMealTimes] : (['dinner'] as MealTime[]);
-
     try {
+      const { data: sessionData, error: sessionErr } = await supabase.auth.getSession();
+      if (sessionErr) throw sessionErr;
+      const uid = sessionData.session?.user?.id;
+      if (!uid) {
+        setSubmitError('Please sign in to save a recipe.');
+        setSubmitting(false);
+        return;
+      }
+
+      const meal_time = [...selectedMealTimes] as MealTime[];
+
       const { error } = await supabase.from('recipes').insert({
-        title:                finalTitle,
-        description:          description.trim() || null,
-        image_url:            finalImage,
-        meal_time:            finalMealTimes,
-        prep_time_mins:       finalCookTime,
-        effort_score:         difficulty,
-        cuisine:              cuisine.trim() || null,
-        ingredients_list:     ingredients.map((s) => s.trim()).filter(Boolean),
-        recipe_steps:         steps.map((s) => s.trim()).filter(Boolean),
-        shopping_list:        [],
-        tags:                 [],
-        is_recipe_of_the_day: false,
-        created_by:           userId,
+        title: titleTrim,
+        description: description.trim() || '',
+        meal_time,
+        prep_time_mins: prepParsed,
+        effort_score: difficulty,
+        servings: servParsed,
+        ingredients_list: ingLines,
+        recipe_steps: stepLines,
+        image_url: '',
+        shopping_list: [],
+        tags: [],
+        is_user_created: true,
+        user_id: uid,
       });
 
       if (error) throw error;
 
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+      showToast();
+      setTimeout(() => {
+        router.replace('/(tabs)/favorites');
+      }, 1500);
 
       setTitle('');
       setDescription('');
-      setPhotoUri(null);
-      setCuisine('');
-      setCookTime('');
+      setPrepTime('');
+      setServings('');
       setSelectedMealTimes(new Set());
       setDifficulty(1);
       setIngredients(['']);
       setSteps(['']);
-
-      router.navigate('/(tabs)');
     } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : 'Something went wrong.';
-      Alert.alert('Publish failed', msg);
+      const msg =
+        err instanceof Error
+          ? err.message
+          : typeof err === 'object' && err && 'message' in err
+            ? String((err as { message: unknown }).message)
+            : 'Something went wrong.';
+      setSubmitError(msg);
     } finally {
       setSubmitting(false);
     }
   }, [
-    userId, title, description, photoUri,
-    selectedMealTimes, cookTime, difficulty, cuisine, ingredients, steps,
+    title,
+    description,
+    selectedMealTimes,
+    prepTime,
+    servings,
+    difficulty,
+    ingredients,
+    steps,
+    showToast,
   ]);
 
   return (
-    <SafeAreaView style={styles.safe} edges={['top']}>
+    <SafeAreaView style={[styles.safe, styles.screenFill]} edges={['top']}>
       <KeyboardAvoidingView
         style={styles.flex}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
       >
-        {/* ── Header ──────────────────────────────────────── */}
         <View style={styles.header}>
           <View>
             <Text style={styles.headerTitle}>New Recipe</Text>
-            <Text style={styles.headerSub}>Share something delicious</Text>
+            <Text style={styles.headerSub}>Save it to your collection</Text>
           </View>
-          <Pressable
-            style={({ pressed }) => [
-              styles.publishBtn,
-              submitting && styles.publishBtnDisabled,
-              pressed && styles.publishBtnPressed,
-            ]}
-            onPress={handleSubmit}
-            disabled={submitting}
-          >
-            {submitting ? (
-              <ActivityIndicator color="#fff" size="small" />
-            ) : (
-              <>
-                <Ionicons name="cloud-upload-outline" size={16} color="#fff" />
-                <Text style={styles.publishBtnText}>Publish</Text>
-              </>
-            )}
-          </Pressable>
         </View>
 
         <ScrollView
           ref={scrollRef}
-          style={styles.scroll}
-          contentContainerStyle={styles.scrollContent}
+          style={[styles.scroll, styles.scrollWide]}
+          contentContainerStyle={[styles.scrollContent, { flexGrow: 1 }]}
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
         >
-          {/* ── Photo picker ─────────────────────────────── */}
-          <View style={styles.photoSection}>
-            {photoUri ? (
-              <View style={styles.photoPreviewWrap}>
-                <Pressable onPress={handlePickPhoto} style={styles.photoPreview}>
-                  <Image source={{ uri: photoUri }} style={styles.photoImage} />
-                </Pressable>
-                <Pressable
-                  style={styles.photoClearBtn}
-                  onPress={() => {
-                    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-                    setPhotoUri(null);
-                  }}
-                  hitSlop={8}
-                >
-                  <Ionicons name="close-circle" size={28} color="#fff" />
-                </Pressable>
-              </View>
-            ) : (
-              <Pressable
-                style={({ pressed }) => [
-                  styles.photoEmpty,
-                  pressed && styles.photoEmptyPressed,
-                ]}
-                onPress={handlePickPhoto}
-              >
-                <View style={styles.photoIconWrap}>
-                  <Ionicons name="camera-outline" size={28} color={Colors.accent} />
-                </View>
-                <Text style={styles.photoEmptyTitle}>📸  Add a Photo</Text>
-                <Text style={styles.photoEmptyHint}>
-                  Tap to pick from your camera roll
-                </Text>
-              </Pressable>
-            )}
-          </View>
-
-          {/* ── Title ────────────────────────────────────── */}
           <View style={styles.fieldGroup}>
-            <FormLabel>Recipe Name</FormLabel>
+            <FormLabel>Recipe title</FormLabel>
             <TextInput
               style={styles.titleInput}
               value={title}
               onChangeText={setTitle}
               placeholder="e.g. Spicy Honey Garlic Chicken"
               placeholderTextColor={Colors.textMuted}
-              maxLength={80}
+              maxLength={120}
             />
           </View>
 
-          {/* ── Description ──────────────────────────────── */}
           <View style={styles.fieldGroup}>
-            <FormLabel>Description</FormLabel>
+            <FormLabel>Description (optional)</FormLabel>
             <TextInput
               style={[styles.input, styles.textArea]}
               value={description}
               onChangeText={setDescription}
-              placeholder="A short, appetising description of the dish…"
+              placeholder="A short description of the dish…"
               placeholderTextColor={Colors.textMuted}
               multiline
               numberOfLines={3}
@@ -359,11 +347,11 @@ export default function CreateScreen() {
 
           <SectionDivider title="Details" />
 
-          {/* ── Meal Time chips ───────────────────────────── */}
           <View style={styles.fieldGroup}>
-            <FormLabel>Meal Time</FormLabel>
+            <FormLabel>Meal type</FormLabel>
             <View style={styles.chipRow}>
-              {MEAL_TIMES.map(({ key, label, emoji }) => {
+              {MEAL_TIME_KEYS.map((key) => {
+                const meta = MEAL_TIME_META[key];
                 const active = selectedMealTimes.has(key);
                 return (
                   <Pressable
@@ -371,9 +359,8 @@ export default function CreateScreen() {
                     style={[styles.chip, active && styles.chipActive]}
                     onPress={() => toggleMealTime(key)}
                   >
-                    <Text style={styles.chipEmoji}>{emoji}</Text>
                     <Text style={[styles.chipText, active && styles.chipTextActive]}>
-                      {label}
+                      {meta.label}
                     </Text>
                   </Pressable>
                 );
@@ -381,34 +368,33 @@ export default function CreateScreen() {
             </View>
           </View>
 
-          {/* ── Cook Time + Cuisine ──────────────────────── */}
           <View style={styles.rowFields}>
-            <View style={[styles.fieldGroup, styles.flex]}>
-              <FormLabel>Cook Time (mins)</FormLabel>
+            <View style={[styles.fieldGroup, styles.rowFieldGrow]}>
+              <FormLabel>Prep time (mins)</FormLabel>
               <TextInput
                 style={styles.input}
-                value={cookTime}
-                onChangeText={(t) => setCookTime(t.replace(/[^0-9]/g, ''))}
+                value={prepTime}
+                onChangeText={(t) => setPrepTime(t.replace(/[^0-9]/g, ''))}
                 placeholder="e.g. 30"
                 placeholderTextColor={Colors.textMuted}
                 keyboardType="number-pad"
                 maxLength={4}
               />
             </View>
-            <View style={[styles.fieldGroup, styles.flex]}>
-              <FormLabel>Cuisine</FormLabel>
+            <View style={[styles.fieldGroup, styles.rowFieldGrow]}>
+              <FormLabel>Servings</FormLabel>
               <TextInput
                 style={styles.input}
-                value={cuisine}
-                onChangeText={setCuisine}
-                placeholder="Italian, Thai…"
+                value={servings}
+                onChangeText={(t) => setServings(t.replace(/[^0-9]/g, ''))}
+                placeholder="e.g. 4"
                 placeholderTextColor={Colors.textMuted}
-                autoCapitalize="words"
+                keyboardType="number-pad"
+                maxLength={3}
               />
             </View>
           </View>
 
-          {/* ── Difficulty ───────────────────────────────── */}
           <View style={styles.fieldGroup}>
             <FormLabel>Difficulty</FormLabel>
             <View style={styles.difficultyRow}>
@@ -429,9 +415,7 @@ export default function CreateScreen() {
                       setDifficulty(score);
                     }}
                   >
-                    <Text
-                      style={[styles.difficultyText, active && { color }]}
-                    >
+                    <Text style={[styles.difficultyText, active && { color }]}>
                       {label}
                     </Text>
                   </Pressable>
@@ -442,7 +426,6 @@ export default function CreateScreen() {
 
           <SectionDivider title="Ingredients" />
 
-          {/* ── Ingredients ──────────────────────────────── */}
           <View style={styles.dynamicSection}>
             {ingredients.map((value, index) => (
               <DynamicItem
@@ -455,12 +438,11 @@ export default function CreateScreen() {
                 onSubmitEditing={addIngredient}
               />
             ))}
-            <AddButton label="Add Ingredient" onPress={addIngredient} />
+            <AddButton label="Add ingredient" onPress={addIngredient} />
           </View>
 
-          <SectionDivider title="Instructions" />
+          <SectionDivider title="Steps" />
 
-          {/* ── Steps ────────────────────────────────────── */}
           <View style={styles.dynamicSection}>
             {steps.map((value, index) => (
               <DynamicItem
@@ -473,15 +455,18 @@ export default function CreateScreen() {
                 multiline
               />
             ))}
-            <AddButton label="Add Step" onPress={addStep} />
+            <AddButton label="Add step" onPress={addStep} />
           </View>
 
-          {/* ── Bottom publish button ─────────────────────── */}
+          {submitError ? (
+            <Text style={styles.errorText}>{submitError}</Text>
+          ) : null}
+
           <Pressable
             style={({ pressed }) => [
-              styles.bottomPublishBtn,
-              submitting && styles.publishBtnDisabled,
-              pressed && styles.publishBtnPressed,
+              styles.saveRecipeBtn,
+              submitting && styles.saveRecipeBtnDisabled,
+              pressed && !submitting && styles.saveRecipeBtnPressed,
             ]}
             onPress={handleSubmit}
             disabled={submitting}
@@ -489,36 +474,43 @@ export default function CreateScreen() {
             {submitting ? (
               <ActivityIndicator color="#fff" size="small" />
             ) : (
-              <>
-                <Ionicons name="checkmark-circle" size={20} color="#fff" />
-                <Text style={styles.bottomPublishBtnText}>Publish Recipe</Text>
-              </>
+              <Text style={styles.saveRecipeBtnText}>Save Recipe</Text>
             )}
           </Pressable>
 
           <View style={{ height: 48 }} />
         </ScrollView>
+
+        {toastMounted ? (
+          <Animated.View
+            style={[styles.toast, { opacity: toastOpacity }]}
+            pointerEvents="none"
+          >
+            <Text style={styles.toastText}>Recipe saved!</Text>
+          </Animated.View>
+        ) : null}
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }
 
-// ─── Styles ───────────────────────────────────────────────────
 function makeStyles(Colors: AppColors) {
   return StyleSheet.create({
     safe: {
       flex: 1,
       backgroundColor: Colors.background,
     },
+    screenFill: {
+      width: '100%',
+      alignSelf: 'stretch',
+    },
     flex: {
       flex: 1,
+      width: '100%',
+      alignSelf: 'stretch',
     },
 
-    // Header
     header: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'space-between',
       paddingHorizontal: 20,
       paddingTop: 16,
       paddingBottom: 12,
@@ -537,103 +529,18 @@ function makeStyles(Colors: AppColors) {
       fontWeight: '500',
       marginTop: 2,
     },
-    publishBtn: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      gap: 6,
-      backgroundColor: Colors.accent,
-      paddingHorizontal: 16,
-      paddingVertical: 10,
-      borderRadius: 20,
-      shadowColor: Colors.accent,
-      shadowOffset: { width: 0, height: 3 },
-      shadowOpacity: 0.35,
-      shadowRadius: 6,
-      elevation: 4,
-    },
-    publishBtnText: {
-      color: '#fff',
-      fontSize: 14,
-      fontWeight: '800',
-    },
-    publishBtnDisabled: {
-      opacity: 0.55,
-    },
-    publishBtnPressed: {
-      opacity: 0.8,
-      transform: [{ scale: 0.97 }],
-    },
 
     scroll: {
       flex: 1,
+    },
+    scrollWide: {
+      width: '100%',
+      alignSelf: 'stretch',
     },
     scrollContent: {
       paddingTop: 8,
     },
 
-    // Photo picker
-    photoSection: {
-      marginHorizontal: 20,
-      marginTop: 16,
-      marginBottom: 20,
-    },
-    photoEmpty: {
-      height: 160,
-      backgroundColor: Colors.surface,
-      borderRadius: 20,
-      borderWidth: 1.5,
-      borderColor: Colors.border,
-      borderStyle: 'dashed',
-      alignItems: 'center',
-      justifyContent: 'center',
-      gap: 8,
-    },
-    photoEmptyPressed: {
-      opacity: 0.7,
-      transform: [{ scale: 0.985 }],
-    },
-    photoIconWrap: {
-      width: 56,
-      height: 56,
-      borderRadius: 16,
-      backgroundColor: Colors.accentSoft,
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginBottom: 4,
-    },
-    photoEmptyTitle: {
-      color: Colors.textPrimary,
-      fontSize: 16,
-      fontWeight: '700',
-    },
-    photoEmptyHint: {
-      color: Colors.textMuted,
-      fontSize: 12,
-      fontWeight: '500',
-    },
-    photoPreviewWrap: {
-      borderRadius: 20,
-      overflow: 'hidden',
-      position: 'relative',
-    },
-    photoPreview: {
-      height: 200,
-      width: '100%',
-      borderRadius: 20,
-      overflow: 'hidden',
-    },
-    photoImage: {
-      width: '100%',
-      height: '100%',
-      resizeMode: 'cover',
-    },
-    photoClearBtn: {
-      position: 'absolute',
-      top: 10,
-      right: 10,
-    },
-
-    // Label
     label: {
       color: Colors.textSecondary,
       fontSize: 11,
@@ -643,7 +550,6 @@ function makeStyles(Colors: AppColors) {
       marginBottom: 8,
     },
 
-    // Generic field group
     fieldGroup: {
       paddingHorizontal: 20,
       marginBottom: 16,
@@ -676,15 +582,16 @@ function makeStyles(Colors: AppColors) {
       textAlignVertical: 'top',
     },
 
-    // Row layout
     rowFields: {
       flexDirection: 'row',
       gap: 12,
       paddingHorizontal: 20,
       marginBottom: 16,
     },
+    rowFieldGrow: {
+      flex: 1,
+    },
 
-    // Section divider
     sectionDivider: {
       flexDirection: 'row',
       alignItems: 'center',
@@ -706,7 +613,6 @@ function makeStyles(Colors: AppColors) {
       textTransform: 'uppercase',
     },
 
-    // Meal time chips
     chipRow: {
       flexDirection: 'row',
       gap: 8,
@@ -739,7 +645,6 @@ function makeStyles(Colors: AppColors) {
       color: Colors.accent,
     },
 
-    // Difficulty buttons
     difficultyRow: {
       flexDirection: 'row',
       gap: 10,
@@ -759,7 +664,6 @@ function makeStyles(Colors: AppColors) {
       fontWeight: '700',
     },
 
-    // Dynamic list items
     dynamicSection: {
       paddingHorizontal: 20,
       gap: 10,
@@ -808,7 +712,6 @@ function makeStyles(Colors: AppColors) {
       marginTop: 12,
     },
 
-    // Add pill button
     addBtn: {
       flexDirection: 'row',
       alignItems: 'center',
@@ -832,28 +735,53 @@ function makeStyles(Colors: AppColors) {
       fontWeight: '700',
     },
 
-    // Bottom publish
-    bottomPublishBtn: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'center',
-      gap: 8,
+    errorText: {
+      color: '#EF4444',
+      fontSize: 14,
+      fontWeight: '600',
       marginHorizontal: 20,
-      marginTop: 24,
+      marginTop: 8,
+      marginBottom: 4,
+    },
+
+    saveRecipeBtn: {
+      marginHorizontal: 20,
+      marginTop: 20,
       height: 56,
       borderRadius: 16,
-      backgroundColor: Colors.accent,
-      shadowColor: Colors.accent,
-      shadowOffset: { width: 0, height: 4 },
-      shadowOpacity: 0.35,
-      shadowRadius: 10,
-      elevation: 6,
+      backgroundColor: SAVE_RED,
+      alignItems: 'center',
+      justifyContent: 'center',
     },
-    bottomPublishBtnText: {
+    saveRecipeBtnDisabled: {
+      opacity: 0.55,
+    },
+    saveRecipeBtnPressed: {
+      opacity: 0.88,
+      transform: [{ scale: 0.98 }],
+    },
+    saveRecipeBtnText: {
       color: '#fff',
       fontSize: 16,
       fontWeight: '800',
       letterSpacing: 0.2,
+    },
+
+    toast: {
+      position: 'absolute',
+      bottom: 100,
+      left: 24,
+      right: 24,
+      backgroundColor: 'rgba(0,0,0,0.88)',
+      paddingVertical: 14,
+      paddingHorizontal: 20,
+      borderRadius: 14,
+      alignItems: 'center',
+    },
+    toastText: {
+      color: '#fff',
+      fontSize: 15,
+      fontWeight: '700',
     },
   });
 }

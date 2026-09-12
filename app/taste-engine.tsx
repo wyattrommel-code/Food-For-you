@@ -183,9 +183,9 @@ export default function TasteEngineScreen() {
   if (loading) return <LoadingScreen message="Loading your Taste Engine..." />;
 
   return (
-    <SafeAreaView style={styles.safeArea} edges={['top']}>
+    <SafeAreaView style={[styles.safeArea, styles.screenFill]} edges={['top']}>
       <KeyboardAvoidingView
-        style={{ flex: 1 }}
+        style={styles.kavFill}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       >
         {/* ── Top nav bar ───────────────────────────────────── */}
@@ -203,6 +203,7 @@ export default function TasteEngineScreen() {
 
         <ScrollView
           style={styles.scroll}
+          contentContainerStyle={styles.scrollContent}
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
         >
@@ -317,8 +318,22 @@ function makeStyles(Colors: AppColors) {
       flex: 1,
       backgroundColor: Colors.background,
     },
+    screenFill: {
+      width: '100%',
+      alignSelf: 'stretch',
+    },
+    kavFill: {
+      flex: 1,
+      width: '100%',
+      alignSelf: 'stretch',
+    },
     scroll: {
       flex: 1,
+      width: '100%',
+      alignSelf: 'stretch',
+    },
+    scrollContent: {
+      flexGrow: 1,
     },
 
     // ── Nav bar ──────────────────────────────────────────────

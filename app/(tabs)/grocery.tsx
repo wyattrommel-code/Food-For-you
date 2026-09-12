@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback, useState, useRef } from 'react';
+import React, { useMemo, useCallback, useState, useRef, useEffect } from 'react';
 import {
   View,
   Text,
@@ -7,6 +7,8 @@ import {
   Pressable,
   StyleSheet,
   Alert,
+  Platform,
+  ToastAndroid,
   type TextInput as TextInputType,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -24,6 +26,10 @@ import {
   CATEGORY_ORDER,
   groupByCategory,
 } from '@/lib/groceryHelpers';
+import {
+  mergeIngredientsIntoUserPantry,
+  parseGroceryLineToPantryIngredients,
+} from '@/lib/groceryPantrySync';
 
 // ─── Checkbox component ───────────────────────────────────────
 
@@ -219,6 +225,44 @@ export default function GroceryScreen() {
 
   const [inputText, setInputText] = useState('');
   const inputRef = useRef<TextInputType>(null);
+  const [inlineToastVisible, setInlineToastVisible] = useState(false);
+  const toastTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
+    };
+  }, []);
+
+  const showPantryToast = useCallback(() => {
+    const msg = 'Added to your pantry';
+    if (Platform.OS === 'android') {
+      ToastAndroid.show(msg, ToastAndroid.SHORT);
+      return;
+    }
+    if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
+    setInlineToastVisible(true);
+    toastTimerRef.current = setTimeout(() => {
+      setInlineToastVisible(false);
+      toastTimerRef.current = null;
+    }, 2200);
+  }, []);
+
+  const handleToggleWithPantry = useCallback(
+    async (id: string) => {
+      const item = items.find((i) => i.id === id);
+      const willCheck = item !== undefined && !item.checked;
+      await toggleItem(id);
+      if (!willCheck || !item) return;
+
+      const parts = parseGroceryLineToPantryIngredients(item.name);
+      const added = await mergeIngredientsIntoUserPantry(parts);
+      if (added > 0) {
+        showPantryToast();
+      }
+    },
+    [items, toggleItem, showPantryToast]
+  );
 
   const handleManualAdd = useCallback(async () => {
     const trimmed = inputText.trim();
@@ -278,7 +322,7 @@ export default function GroceryScreen() {
   if (loading) return null;
 
   return (
-    <SafeAreaView style={styles.safe} edges={['top']}>
+    <SafeAreaView style={[styles.safe, styles.screenFill]} edges={['top']}>
       {/* ── Header ──────────────────────────────────────────── */}
       <View style={styles.header}>
         <View>
@@ -363,8 +407,8 @@ export default function GroceryScreen() {
         <EmptyState />
       ) : (
         <ScrollView
-          style={styles.scroll}
-          contentContainerStyle={styles.scrollContent}
+          style={[styles.scroll, styles.scrollWide]}
+          contentContainerStyle={[styles.scrollContent, { flexGrow: 1 }]}
           showsVerticalScrollIndicator={false}
         >
           {CATEGORY_ORDER.map((cat) => (
@@ -372,12 +416,22 @@ export default function GroceryScreen() {
               key={cat}
               category={cat}
               items={grouped[cat]}
-              onToggle={toggleItem}
+              onToggle={handleToggleWithPantry}
               onRemove={removeItem}
             />
           ))}
           <View style={{ height: 40 }} />
         </ScrollView>
+      )}
+
+      {inlineToastVisible && (
+        <View style={styles.toastOverlay} pointerEvents="none">
+          <View style={[styles.toastBubble, { backgroundColor: Colors.surfaceElevated }]}>
+            <Text style={[styles.toastText, { color: Colors.textPrimary }]}>
+              Added to your pantry
+            </Text>
+          </View>
+        </View>
       )}
     </SafeAreaView>
   );
@@ -389,6 +443,10 @@ function makeStyles(Colors: AppColors) {
     safe: {
       flex: 1,
       backgroundColor: Colors.background,
+    },
+    screenFill: {
+      width: '100%',
+      alignSelf: 'stretch',
     },
 
     // Header
@@ -453,6 +511,10 @@ function makeStyles(Colors: AppColors) {
 
     scroll: {
       flex: 1,
+    },
+    scrollWide: {
+      width: '100%',
+      alignSelf: 'stretch',
     },
     scrollContent: {
       paddingTop: 8,
@@ -624,6 +686,29 @@ function makeStyles(Colors: AppColors) {
       textAlign: 'center',
       lineHeight: 20,
       fontWeight: '500',
+    },
+
+    toastOverlay: {
+      ...StyleSheet.absoluteFillObject,
+      justifyContent: 'flex-end',
+      alignItems: 'center',
+      paddingBottom: 48,
+    },
+    toastBubble: {
+      paddingHorizontal: 20,
+      paddingVertical: 12,
+      borderRadius: 14,
+      borderWidth: 1,
+      borderColor: Colors.border,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 4 },
+      shadowOpacity: 0.2,
+      shadowRadius: 8,
+      elevation: 6,
+    },
+    toastText: {
+      fontSize: 14,
+      fontWeight: '700',
     },
   });
 }

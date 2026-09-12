@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
+import * as Haptics from 'expo-haptics';
 import { useTheme } from '@/context/ThemeContext';
 
 interface SectionHeaderProps {
@@ -8,6 +9,8 @@ interface SectionHeaderProps {
   onSeeAll?:    () => void;
   accentColor?: string;
   rightAction?: React.ReactNode;
+  /** Tighter vertical margins (e.g. landscape). */
+  compact?:     boolean;
 }
 
 export function SectionHeader({
@@ -16,11 +19,12 @@ export function SectionHeader({
   onSeeAll,
   accentColor,
   rightAction,
+  compact,
 }: SectionHeaderProps) {
   const { Colors } = useTheme();
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, compact && styles.containerCompact]}>
       <View style={styles.left}>
         {accentColor && (
           <View style={[styles.accent, { backgroundColor: accentColor }]} />
@@ -33,8 +37,14 @@ export function SectionHeader({
         </View>
       </View>
       {rightAction ?? (onSeeAll ? (
-        <Pressable onPress={onSeeAll} hitSlop={8}>
-          <Text style={[styles.seeAll, { color: Colors.accent }]}>See all</Text>
+        <Pressable
+          onPress={() => {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+            onSeeAll();
+          }}
+          hitSlop={8}
+        >
+          <Text style={[styles.seeAll, { color: Colors.accent }]}>See all →</Text>
         </Pressable>
       ) : null)}
     </View>
@@ -49,6 +59,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     marginBottom:   16,
     marginTop:      32,
+  },
+  containerCompact: {
+    marginBottom: 10,
+    marginTop:    16,
   },
   left: {
     flexDirection: 'row',

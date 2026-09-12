@@ -4,6 +4,14 @@ import { Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '@/context/ThemeContext';
 
+/*
+ * Tablet UX: A side drawer or left-rail navigator can feel more natural than
+ * bottom tabs on wide screens. We keep the standard bottom tab bar here because
+ * moving primary navigation to a drawer would require re-homing each tab route,
+ * duplicating headers, and re-testing deep links and auth redirects. That is
+ * intentionally out of scope to avoid breaking existing navigation behavior.
+ */
+
 type IoniconsName = React.ComponentProps<typeof Ionicons>['name'];
 
 interface TabConfig {
@@ -33,6 +41,12 @@ const TABS: TabConfig[] = [
     activeIcon: 'cart',
   },
   {
+    name: 'pantry',
+    title: 'My Pantry',
+    icon: 'basket-outline',
+    activeIcon: 'basket',
+  },
+  {
     name: 'create',
     title: 'Create',
     icon: 'add-circle-outline',
@@ -54,7 +68,14 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         headerShown: false,
+        sceneStyle: {
+          flex: 1,
+          width: '100%',
+          alignSelf: 'stretch',
+        },
         tabBarStyle: {
+          width: '100%',
+          alignSelf: 'stretch',
           backgroundColor: Colors.surface,
           borderTopColor: Colors.border,
           borderTopWidth: 1,
