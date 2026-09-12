@@ -1,6 +1,7 @@
 import { Tabs } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { Platform } from 'react-native';
+import { Text, useWindowDimensions } from 'react-native';
+import {tabBarMetrics} from '@/lib/discovery';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '@/context/ThemeContext';
 
@@ -42,7 +43,7 @@ const TABS: TabConfig[] = [
   },
   {
     name: 'pantry',
-    title: 'My Pantry',
+    title: 'Pantry',
     icon: 'basket-outline',
     activeIcon: 'basket',
   },
@@ -63,6 +64,7 @@ const TABS: TabConfig[] = [
 export default function TabLayout() {
   const insets        = useSafeAreaInsets();
   const { Colors }    = useTheme();
+  const {fontScale}=useWindowDimensions();
 
   return (
     <Tabs
@@ -79,10 +81,10 @@ export default function TabLayout() {
           backgroundColor: Colors.surface,
           borderTopColor: Colors.border,
           borderTopWidth: 1,
-          height: Platform.OS === 'ios' ? 84 : 56 + insets.bottom,
-          paddingBottom: Platform.OS === 'ios' ? 24 : insets.bottom + 8,
-          paddingTop: 8,
+          ...tabBarMetrics(insets.bottom,fontScale),
         },
+        tabBarLabelPosition: 'below-icon',
+        tabBarHideOnKeyboard: true,
         tabBarActiveTintColor: Colors.accent,
         tabBarInactiveTintColor: Colors.textMuted,
         tabBarLabelStyle: {
@@ -98,6 +100,8 @@ export default function TabLayout() {
           name={tab.name}
           options={{
             title: tab.title,
+            tabBarAccessibilityLabel: tab.name==='pantry'?'My Pantry':tab.title,
+            tabBarLabel: ({color})=><Text numberOfLines={1} adjustsFontSizeToFit maxFontSizeMultiplier={1.3} style={{fontSize:11,fontWeight:'600',color,textAlign:'center',marginTop:2}}>{tab.title}</Text>,
             tabBarIcon: ({ focused, color, size }) => (
               <Ionicons
                 name={focused ? tab.activeIcon : tab.icon}

@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { discoveryBonus, weightedShuffle } from '@/lib/discovery';
 import { supabase } from '@/lib/supabase';
 import {
   DbRecipe,
@@ -16,32 +17,6 @@ import {
  * Weighted random selection — picks `count` unique items from an array
  * where each item has a weight proportional to its affinity score.
  */
-function weightedSample<T extends { _score: number }>(
-  items: T[],
-  count: number
-): T[] {
-  if (items.length <= count) return [...items];
-
-  const selected: T[] = [];
-  const pool = [...items];
-
-  while (selected.length < count && pool.length > 0) {
-    const totalWeight = pool.reduce((sum, item) => sum + Math.max(item._score, 1), 0);
-    let rand = Math.random() * totalWeight;
-
-    for (let i = 0; i < pool.length; i++) {
-      rand -= Math.max(pool[i]._score, 1);
-      if (rand <= 0) {
-        selected.push(pool[i]);
-        pool.splice(i, 1);
-        break;
-      }
-    }
-  }
-
-  return selected;
-}
-
 // ─── Hook ─────────────────────────────────────────────────────
 
 export function useRecipes(
@@ -51,6 +26,7 @@ export function useRecipes(
   const [allRecipes, setAllRecipes] = useState<DbRecipe[]>([]);
   const [favoriteIds, setFavoriteIds] = useState<Set<string>>(new Set());
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const favsKey = userId ? `favs:${userId}` : null;
@@ -58,7 +34,7 @@ export function useRecipes(
   // ── Fetch all recipes from Supabase + favorites from AsyncStorage ──
   const fetchData = useCallback(async () => {
     try {
-      setLoading(true);
+      setRefreshing(true);
       setError(null);
 
       const runQuery = () =>
@@ -103,6 +79,7 @@ export function useRecipes(
       setError(err instanceof Error ? err.message : 'Failed to load recipes');
     } finally {
       setLoading(false);
+      setRefreshing(false);
     }
   }, [favsKey]);
 
@@ -126,7 +103,7 @@ export function useRecipes(
       .map((r) => ({
         ...r,
         is_favorited: favoriteIds.has(r.id),
-        _score: recipeAffinityScore(r, preferences, favoriteTags),
+        _score: recipeAffinityScore(r, preferences, favoriteTags) + discoveryBonus(r, preferences),
       }));
   }, [allRecipes, preferences, favoriteIds, favoriteTags]);
 
@@ -144,7 +121,7 @@ export function useRecipes(
       }))
         .sort((a, b) => b._score - a._score);
 
-      return weightedSample(scored, 3);
+      return weightedShuffle(scored).slice(0, 3);
     },
     [visibleRecipes]
   );
@@ -196,6 +173,7 @@ export function useRecipes(
 
   return {
     loading,
+    refreshing,
     error,
     visibleRecipes,
     getRNGChoices,

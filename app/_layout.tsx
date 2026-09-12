@@ -8,7 +8,10 @@ import * as SystemUI from 'expo-system-ui';
 import * as Linking from 'expo-linking';
 
 import { ThemeProvider, useTheme } from '@/context/ThemeContext';
+import {SessionProvider} from '@/context/SessionContext';
 import { useSession } from '@/hooks/useSession';
+import { PreferencesProvider } from '@/context/PreferencesContext';
+import { PreferenceOnboardingGate } from '@/components/PreferenceOnboardingGate';
 import { supabase } from '@/lib/supabase';
 import { classifyAuthDeepLink, parseAuthParamsFromUrl } from '@/lib/authDeepLink';
 
@@ -110,7 +113,9 @@ function RootLayoutInner() {
   if (loading || !deepLinkReady) return null;
 
   return (
+    <PreferencesProvider key={session?.user.id ?? 'guest'} userId={session?.user.id ?? null}>
     <View style={{ flex: 1, width: '100%', alignSelf: 'stretch' }}>
+      <PreferenceOnboardingGate />
       <StatusBar style={isDark ? 'light' : 'dark'} backgroundColor={Colors.background} />
       <Stack
         screenOptions={{
@@ -123,6 +128,7 @@ function RootLayoutInner() {
           animation: 'fade',
         }}
       >
+        <Stack.Screen name="onboarding" options={{headerShown:false,gestureEnabled:false}} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen
           name="login"
@@ -175,13 +181,14 @@ function RootLayoutInner() {
         />
       </Stack>
     </View>
+    </PreferencesProvider>
   );
 }
 
 export default function RootLayout() {
   return (
     <ThemeProvider>
-      <RootLayoutInner />
+      <SessionProvider><RootLayoutInner /></SessionProvider>
     </ThemeProvider>
   );
 }

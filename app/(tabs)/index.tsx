@@ -30,6 +30,8 @@ import {
 import { useSession } from '@/hooks/useSession';
 import { usePreferences } from '@/hooks/usePreferences';
 import { supabase } from '@/lib/supabase';
+import { useDiscoveryFeed } from '@/hooks/useDiscoveryFeed';
+import { freshOrder } from '@/lib/discovery';
 import { useRecipes } from '@/hooks/useRecipes';
 import {
   HeroCard,
@@ -49,37 +51,8 @@ type HungryHeadingKind = '30' | '45' | 'any';
 
 // ─── Helpers ─────────────────────────────────────────────────
 
-function randomSeed(): number {
-  const t = Date.now();
-  const r = Math.floor(Math.random() * 0x7fffffff);
-  const p =
-    typeof globalThis.performance !== 'undefined' && typeof globalThis.performance.now === 'function'
-      ? globalThis.performance.now()
-      : 0;
-  return (t ^ r ^ (Math.floor(p * 1000) >>> 0)) >>> 0;
-}
-
-function mulberry32(seed: number) {
-  return () => {
-    let t = (seed += 0x6d2b79f5);
-    t = Math.imul(t ^ (t >>> 15), t | 1);
-    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
-
-function shuffleWithSeed<T>(items: T[], seed: number): T[] {
-  const out = [...items];
-  const rnd = mulberry32(seed);
-  for (let i = out.length - 1; i > 0; i--) {
-    const j = Math.floor(rnd() * (i + 1));
-    [out[i], out[j]] = [out[j], out[i]];
-  }
-  return out;
-}
-
 function pickForMeSetKey(ids: string[]): string {
-  return [...ids].sort().join('\0');
+  return ids.join('\0');
 }
 
 /** Recipes with prep_time_mins <= maxPrep (inclusive). maxPrep null = no cap. */
@@ -145,20 +118,7 @@ function rollHungryNowTrio(
     return { trio: [], headingKind };
   }
 
-  if (want < 3) {
-    const shuffled = shuffleWithSeed(pool, randomSeed());
-    return { trio: shuffled.slice(0, want), headingKind };
-  }
-
-  let trio: Recipe[] = [];
-  for (let attempt = 0; attempt < 24; attempt++) {
-    const shuffled = shuffleWithSeed(pool, randomSeed() + attempt);
-    trio = shuffled.slice(0, want);
-    const key = pickForMeSetKey(trio.map((r) => r.id));
-    if (lastSetKey === null || key !== lastSetKey) {
-      break;
-    }
-  }
+  const trio = freshOrder(pool, lastSetKey?.split('\0') ?? []).slice(0, want);
   return { trio, headingKind };
 }
 
@@ -177,19 +137,7 @@ function rollFeelingBoldTrio(
   const want = Math.min(3, pool.length);
   if (want === 0) return [];
 
-  if (want < 3) {
-    return shuffleWithSeed(pool, randomSeed()).slice(0, want);
-  }
-
-  let trio: Recipe[] = [];
-  for (let attempt = 0; attempt < 24; attempt++) {
-    const shuffled = shuffleWithSeed(pool, randomSeed() + attempt);
-    trio = shuffled.slice(0, want);
-    const key = pickForMeSetKey(trio.map((r) => r.id));
-    if (lastSetKey === null || key !== lastSetKey) {
-      break;
-    }
-  }
+  const trio = freshOrder(pool, lastSetKey?.split('\0') ?? []).slice(0, want);
   return trio;
 }
 
@@ -302,17 +250,23 @@ function FeedSectionHeader({
   hideSeeAll?:  boolean;
 }) {
   const { Colors } = useTheme();
-  const sh         = useMemo(() => makeSh(Colors, compact), [Colors, compact]);
+  const {width,fontScale}=useWindowDimensions();
+  const stacked=width<350 || fontScale>1.3;
+  const sh = useMemo(() => makeSh(Colors, compact), [Colors, compact]);
 
   return (
-    <View style={sh.row}>
-      <View style={[sh.bar, { backgroundColor: accentColor }]} />
-      <Text style={sh.title}>{title}</Text>
-      <View style={{ flex: 1 }} />
+    <View style={[sh.row,stacked && {flexWrap:'wrap'}]}>
+      <View style={{flexDirection:'row',alignItems:'center',gap:10,flex:stacked?undefined:1,width:stacked?'100%':undefined,minWidth:0}}>
+        <View style={[sh.bar, { backgroundColor: accentColor,flexShrink:0 }]} />
+        <Text style={[sh.title,{flex:1,minWidth:0}]}>{title}</Text>
+      </View>
       {rightAction ??
         (!hideSeeAll ? (
           <Pressable
-            hitSlop={10}
+            accessibilityRole="button"
+            accessibilityLabel={`See all ${title}`}
+            style={{minHeight:44,justifyContent:'center',flexShrink:0}}
+            hitSlop={4}
             onPress={() => {
               Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
               onSeeAll?.();
@@ -395,7 +349,7 @@ function HCarousel({
       data={recipes}
       keyExtractor={(r) => r.id}
       showsHorizontalScrollIndicator={false}
-      style={{ flex: 1, width: '100%' }}
+      style={{ width: '100%' }}
       contentContainerStyle={[styles.carouselContent, { flexGrow: 1 }]}
       snapToInterval={snapInterval}
       decelerationRate="fast"
@@ -490,10 +444,16 @@ export default function HomeScreen() {
   const {
     loading,
     visibleRecipes,
-    getCarouselRecipes,
+    refreshing,
+    error,
     toggleFavorite,
     refresh,
   } = useRecipes(userId, preferences);
+  const {getCarouselRecipes,reroll} = useDiscoveryFeed(visibleRecipes,userId,JSON.stringify(preferences));
+  const refreshFeed = useCallback(async () => {
+    reroll(); setPickedRecipes([]); setActiveMode(null);
+    await refresh();
+  }, [reroll,refresh]);
 
   useFocusEffect(
     useCallback(() => {
@@ -620,27 +580,9 @@ export default function HomeScreen() {
 
     const h    = new Date().getHours();
     const pool = applyMealTimePreferencePool(visibleRecipes, h);
-    const want = Math.min(3, pool.length);
-    if (want === 0) return [];
-
-    if (want < 3) {
-      const shuffled = shuffleWithSeed(pool, randomSeed());
-      const trio     = shuffled.slice(0, want);
-      lastPickForMeKey.current = pickForMeSetKey(trio.map((r) => r.id));
-      return trio;
-    }
-
-    let trio: Recipe[] = [];
-    for (let attempt = 0; attempt < 16; attempt++) {
-      const shuffled = shuffleWithSeed(pool, randomSeed() + attempt);
-      trio = shuffled.slice(0, want);
-      const key = pickForMeSetKey(trio.map((r) => r.id));
-      if (lastPickForMeKey.current !== key) {
-        lastPickForMeKey.current = key;
-        break;
-      }
-    }
-    return trio;
+    const picks = freshOrder(pool, lastPickForMeKey.current?.split('\0') ?? []).slice(0, 1);
+    lastPickForMeKey.current = pickForMeSetKey(picks.map(r => r.id));
+    return picks;
   }, [visibleRecipes]);
 
   const handlePickForMe = useCallback(() => {
@@ -686,13 +628,17 @@ export default function HomeScreen() {
     setPickedRecipes(trio);
   }, [visibleRecipes]);
 
+  useEffect(() => {
+    setPickedRecipes(previous => previous.map(r=>visibleRecipes.find(v=>v.id===r.id)).filter((r):r is Recipe=>!!r));
+  }, [visibleRecipes]);
+
   if (loading) {
     return <LoadingScreen message="Loading your personalized menu..." />;
   }
 
   // ── Render ────────────────────────────────────────────────
   return (
-    <SafeAreaView style={styles.safeArea} edges={['top']}>
+    <SafeAreaView style={styles.safeArea} edges={['top','left','right']}>
       <ScrollView
         style={styles.scroll}
         contentContainerStyle={styles.scrollContent}
@@ -700,8 +646,8 @@ export default function HomeScreen() {
         keyboardShouldPersistTaps="handled"
         refreshControl={
           <RefreshControl
-            refreshing={loading}
-            onRefresh={refresh}
+            refreshing={refreshing}
+            onRefresh={refreshFeed}
             tintColor={Colors.accent}
             colors={[Colors.accent]}
           />
@@ -748,6 +694,12 @@ export default function HomeScreen() {
           onClear={() => setSearchQuery('')}
         />
 
+        <View style={{paddingHorizontal:20,marginTop:10,alignItems:'flex-start'}}>
+          <Pressable accessibilityRole="button" accessibilityLabel="Refresh meal ideas" onPress={refreshFeed} disabled={refreshing} style={{minHeight:44,justifyContent:'center',paddingHorizontal:4}}>
+            <Text style={{color:Colors.accent,fontWeight:'700'}}>{refreshing?'Refreshing…':'↻ New meal ideas'}</Text>
+          </Pressable>
+          {error && <Text accessibilityRole="alert" style={{color:Colors.textSecondary}}>{visibleRecipes.length?'Could not update the catalog. Showing fresh picks from loaded recipes.':'Could not load recipes. Tap New meal ideas to retry.'}</Text>}
+        </View>
         {/* ── Action buttons ──────────────────────────────── */}
         <View style={[styles.buttonsWrap, isLandscape && styles.buttonsWrapLandscape]}>
           {useThreeActionColumns ? (
@@ -1211,6 +1163,7 @@ function makeMainStyles(Colors: AppColors) {
       alignSelf: 'stretch',
     },
     scrollContent: {
+      paddingBottom: 24,
       flexGrow: 1,
     },
 

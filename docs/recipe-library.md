@@ -4,7 +4,7 @@ Updated September 12, 2026. Work continues here in Codex using C:\Users\wyatt\fo
 
 Prioritize American-style tacos, burgers, burritos, Hamburger Helper-style pasta, buttered noodles, oven chicken, boxed dinners and breakfast for dinner. Common prepared shortcuts are welcome. No paid recipe service or subscription is part of the workflow.
 
-The live testing library now has 169 shared recipes and one private recipe. Six comfort meals were added and three basics simplified after the first ten community recipes. This is not yet 500 reviewed easy meals.
+The live testing library now has **219 shared recipes, all with photo URLs**, and one private recipe. The [50 easy meals batch](easy-050.md) followed completion of the 21 missing photos. It adds 41 meals ready in 30 minutes or less and nine longer oven meals with 5–15 minutes of active work. This is not yet 500 reviewed easy meals.
 
 Allow meals ready in 30 minutes and longer meals with about 15 minutes of hands-on work. Show full cooking time honestly. Whole-package family portions are fine. Improve existing meals instead of adding renamed duplicates.
 
@@ -60,7 +60,7 @@ Tacos now use mild packet seasoning and measured toppings. Noodles use garlic po
 
 ## Editorial status and sources
 
-All 16 additions and three revisions are editorially reviewed, **not cook-tested**. The original import snapshots keep blank image fields. A separate reviewed photo overlay now supplies 12 of the 16 additions and replaces the broken cheeseburger pasta photo; see [photo workflow](recipe-photos.md). Concise original wording uses cooking facts and attributed community ideas; no publisher photos or stories were copied. Attribution does not claim permission or endorsement.
+The original 16 additions and three revisions are editorially reviewed, **not cook-tested**. Their import snapshots keep blank image fields; apply the later photo overlays to obtain their complete current photo assignments. The new 50-meal batch includes reviewed images directly; see [photo workflow](recipe-photos.md). Concise original wording uses cooking facts and attributed community ideas; no publisher stories were copied. Reused photos carry their recorded license or existing library provenance. Attribution does not claim endorsement.
 
 [Julia Pacheco's public Facebook page](https://www.facebook.com/JuliaPachecoYouTube/) was accessible in the browser. Methods in this batch were verified on her website; no Facebook-only recipe is counted. No messages, posts or comments were sent.
 

@@ -13,7 +13,7 @@ type Props = {
 
 export function RecipeImagePlaceholder({ style, iconSize = 48 }: Props) {
   return (
-    <View style={[styles.root, style]} accessibilityRole="image" accessibilityLabel="No recipe photo">
+    <View style={[styles.root, style]} accessible={false} accessibilityElementsHidden importantForAccessibility="no-hide-descendants" aria-hidden>
       <Ionicons name="restaurant" size={iconSize} color={RECIPE_IMAGE_PLACEHOLDER_ICON} />
     </View>
   );

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Pressable, StyleSheet } from 'react-native';
+import { View, Text, Pressable, StyleSheet, useWindowDimensions } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import { useTheme } from '@/context/ThemeContext';
 
@@ -22,14 +22,16 @@ export function SectionHeader({
   compact,
 }: SectionHeaderProps) {
   const { Colors } = useTheme();
+  const {width,fontScale}=useWindowDimensions();
+  const stacked=width<350 || fontScale>1.3;
 
   return (
-    <View style={[styles.container, compact && styles.containerCompact]}>
-      <View style={styles.left}>
+    <View style={[styles.container, compact && styles.containerCompact, stacked && {flexWrap: 'wrap'}]}>
+      <View style={[styles.left,stacked && {flex:undefined,width:'100%'}]}>
         {accentColor && (
           <View style={[styles.accent, { backgroundColor: accentColor }]} />
         )}
-        <View>
+        <View style={{flex:1,minWidth:0}}>
           <Text style={[styles.title, { color: Colors.textPrimary }]}>{title}</Text>
           {subtitle ? (
             <Text style={[styles.subtitle, { color: Colors.textSecondary }]}>{subtitle}</Text>
@@ -38,6 +40,9 @@ export function SectionHeader({
       </View>
       {rightAction ?? (onSeeAll ? (
         <Pressable
+          accessibilityRole="button"
+          accessibilityLabel={`See all ${title}`}
+          style={{minHeight:44,flexShrink:0,justifyContent:'center'}}
           onPress={() => {
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
             onSeeAll();
@@ -65,6 +70,9 @@ const styles = StyleSheet.create({
     marginTop:    16,
   },
   left: {
+    flex: 1,
+    minWidth: 0,
+    marginRight: 12,
     flexDirection: 'row',
     alignItems:    'center',
     gap:           10,

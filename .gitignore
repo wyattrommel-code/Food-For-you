@@ -29,3 +29,7 @@ Thumbs.db
 # ── Editor ────────────────────────────────────────────────────
 .vscode/
 *.log
+
+# Local CLI state and browser QA artifacts
+supabase/.temp/
+artifacts/ui-qa/

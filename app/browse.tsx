@@ -150,7 +150,7 @@ export default function BrowseScreen() {
   const numColumns = isTablet ? 2 : 1;
 
   return (
-    <SafeAreaView style={styles.safe} edges={['top']}>
+    <SafeAreaView style={styles.safe} edges={['top','bottom','left','right']}>
       <View style={styles.header}>
         <Pressable
           onPress={() => {

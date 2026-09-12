@@ -10,4 +10,4 @@ Recipe sources include Budget Bytes, manufacturer kitchens, independent recipe w
 
 Import is atomic and rejects conflicting existing titles. New recipes include their image URLs at insertion; local file validation and remote image verification precede the live import.
 
-Publication status: prepared; live verification pending.
+Publication status: live. Commit 577ea7d published all 50 images; their public MIME type, byte count and SHA-256 were verified before the atomic import. The app’s public API returned 219 shared recipes, zero missing photos and zero private recipes. All 64 regression tests passed.

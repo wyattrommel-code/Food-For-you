@@ -10,7 +10,7 @@ export interface DbUser {
   created_at: string;
 }
 
-export interface DbUserPreferences {
+export interface DbUserPreferences extends UserPreferences {
   id: string;
   user_id: string;
   disliked_ingredients: string[];
@@ -77,6 +77,12 @@ export interface Recipe extends DbRecipe {
 
 /** Full preferences object — front-end facing */
 export interface UserPreferences {
+  diet_style?: 'any' | 'vegetarian' | 'vegan';
+  preferred_meal_styles?: string[];
+  max_cook_time_mins?: number | null;
+  prefer_easy?: boolean;
+  household_size?: number | null;
+  onboarding_completed_at?: string | null;
   disliked_ingredients: string[];
   disliked_cuisines: string[];
   liked_ingredients: string[];
@@ -254,7 +260,8 @@ function expandDislike(raw: string): string[] {
 export function isRecipeBanned(recipe: DbRecipe, prefs: UserPreferences): boolean {
   if (recipe.cuisine && prefs.disliked_cuisines.some((c) =>
     containsIngredient(recipe.cuisine!, c))) return true;
-  const terms = prefs.disliked_ingredients.flatMap(expandDislike);
+  const diet = prefs.diet_style && prefs.diet_style !== 'any' ? [prefs.diet_style] : [];
+  const terms = [...prefs.disliked_ingredients, ...diet].flatMap(expandDislike);
   return recipe.ingredients_list.some((ingredient) => terms.some((term) => {
     let text = ingredient;
     // Remove only named substitutes, leaving any additional dairy in the line.

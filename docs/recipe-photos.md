@@ -1,10 +1,10 @@
 # Recipe photos without a paid photo API
 
-The [complete shared-library checklist](photo-audit-2026-09-12.md) records 169 photo assignments and zero empty shared-recipe photo fields after the completion overlay. The 21 published JPEGs and all 169 live assignments are verified. All 55 tests passed, with no private recipes exposed through anonymous access. Earlier pending lists in the first manifests are historical.
+The current library has **219 shared recipes with zero empty photo URLs**. The [historical shared-library checklist](photo-audit-2026-09-12.md) records all 169 assignments after completing the 21 missing photos. The subsequent [50 easy meals batch](easy-050.md) adds 50 more reviewed JPEGs. The public API verifier checks both sets and confirms anonymous requests expose no private recipes. Earlier pending lists in the first manifests are historical.
 
 Apply photo overlays in order: `photo-manifest.json`, `photo-repairs-002.json`, then `photo-completion-003.json`. The API verifier composes them with the newest assignment winning. Never replay an old recipe import over a newer reviewed photo description.
 
-The latest overlay adds 18 free Creative Commons photos and reuses 3 existing library assets. The 21 delivery files total 1,660,967 bytes. Twelve illustrations generated in earlier work remain in use; no new generation or paid service was used for this completion.
+The completion overlay adds 18 free Creative Commons photos and reuses 3 existing library assets. Its 21 delivery files total 1,660,967 bytes. The following 50-meal batch reuses 49 existing library images and one licensed Creative Commons photo, totaling 4,837,273 bytes. Illustrations generated in earlier work remain in use; no new generation or paid service was used for either batch.
 
 ## Free-photo workflow
 

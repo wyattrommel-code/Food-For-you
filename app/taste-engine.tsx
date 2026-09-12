@@ -183,7 +183,7 @@ export default function TasteEngineScreen() {
   if (loading) return <LoadingScreen message="Loading your Taste Engine..." />;
 
   return (
-    <SafeAreaView style={[styles.safeArea, styles.screenFill]} edges={['top']}>
+    <SafeAreaView style={[styles.safeArea, styles.screenFill]} edges={['top','bottom','left','right']}>
       <KeyboardAvoidingView
         style={styles.kavFill}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}

@@ -24,6 +24,8 @@ import * as Haptics from 'expo-haptics';
 import * as ImagePicker from 'expo-image-picker';
 import { useTheme } from '@/context/ThemeContext';
 import type { AppColors } from '@/constants/Colors';
+import {usePreferences} from '@/hooks/usePreferences';
+import {preferenceSummary} from '@/lib/preferences';
 import { useSession } from '@/hooks/useSession';
 import { supabase } from '@/lib/supabase';
 
@@ -321,6 +323,7 @@ export default function SettingsScreen() {
   const { Colors, themeMode, setThemeMode } = useTheme();
   const styles                              = useMemo(() => makeStyles(Colors), [Colors]);
   const { session, userId }                 = useSession();
+  const {preferences,syncError,refresh:retryPreferences}=usePreferences(userId);
 
   const email = session?.user?.email ?? '';
 
@@ -524,14 +527,18 @@ export default function SettingsScreen() {
           <SettingRow
             icon="options-outline"
             title="Food Preferences"
-            subtitle="Manage your food likes and dislikes"
-            onPress={() => router.push('/taste-engine')}
+            subtitle={preferenceSummary(preferences)}
+            onPress={() => router.push('/onboarding?from=settings')}
             isLast
             Colors={Colors}
           />
         </Section>
 
-        <View style={{ height: 60 }} />
+        <Section label="MORE FOOD SETTINGS" Colors={Colors}>
+          <SettingRow icon="heart-outline" title="Ingredients & cuisines" subtitle="Edit detailed likes and dislikes" onPress={()=>router.push('/taste-engine')} isLast Colors={Colors}/>
+        </Section>
+        {syncError && <Pressable accessibilityRole="button" onPress={retryPreferences} style={{padding:20,minHeight:48}}><Text style={{color:Colors.accent}}>{syncError} Tap to retry.</Text></Pressable>}
+        <View style={{ height: 24 }} />
       </ScrollView>
 
       {/* ── Profile Edit Modal ────────────────────────────── */}

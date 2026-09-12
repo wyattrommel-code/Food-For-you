@@ -234,13 +234,13 @@ export default function RecipeDetailScreen() {
 
   useEffect(() => {
     if (!recipe) return;
-    const raw = recipe.servings;
+    const raw = preferences.household_size ?? recipe.servings;
     const d =
       raw != null && raw > 0
         ? Math.min(SERVING_SLIDER_MAX, Math.max(SERVING_SLIDER_MIN, Math.round(raw)))
         : 2;
     setSelectedServings(d);
-  }, [recipe?.id, recipe?.servings]);
+  }, [recipe?.id, recipe?.servings, preferences.household_size]);
 
   const servingRatio = useMemo(
     () => getServingScaleRatio(selectedServings, recipe?.servings),
@@ -487,6 +487,11 @@ export default function RecipeDetailScreen() {
         <Text style={styles.servingsSliderLabel}>Servings</Text>
         <Text style={styles.servingsCount}>{selectedServings}</Text>
         <Slider
+          accessibilityLabel="Recipe servings"
+          accessibilityValue={{ min: SERVING_SLIDER_MIN, max: SERVING_SLIDER_MAX, now: selectedServings }}
+          aria-valuemin={SERVING_SLIDER_MIN}
+          aria-valuemax={SERVING_SLIDER_MAX}
+          aria-valuenow={selectedServings}
           style={styles.servingsSlider}
           minimumValue={SERVING_SLIDER_MIN}
           maximumValue={SERVING_SLIDER_MAX}
