@@ -2724,5 +2724,14 @@
       "visual_review": "Existing image visually reviewed.",
       "notes": "Main dish matches; image is clear at card and detail size. Serving illustration, not proof of a cooked recipe test."
     }
-  ]
+  ],
+  "verification": {
+    "tests_passed": 52,
+    "new_published_images_verified_by_hash": 7,
+    "public_api_image_assignments_verified": 169,
+    "private_rows_visible_to_anonymous": 0,
+    "rows_rewritten_on_repeat": 0,
+    "status": "applied-and-verified-in-testing",
+    "new_google_play_binary": false
+  }
 }

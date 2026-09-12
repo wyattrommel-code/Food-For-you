@@ -4,7 +4,7 @@ Reviewed all **169 shared recipes**. Private user recipes were not accessed or c
 
 Before repairs: 142 images loaded, 11 Manus CDN links returned HTTP 403, and 16 recipes had no image. Twelve temporary HTTP 429 responses passed a slower retry and were not treated as broken. No byte-identical images were shared between different recipes. All loaded images were at least 900 pixels wide and 602 pixels tall.
 
-Seven replacement images are prepared: four recovered from existing Mealsolved storage and three free licensed photos. Ten unusable URLs are cleared: nine broken links without an approved replacement and the pork-chashu image on the chicken ramen recipe. Rejected URLs are preserved in the before snapshots. No recipes or storage objects are deleted.
+Seven replacement images are now live in testing: four recovered from existing Mealsolved storage and three free licensed photos. Ten unusable URLs are cleared: nine broken links without an approved replacement and the pork-chashu image on the chicken ramen recipe. Rejected URLs are preserved in the before snapshots. No recipes or storage objects are deleted.
 
 After the repair overlay: **148 recipes have images and 21 need photos**. Of the 148, 147 are usable serving illustrations (some have the disclosed variations below); Ground Beef Tacos still needs a closer soft-flour-tortilla photo. The taco image is retained and flagged, not counted as an exact match. This is not a claim that every recipe now has a good photo.
 
@@ -213,3 +213,7 @@ No new AI generation, paid photo APIs or subscriptions were used. Seven optimize
 Run `node scripts/recipe-photos.cjs --manifest data/recipes/photo-repairs-002.json --sql` for local validation and guarded SQL generation. Publish assets first, then use `--verify-remote` to check the hosted JPEG bytes. Trial SQL with ROLLBACK, apply it with trusted administrative access, and run `node scripts/verify-recipe-api.cjs`. The API checker composes the original recipe reviews and both photo overlays. New library or photo changes should receive a fresh audit; this report is a dated snapshot.
 
 The existing app receives photo URLs after refreshing its library. This audit submits no new Google Play binary.
+
+## Completed verification
+
+All 52 tests passed. The seven published replacements returned valid JPEGs with the expected SHA-256 and byte length. SQL was trialed with rollback, applied, and repeated with zero rows rewritten. The anonymous app API matched all 169 final image assignments and all 30 photo-overlay records; private recipe access returned zero rows. Live totals are 169 shared recipes, 148 image URLs, 21 empty photo fields and no remaining Manus CDN links. This validates the database and image delivery; no new Google Play binary was submitted or tested on a physical device.
