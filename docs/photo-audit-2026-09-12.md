@@ -1,6 +1,6 @@
 # Whole recipe photo audit — 2026-09-12
 
-All **169 shared recipes now have a reviewed photo assignment**. The completion overlay fills the 21 fields left empty by the initial audit. Publication and live API checks are pending.
+All **169 shared recipes now have a reviewed photo assignment**. The completion overlay fills the 21 fields left empty by the initial audit. All 21 published JPEGs passed MIME, byte-length and SHA-256 checks. The guarded SQL passed a rollback trial and was applied. The public API verified all 169 photo assignments, 41 final photo overlays and zero private rows. All 55 tests passed.
 
 The completion adds 18 Creative Commons photos and reuses 3 existing library images. No new AI generation, paid API or subscription was used. All images are resized to at most 900 pixels on either side, with aspect ratio preserved. Original recipe ingredients, instructions, ownership and dietary tags are unchanged.
 

@@ -1,6 +1,6 @@
 # Recipe photos without a paid photo API
 
-The [complete shared-library checklist](photo-audit-2026-09-12.md) records 169 photo assignments and zero empty shared-recipe photo fields after the completion overlay. Publication and API verification are pending. Earlier pending lists in the first manifests are historical.
+The [complete shared-library checklist](photo-audit-2026-09-12.md) records 169 photo assignments and zero empty shared-recipe photo fields after the completion overlay. The 21 published JPEGs and all 169 live assignments are verified. All 55 tests passed, with no private recipes exposed through anonymous access. Earlier pending lists in the first manifests are historical.
 
 Apply photo overlays in order: `photo-manifest.json`, `photo-repairs-002.json`, then `photo-completion-003.json`. The API verifier composes them with the newest assignment winning. Never replay an old recipe import over a newer reviewed photo description.
 
