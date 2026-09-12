@@ -1,0 +1,1671 @@
+[
+  {
+    "title": "20-Minute Honey Garlic Chicken",
+    "meal_time": [
+      "dinner"
+    ],
+    "prep_time_mins": 20
+  },
+  {
+    "title": "American Goulash",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 30
+  },
+  {
+    "title": "Avocado Toast",
+    "meal_time": [
+      "breakfast",
+      "lunch"
+    ],
+    "prep_time_mins": 10
+  },
+  {
+    "title": "Bacon BBQ Burgers",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 25
+  },
+  {
+    "title": "Bacon-Wrapped Jalapeno Poppers",
+    "meal_time": [
+      "snack"
+    ],
+    "prep_time_mins": 50
+  },
+  {
+    "title": "Bacon, Egg & Cheese Breakfast Sandwich",
+    "meal_time": [
+      "breakfast"
+    ],
+    "prep_time_mins": 20
+  },
+  {
+    "title": "Baked Ziti",
+    "meal_time": [
+      "dinner"
+    ],
+    "prep_time_mins": 55
+  },
+  {
+    "title": "Banana Bread",
+    "meal_time": [
+      "breakfast",
+      "dessert"
+    ],
+    "prep_time_mins": 85
+  },
+  {
+    "title": "BBQ Baby Back Ribs",
+    "meal_time": [
+      "dinner"
+    ],
+    "prep_time_mins": 210
+  },
+  {
+    "title": "BBQ Chicken and Cheddar Quesadillas",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 20
+  },
+  {
+    "title": "BBQ Grilled Pork Chops",
+    "meal_time": [
+      "dinner"
+    ],
+    "prep_time_mins": 35
+  },
+  {
+    "title": "BBQ Pulled Chicken Sandwiches",
+    "meal_time": [
+      "dinner",
+      "lunch"
+    ],
+    "prep_time_mins": 75
+  },
+  {
+    "title": "BBQ Smash Burgers",
+    "meal_time": [
+      "dinner",
+      "lunch"
+    ],
+    "prep_time_mins": 20
+  },
+  {
+    "title": "Beef and Bean Burrito Bowls",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 25
+  },
+  {
+    "title": "Beef and Rice Skillet",
+    "meal_time": [
+      "dinner"
+    ],
+    "prep_time_mins": 40
+  },
+  {
+    "title": "Beef Birria Tacos",
+    "meal_time": [
+      "dinner"
+    ],
+    "prep_time_mins": 270
+  },
+  {
+    "title": "Beef Lo Mein",
+    "meal_time": [
+      "dinner"
+    ],
+    "prep_time_mins": 45
+  },
+  {
+    "title": "Beer Can Smoked Chicken",
+    "meal_time": [
+      "dinner"
+    ],
+    "prep_time_mins": 180
+  },
+  {
+    "title": "Black Bean Quesadillas",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 20
+  },
+  {
+    "title": "Boxed Beef Pasta with Green Beans",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 30
+  },
+  {
+    "title": "Boxed Mac and Canned Chili Dinner",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 25
+  },
+  {
+    "title": "Breakfast Burrito",
+    "meal_time": [
+      "breakfast"
+    ],
+    "prep_time_mins": 30
+  },
+  {
+    "title": "Breakfast Tacos with Eggs and Sausage",
+    "meal_time": [
+      "breakfast",
+      "dinner"
+    ],
+    "prep_time_mins": 25
+  },
+  {
+    "title": "Buffalo Chicken Dip",
+    "meal_time": [
+      "snack"
+    ],
+    "prep_time_mins": 45
+  },
+  {
+    "title": "Buffalo Chicken Sliders",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 30
+  },
+  {
+    "title": "Buttered Garlic Egg Noodles",
+    "meal_time": [
+      "dinner",
+      "lunch",
+      "sides"
+    ],
+    "prep_time_mins": 20
+  },
+  {
+    "title": "Buttered Toast with Jam",
+    "meal_time": [
+      "breakfast",
+      "snack"
+    ],
+    "prep_time_mins": 5
+  },
+  {
+    "title": "Buttermilk Pancakes from Scratch",
+    "meal_time": [
+      "breakfast"
+    ],
+    "prep_time_mins": 30
+  },
+  {
+    "title": "Carrot Cake with Cream Cheese Frosting",
+    "meal_time": [
+      "dessert"
+    ],
+    "prep_time_mins": 90
+  },
+  {
+    "title": "Cheese Quesadillas with Fresh Pico de Gallo",
+    "meal_time": [
+      "lunch",
+      "dinner",
+      "snack"
+    ],
+    "prep_time_mins": 25
+  },
+  {
+    "title": "Cheese Quesadillas with Guacamole",
+    "meal_time": [
+      "lunch",
+      "snack",
+      "dinner"
+    ],
+    "prep_time_mins": 20
+  },
+  {
+    "title": "Cheesy Beef and Potato Skillet",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 30
+  },
+  {
+    "title": "Cheesy Salsa Chicken",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 40
+  },
+  {
+    "title": "Chicken and Broccoli Rice Bake",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 45
+  },
+  {
+    "title": "Chicken and Drop Dumplings",
+    "meal_time": [
+      "dinner"
+    ],
+    "prep_time_mins": 55
+  },
+  {
+    "title": "Chicken and Noodles in Gravy",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 25
+  },
+  {
+    "title": "Chicken and Potato Enchilada Skillet",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 55
+  },
+  {
+    "title": "Chicken and Waffles Shortcut Dinner",
+    "meal_time": [
+      "breakfast",
+      "dinner"
+    ],
+    "prep_time_mins": 30
+  },
+  {
+    "title": "Chicken Bacon Ranch Pasta",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 25
+  },
+  {
+    "title": "Chicken Caesar Wrap",
+    "meal_time": [
+      "lunch"
+    ],
+    "prep_time_mins": 35
+  },
+  {
+    "title": "Chicken Enchiladas",
+    "meal_time": [
+      "dinner"
+    ],
+    "prep_time_mins": 60
+  },
+  {
+    "title": "Chicken Fajita Pasta",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 30
+  },
+  {
+    "title": "Chicken Fried Rice with Frozen Vegetables",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 20
+  },
+  {
+    "title": "Chicken Gravy over Instant Mash",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 15
+  },
+  {
+    "title": "Chicken Marinara Spaghetti",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 20
+  },
+  {
+    "title": "Chicken Parmesan",
+    "meal_time": [
+      "dinner"
+    ],
+    "prep_time_mins": 45
+  },
+  {
+    "title": "Chicken Tikka Masala",
+    "meal_time": [
+      "dinner"
+    ],
+    "prep_time_mins": 90
+  },
+  {
+    "title": "Chicken, Ham and Swiss Bake",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 45
+  },
+  {
+    "title": "Chickpea and Pickle Sandwiches",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 15
+  },
+  {
+    "title": "Chocolate Lava Cakes",
+    "meal_time": [
+      "dessert"
+    ],
+    "prep_time_mins": 50
+  },
+  {
+    "title": "Chorizo, Egg and Potato Breakfast Skillet",
+    "meal_time": [
+      "breakfast",
+      "dinner"
+    ],
+    "prep_time_mins": 30
+  },
+  {
+    "title": "Classic American Potato Salad",
+    "meal_time": [
+      "sides"
+    ],
+    "prep_time_mins": 40
+  },
+  {
+    "title": "Classic Beef Stew",
+    "meal_time": [
+      "dinner"
+    ],
+    "prep_time_mins": 180
+  },
+  {
+    "title": "Classic BLT Sandwich",
+    "meal_time": [
+      "lunch"
+    ],
+    "prep_time_mins": 15
+  },
+  {
+    "title": "Classic Cereal Bowl",
+    "meal_time": [
+      "breakfast"
+    ],
+    "prep_time_mins": 5
+  },
+  {
+    "title": "Classic Cheese Omelette",
+    "meal_time": [
+      "breakfast",
+      "lunch"
+    ],
+    "prep_time_mins": 10
+  },
+  {
+    "title": "Classic Chicken Noodle Soup",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 50
+  },
+  {
+    "title": "Classic Chicken Pot Pie",
+    "meal_time": [
+      "dinner"
+    ],
+    "prep_time_mins": 80
+  },
+  {
+    "title": "Classic Chocolate Chip Cookies",
+    "meal_time": [
+      "dessert"
+    ],
+    "prep_time_mins": 35
+  },
+  {
+    "title": "Classic Chocolate Fudge",
+    "meal_time": [
+      "dessert",
+      "snack"
+    ],
+    "prep_time_mins": 20
+  },
+  {
+    "title": "Classic Chocolate Layer Cake",
+    "meal_time": [
+      "dessert"
+    ],
+    "prep_time_mins": 120
+  },
+  {
+    "title": "Classic Creamy Coleslaw",
+    "meal_time": [
+      "sides"
+    ],
+    "prep_time_mins": 15
+  },
+  {
+    "title": "Classic Deviled Eggs",
+    "meal_time": [
+      "snack"
+    ],
+    "prep_time_mins": 30
+  },
+  {
+    "title": "Classic Fluffy Pancakes",
+    "meal_time": [
+      "breakfast",
+      "dinner"
+    ],
+    "prep_time_mins": 20
+  },
+  {
+    "title": "Classic French Onion Soup",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 105
+  },
+  {
+    "title": "Classic French Toast",
+    "meal_time": [
+      "breakfast"
+    ],
+    "prep_time_mins": 40
+  },
+  {
+    "title": "Classic Fried Rice",
+    "meal_time": [
+      "dinner",
+      "lunch"
+    ],
+    "prep_time_mins": 20
+  },
+  {
+    "title": "Classic Fudgy Brownies",
+    "meal_time": [
+      "dessert"
+    ],
+    "prep_time_mins": 50
+  },
+  {
+    "title": "Classic Garlic Mashed Potatoes",
+    "meal_time": [
+      "sides"
+    ],
+    "prep_time_mins": 40
+  },
+  {
+    "title": "Classic Green Bean Casserole",
+    "meal_time": [
+      "sides"
+    ],
+    "prep_time_mins": 55
+  },
+  {
+    "title": "Classic Grilled Cheese",
+    "meal_time": [
+      "lunch",
+      "snack"
+    ],
+    "prep_time_mins": 15
+  },
+  {
+    "title": "Classic Guacamole",
+    "meal_time": [
+      "snack"
+    ],
+    "prep_time_mins": 15
+  },
+  {
+    "title": "Classic Homemade Beef Chili",
+    "meal_time": [
+      "dinner",
+      "lunch"
+    ],
+    "prep_time_mins": 75
+  },
+  {
+    "title": "Classic Homemade Lasagna",
+    "meal_time": [
+      "dinner"
+    ],
+    "prep_time_mins": 90
+  },
+  {
+    "title": "Classic Meatloaf",
+    "meal_time": [
+      "dinner"
+    ],
+    "prep_time_mins": 75
+  },
+  {
+    "title": "Classic Philly Cheesesteak",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 75
+  },
+  {
+    "title": "Classic Rice and Beans",
+    "meal_time": [
+      "dinner",
+      "lunch"
+    ],
+    "prep_time_mins": 35
+  },
+  {
+    "title": "Classic Scrambled Eggs",
+    "meal_time": [
+      "breakfast"
+    ],
+    "prep_time_mins": 10
+  },
+  {
+    "title": "Classic Skillet Cornbread",
+    "meal_time": [
+      "sides"
+    ],
+    "prep_time_mins": 35
+  },
+  {
+    "title": "Classic Sloppy Joes",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 30
+  },
+  {
+    "title": "Classic Smash Burger",
+    "meal_time": [
+      "dinner",
+      "lunch"
+    ],
+    "prep_time_mins": 20
+  },
+  {
+    "title": "Classic Snickerdoodles",
+    "meal_time": [
+      "dessert",
+      "snack"
+    ],
+    "prep_time_mins": 30
+  },
+  {
+    "title": "Classic Spaghetti with Meat Sauce",
+    "meal_time": [
+      "dinner",
+      "lunch"
+    ],
+    "prep_time_mins": 45
+  },
+  {
+    "title": "Classic Strawberry Shortcake",
+    "meal_time": [
+      "dessert"
+    ],
+    "prep_time_mins": 60
+  },
+  {
+    "title": "Classic Stuffed Bell Peppers",
+    "meal_time": [
+      "dinner"
+    ],
+    "prep_time_mins": 75
+  },
+  {
+    "title": "Classic Tiramisu",
+    "meal_time": [
+      "dessert"
+    ],
+    "prep_time_mins": 45
+  },
+  {
+    "title": "Classic Tuna Salad Sandwich",
+    "meal_time": [
+      "lunch"
+    ],
+    "prep_time_mins": 15
+  },
+  {
+    "title": "Creamy Chicken Alfredo",
+    "meal_time": [
+      "dinner"
+    ],
+    "prep_time_mins": 40
+  },
+  {
+    "title": "Creamy Chicken Gnocchi Soup",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 25
+  },
+  {
+    "title": "Creamy Chicken Mushroom Skillet",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 30
+  },
+  {
+    "title": "Creamy Garlic Chicken",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 25
+  },
+  {
+    "title": "Creamy Macaroni Salad",
+    "meal_time": [
+      "sides"
+    ],
+    "prep_time_mins": 25
+  },
+  {
+    "title": "Creamy Pasta Salad",
+    "meal_time": [
+      "sides"
+    ],
+    "prep_time_mins": 25
+  },
+  {
+    "title": "Creamy Pesto Pasta",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 20
+  },
+  {
+    "title": "Creamy Roasted Tomato Soup",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 60
+  },
+  {
+    "title": "Creamy Scalloped Potatoes au Gratin",
+    "meal_time": [
+      "sides"
+    ],
+    "prep_time_mins": 105
+  },
+  {
+    "title": "Creamy Tortellini and Vegetable Soup",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 25
+  },
+  {
+    "title": "Creme Brulee",
+    "meal_time": [
+      "dessert"
+    ],
+    "prep_time_mins": 75
+  },
+  {
+    "title": "Crispy Baked Chicken Thighs",
+    "meal_time": [
+      "dinner",
+      "lunch"
+    ],
+    "prep_time_mins": 50
+  },
+  {
+    "title": "Crispy Chicken Mashed Potato Bowls",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 30
+  },
+  {
+    "title": "Crispy Frozen Fish Tacos",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 30
+  },
+  {
+    "title": "Crispy Honey Mustard Chicken Tenders",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 30
+  },
+  {
+    "title": "Crispy Skillet Hash Browns",
+    "meal_time": [
+      "breakfast",
+      "sides"
+    ],
+    "prep_time_mins": 25
+  },
+  {
+    "title": "Crispy Smashed Potatoes",
+    "meal_time": [
+      "sides"
+    ],
+    "prep_time_mins": 55
+  },
+  {
+    "title": "Easy Beef and Bean Enchiladas",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 45
+  },
+  {
+    "title": "Easy Chicken Enchilada Soup",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 25
+  },
+  {
+    "title": "Easy White Chicken Chili",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 25
+  },
+  {
+    "title": "Eggs Benedict with Hollandaise",
+    "meal_time": [
+      "breakfast"
+    ],
+    "prep_time_mins": 60
+  },
+  {
+    "title": "English Muffin Pizzas",
+    "meal_time": [
+      "lunch",
+      "snack",
+      "dinner"
+    ],
+    "prep_time_mins": 20
+  },
+  {
+    "title": "Four-Ingredient Ravioli Bake",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 45
+  },
+  {
+    "title": "French Onion Beef Sliders",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 30
+  },
+  {
+    "title": "Fried Bologna Sandwich",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 15
+  },
+  {
+    "title": "Fried Egg Sandwich",
+    "meal_time": [
+      "breakfast",
+      "lunch"
+    ],
+    "prep_time_mins": 10
+  },
+  {
+    "title": "Garden Salad with Red Wine Vinaigrette",
+    "meal_time": [
+      "sides"
+    ],
+    "prep_time_mins": 15
+  },
+  {
+    "title": "Garlic Butter Corn on the Cob",
+    "meal_time": [
+      "sides"
+    ],
+    "prep_time_mins": 20
+  },
+  {
+    "title": "Garlic Butter Shrimp Pasta",
+    "meal_time": [
+      "dinner"
+    ],
+    "prep_time_mins": 25
+  },
+  {
+    "title": "Garlic Shrimp Tacos",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 20
+  },
+  {
+    "title": "German Potato Salad",
+    "meal_time": [
+      "sides"
+    ],
+    "prep_time_mins": 45
+  },
+  {
+    "title": "Greek Chicken Rice Bowls",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 25
+  },
+  {
+    "title": "Grilled BBQ Chicken Thighs",
+    "meal_time": [
+      "dinner",
+      "lunch"
+    ],
+    "prep_time_mins": 50
+  },
+  {
+    "title": "Grilled BBQ Hot Dogs",
+    "meal_time": [
+      "dinner",
+      "lunch"
+    ],
+    "prep_time_mins": 15
+  },
+  {
+    "title": "Grilled Cheese with Homemade Tomato Soup",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 45
+  },
+  {
+    "title": "Grilled Elote Street Corn",
+    "meal_time": [
+      "sides"
+    ],
+    "prep_time_mins": 25
+  },
+  {
+    "title": "Grilled PB&J Sandwiches",
+    "meal_time": [
+      "lunch",
+      "snack"
+    ],
+    "prep_time_mins": 15
+  },
+  {
+    "title": "Ground Beef Stroganoff with Egg Noodles",
+    "meal_time": [
+      "dinner"
+    ],
+    "prep_time_mins": 35
+  },
+  {
+    "title": "Ground Beef Tacos",
+    "meal_time": [
+      "dinner",
+      "lunch"
+    ],
+    "prep_time_mins": 25
+  },
+  {
+    "title": "Ham and Swiss Sub Sandwiches",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 10
+  },
+  {
+    "title": "Homemade Baked Mac and Cheese",
+    "meal_time": [
+      "dinner",
+      "lunch"
+    ],
+    "prep_time_mins": 55
+  },
+  {
+    "title": "Homemade Belgian Waffles",
+    "meal_time": [
+      "breakfast"
+    ],
+    "prep_time_mins": 40
+  },
+  {
+    "title": "Homemade Blondies",
+    "meal_time": [
+      "dessert",
+      "snack"
+    ],
+    "prep_time_mins": 45
+  },
+  {
+    "title": "Homemade Bolognese with Tagliatelle",
+    "meal_time": [
+      "dinner"
+    ],
+    "prep_time_mins": 150
+  },
+  {
+    "title": "Homemade Chicken Nuggets",
+    "meal_time": [
+      "dinner",
+      "lunch",
+      "snack"
+    ],
+    "prep_time_mins": 40
+  },
+  {
+    "title": "Homemade Cinnamon Rolls",
+    "meal_time": [
+      "breakfast",
+      "dessert"
+    ],
+    "prep_time_mins": 180
+  },
+  {
+    "title": "Homemade Corn Dogs",
+    "meal_time": [
+      "dinner",
+      "snack"
+    ],
+    "prep_time_mins": 60
+  },
+  {
+    "title": "Homemade Dinner Rolls",
+    "meal_time": [
+      "sides"
+    ],
+    "prep_time_mins": 150
+  },
+  {
+    "title": "Homemade Fish Sticks",
+    "meal_time": [
+      "dinner",
+      "lunch"
+    ],
+    "prep_time_mins": 35
+  },
+  {
+    "title": "Homemade Lemon Bars",
+    "meal_time": [
+      "dessert"
+    ],
+    "prep_time_mins": 90
+  },
+  {
+    "title": "Homemade Meatballs with Marinara and Spaghetti",
+    "meal_time": [
+      "dinner"
+    ],
+    "prep_time_mins": 90
+  },
+  {
+    "title": "Homemade Pizza from Scratch",
+    "meal_time": [
+      "dinner"
+    ],
+    "prep_time_mins": 90
+  },
+  {
+    "title": "Homemade Ramen",
+    "meal_time": [
+      "dinner",
+      "lunch"
+    ],
+    "prep_time_mins": 90
+  },
+  {
+    "title": "Homemade Soft Pretzels",
+    "meal_time": [
+      "snack"
+    ],
+    "prep_time_mins": 120
+  },
+  {
+    "title": "Honey Jalapeno Cornbread",
+    "meal_time": [
+      "sides"
+    ],
+    "prep_time_mins": 35
+  },
+  {
+    "title": "Hot Spinach & Artichoke Dip",
+    "meal_time": [
+      "snack"
+    ],
+    "prep_time_mins": 50
+  },
+  {
+    "title": "Lemon Garlic Chicken and Potatoes",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 60
+  },
+  {
+    "title": "Lemon Pepper Chicken Drumsticks",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 60
+  },
+  {
+    "title": "Loaded Baked Potato Dinner",
+    "meal_time": [
+      "dinner"
+    ],
+    "prep_time_mins": 70
+  },
+  {
+    "title": "Loaded Ballpark Hot Dogs",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 15
+  },
+  {
+    "title": "Loaded Frozen Pizza Night",
+    "meal_time": [
+      "dinner",
+      "snack"
+    ],
+    "prep_time_mins": 5
+  },
+  {
+    "title": "Loaded Mini Pita Pizzas",
+    "meal_time": [
+      "lunch",
+      "snack",
+      "dinner"
+    ],
+    "prep_time_mins": 25
+  },
+  {
+    "title": "Loaded Taco Salad",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 20
+  },
+  {
+    "title": "Loaded Twice-Baked Potatoes",
+    "meal_time": [
+      "sides"
+    ],
+    "prep_time_mins": 105
+  },
+  {
+    "title": "Mild White Bean and Spinach Quesadillas",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 25
+  },
+  {
+    "title": "Mushroom Swiss Burgers",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 25
+  },
+  {
+    "title": "No-Bake Chocolate Peanut Butter Oat Cookies",
+    "meal_time": [
+      "dessert",
+      "snack"
+    ],
+    "prep_time_mins": 20
+  },
+  {
+    "title": "One-Pan Creamy Chicken and Rice",
+    "meal_time": [
+      "dinner"
+    ],
+    "prep_time_mins": 30
+  },
+  {
+    "title": "One-Pan Creamy Tomato Pasta",
+    "meal_time": [
+      "dinner",
+      "lunch"
+    ],
+    "prep_time_mins": 30
+  },
+  {
+    "title": "One-Pot Cheeseburger Pasta",
+    "meal_time": [
+      "dinner",
+      "lunch"
+    ],
+    "prep_time_mins": 30
+  },
+  {
+    "title": "One-Pot Creamy Sausage Pasta",
+    "meal_time": [
+      "dinner"
+    ],
+    "prep_time_mins": 25
+  },
+  {
+    "title": "Oven Beef Sliders",
+    "meal_time": [
+      "lunch",
+      "dinner",
+      "snack"
+    ],
+    "prep_time_mins": 40
+  },
+  {
+    "title": "Oven Sweet Potato Fries",
+    "meal_time": [
+      "sides"
+    ],
+    "prep_time_mins": 35
+  },
+  {
+    "title": "Oven-Baked Baby Back Ribs",
+    "meal_time": [
+      "dinner"
+    ],
+    "prep_time_mins": 210
+  },
+  {
+    "title": "Overnight Oats",
+    "meal_time": [
+      "breakfast"
+    ],
+    "prep_time_mins": 10
+  },
+  {
+    "title": "Pan-Seared Pork Chops with Pan Gravy",
+    "meal_time": [
+      "dinner"
+    ],
+    "prep_time_mins": 25
+  },
+  {
+    "title": "Peanut Ramen with Edamame",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 20
+  },
+  {
+    "title": "Peanut Sesame Noodles",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 20
+  },
+  {
+    "title": "Pepperoni and Pepper Pizzadillas",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 20
+  },
+  {
+    "title": "Pesto Chicken and Vegetable Skillet",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 30
+  },
+  {
+    "title": "Pesto Couscous and Feta Bowls",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 20
+  },
+  {
+    "title": "Philly Cheesesteak",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 60
+  },
+  {
+    "title": "Philly Sloppy Joes",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 25
+  },
+  {
+    "title": "Pinto Beans and Cornbread",
+    "meal_time": [
+      "dinner"
+    ],
+    "prep_time_mins": 55
+  },
+  {
+    "title": "Pizza Bagels",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 25
+  },
+  {
+    "title": "Plain Cereal",
+    "meal_time": [
+      "breakfast"
+    ],
+    "prep_time_mins": 2
+  },
+  {
+    "title": "Quick Beef and Broccoli over Rice",
+    "meal_time": [
+      "dinner"
+    ],
+    "prep_time_mins": 25
+  },
+  {
+    "title": "Quick Chicken Corn Chowder",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 30
+  },
+  {
+    "title": "Quick Chicken Shawarma Wraps",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 25
+  },
+  {
+    "title": "Ranch Chicken Tray Bake",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 40
+  },
+  {
+    "title": "Rice Krispie Treats",
+    "meal_time": [
+      "dessert",
+      "snack"
+    ],
+    "prep_time_mins": 15
+  },
+  {
+    "title": "Roasted Brussels Sprouts with Bacon",
+    "meal_time": [
+      "sides"
+    ],
+    "prep_time_mins": 40
+  },
+  {
+    "title": "Roasted Garlic Green Beans",
+    "meal_time": [
+      "sides"
+    ],
+    "prep_time_mins": 25
+  },
+  {
+    "title": "Roasted Pepper and Hummus Pitas",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 10
+  },
+  {
+    "title": "Rotisserie Chicken and Stuffing Bake",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 60
+  },
+  {
+    "title": "Salisbury Steak with Gravy",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 30
+  },
+  {
+    "title": "Salsa Chicken Tacos",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 15
+  },
+  {
+    "title": "Sausage and Potato Skillet",
+    "meal_time": [
+      "dinner",
+      "breakfast"
+    ],
+    "prep_time_mins": 28
+  },
+  {
+    "title": "Sausage, White Bean and Spinach Skillet",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 25
+  },
+  {
+    "title": "Seasoned Steak Fries",
+    "meal_time": [
+      "sides"
+    ],
+    "prep_time_mins": 45
+  },
+  {
+    "title": "Shakshuka",
+    "meal_time": [
+      "breakfast",
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 40
+  },
+  {
+    "title": "Sheet Pan Beef Nachos",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 25
+  },
+  {
+    "title": "Sheet Pan Sausage and Peppers",
+    "meal_time": [
+      "dinner",
+      "lunch"
+    ],
+    "prep_time_mins": 25
+  },
+  {
+    "title": "Shepherd's Pie",
+    "meal_time": [
+      "dinner"
+    ],
+    "prep_time_mins": 75
+  },
+  {
+    "title": "Shortcut Biscuits and Sausage Gravy",
+    "meal_time": [
+      "breakfast",
+      "dinner"
+    ],
+    "prep_time_mins": 30
+  },
+  {
+    "title": "Shortcut Chicken Tetrazzini",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 50
+  },
+  {
+    "title": "Shortcut Rotisserie Chicken Noodle Soup",
+    "meal_time": [
+      "dinner",
+      "lunch"
+    ],
+    "prep_time_mins": 35
+  },
+  {
+    "title": "Shrimp Fajitas",
+    "meal_time": [
+      "dinner",
+      "lunch"
+    ],
+    "prep_time_mins": 40
+  },
+  {
+    "title": "Shrimp Scampi with Linguine",
+    "meal_time": [
+      "dinner"
+    ],
+    "prep_time_mins": 35
+  },
+  {
+    "title": "Simple Bean and Cheese Burritos",
+    "meal_time": [
+      "dinner",
+      "lunch"
+    ],
+    "prep_time_mins": 15
+  },
+  {
+    "title": "Simple Beef Vegetable Soup",
+    "meal_time": [
+      "dinner",
+      "lunch"
+    ],
+    "prep_time_mins": 45
+  },
+  {
+    "title": "Simple Potato Soup",
+    "meal_time": [
+      "dinner",
+      "lunch"
+    ],
+    "prep_time_mins": 40
+  },
+  {
+    "title": "Skillet Chicken Fajitas",
+    "meal_time": [
+      "dinner",
+      "lunch"
+    ],
+    "prep_time_mins": 25
+  },
+  {
+    "title": "Slow-Cooked Pork Carnitas",
+    "meal_time": [
+      "dinner"
+    ],
+    "prep_time_mins": 240
+  },
+  {
+    "title": "Smoked Beef Short Ribs",
+    "meal_time": [
+      "dinner"
+    ],
+    "prep_time_mins": 540
+  },
+  {
+    "title": "Smoked Chicken Wings",
+    "meal_time": [
+      "dinner",
+      "snack"
+    ],
+    "prep_time_mins": 150
+  },
+  {
+    "title": "Smoked Pulled Pork Sliders",
+    "meal_time": [
+      "dinner"
+    ],
+    "prep_time_mins": 540
+  },
+  {
+    "title": "Smoked Sausage Links",
+    "meal_time": [
+      "dinner",
+      "lunch"
+    ],
+    "prep_time_mins": 30
+  },
+  {
+    "title": "Smoky BBQ Baked Beans",
+    "meal_time": [
+      "sides"
+    ],
+    "prep_time_mins": 90
+  },
+  {
+    "title": "Southern Baked Beans",
+    "meal_time": [
+      "sides"
+    ],
+    "prep_time_mins": 90
+  },
+  {
+    "title": "Southern Fried Chicken",
+    "meal_time": [
+      "dinner",
+      "lunch"
+    ],
+    "prep_time_mins": 120
+  },
+  {
+    "title": "Southern Fried Potatoes and Onions",
+    "meal_time": [
+      "sides"
+    ],
+    "prep_time_mins": 30
+  },
+  {
+    "title": "Steamed Broccoli with Garlic Butter",
+    "meal_time": [
+      "sides"
+    ],
+    "prep_time_mins": 15
+  },
+  {
+    "title": "Sticky Apricot Chicken",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 60
+  },
+  {
+    "title": "Stovetop Tuna Noodle Skillet",
+    "meal_time": [
+      "dinner",
+      "lunch"
+    ],
+    "prep_time_mins": 20
+  },
+  {
+    "title": "Sunday Pot Roast with Gravy",
+    "meal_time": [
+      "dinner"
+    ],
+    "prep_time_mins": 210
+  },
+  {
+    "title": "Teriyaki Chicken Stir-Fry",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 25
+  },
+  {
+    "title": "Texas-Style Smoked Beef Brisket",
+    "meal_time": [
+      "dinner"
+    ],
+    "prep_time_mins": 840
+  },
+  {
+    "title": "Tuna and Mixed Bean Lunch Bowls",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 15
+  },
+  {
+    "title": "Tuna Noodle Casserole",
+    "meal_time": [
+      "dinner"
+    ],
+    "prep_time_mins": 45
+  },
+  {
+    "title": "Turkey and Hummus Cold Plates",
+    "meal_time": [
+      "lunch",
+      "dinner"
+    ],
+    "prep_time_mins": 10
+  },
+  {
+    "title": "Yellow Butter Cake with Chocolate Frosting",
+    "meal_time": [
+      "dessert"
+    ],
+    "prep_time_mins": 90
+  }
+]

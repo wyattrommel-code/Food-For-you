@@ -4,4 +4,4 @@ The recipe detail page now shows a collapsed **Sources & photo credits** control
 
 Known photo-credit suffixes are separated for presentation only; stored descriptions and attribution records are unchanged. Unknown description formats remain visible in full. TypeScript, three focused source/attribution tests, source credential scanning and whitespace checks pass.
 
-This change was made after Android 1.0.2 (8) was published to internal testing and is **not included in that binary**. It requires a subsequent Android build and release. No additional cloud build was started for this change.
+Published in [Android 1.0.3 (9)](testing-release-1.0.3.md) on September 12, 2026. Google Play confirms it is available to internal testers. The successful Expo build used source commit `e6c572fa616f79dfba070a34af76b3b615f1cc87`.

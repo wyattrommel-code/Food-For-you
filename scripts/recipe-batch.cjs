@@ -15,8 +15,8 @@ function validateBatch(batch) {
   assert.equal(batch.status, 'editorially-reviewed-not-cook-tested');
   assert.ok(Array.isArray(batch.recipes) && batch.recipes.length > 0);
   const kind = batch.batch_kind ?? 'quick';
-  assert.ok(['quick', 'easy-comfort'].includes(kind), 'Unknown batch kind');
-  const comfort = kind === 'easy-comfort';
+  assert.ok(['quick', 'easy-comfort', 'easy-everyday'].includes(kind), 'Unknown batch kind');
+  const comfort = kind !== 'quick';
   assert.ok(batch.photo_policy === undefined || batch.photo_policy === 'reviewed-local-assets', 'Unknown photo policy');
   const photoReady = batch.photo_policy === 'reviewed-local-assets';
   const titles = new Set();
@@ -46,7 +46,7 @@ function validateBatch(batch) {
       assert.equal(new Set(row[field]).size, row[field].length, `${row.title}: duplicate ${field}`);
     }
     assert.ok(row.meal_time.every(t => ['breakfast', 'lunch', 'dinner', 'snack', 'dessert', 'sides'].includes(t)));
-    assert.ok(row.meal_time.some(t => ['breakfast', 'lunch', 'dinner'].includes(t)), 'Meal required, not just a side');
+    assert.ok(row.meal_time.some(t => ['breakfast', 'lunch', 'dinner', ...(kind === 'easy-everyday' ? ['dessert'] : [])].includes(t)), 'Meal or explicitly supported dessert required, not just a side');
     assert.ok(row.ingredients_list.length <= 10, `${row.title}: review long ingredient list`);
     assert.ok(row.ingredients_list.every(x => /^\d/.test(x)), `${row.title}: measured ingredients required`);
     assert.ok(row.recipe_steps.length >= 3 && row.recipe_steps.length <= 6, `${row.title}: review step count`);
