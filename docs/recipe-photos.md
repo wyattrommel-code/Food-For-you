@@ -17,6 +17,6 @@ The completion overlay adds 18 free Creative Commons photos and reuses 3 existin
 
 ## Delivery
 
-The existing testing app reads image URLs from Supabase. These data changes appear on refresh without a new Google Play binary. Image loading/fallback source improvements still require a new app build. No private user recipe was modified.
+The existing testing app reads image URLs from Supabase. These data changes appear on refresh without a new Google Play binary. Image loading/fallback improvements are included in [Android 1.0.2 (8)](testing-release-1.0.2.md), now available to Google Play internal testers. No private user recipe was modified.
 
 Files use immutable, content-named URLs in the existing public GitHub repository during testing. This introduces no subscription or photo-generation API. GitHub raw hosting is not a dedicated production image CDN; optimized files can later move to the existing Supabase Storage allowance without changing recipe content.

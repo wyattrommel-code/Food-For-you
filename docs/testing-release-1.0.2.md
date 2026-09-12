@@ -1,6 +1,6 @@
 # Mealsolved 1.0.2 testing release
 
-Prepared September 12, 2026; Android version code 8, iOS build 8. A new store binary has not been uploaded. Confirm that code 8 exceeds the latest Play testing version before building or submitting.
+Published to Google Play internal testing on September 12, 2026: **Android 1.0.2, version code 8**. Play Console confirms “Available to internal testers.” No production release or iOS binary was submitted.
 
 ## Live recipe content
 
@@ -8,7 +8,7 @@ The 21 remaining missing photos were completed first. The subsequent batch adds 
 
 The 21 completion assets and 50 new assets were published and verified by JPEG MIME type, byte count and SHA-256 before the guarded database updates. All 169 historical assignments plus the 50 new recipes were verified through the app's public API. Recipes and their credited photos are available to the current testing app on refresh. The 500-meal launch target remains unmet.
 
-No paid photo generation, photo API, subscription or cloud build was used. Existing library illustrations and explicitly licensed community photos carry visible provenance and serving-variation notes. Editorial and visual review does not mean the recipes were cook-tested. See [the 50-meal batch](easy-050.md) and [photo workflow](recipe-photos.md).
+No paid photo generation, photo API or new subscription was used for the recipe work. Existing library illustrations and explicitly licensed community photos carry visible provenance and serving-variation notes. Editorial and visual review does not mean the recipes were cook-tested. See [the 50-meal batch](easy-050.md) and [photo workflow](recipe-photos.md).
 
 ## App behavior
 
@@ -29,12 +29,15 @@ Existing security limitations are documented in [the security report](security/2
 
 ## Verification and delivery
 
-- 77 regression tests pass, including recipe/photo validation, preference filtering and weighting, repeat avoidance, queued and offline saves, stale-cloud protection and account isolation.
+- 78 regression tests pass, including recipe/photo validation, preference filtering and weighting, repeat avoidance, queued and offline saves, stale-cloud protection, account isolation and portable dependency installation.
 - TypeScript, source credential scanning and whitespace checks pass.
 - Browser QA uses a simulated account and intercepts account writes; it reads the real 219-recipe public catalog. It checks setup completion, saved answers in Settings, reload behavior, refresh variety, loaded feed/detail photos and the one-person portion default.
 - Browser layouts were inspected at 320×740, 360×800, 390×844, 844×390 and 768×1024. Insets of 0, 16, 24, 34 and 48 plus font scales 1, 1.3 and 2 are covered by layout-metric tests. This is not a physical-device test of gesture/three-button navigation or screen readers.
-- Expo's Android JavaScript/Hermes export succeeds. This validates bundling; it is not an APK/AAB or a successful Google Play upload.
+- Expo's Android JavaScript/Hermes export and full Android cloud build succeed. A clean npm 10.9.3 install/prebuild check also passes after fixing the [local decoder dependency link](security/npm-install-portability.md).
+- Google Play accepted the signed Android App Bundle and published version code 8 to the existing internal testing track. It reports no previously supported devices lost. Its sole release warning concerns an absent deobfuscation mapping file for crash analysis; it did not block publication.
 
 Reproduce with `npm test`, `npx tsc --noEmit`, `node scripts/check-source-credentials.cjs`, and `npx expo export --platform android --output-dir dist/android-check`. For browser QA, start `npx expo start --web --port 8088 --localhost` and run `node scripts/verify-ui.cjs` with Playwright installed or `PLAYWRIGHT_MODULE_PATH` set. Screenshots and test output stay in ignored `artifacts/ui-qa/` by default.
 
-Expo is signed out on this PC. Sign in locally using `npx eas-cli login`, confirm the existing project's free build allowance and Play version code, then create a new testing build. Do not start a billed build or purchase a plan. The recipe data is live now; these UI changes reach installed Android apps only after a new build is installed. A GitHub push alone does not update the Google Play binary.
+The successful [Expo build](https://expo.dev/accounts/wyattrommel/projects/food-for-you/builds/daf460ca-b62e-4b74-8a1c-fd77463314ac) uses source commit `e93ebb5fc788f0fc04f958fa135a5476ef473b31` and completed at `2026-09-12T22:44:16.143Z`. The uploaded AAB is 50,097,952 bytes with SHA-256 `6b2761f88cd4d08d4d9011d617f180c2b9dd4c1d30fe00aa149f6addc2dc9220`. Existing Android signing credentials were reused.
+
+Existing testers can install the update through the test enrollment link provided by Play Console. Google says publication usually reaches the store within one hour, but can take longer. Installing 1.0.2 is required for the new onboarding, feed and layout behavior; recipe/photo data already reaches older builds on refresh. Physical-phone verification of the installed release remains outstanding.

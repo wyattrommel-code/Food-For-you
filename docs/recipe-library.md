@@ -16,7 +16,7 @@ The authoritative records are in the actual project:
 
 Facebook is signed in; public recipe pages are accessible. Current detailed methods were checked on publisher websites. Supabase is connected. Spoonacular's API console was signed out; revocation of the exposed legacy key still needs confirmation.
 
-The goal remains 500 distinct, useful, reviewed easy meals before production launch. Editorial checks do not replace cooking tests. Recipe data is live in testing; no new Google Play binary or production release was submitted.
+The goal remains 500 distinct, useful, reviewed easy meals before production launch. Editorial checks do not replace cooking tests. Recipe data is live, and [Android 1.0.2 (8)](testing-release-1.0.2.md) is available to Google Play internal testers with the new preference setup, varied feed and layout fixes. No production release was submitted.
 
 
 ## Comfort batch
