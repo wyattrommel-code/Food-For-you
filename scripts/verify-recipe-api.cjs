@@ -1,7 +1,8 @@
 // Read-only smoke check using the app's public key. Never prints credentials.
 const fs = require('node:fs');
 const assert = require('node:assert/strict');
-const batch = require('../data/recipes/community-001.json');
+const batches = ['community-001', 'comfort-002'].map(name => require('../data/recipes/' + name + '.json'));
+const revisions = require('../data/recipes/comfort-revisions-001.json');
 const { validateBatch } = require('./recipe-batch.cjs');
 const env = {};
 for (const line of fs.readFileSync('.env', 'utf8').split(/\r?\n/)) {
@@ -23,12 +24,16 @@ async function get(query) {
   return response.json();
 }
 (async () => {
-  const catalog = await get('recipes?select=*&is_user_created=eq.false&source_url=not.is.null');
-  for (const expected of validateBatch(batch)) {
+  const catalog = await get('recipes?select=*&is_user_created=eq.false');
+  const expectedRows = [...batches.flatMap(validateBatch), ...revisions.revisions.map(r => {
+    const { created_at, ...expected } = r.after;
+    return expected;
+  })];
+  for (const expected of expectedRows) {
     const actual = catalog.filter(row => row.title === expected.title);
     assert.equal(actual.length, 1, `Missing or duplicate recipe: ${expected.title}`);
     for (const field of Object.keys(expected)) assert.deepEqual(actual[0][field], expected[field], `${expected.title}: ${field}`);
   }
   assert.deepEqual(await get('recipes?select=id&is_user_created=eq.true'), [], 'Anonymous clients must not see private recipes');
-  console.log('Public API verified all 10 recipes and their arrays/source links; private recipe access returned zero rows.');
+  console.log(`Public API verified ${expectedRows.length} reviewed recipes and revisions; private recipe access returned zero rows.`);
 })().catch(error => { console.error(error.message); process.exitCode = 1; });

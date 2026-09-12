@@ -1,8 +1,46 @@
-# Recipe library, September 12, 2026
+# Current recipe direction
 
-Ten new meals are live in Supabase project `yhfqlvblqlpacjdkltfi`. The library now has 164 rows: 163 shared recipes and one private recipe. No existing recipes were overwritten. The public API returned all ten new recipes with matching ingredients, steps and source links, and returned zero private recipes. A repeated import inserted zero rows.
+Updated September 12, 2026. Work continues here in Codex using C:\Users\wyatt\food-for-you. Cursor handoffs are discontinued.
 
-There are 69 shared rows with effort <=2 and time <=30 minutes, up from 59. This is a candidate count, not a certified count of complete easy meals: older rows still include sides, desserts and preparation-only timings. The goal remains **500 distinct, reviewed easy meals**; at least 431 additional qualifying meals or meaningful revisions are needed. Do not count every shared recipe toward that goal.
+Prioritize American-style tacos, burgers, burritos, Hamburger Helper-style pasta, buttered noodles, oven chicken, boxed dinners and breakfast for dinner. Common prepared shortcuts are welcome. No paid recipe service or subscription is part of the workflow.
+
+The live testing library now has 169 shared recipes and one private recipe. Six comfort meals were added and three basics simplified after the first ten community recipes. This is not yet 500 reviewed easy meals.
+
+Allow meals ready in 30 minutes and longer meals with about 15 minutes of hands-on work. Show full cooking time honestly. Whole-package family portions are fine. Improve existing meals instead of adding renamed duplicates.
+
+The authoritative records are in the actual project:
+- docs/recipe-library.md
+- data/recipes/comfort-002.json
+- data/recipes/comfort-revisions-001.json
+- docs/security/2026-09-12.md
+
+Facebook is signed in; public recipe pages are accessible. Current detailed methods were checked on publisher websites. Supabase is connected. Spoonacular's API console was signed out; revocation of the exposed legacy key still needs confirmation.
+
+The goal remains 500 distinct, useful, reviewed easy meals before production launch. Editorial checks do not replace cooking tests. Recipe data is live in testing; no new Google Play binary or production release was submitted.
+
+
+## Comfort batch
+
+| Recipe | Estimated total minutes | Active minutes | Servings | Source |
+|---|---:|---:|---:|---|
+| Boxed Beef Pasta with Green Beans | 30 | 15 | 4 | [Betty Crocker Kitchens](https://www.bettycrocker.com/recipes/green-bean-and-beef-pasta-supper/56a3af35-f2d7-4e97-a8e3-198cba211f1a) |
+| Boxed Mac and Canned Chili Dinner | 25 | 10 | 3 | [r/EatCheapAndHealthy community meal idea](https://www.reddit.com/r/EatCheapAndHealthy/comments/cu0slr/) |
+| Shortcut Biscuits and Sausage Gravy | 30 | 15 | 2 | [Beth Moncel, Budget Bytes](https://www.budgetbytes.com/country-sausage-gravy/) |
+| Rotisserie Chicken and Stuffing Bake | 60 | 15 | 4 | [Julia Pacheco](https://www.juliapacheco.com/zucchini-stuffing-chicken-casserole/) |
+| Four-Ingredient Ravioli Bake | 45 | 15 | 4 | [Beth Moncel, Budget Bytes](https://www.budgetbytes.com/baked-ravioli/) |
+| Chicken and Potato Enchilada Skillet | 55 | 15 | 2 | [Julia Pacheco](https://www.juliapacheco.com/enchilada-potato-skillet/) |
+
+All six have three steps and four to seven measured ingredients. Package directions take priority for the exact product bought. Longer meals are not tagged quick. The potato skillet estimate allows more simmering time because source readers reported firm potatoes at the shorter time.
+
+## Existing recipes simplified in place
+
+| Recipe | Ingredient lines, before → after | Steps, before → after |
+|---|---:|---:|
+| Ground Beef Tacos | 14 → 7 | 9 → 3 |
+| Buttered Garlic Egg Noodles | 8 → 5 | 9 → 3 |
+| One-Pot Cheeseburger Pasta | 14 → 9 | 7 → 4 |
+
+Tacos now use mild packet seasoning and measured toppings. Noodles use garlic powder and grated cheese. Cheeseburger pasta requires no chopping and shows a 30-minute total. The revisions preserve IDs, favorites, ownership and existing image URLs; no extra rows were created. They simplify existing Mealsolved content without claiming a new external source.
 
 ## First batch
 
@@ -19,24 +57,29 @@ There are 69 shared rows with effort <=2 and time <=30 minutes, up from 59. This
 | Roasted Pepper and Hummus Pitas | 10 | 2 | [Budget Bytes](https://www.budgetbytes.com/roasted-red-pepper-hummus-wraps/) |
 | Pesto Couscous and Feta Bowls | 20 | 2 | [Jemma Morphet, Good Food](https://www.bbcgoodfood.com/recipes/10minute-couscous-salad) |
 
-These are concise Mealsolved adaptations based on ingredient and cooking facts, with original wording. Two Reddit leads were meal ideas; their quantities were authored for this batch. No recipe is claimed to be creator-approved or cook-tested. Facebook posts remain unverified because public access returned a login page; none are counted here. No creator was contacted, and no service or subscription was purchased.
 
-Every recipe has five to eight measured ingredients, one or two base servings, three or four steps, a source record and a reviewed distinction from existing recipes. `prep_time_mins` holds estimated **total** time, including cooking. Larger batches can take longer. Packaged ingredients and appliance times vary; follow package directions and check ingredient labels. Original publisher photography was not copied; new `image_url` values are intentionally empty.
+## Editorial status and sources
 
-Food safety checks use the [USDA temperature chart](https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/safe-temperature-chart) and [food-handling guidance](https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/steps-keep-food-safe). These checks do not turn estimated timings into cook tests.
+All 16 additions and three revisions are editorially reviewed, **not cook-tested**. New recipes have blank image fields. Concise original wording uses cooking facts and attributed community ideas; no publisher photos or stories were copied. Attribution does not claim permission or endorsement.
 
-## Files and repeatable import
+[Julia Pacheco's public Facebook page](https://www.facebook.com/JuliaPachecoYouTube/) was accessible in the browser. Methods in this batch were verified on her website; no Facebook-only recipe is counted. No messages, posts or comments were sent.
 
-`data/recipes/community-001.json` is the editorial record. It records source type, original timing, adaptations, equipment, audience evidence and duplicate review. The CSV contains only live recipe columns; the SQL companion is generated from the same validated rows. Neither generation nor tests write to the database.
+Safety endpoints were checked against [FoodSafety.gov's temperature chart](https://www.foodsafety.gov/food-safety-charts/safe-minimum-internal-temperatures). Timings remain estimates. These recipes do not claim nutritional completeness. Whole-package batches may be simpler to cook and portion than using fractional packets from the serving slider.
 
-1. Read the live schema with verbose column details and fetch current shared titles and ingredients before preparing another batch.
-2. Review actual source quantities and cooking steps, complete meal portions, total time, equipment and ingredient-level duplication. Keep new images blank until separately verified.
-3. Run `npm run recipes:check` for this batch, or `node scripts/recipe-batch.cjs data/recipes/<batch>.json` for another batch. Correct failed checks; they do not replace editorial review or cook tests.
-4. Review the generated CSV, using PostgreSQL text-array values, and its SQL companion. Never import XLSX. The SQL applies rows atomically as a trusted administrator, skips an identical existing shared recipe and rejects an existing title with different contents. It never updates an existing row. The mobile public key cannot publish shared recipes.
-5. After import, verify counts and run the public API check. `node scripts/verify-recipe-api.cjs` checks this first batch using only the app's public key and never logs it.
+There are 72 shared rows with effort <=2 and time <=30 minutes, plus three new meals with little active work and longer total times. The 72 is a candidate count; older rows include sides, desserts and preparation-only timings. Do not count all 169 shared rows as verified easy meals.
 
-Source links are stored live in optional `source_url` and `source_name` columns. Existing testing builds can receive the recipes immediately after refreshing. The new source-link UI needs the next app build; it has not been submitted to Google Play.
+## Repeatable import and validation
 
-## Cursor handoff
+The editorial records are in data/recipes/community-001.json, comfort-002.json and comfort-revisions-001.json. The first two generate CSV and SQL from the same validated rows. The revisions include complete before/after snapshots and generate guarded SQL updates. Generation and local tests never write to Supabase.
 
-Continue in `C:\Users\wyatt\food-for-you`. Read this file and `docs/security/2026-09-12.md`. The first batch and live access policies are already applied; do not import duplicates or replay the old baseline schema. Use the two timestamped migrations as the current change record. Preserve the no-cost constraint, collect verified sources, and grow the easy-meal library in reviewed batches. Run `npm test`, TypeScript and Expo compatibility checks before preparing the next testing build. Do not claim a production release or 500 completed easy recipes.
+1. Inspect live column details and current shared titles and ingredients before another batch. Never import XLSX.
+2. Verify quantities, complete portions, equipment, active and total time, and meaningful differences. Keep unverified images blank.
+3. Run npm run recipes:check. A new batch can use batch_kind: easy-comfort for portions up to six and total times up to 75 minutes; meals longer than 30 minutes require at most 15 active minutes, an explicit description of both times, and no quick tag. The default quick batch remains stricter.
+4. Review and trial SQL with ROLLBACK before applying. Imports skip identical shared titles and reject conflicting contents. Revisions lock rows and reject changes since review. Both require trusted administrative access; the mobile public key cannot publish shared recipes.
+5. Run node scripts/verify-recipe-api.cjs after import. It compares all 19 reviewed rows through the public API without printing credentials and verifies private recipes are hidden.
+
+Validation: 38 tests, TypeScript, Android export and public API checks. Repeated additions and revisions made zero changes. Database access policies remain in effect.
+
+The effort label in source changed from Quick to Easy so difficulty is separate from cooking time. This and source-link display require the next app build. The existing testing app can receive the recipe data after refreshing. No Google Play build was submitted.
+
+Work in C:\Users\wyatt\food-for-you from this task. Read docs/security/2026-09-12.md for applied security fixes; do not replay the old baseline schema. The remaining credential action is to confirm revocation of the old key in [Spoonacular's API console](https://spoonacular.com/food-api/console).

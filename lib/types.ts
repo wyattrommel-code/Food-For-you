@@ -424,12 +424,12 @@ export function effortSpoons(score: EffortScore | number): string {
 
 /**
  * Maps effort_score to a 3-level human-readable difficulty label.
- *   1   → "Quick"
+ *   1   → "Easy" (effort, separate from total time)
  *   2   → "Moderate"
  *   ≥3  → "Challenge"
  */
 export function difficultyLabel(score: EffortScore | number): string {
-  if (score <= 1) return 'Quick';
+  if (score <= 1) return 'Easy';
   if (score <= 2) return 'Moderate';
   return 'Challenge';
 }

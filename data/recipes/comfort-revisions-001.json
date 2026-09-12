@@ -1,0 +1,337 @@
+{
+  "batch_id": "comfort-revisions-001",
+  "reviewed_at": "2026-09-12",
+  "status": "editorially-reviewed-not-cook-tested",
+  "origin": "Simplifications of existing Mealsolved shared recipes, following the owner's comfort-food direction. No external recipe authorship claimed.",
+  "notes": "IDs, favorites, existing images and ownership remain unchanged. Buttered noodles count as a basic meal option, not a claim of nutritional completeness. Total times are estimates.",
+  "revisions": [
+    {
+      "before": {
+        "id": "18fc0b1c-6942-418c-a04a-95af6fa670b7",
+        "title": "Ground Beef Tacos",
+        "description": "Perfectly seasoned ground beef in crispy taco shells with all the classic toppings. Better than any taco kit — the homemade seasoning blend makes the difference.",
+        "meal_time": [
+          "dinner",
+          "lunch"
+        ],
+        "prep_time_mins": 25,
+        "effort_score": 1,
+        "tags": [
+          "beef",
+          "tacos",
+          "mexican",
+          "quick",
+          "kid-friendly"
+        ],
+        "image_url": "https://yhfqlvblqlpacjdkltfi.supabase.co/storage/v1/object/public/meal-photos/hero/beef_tacos.jpg",
+        "ingredients_list": [
+          "1 lb (450g) ground beef (80/20)",
+          "1/2 medium white onion, finely diced",
+          "3 garlic cloves, minced",
+          "1 tbsp chili powder",
+          "1 1/2 tsp ground cumin",
+          "1 tsp paprika",
+          "1/2 tsp garlic powder",
+          "1/2 tsp onion powder",
+          "1/4 tsp dried oregano",
+          "1 tsp salt",
+          "1/2 tsp black pepper",
+          "2/3 cup (160ml) water",
+          "8 taco shells (hard or small soft corn tortillas)",
+          "Toppings: shredded cheddar, sour cream, shredded lettuce, diced tomato, hot sauce, lime wedges"
+        ],
+        "shopping_list": [
+          "🥩 Proteins: ground beef (80/20)",
+          "🥬 Produce: white onion, garlic cloves, shredded lettuce, diced tomato, lime",
+          "🧀 Dairy: shredded cheddar cheese, sour cream",
+          "🍞 Bread: taco shells or small corn tortillas",
+          "🫙 Pantry: chili powder, cumin, paprika, garlic powder, onion powder, dried oregano, salt, black pepper, hot sauce"
+        ],
+        "recipe_steps": [
+          "Finely dice 1/2 white onion and mince 3 garlic cloves. Set aside.",
+          "In a small bowl, combine 1 tbsp chili powder, 1 1/2 tsp cumin, 1 tsp paprika, 1/2 tsp garlic powder, 1/2 tsp onion powder, 1/4 tsp oregano, 1 tsp salt, and 1/2 tsp pepper. Stir until evenly mixed.",
+          "Heat a large skillet over medium-high heat. Add 1 lb of ground beef and break apart with a spoon. Cook until no pink remains, about 5-6 minutes.",
+          "Drain excess fat, leaving about 1 tbsp behind. Add the diced onion and cook for 3-4 minutes until softened.",
+          "Add the minced garlic and stir for 30 seconds until fragrant.",
+          "Sprinkle the entire seasoning blend over the meat and stir to coat evenly.",
+          "Pour in 2/3 cup water and stir to combine. Reduce heat to medium-low and simmer for 3-4 minutes, stirring occasionally, until the liquid is mostly absorbed and the beef is saucy.",
+          "Warm taco shells according to package directions, or warm corn tortillas in a dry skillet for 20-30 seconds per side.",
+          "Spoon the beef mixture into the warmed taco shells. Top with shredded cheese, sour cream, lettuce, diced tomato, and hot sauce. Squeeze fresh lime over the top."
+        ],
+        "cuisine": "Mexican",
+        "created_at": "2026-03-24 12:00:00+00",
+        "servings": 4,
+        "user_id": null,
+        "is_user_created": false,
+        "source_url": null,
+        "source_name": null
+      },
+      "after": {
+        "id": "18fc0b1c-6942-418c-a04a-95af6fa670b7",
+        "title": "Ground Beef Tacos",
+        "description": "Simple American-style tacos with mild packet seasoning and three toppings. Makes eight tacos for four people.",
+        "meal_time": [
+          "dinner",
+          "lunch"
+        ],
+        "prep_time_mins": 25,
+        "effort_score": 1,
+        "tags": [
+          "beef",
+          "tacos",
+          "easy",
+          "quick",
+          "comfort-food",
+          "family-dinner"
+        ],
+        "image_url": "https://yhfqlvblqlpacjdkltfi.supabase.co/storage/v1/object/public/meal-photos/hero/beef_tacos.jpg",
+        "ingredients_list": [
+          "1 lb ground beef",
+          "1 packet mild taco seasoning, 1 oz",
+          "2/3 cup water",
+          "8 small soft flour tortillas",
+          "1 cup shredded cheddar cheese",
+          "2 cups shredded lettuce",
+          "1/2 cup jarred salsa"
+        ],
+        "shopping_list": [
+          "1 lb ground beef",
+          "1 packet mild taco seasoning, 1 oz",
+          "8 small soft flour tortillas",
+          "1 cup shredded cheddar cheese",
+          "2 cups shredded lettuce",
+          "1/2 cup jarred salsa"
+        ],
+        "recipe_steps": [
+          "Cook and crumble the beef in a skillet over medium-high heat for about 7 minutes, until it reaches 160°F. Spoon excess fat into a heatproof container.",
+          "Stir in taco seasoning and water; follow your packet if its water amount differs. Simmer on low for 3-5 minutes until saucy.",
+          "Warm the tortillas according to their package. Fill with beef, cheese, lettuce and salsa."
+        ],
+        "cuisine": "American",
+        "created_at": "2026-03-24 12:00:00+00",
+        "servings": 4,
+        "user_id": null,
+        "is_user_created": false,
+        "source_url": null,
+        "source_name": null
+      }
+    },
+    {
+      "before": {
+        "id": "53faedf2-f560-4996-a672-4bbd01529de9",
+        "title": "Buttered Garlic Egg Noodles",
+        "description": "Simple, comforting egg noodles tossed in garlic butter with Parmesan and fresh parsley. One of those dishes that takes 20 minutes and tastes like you tried much harder than you did.",
+        "meal_time": [
+          "dinner",
+          "lunch",
+          "sides"
+        ],
+        "prep_time_mins": 20,
+        "effort_score": 1,
+        "tags": [
+          "pasta",
+          "quick",
+          "vegetarian",
+          "comfort-food",
+          "easy"
+        ],
+        "image_url": "https://yhfqlvblqlpacjdkltfi.supabase.co/storage/v1/object/public/meal-photos/hero/buttered_garlic_egg_noodles.jpg",
+        "ingredients_list": [
+          "12 oz wide egg noodles",
+          "4 tbsp unsalted butter",
+          "3 garlic cloves, minced",
+          "1/2 tsp garlic powder",
+          "1/2 tsp salt",
+          "1/4 tsp black pepper",
+          "1/4 cup Parmesan cheese block, grated",
+          "2 tbsp fresh parsley, chopped"
+        ],
+        "shopping_list": [
+          "🍞 Bread: wide egg noodles",
+          "🧀 Dairy: unsalted butter, Parmesan cheese block",
+          "🥬 Produce: garlic cloves, fresh parsley",
+          "🫙 Pantry: garlic powder, salt, black pepper"
+        ],
+        "recipe_steps": [
+          "Mince 3 garlic cloves. Chop 2 tbsp fresh parsley. Grate 1/4 cup Parmesan. Set all aside.",
+          "Bring a large pot of water to a boil. Add 1 tbsp salt and 12 oz egg noodles. Cook for 8 minutes until tender. Reserve 1/4 cup pasta water before draining. Drain through a colander.",
+          "Melt 4 tbsp butter in the same large pot over medium-low heat.",
+          "Add the minced garlic and cook for 1 minute, stirring constantly, until fragrant but not browned.",
+          "Add the drained noodles back to the pot. Toss until fully coated in the garlic butter.",
+          "Pour in 2 tbsp of the reserved pasta water. Add 1/2 tsp garlic powder, 1/2 tsp salt, and 1/4 tsp pepper. Toss until all seasonings are combined.",
+          "Remove from heat. Sprinkle the grated Parmesan over the noodles and toss once more to incorporate.",
+          "Sprinkle the chopped parsley over the top.",
+          "Serve immediately."
+        ],
+        "cuisine": "American",
+        "created_at": "2026-03-29 12:00:00+00",
+        "servings": 4,
+        "user_id": null,
+        "is_user_created": false,
+        "source_url": null,
+        "source_name": null
+      },
+      "after": {
+        "id": "53faedf2-f560-4996-a672-4bbd01529de9",
+        "title": "Buttered Garlic Egg Noodles",
+        "description": "Basic buttered noodles with garlic powder and ready-grated Parmesan. No chopping or fresh herbs needed.",
+        "meal_time": [
+          "dinner",
+          "lunch",
+          "sides"
+        ],
+        "prep_time_mins": 20,
+        "effort_score": 1,
+        "tags": [
+          "pasta",
+          "quick",
+          "comfort-food",
+          "easy"
+        ],
+        "image_url": "https://yhfqlvblqlpacjdkltfi.supabase.co/storage/v1/object/public/meal-photos/hero/buttered_garlic_egg_noodles.jpg",
+        "ingredients_list": [
+          "12 oz wide egg noodles",
+          "4 tbsp butter",
+          "1/2 tsp garlic powder",
+          "1/4 cup grated Parmesan cheese",
+          "1/4 tsp black pepper"
+        ],
+        "shopping_list": [
+          "12 oz wide egg noodles",
+          "4 tbsp butter",
+          "1/2 tsp garlic powder",
+          "1/4 cup grated Parmesan cheese",
+          "1/4 tsp black pepper"
+        ],
+        "recipe_steps": [
+          "Bring a large pot of water to a boil. Cook the egg noodles according to the bag until tender, usually 8-10 minutes.",
+          "Save a little cooking water in a mug, then drain the noodles carefully and return them to the warm pot with the heat off.",
+          "Stir in butter, garlic powder, Parmesan and pepper. Loosen with a splash of the saved water if needed, then serve."
+        ],
+        "cuisine": "American",
+        "created_at": "2026-03-29 12:00:00+00",
+        "servings": 4,
+        "user_id": null,
+        "is_user_created": false,
+        "source_url": null,
+        "source_name": null
+      }
+    },
+    {
+      "before": {
+        "id": "93f3cc87-86a7-41f9-a7b5-357013555f7d",
+        "title": "One-Pot Cheeseburger Pasta",
+        "description": "All the flavors of a cheeseburger cooked into a creamy, cheesy pasta without dirtying more than one pot. Stirring every couple of minutes while the pasta cooks keeps it from sticking and helps the sauce come together.",
+        "meal_time": [
+          "dinner",
+          "lunch"
+        ],
+        "prep_time_mins": 20,
+        "effort_score": 1,
+        "tags": [
+          "beef",
+          "pasta",
+          "one-pot",
+          "kid-friendly",
+          "quick",
+          "comfort-food"
+        ],
+        "image_url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663417307705/PLLddPvEeMmBPsxO.jpg",
+        "ingredients_list": [
+          "1 lb ground beef (80/20)",
+          "1½ cups dry elbow macaroni",
+          "½ yellow onion, finely diced",
+          "3 cloves garlic, minced",
+          "2 cups beef broth",
+          "1 cup whole milk",
+          "1½ cups cheddar cheese, grated",
+          "1 tbsp ketchup",
+          "1 tsp yellow mustard",
+          "1 tsp Worcestershire sauce",
+          "½ tsp garlic powder",
+          "½ tsp onion powder",
+          "1 tsp salt",
+          "¼ tsp black pepper"
+        ],
+        "shopping_list": [
+          "🥩 Proteins: ground beef",
+          "🧀 Dairy: whole milk, cheddar cheese block",
+          "🥬 Produce: yellow onion, garlic",
+          "🥫 Canned: beef broth",
+          "🫙 Pantry: elbow macaroni, ketchup, yellow mustard, Worcestershire sauce, garlic powder, onion powder, salt, black pepper"
+        ],
+        "recipe_steps": [
+          "Dice ½ yellow onion, mince 3 cloves of garlic, and grate 1½ cups of cheddar cheese.",
+          "Add 1 lb of ground beef to a large pot over medium-high heat. Break into crumbles and cook for 5 minutes until no pink remains.",
+          "Add the diced onion and cook for 2 minutes, then add the minced garlic and cook for 1 minute, stirring constantly. Drain excess fat.",
+          "Stir in 1 tbsp ketchup, 1 tsp mustard, 1 tsp Worcestershire sauce, ½ tsp garlic powder, ½ tsp onion powder, 1 tsp salt, and ¼ tsp black pepper. Cook 1 minute.",
+          "Pour in 2 cups of beef broth and 1 cup of whole milk. Add 1½ cups of dry elbow macaroni and stir everything together.",
+          "Bring to a boil over high heat, then reduce to medium. Cook uncovered for 10–12 minutes, stirring every 2 minutes, until the pasta is tender and most liquid is absorbed.",
+          "Remove from heat, add the grated cheddar, and stir until completely melted. Serve immediately from the pot."
+        ],
+        "cuisine": "American",
+        "created_at": "2026-03-29 12:00:00+00",
+        "servings": 4,
+        "user_id": null,
+        "is_user_created": false,
+        "source_url": null,
+        "source_name": null
+      },
+      "after": {
+        "id": "93f3cc87-86a7-41f9-a7b5-357013555f7d",
+        "title": "One-Pot Cheeseburger Pasta",
+        "description": "Homemade Hamburger Helper-style pasta with ground beef and cheddar. One pot, no chopping, and about 30 minutes total.",
+        "meal_time": [
+          "dinner",
+          "lunch"
+        ],
+        "prep_time_mins": 30,
+        "effort_score": 1,
+        "tags": [
+          "beef",
+          "pasta",
+          "one-pot",
+          "easy",
+          "quick",
+          "comfort-food"
+        ],
+        "image_url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663417307705/PLLddPvEeMmBPsxO.jpg",
+        "ingredients_list": [
+          "1 lb ground beef",
+          "1 1/2 cups dry elbow macaroni",
+          "2 cups beef broth",
+          "1 cup milk",
+          "1 1/2 cups shredded cheddar cheese",
+          "1 tbsp ketchup",
+          "1 tsp yellow mustard",
+          "1/2 tsp garlic powder",
+          "1/4 tsp black pepper"
+        ],
+        "shopping_list": [
+          "1 lb ground beef",
+          "1 1/2 cups dry elbow macaroni",
+          "2 cups beef broth",
+          "1 cup milk",
+          "1 1/2 cups shredded cheddar cheese",
+          "1 tbsp ketchup",
+          "1 tsp yellow mustard",
+          "1/2 tsp garlic powder",
+          "1/4 tsp black pepper"
+        ],
+        "recipe_steps": [
+          "In a deep pot over medium-high heat, crumble and cook the beef for about 7 minutes, until it reaches 160°F. Spoon excess fat into a heatproof container.",
+          "Add broth, milk, macaroni, ketchup, mustard, garlic powder and pepper. Bring to a gentle boil, then reduce to a steady simmer.",
+          "Cook uncovered for about 10-12 minutes, stirring often, until the pasta is tender. Add a splash of water if it gets dry before the pasta cooks.",
+          "Turn off the heat. Stir in cheddar until melted and let the sauce settle for 2 minutes before serving."
+        ],
+        "cuisine": "American",
+        "created_at": "2026-03-29 12:00:00+00",
+        "servings": 4,
+        "user_id": null,
+        "is_user_created": false,
+        "source_url": null,
+        "source_name": null
+      }
+    }
+  ]
+}

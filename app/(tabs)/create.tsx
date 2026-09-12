@@ -33,7 +33,7 @@ const MEAL_TIME_KEYS: MealTime[] = [
 ];
 
 const DIFFICULTIES: { label: string; score: EffortScore; color: string }[] = [
-  { label: 'Quick', score: 1, color: '#22C55E' },
+  { label: 'Easy', score: 1, color: '#22C55E' },
   { label: 'Moderate', score: 2, color: '#F59E0B' },
   { label: 'Challenge', score: 3, color: '#EF4444' },
 ];

@@ -12,6 +12,9 @@ function validateBatch(batch) {
   assert.match(batch.batch_id, /^[a-z0-9-]+$/);
   assert.equal(batch.status, 'editorially-reviewed-not-cook-tested');
   assert.ok(Array.isArray(batch.recipes) && batch.recipes.length > 0);
+  const kind = batch.batch_kind ?? 'quick';
+  assert.ok(['quick', 'easy-comfort'].includes(kind), 'Unknown batch kind');
+  const comfort = kind === 'easy-comfort';
   const titles = new Set();
   for (const row of batch.recipes) {
     for (const field of columns) assert.ok(Object.hasOwn(row, field), `${row.title}: missing ${field}`);
@@ -21,9 +24,18 @@ function validateBatch(batch) {
     const title = normalizeTitle(row.title);
     assert.ok(!titles.has(title), `Duplicate title: ${row.title}`);
     titles.add(title);
-    assert.ok(Number.isInteger(row.prep_time_mins) && row.prep_time_mins > 0 && row.prep_time_mins <= 30, `${row.title}: quick batch needs total time <=30`);
+    assert.ok(Number.isInteger(row.prep_time_mins) && row.prep_time_mins > 0 && row.prep_time_mins <= (comfort ? 75 : 30), row.title + ': invalid total time');
+    if (comfort) {
+      const active = row.review?.active_time_mins;
+      assert.ok(Number.isInteger(active) && active > 0 && active <= Math.min(row.prep_time_mins, 20), row.title + ': active time required');
+      if (row.prep_time_mins > 30) {
+        assert.ok(active <= 15 && row.tags.includes('low-active-time'), row.title + ': long meal must need little active work');
+        assert.ok(!row.tags.includes('quick'), row.title + ': long meal cannot be tagged quick');
+        assert.ok(row.description.includes(active + ' minutes of hands-on work') && row.description.includes(row.prep_time_mins + ' minutes total'), row.title + ': disclose active and total time');
+      }
+    }
     assert.ok([1, 2].includes(row.effort_score), `${row.title}: quick batch needs effort 1 or 2`);
-    assert.ok(Number.isInteger(row.servings) && row.servings >= 1 && row.servings <= 2);
+    assert.ok(Number.isInteger(row.servings) && row.servings >= 1 && row.servings <= (comfort ? 6 : 2));
     for (const field of arrayColumns) {
       assert.ok(Array.isArray(row[field]) && row[field].length, `${row.title}: empty ${field}`);
       assert.ok(row[field].every(x => typeof x === 'string' && x.trim()), `${row.title}: invalid ${field}`);
@@ -78,4 +90,4 @@ if (require.main === module) {
   fs.writeFileSync(stem + '.sql', importSql(rows));
   console.log(`Validated ${rows.length} recipes; wrote ${stem}.csv and .sql. No network calls or database writes.`);
 }
-module.exports = { validateBatch, toCsv, importSql, normalizeTitle };
+module.exports = { validateBatch, toCsv, importSql, normalizeTitle, columns };

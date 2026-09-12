@@ -9,7 +9,7 @@
     "web": "expo start --web",
     "postinstall": "node scripts/patch-image-size.cjs",
     "test": "node --test tests/*.test.cjs",
-    "recipes:check": "node scripts/recipe-batch.cjs data/recipes/community-001.json"
+    "recipes:check": "node scripts/recipe-batch.cjs data/recipes/community-001.json && node scripts/recipe-batch.cjs data/recipes/comfort-002.json && node scripts/recipe-revisions.cjs data/recipes/comfort-revisions-001.json"
   },
   "dependencies": {
     "@expo/vector-icons": "^15.0.3",
