@@ -11,12 +11,12 @@
   },
   "after": {
     "shared": 169,
-    "images": 148,
+    "images": 169,
     "replaced": 7,
     "cleared": 10,
-    "needs-photo": 21,
+    "needs-photo": 0,
     "usable": 136,
-    "usable-with-serving-variation": 11,
+    "usable-with-serving-variation": 32,
     "needs-closer-match": 1
   },
   "entries": [
@@ -27,14 +27,18 @@
       "before_image_url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663417307705/uBqtvXRjmmMrKlrt.jpg",
       "initial_transport": "broken",
       "http_status_before": 403,
-      "final_image_url": "",
-      "final_status": "needs-photo",
-      "action": "clear-unusable-url",
-      "image_sha256": null,
-      "width": null,
-      "height": null,
-      "visual_review": "No approved image available.",
-      "notes": "Existing Manus CDN image returns HTTP 403. No close, visually approved free replacement found in this audit. Clear the unusable URL and keep the neutral placeholder."
+      "final_image_url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/20-minute-honey-garlic-chicken-0bffba20b20b.jpg",
+      "final_status": "usable-with-serving-variation",
+      "action": "add-reviewed-photo",
+      "image_sha256": "0bffba20b20b5c36bf21d2c4b83cd3505e59ee673d3bd59c548f43439280fd36",
+      "width": 900,
+      "height": 672,
+      "visual_review": "Existing illustration shows browned boneless chicken pieces in a glossy brown glaze over rice; a suitable serving example for honey-garlic chicken.",
+      "notes": "Serving illustration of glazed chicken over rice. Sauce color and garnish may vary.",
+      "previous_review": {
+        "final_status": "needs-photo",
+        "notes": "Existing Manus CDN image returns HTTP 403. No close, visually approved free replacement found in this audit. Clear the unusable URL and keep the neutral placeholder."
+      }
     },
     {
       "number": 2,
@@ -187,14 +191,18 @@
       "before_image_url": "",
       "initial_transport": "missing",
       "http_status_before": null,
-      "final_image_url": "",
-      "final_status": "needs-photo",
-      "action": "retain",
-      "image_sha256": null,
-      "width": null,
-      "height": null,
-      "visual_review": "No approved image available.",
-      "notes": "No photo assigned. A matching owned or free licensed image is still needed."
+      "final_image_url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/beef-and-rice-skillet-ad4ce1a0230f.jpg",
+      "final_status": "usable-with-serving-variation",
+      "action": "add-reviewed-photo",
+      "image_sha256": "ad4ce1a0230fc4a31dffa0605eeee3b77fe6d1623ce3cedef8972d4023a32818",
+      "width": 900,
+      "height": 675,
+      "visual_review": "Ground beef in tomato sauce and white rice match the core meal. Assembly and cheddar topping differ and are disclosed.",
+      "notes": "Serving example shows tomato-seasoned ground beef over rice; this recipe cooks them together and adds cheddar.",
+      "previous_review": {
+        "final_status": "needs-photo",
+        "notes": "No photo assigned. A matching owned or free licensed image is still needed."
+      }
     },
     {
       "number": 12,
@@ -939,14 +947,18 @@
       "before_image_url": "",
       "initial_transport": "missing",
       "http_status_before": null,
-      "final_image_url": "",
-      "final_status": "needs-photo",
-      "action": "retain",
-      "image_sha256": null,
-      "width": null,
-      "height": null,
-      "visual_review": "No approved image available.",
-      "notes": "No photo assigned. A matching owned or free licensed image is still needed."
+      "final_image_url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/classic-rice-and-beans-37899c0b75d5.jpg",
+      "final_status": "usable-with-serving-variation",
+      "action": "add-reviewed-photo",
+      "image_sha256": "37899c0b75d53cc75343398da4de8f49c88c090de9efa31046994448ad9e6700",
+      "width": 900,
+      "height": 600,
+      "visual_review": "Clear photo of cooked black beans beside rice. Vegetable and avocado garnishes differ from the simple recipe.",
+      "notes": "Serving example includes avocado, corn and herbs; these are optional extras, not required by this recipe.",
+      "previous_review": {
+        "final_status": "needs-photo",
+        "notes": "No photo assigned. A matching owned or free licensed image is still needed."
+      }
     },
     {
       "number": 59,
@@ -1323,14 +1335,18 @@
       "before_image_url": "",
       "initial_transport": "missing",
       "http_status_before": null,
-      "final_image_url": "",
-      "final_status": "needs-photo",
-      "action": "retain",
-      "image_sha256": null,
-      "width": null,
-      "height": null,
-      "visual_review": "No approved image available.",
-      "notes": "No photo assigned. A matching owned or free licensed image is still needed."
+      "final_image_url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/fried-bologna-sandwich-795c7b84f1dd.jpg",
+      "final_status": "usable-with-serving-variation",
+      "action": "add-reviewed-photo",
+      "image_sha256": "795c7b84f1dd46237118c407e316fede0ded911f5178d97c84c4d2a346a5b3db",
+      "width": 640,
+      "height": 640,
+      "visual_review": "Clearly browned, notched bologna and toasted sliced bread. No wrong protein. Cheese is not visible in this serving arrangement.",
+      "notes": "Serving example shows the fried bologna beside toasted bread; assemble with the cheese and mustard in the recipe.",
+      "previous_review": {
+        "final_status": "needs-photo",
+        "notes": "No photo assigned. A matching owned or free licensed image is still needed."
+      }
     },
     {
       "number": 83,
@@ -1723,14 +1739,18 @@
       "before_image_url": "https://yhfqlvblqlpacjdkltfi.supabase.co/storage/v1/object/public/meal-photos/hero/homemade_ramen.jpg",
       "initial_transport": "loads",
       "http_status_before": 200,
-      "final_image_url": "",
-      "final_status": "needs-photo",
-      "action": "clear-unusable-url",
-      "image_sha256": null,
-      "width": null,
-      "height": null,
-      "visual_review": "No approved image available.",
-      "notes": "Photo clearly depicts rolled pork chashu. Recipe calls for shredded chicken with bok choy and corn. Free candidates did not match; remove the misleading photo until a suitable replacement is available."
+      "final_image_url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/homemade-ramen-3a143a47ec5f.jpg",
+      "final_status": "usable-with-serving-variation",
+      "action": "add-reviewed-photo",
+      "image_sha256": "3a143a47ec5f322f414b87308ee4cb10c31f33e19d9e2aab8f7f7a3482b4d1df",
+      "width": 900,
+      "height": 600,
+      "visual_review": "Primary photographer identifies chicken ramen; egg, chicken and ramen broth are visible. Replaces the previously rejected pork-chashu image.",
+      "notes": "Representative chicken ramen with egg. Broth, chicken cut and vegetable toppings differ from this homemade version.",
+      "previous_review": {
+        "final_status": "needs-photo",
+        "notes": "Photo clearly depicts rolled pork chashu. Recipe calls for shredded chicken with bok choy and corn. Free candidates did not match; remove the misleading photo until a suitable replacement is available."
+      }
     },
     {
       "number": 108,
@@ -1787,14 +1807,18 @@
       "before_image_url": "",
       "initial_transport": "missing",
       "http_status_before": null,
-      "final_image_url": "",
-      "final_status": "needs-photo",
-      "action": "retain",
-      "image_sha256": null,
-      "width": null,
-      "height": null,
-      "visual_review": "No approved image available.",
-      "notes": "No photo assigned. A matching owned or free licensed image is still needed."
+      "final_image_url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/loaded-baked-potato-dinner-2167e235bb68.jpg",
+      "final_status": "usable-with-serving-variation",
+      "action": "add-reviewed-photo",
+      "image_sha256": "2167e235bb68d5ec2bef45ce556ec26b325db9240f3a5adad89b03390d0c8f5f",
+      "width": 900,
+      "height": 672,
+      "visual_review": "Baked russet potato halves with bacon, cheddar and green onion match the core loaded-potato dinner. Filling presentation varies.",
+      "notes": "Serving illustration uses a mashed, twice-baked filling with bacon and cheese. This recipe keeps the baked potato filling fluffy and adds sour cream.",
+      "previous_review": {
+        "final_status": "needs-photo",
+        "notes": "No photo assigned. A matching owned or free licensed image is still needed."
+      }
     },
     {
       "number": 112,
@@ -1899,14 +1923,18 @@
       "before_image_url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663417307705/qSDVoGmauzWSWIIK.jpg",
       "initial_transport": "broken",
       "http_status_before": 403,
-      "final_image_url": "",
-      "final_status": "needs-photo",
-      "action": "clear-unusable-url",
-      "image_sha256": null,
-      "width": null,
-      "height": null,
-      "visual_review": "No approved image available.",
-      "notes": "Existing Manus CDN image returns HTTP 403. No close, visually approved free replacement found in this audit. Clear the unusable URL and keep the neutral placeholder."
+      "final_image_url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/one-pan-creamy-chicken-and-rice-a72b64b2cad5.jpg",
+      "final_status": "usable-with-serving-variation",
+      "action": "add-reviewed-photo",
+      "image_sha256": "a72b64b2cad5f26751178ac40ba589a6c73ac7247643e5955bea5c27deb173c8",
+      "width": 900,
+      "height": 600,
+      "visual_review": "Clearly browned boneless chicken pieces in a creamy chicken-and-rice casserole. The serving dish and cooking method vary, disclosed in the caption.",
+      "notes": "Serving example is a baked chicken-and-rice casserole; this recipe is cooked on the stovetop.",
+      "previous_review": {
+        "final_status": "needs-photo",
+        "notes": "Existing Manus CDN image returns HTTP 403. No close, visually approved free replacement found in this audit. Clear the unusable URL and keep the neutral placeholder."
+      }
     },
     {
       "number": 119,
@@ -1947,14 +1975,18 @@
       "before_image_url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663417307705/NZwKyHhmXuvRfyze.jpg",
       "initial_transport": "broken",
       "http_status_before": 403,
-      "final_image_url": "",
-      "final_status": "needs-photo",
-      "action": "clear-unusable-url",
-      "image_sha256": null,
-      "width": null,
-      "height": null,
-      "visual_review": "No approved image available.",
-      "notes": "Existing Manus CDN image returns HTTP 403. No close, visually approved free replacement found in this audit. Clear the unusable URL and keep the neutral placeholder."
+      "final_image_url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/one-pot-creamy-sausage-pasta-a2d4166441aa.jpg",
+      "final_status": "usable-with-serving-variation",
+      "action": "add-reviewed-photo",
+      "image_sha256": "a2d4166441aab3f9becf17b77b110f0f52a9540873d55bac184717883eac91b8",
+      "width": 900,
+      "height": 506,
+      "visual_review": "Sausage pieces and creamy short pasta match the meal family. Pasta shape and sauce variation are explicitly disclosed.",
+      "notes": "Serving example shows creamy sausage macaroni with cheese. This recipe uses rotini or penne, cream and tomatoes.",
+      "previous_review": {
+        "final_status": "needs-photo",
+        "notes": "Existing Manus CDN image returns HTTP 403. No close, visually approved free replacement found in this audit. Clear the unusable URL and keep the neutral placeholder."
+      }
     },
     {
       "number": 122,
@@ -2027,14 +2059,18 @@
       "before_image_url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663417307705/XUkBeFJKDojOZilf.jpg",
       "initial_transport": "broken",
       "http_status_before": 403,
-      "final_image_url": "",
-      "final_status": "needs-photo",
-      "action": "clear-unusable-url",
-      "image_sha256": null,
-      "width": null,
-      "height": null,
-      "visual_review": "No approved image available.",
-      "notes": "Existing Manus CDN image returns HTTP 403. No close, visually approved free replacement found in this audit. Clear the unusable URL and keep the neutral placeholder."
+      "final_image_url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/pan-seared-pork-chops-with-pan-gravy-651f3d770f12.jpg",
+      "final_status": "usable-with-serving-variation",
+      "action": "add-reviewed-photo",
+      "image_sha256": "651f3d770f123579d2f873c3fc5d6a4af9e5ed56c462b1c3534304daf32cb59c",
+      "width": 900,
+      "height": 672,
+      "visual_review": "Pan-seared pork chops covered with gravy and mashed potatoes match the core dinner. Onion gravy variation is disclosed.",
+      "notes": "Serving illustration includes onion gravy, mashed potatoes and green beans. This recipe makes a simple creamy pan gravy.",
+      "previous_review": {
+        "final_status": "needs-photo",
+        "notes": "Existing Manus CDN image returns HTTP 403. No close, visually approved free replacement found in this audit. Clear the unusable URL and keep the neutral placeholder."
+      }
     },
     {
       "number": 127,
@@ -2107,14 +2143,18 @@
       "before_image_url": "",
       "initial_transport": "missing",
       "http_status_before": null,
-      "final_image_url": "",
-      "final_status": "needs-photo",
-      "action": "retain",
-      "image_sha256": null,
-      "width": null,
-      "height": null,
-      "visual_review": "No approved image available.",
-      "notes": "No photo assigned. A matching owned or free licensed image is still needed."
+      "final_image_url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/pinto-beans-and-cornbread-05f1b330957c.jpg",
+      "final_status": "usable-with-serving-variation",
+      "action": "add-reviewed-photo",
+      "image_sha256": "05f1b330957cf607f75215ff79f97e33794a9676c8d73d4b8ecad99af6feebda",
+      "width": 900,
+      "height": 675,
+      "visual_review": "Photographer explicitly identifies pinto beans, cornbread and mustard greens. Beans on cornbread are visible; no ham substitution.",
+      "notes": "Serving example includes mustard greens on the side.",
+      "previous_review": {
+        "final_status": "needs-photo",
+        "notes": "No photo assigned. A matching owned or free licensed image is still needed."
+      }
     },
     {
       "number": 132,
@@ -2139,14 +2179,18 @@
       "before_image_url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663417307705/zAoWxWONrRfuZkNk.jpg",
       "initial_transport": "broken",
       "http_status_before": 403,
-      "final_image_url": "",
-      "final_status": "needs-photo",
-      "action": "clear-unusable-url",
-      "image_sha256": null,
-      "width": null,
-      "height": null,
-      "visual_review": "No approved image available.",
-      "notes": "Existing Manus CDN image returns HTTP 403. No close, visually approved free replacement found in this audit. Clear the unusable URL and keep the neutral placeholder."
+      "final_image_url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/quick-beef-and-broccoli-over-rice-6bcf0271f855.jpg",
+      "final_status": "usable-with-serving-variation",
+      "action": "add-reviewed-photo",
+      "image_sha256": "6bcf0271f855c2f06d168dabd39ffa841347918154ff763c8b3afe9b9f48e5a8",
+      "width": 900,
+      "height": 720,
+      "visual_review": "Sharp skillet photo clearly shows ground beef, not steak strips, with broccoli. Rice is prepared separately in this recipe.",
+      "notes": "Photo shows the ground beef and broccoli before serving over rice.",
+      "previous_review": {
+        "final_status": "needs-photo",
+        "notes": "Existing Manus CDN image returns HTTP 403. No close, visually approved free replacement found in this audit. Clear the unusable URL and keep the neutral placeholder."
+      }
     },
     {
       "number": 134,
@@ -2203,14 +2247,18 @@
       "before_image_url": "",
       "initial_transport": "missing",
       "http_status_before": null,
-      "final_image_url": "",
-      "final_status": "needs-photo",
-      "action": "retain",
-      "image_sha256": null,
-      "width": null,
-      "height": null,
-      "visual_review": "No approved image available.",
-      "notes": "No photo assigned. A matching owned or free licensed image is still needed."
+      "final_image_url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/roasted-pepper-and-hummus-pitas-d5eaa97b3e35.jpg",
+      "final_status": "usable-with-serving-variation",
+      "action": "add-reviewed-photo",
+      "image_sha256": "d5eaa97b3e35e1b9c0550e81b6d48798f0cc4acb98d3a5eb306f72923031d09c",
+      "width": 900,
+      "height": 675,
+      "visual_review": "Homemade pita pockets, hummus and chopped vegetables match the meal type. Specific vegetable preparation and toppings vary.",
+      "notes": "Serving example shows homemade pita, hummus and chopped vegetables. This recipe uses roasted peppers, cucumber, spinach and feta.",
+      "previous_review": {
+        "final_status": "needs-photo",
+        "notes": "No photo assigned. A matching owned or free licensed image is still needed."
+      }
     },
     {
       "number": 138,
@@ -2235,14 +2283,18 @@
       "before_image_url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663417307705/EpQxMfmBUgTLmfAo.jpg",
       "initial_transport": "broken",
       "http_status_before": 403,
-      "final_image_url": "",
-      "final_status": "needs-photo",
-      "action": "clear-unusable-url",
-      "image_sha256": null,
-      "width": null,
-      "height": null,
-      "visual_review": "No approved image available.",
-      "notes": "Existing Manus CDN image returns HTTP 403. No close, visually approved free replacement found in this audit. Clear the unusable URL and keep the neutral placeholder."
+      "final_image_url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/sausage-and-potato-skillet-9485acb69753.jpg",
+      "final_status": "usable-with-serving-variation",
+      "action": "add-reviewed-photo",
+      "image_sha256": "9485acb69753c7f1f4a710a5e483f8415643103e00339aba5f6b02adbd10c717",
+      "width": 900,
+      "height": 506,
+      "visual_review": "Browned sausage coins and fried potato cubes clearly match the main meal. Side beans and garnish are disclosed.",
+      "notes": "Serving example includes baked beans on the side; this recipe adds bell pepper and onion to the skillet.",
+      "previous_review": {
+        "final_status": "needs-photo",
+        "notes": "Existing Manus CDN image returns HTTP 403. No close, visually approved free replacement found in this audit. Clear the unusable URL and keep the neutral placeholder."
+      }
     },
     {
       "number": 140,
@@ -2251,14 +2303,18 @@
       "before_image_url": "",
       "initial_transport": "missing",
       "http_status_before": null,
-      "final_image_url": "",
-      "final_status": "needs-photo",
-      "action": "retain",
-      "image_sha256": null,
-      "width": null,
-      "height": null,
-      "visual_review": "No approved image available.",
-      "notes": "No photo assigned. A matching owned or free licensed image is still needed."
+      "final_image_url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/sausage-white-bean-and-spinach-skillet-8ae88462fd03.jpg",
+      "final_status": "usable-with-serving-variation",
+      "action": "add-reviewed-photo",
+      "image_sha256": "8ae88462fd03fd0a4c20783215aa84203f2c02f1f7e7ceb5c2095362bef761d8",
+      "width": 900,
+      "height": 675,
+      "visual_review": "White beans, browned sausage and greens are clearly visible. Sausage shape and baked crumb topping differ from the skillet recipe and are disclosed.",
+      "notes": "Serving example is a white-bean and sausage bake with a crumb topping. This recipe uses crumbled sausage and spinach in a skillet, without crumbs.",
+      "previous_review": {
+        "final_status": "needs-photo",
+        "notes": "No photo assigned. A matching owned or free licensed image is still needed."
+      }
     },
     {
       "number": 141,
@@ -2299,14 +2355,18 @@
       "before_image_url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663417307705/wRhjODjmXlNMzoTO.jpg",
       "initial_transport": "broken",
       "http_status_before": 403,
-      "final_image_url": "",
-      "final_status": "needs-photo",
-      "action": "clear-unusable-url",
-      "image_sha256": null,
-      "width": null,
-      "height": null,
-      "visual_review": "No approved image available.",
-      "notes": "Existing Manus CDN image returns HTTP 403. No close, visually approved free replacement found in this audit. Clear the unusable URL and keep the neutral placeholder."
+      "final_image_url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/sheet-pan-sausage-and-peppers-2efa90b214d3.jpg",
+      "final_status": "usable-with-serving-variation",
+      "action": "add-reviewed-photo",
+      "image_sha256": "2efa90b214d30e8e6108c1804146404e602de9da8ca09f38aadc06f394a82b50",
+      "width": 900,
+      "height": 647,
+      "visual_review": "Clear photo of cooked pork sausages, bell peppers and onions. Sausage cut and pan type vary; the core meal is the same.",
+      "notes": "Serving example shows whole Italian sausages and peppers in a skillet. This recipe roasts sliced kielbasa and peppers on a sheet pan.",
+      "previous_review": {
+        "final_status": "needs-photo",
+        "notes": "Existing Manus CDN image returns HTTP 403. No close, visually approved free replacement found in this audit. Clear the unusable URL and keep the neutral placeholder."
+      }
     },
     {
       "number": 144,
@@ -2395,14 +2455,18 @@
       "before_image_url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663417307705/ewVbFOaAuzKgyuYM.jpg",
       "initial_transport": "broken",
       "http_status_before": 403,
-      "final_image_url": "",
-      "final_status": "needs-photo",
-      "action": "clear-unusable-url",
-      "image_sha256": null,
-      "width": null,
-      "height": null,
-      "visual_review": "No approved image available.",
-      "notes": "Existing Manus CDN image returns HTTP 403. No close, visually approved free replacement found in this audit. Clear the unusable URL and keep the neutral placeholder."
+      "final_image_url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/simple-bean-and-cheese-burritos-00003e6170b5.jpg",
+      "final_status": "usable-with-serving-variation",
+      "action": "add-reviewed-photo",
+      "image_sha256": "00003e6170b5d0774ecab9cacda36468728d1a0fab9a4c07a6007cf853ae07bc",
+      "width": 900,
+      "height": 596,
+      "visual_review": "Photographer identifies a bean-and-cheese burrito; the cut flour tortilla shows cooked bean filling. Correct core dish with a different garnish.",
+      "notes": "Serving example includes extra vegetables and crumbled cheese as garnish.",
+      "previous_review": {
+        "final_status": "needs-photo",
+        "notes": "Existing Manus CDN image returns HTTP 403. No close, visually approved free replacement found in this audit. Clear the unusable URL and keep the neutral placeholder."
+      }
     },
     {
       "number": 150,
@@ -2411,14 +2475,18 @@
       "before_image_url": "",
       "initial_transport": "missing",
       "http_status_before": null,
-      "final_image_url": "",
-      "final_status": "needs-photo",
-      "action": "retain",
-      "image_sha256": null,
-      "width": null,
-      "height": null,
-      "visual_review": "No approved image available.",
-      "notes": "No photo assigned. A matching owned or free licensed image is still needed."
+      "final_image_url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/simple-beef-vegetable-soup-431c4ff693de.jpg",
+      "final_status": "usable-with-serving-variation",
+      "action": "add-reviewed-photo",
+      "image_sha256": "431c4ff693ded39883c6e0b671502278b89f14fe94bb3ffafbef569dd99a9acc",
+      "width": 900,
+      "height": 601,
+      "visual_review": "Primary description confirms hamburger beef, potatoes, carrots, green beans and tomatoes. Macro photo focuses on vegetables with a shallow depth of field; extra ingredients are disclosed.",
+      "notes": "Serving example includes extra corn, beans and noodles. Follow the simpler ingredients listed below.",
+      "previous_review": {
+        "final_status": "needs-photo",
+        "notes": "No photo assigned. A matching owned or free licensed image is still needed."
+      }
     },
     {
       "number": 151,
@@ -2619,14 +2687,18 @@
       "before_image_url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663417307705/oFjPcEfWlQeGQJml.jpg",
       "initial_transport": "broken",
       "http_status_before": 403,
-      "final_image_url": "",
-      "final_status": "needs-photo",
-      "action": "clear-unusable-url",
-      "image_sha256": null,
-      "width": null,
-      "height": null,
-      "visual_review": "No approved image available.",
-      "notes": "Existing Manus CDN image returns HTTP 403. No close, visually approved free replacement found in this audit. Clear the unusable URL and keep the neutral placeholder."
+      "final_image_url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/stovetop-tuna-noodle-skillet-5aaeb09d2654.jpg",
+      "final_status": "usable-with-serving-variation",
+      "action": "add-reviewed-photo",
+      "image_sha256": "5aaeb09d2654eb1cef394101fb6d64000c9e1f8666a012ffd659476669be6b7f",
+      "width": 900,
+      "height": 675,
+      "visual_review": "Cooked tuna, peas and cream sauce over noodles match. Pasta shape and cheddar presentation differ and are disclosed.",
+      "notes": "Serving example uses long noodles. This recipe uses egg noodles and finishes with cheddar.",
+      "previous_review": {
+        "final_status": "needs-photo",
+        "notes": "Existing Manus CDN image returns HTTP 403. No close, visually approved free replacement found in this audit. Clear the unusable URL and keep the neutral placeholder."
+      }
     },
     {
       "number": 164,
@@ -2667,14 +2739,18 @@
       "before_image_url": "",
       "initial_transport": "missing",
       "http_status_before": null,
-      "final_image_url": "",
-      "final_status": "needs-photo",
-      "action": "retain",
-      "image_sha256": null,
-      "width": null,
-      "height": null,
-      "visual_review": "No approved image available.",
-      "notes": "No photo assigned. A matching owned or free licensed image is still needed."
+      "final_image_url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/tuna-and-mixed-bean-lunch-bowls-640e4df8ba58.jpg",
+      "final_status": "usable-with-serving-variation",
+      "action": "add-reviewed-photo",
+      "image_sha256": "640e4df8ba58143452684242e7c8363b2870d682bb77a35a9f0d85849206141f",
+      "width": 900,
+      "height": 600,
+      "visual_review": "High-resolution bowl of flaked canned tuna, beans and cherry tomatoes, with no wrong protein. Bean mix and garnishes vary.",
+      "notes": "Serving example uses white beans, red onion and herbs; this recipe uses mixed beans and cucumber.",
+      "previous_review": {
+        "final_status": "needs-photo",
+        "notes": "No photo assigned. A matching owned or free licensed image is still needed."
+      }
     },
     {
       "number": 167,
@@ -2683,14 +2759,18 @@
       "before_image_url": "",
       "initial_transport": "missing",
       "http_status_before": null,
-      "final_image_url": "",
-      "final_status": "needs-photo",
-      "action": "retain",
-      "image_sha256": null,
-      "width": null,
-      "height": null,
-      "visual_review": "No approved image available.",
-      "notes": "No photo assigned. A matching owned or free licensed image is still needed."
+      "final_image_url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/tuna-noodle-casserole-35300f5af913.jpg",
+      "final_status": "usable-with-serving-variation",
+      "action": "add-reviewed-photo",
+      "image_sha256": "35300f5af913e572e0eca7ce87bea35e21f2105459872f1e8455b8c648ee84eb",
+      "width": 900,
+      "height": 900,
+      "visual_review": "Clearly shows a creamy tuna-noodle casserole portion with peas and melted cheddar. Photographer watermark is preserved.",
+      "notes": "Serving example includes toast on the side; the breadcrumb topping may look different.",
+      "previous_review": {
+        "final_status": "needs-photo",
+        "notes": "No photo assigned. A matching owned or free licensed image is still needed."
+      }
     },
     {
       "number": 168,
@@ -2699,14 +2779,18 @@
       "before_image_url": "",
       "initial_transport": "missing",
       "http_status_before": null,
-      "final_image_url": "",
-      "final_status": "needs-photo",
-      "action": "retain",
-      "image_sha256": null,
-      "width": null,
-      "height": null,
-      "visual_review": "No approved image available.",
-      "notes": "No photo assigned. A matching owned or free licensed image is still needed."
+      "final_image_url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/turkey-and-hummus-cold-plates-52fce7653976.jpg",
+      "final_status": "usable-with-serving-variation",
+      "action": "add-reviewed-photo",
+      "image_sha256": "52fce765397617ec4ebea02d7134ee4d70e8edfb82356ae64c6d2836465638fc",
+      "width": 668,
+      "height": 900,
+      "visual_review": "Photographer identifies turkey, not ham. Simple deli turkey, cheddar, crackers and fruit/vegetables match the cold-plate meal; hummus is not pictured.",
+      "notes": "Packed-lunch serving example shows turkey, cheese, crackers, carrots and pear. This recipe includes hummus, cucumber and apple.",
+      "previous_review": {
+        "final_status": "needs-photo",
+        "notes": "No photo assigned. A matching owned or free licensed image is still needed."
+      }
     },
     {
       "number": 169,
@@ -2733,5 +2817,15 @@
     "rows_rewritten_on_repeat": 0,
     "status": "applied-and-verified-in-testing",
     "new_google_play_binary": false
+  },
+  "completion": {
+    "date": "2026-09-12",
+    "manifest": "photo-completion-003.json",
+    "photos_added": 21,
+    "licensed_photos": 18,
+    "reused_library_assets": 3,
+    "new_generation": 0,
+    "bytes": 1660967,
+    "status": "Prepared; publication and API verification pending."
   }
 }

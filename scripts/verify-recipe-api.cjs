@@ -7,7 +7,8 @@ const { validateBatch } = require('./recipe-batch.cjs');
 const photos = require('../data/recipes/photo-manifest.json');
 const { validateManifest, photoAfter } = require('./recipe-photos.cjs');
 const repairs = require('../data/recipes/photo-repairs-002.json');
-const reviewedPhotos = [...new Map([...validateManifest(photos), ...validateManifest(repairs)].map(e => [e.id, e])).values()];
+const completion = require('../data/recipes/photo-completion-003.json');
+const reviewedPhotos = [...new Map([...validateManifest(photos), ...validateManifest(repairs), ...validateManifest(completion)].map(e => [e.id, e])).values()];
 const env = {};
 for (const line of fs.readFileSync('.env', 'utf8').split(/\r?\n/)) {
   const match = line.match(/^(EXPO_PUBLIC_SUPABASE_(?:URL|ANON_KEY))=(.*)$/);

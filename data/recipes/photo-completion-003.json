@@ -1,0 +1,1750 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-09-12",
+  "policy": "Fill all 21 empty shared-recipe image fields using confirmed Creative Commons photos and existing library assets. No new generation, paid API or subscription. Preserve recipe content; disclose representative serving variations.",
+  "entries": [
+    {
+      "id": "640b90af-82ec-41fa-a292-0b614f6529ca",
+      "title": "20-Minute Honey Garlic Chicken",
+      "before": {
+        "id": "640b90af-82ec-41fa-a292-0b614f6529ca",
+        "title": "20-Minute Honey Garlic Chicken",
+        "description": "Boneless chicken thighs seared until deeply golden, then glazed in a sweet and savory honey garlic sauce that clings to every bite. Letting the thighs cook undisturbed for 5 minutes on the first side is what builds the crust the sauce sticks to.",
+        "meal_time": [
+          "dinner"
+        ],
+        "prep_time_mins": 20,
+        "effort_score": 2,
+        "tags": [
+          "chicken",
+          "quick",
+          "one-pan",
+          "asian",
+          "kid-friendly",
+          "comfort-food"
+        ],
+        "image_url": "",
+        "ingredients_list": [
+          "1½ lbs boneless skinless chicken thighs",
+          "5 cloves garlic, minced",
+          "1 tbsp unsalted butter",
+          "¼ cup honey",
+          "3 tbsp soy sauce",
+          "1 tbsp apple cider vinegar",
+          "1 tsp cornstarch",
+          "2 tbsp olive oil",
+          "½ tsp salt",
+          "¼ tsp black pepper",
+          "2 tbsp fresh parsley, chopped",
+          "2 cups white rice, for serving"
+        ],
+        "shopping_list": [
+          "🥩 Proteins: boneless skinless chicken thighs",
+          "🧀 Dairy: unsalted butter",
+          "🥬 Produce: garlic, fresh parsley",
+          "🫙 Pantry: honey, soy sauce, apple cider vinegar, cornstarch, olive oil, salt, black pepper, white rice"
+        ],
+        "recipe_steps": [
+          "Start 2 cups of white rice cooking. Pat 1½ lbs of chicken thighs dry and season both sides with ½ tsp salt and ¼ tsp black pepper. Mince 5 cloves of garlic.",
+          "Whisk together ¼ cup honey, 3 tbsp soy sauce, 1 tbsp apple cider vinegar, and 1 tsp cornstarch until the cornstarch fully dissolves. Set aside.",
+          "Heat 2 tbsp olive oil in a large skillet over medium-high heat. Add the chicken thighs and cook for 5 minutes without moving until deeply golden brown on the bottom.",
+          "Flip each thigh and cook for 4 more minutes until the second side is golden and cooked through. Transfer to a plate.",
+          "Reduce heat to medium. Add 1 tbsp butter and the minced garlic to the skillet. Cook for 1 minute, stirring constantly, until golden.",
+          "Pour the honey soy sauce into the skillet. Stir and cook for 1–2 minutes until the sauce bubbles and thickens.",
+          "Return the chicken to the skillet, spoon sauce over each piece, and cook 1 more minute. Serve over rice and sprinkle with 2 tbsp chopped parsley."
+        ],
+        "cuisine": "Asian",
+        "created_at": "2026-03-29 12:00:00+00",
+        "servings": 4,
+        "user_id": null,
+        "is_user_created": false,
+        "source_url": null,
+        "source_name": null
+      },
+      "image": {
+        "kind": "existing-library-image",
+        "creator": "Existing Mealsolved image library",
+        "storage_object": "bourbon_chicken.jpg",
+        "source_url": "https://yhfqlvblqlpacjdkltfi.supabase.co/storage/v1/object/public/meal-photos/bourbon_chicken.jpg",
+        "provenance_note": "Existing public Mealsolved asset, reused without generation or a new paid service. Historical creation/license records were not independently reconstructed.",
+        "credit": "Serving illustration from the existing Mealsolved image library. Serving illustration of glazed chicken over rice. Sauce color and garnish may vary.",
+        "file": "assets/recipe-photos/20-minute-honey-garlic-chicken-0bffba20b20b.jpg",
+        "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/20-minute-honey-garlic-chicken-0bffba20b20b.jpg",
+        "sha256": "0bffba20b20b5c36bf21d2c4b83cd3505e59ee673d3bd59c548f43439280fd36",
+        "bytes": 85409,
+        "width": 900,
+        "height": 672
+      },
+      "review": {
+        "status": "visually-reviewed",
+        "date": "2026-09-12",
+        "notes": "Existing illustration shows browned boneless chicken pieces in a glossy brown glaze over rice; a suitable serving example for honey-garlic chicken.",
+        "serving_variation": "Serving illustration of glazed chicken over rice. Sauce color and garnish may vary."
+      }
+    },
+    {
+      "id": "0f3613aa-d164-48cb-92b9-e82552b31eb4",
+      "title": "Beef and Rice Skillet",
+      "before": {
+        "id": "0f3613aa-d164-48cb-92b9-e82552b31eb4",
+        "title": "Beef and Rice Skillet",
+        "description": "A one-skillet dinner of seasoned ground beef and rice simmered with diced tomatoes and topped with melted cheddar. Tex-Mex flavors, minimal cleanup.",
+        "meal_time": [
+          "dinner"
+        ],
+        "prep_time_mins": 40,
+        "effort_score": 2,
+        "tags": [
+          "beef",
+          "rice",
+          "one-pan",
+          "comfort-food",
+          "family"
+        ],
+        "image_url": "",
+        "ingredients_list": [
+          "1 lb ground beef",
+          "1 cup long-grain white rice",
+          "1 small yellow onion",
+          "3 garlic cloves",
+          "1 can (14.5 oz) diced tomatoes",
+          "1.5 cups beef broth",
+          "1 tsp chili powder",
+          "1/2 tsp cumin",
+          "1/2 tsp garlic powder",
+          "1/2 cup shredded cheddar cheese",
+          "Oil",
+          "Salt",
+          "Black pepper"
+        ],
+        "shopping_list": [
+          "🥩 Proteins: ground beef, beef broth",
+          "🥬 Produce: yellow onion, garlic cloves",
+          "🍅 Canned: diced tomatoes",
+          "🧀 Dairy: shredded cheddar cheese",
+          "🍚 Pantry: long-grain white rice, chili powder, cumin, garlic powder, oil, salt, black pepper"
+        ],
+        "recipe_steps": [
+          "Peel and dice the onion. Peel and mince 3 garlic cloves.",
+          "Heat 1 tbsp oil in a large skillet over medium-high heat. Add 1 lb ground beef, break into small pieces, and cook 6 to 7 minutes until browned. Spoon off excess fat.",
+          "Add the onion and cook 3 minutes, then add the garlic and cook 1 minute.",
+          "Add 1 cup rice and stir to coat with the beef mixture.",
+          "Add the entire can of diced tomatoes with liquid, 1.5 cups beef broth, 1 tsp chili powder, 1/2 tsp cumin, 1/2 tsp garlic powder, 1/2 tsp salt, and 1/4 tsp pepper. Stir.",
+          "Bring to a boil, reduce to low, cover, and cook 20 minutes until the rice is tender and liquid is absorbed.",
+          "Remove from heat, sprinkle 1/2 cup cheddar over top, cover 2 minutes to melt, and serve from the skillet."
+        ],
+        "cuisine": "American",
+        "created_at": "2026-06-08 12:00:00+00",
+        "servings": 4,
+        "user_id": null,
+        "is_user_created": false,
+        "source_url": null,
+        "source_name": null
+      },
+      "image": {
+        "kind": "licensed-photo",
+        "creator": "UCFFool",
+        "title": "picadillo",
+        "source_url": "https://www.flickr.com/photos/36762416@N04/3439524063",
+        "license": "CC BY 2.0",
+        "license_url": "https://creativecommons.org/licenses/by/2.0/",
+        "primary_license_url": "https://creativecommons.org/licenses/by/2.0/deed.en",
+        "primary_license_name": "CC BY 2.0",
+        "license_verified_at": "2026-09-12",
+        "changes": "Resized and converted to JPEG.",
+        "credit": "Representative photo: \"picadillo\" by UCFFool, CC BY 2.0. Resized and converted to JPEG. Serving example shows tomato-seasoned ground beef over rice; this recipe cooks them together and adds cheddar. Source: https://www.flickr.com/photos/36762416@N04/3439524063 License: https://creativecommons.org/licenses/by/2.0/",
+        "file": "assets/recipe-photos/beef-and-rice-skillet-ad4ce1a0230f.jpg",
+        "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/beef-and-rice-skillet-ad4ce1a0230f.jpg",
+        "sha256": "ad4ce1a0230fc4a31dffa0605eeee3b77fe6d1623ce3cedef8972d4023a32818",
+        "bytes": 63941,
+        "width": 900,
+        "height": 675
+      },
+      "review": {
+        "status": "visually-reviewed",
+        "date": "2026-09-12",
+        "notes": "Ground beef in tomato sauce and white rice match the core meal. Assembly and cheddar topping differ and are disclosed.",
+        "serving_variation": "Serving example shows tomato-seasoned ground beef over rice; this recipe cooks them together and adds cheddar."
+      }
+    },
+    {
+      "id": "e4448bf2-61d9-43b7-a349-279a30c9f155",
+      "title": "Classic Rice and Beans",
+      "before": {
+        "id": "e4448bf2-61d9-43b7-a349-279a30c9f155",
+        "title": "Classic Rice and Beans",
+        "description": "A pantry-friendly skillet of seasoned rice and beans simmered with onion, garlic, cumin, and chili powder. Filling, cheap, and endlessly customizable.",
+        "meal_time": [
+          "dinner",
+          "lunch"
+        ],
+        "prep_time_mins": 35,
+        "effort_score": 1,
+        "tags": [
+          "rice",
+          "beans",
+          "vegetarian",
+          "budget",
+          "comfort-food"
+        ],
+        "image_url": "",
+        "ingredients_list": [
+          "1 cup long-grain white rice",
+          "1 can (15 oz) black or pinto beans",
+          "2 cups water",
+          "1/2 cup chicken broth",
+          "1 small yellow onion, diced",
+          "3 garlic cloves, minced",
+          "1 tsp cumin",
+          "1/2 tsp chili powder",
+          "1 tbsp olive oil",
+          "Salt",
+          "Black pepper"
+        ],
+        "shopping_list": [
+          "🫘 Canned: black or pinto beans",
+          "🥬 Produce: yellow onion, garlic cloves",
+          "🍚 Pantry: long-grain white rice, cumin, chili powder, olive oil, salt, black pepper",
+          "🥩 Proteins: chicken broth"
+        ],
+        "recipe_steps": [
+          "Peel and dice the onion into 1/4-inch pieces. Peel and mince 3 garlic cloves.",
+          "Open the can of beans, drain in a colander, and rinse under cold water.",
+          "Heat 1 tbsp olive oil in a medium saucepan over medium heat. Add the diced onion and cook 4 minutes until softened.",
+          "Add the minced garlic and cook 1 minute, stirring constantly.",
+          "Add 1 tsp cumin and 1/2 tsp chili powder and cook 30 seconds.",
+          "Add 1 cup rice and stir to coat in the oil and spices.",
+          "Pour in 2 cups water and 1/2 cup chicken broth. Season with 1/2 tsp salt and 1/4 tsp pepper.",
+          "Bring to a boil over high heat, then reduce to low, cover tightly, and cook 18 minutes.",
+          "Remove from heat. Add the drained beans, stir gently, cover, and let sit 5 minutes. Fluff with a fork and serve."
+        ],
+        "cuisine": "Latin American",
+        "created_at": "2026-06-08 12:00:00+00",
+        "servings": 4,
+        "user_id": null,
+        "is_user_created": false,
+        "source_url": null,
+        "source_name": null
+      },
+      "image": {
+        "kind": "licensed-photo",
+        "creator": "Stacy Spensley",
+        "title": "cuban black bean stew",
+        "source_url": "https://www.flickr.com/photos/21001756@N06/8083012836",
+        "license": "CC BY 2.0",
+        "license_url": "https://creativecommons.org/licenses/by/2.0/",
+        "primary_license_url": "https://creativecommons.org/licenses/by/2.0/deed.en",
+        "primary_license_name": "CC BY 2.0",
+        "license_verified_at": "2026-09-12",
+        "changes": "Resized and converted to JPEG.",
+        "credit": "Representative photo: \"cuban black bean stew\" by Stacy Spensley, CC BY 2.0. Resized and converted to JPEG. Serving example includes avocado, corn and herbs; these are optional extras, not required by this recipe. Source: https://www.flickr.com/photos/21001756@N06/8083012836 License: https://creativecommons.org/licenses/by/2.0/",
+        "file": "assets/recipe-photos/classic-rice-and-beans-37899c0b75d5.jpg",
+        "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/classic-rice-and-beans-37899c0b75d5.jpg",
+        "sha256": "37899c0b75d53cc75343398da4de8f49c88c090de9efa31046994448ad9e6700",
+        "bytes": 62586,
+        "width": 900,
+        "height": 600
+      },
+      "review": {
+        "status": "visually-reviewed",
+        "date": "2026-09-12",
+        "notes": "Clear photo of cooked black beans beside rice. Vegetable and avocado garnishes differ from the simple recipe.",
+        "serving_variation": "Serving example includes avocado, corn and herbs; these are optional extras, not required by this recipe."
+      }
+    },
+    {
+      "id": "5237ade9-017f-4402-998f-8614f599cdff",
+      "title": "Fried Bologna Sandwich",
+      "before": {
+        "id": "5237ade9-017f-4402-998f-8614f599cdff",
+        "title": "Fried Bologna Sandwich",
+        "description": "A griddled bologna sandwich with browned, slightly puffed slices, melted American cheese, and mustard on toast. Nostalgic and ready in minutes.",
+        "meal_time": [
+          "lunch",
+          "dinner"
+        ],
+        "prep_time_mins": 15,
+        "effort_score": 1,
+        "tags": [
+          "sandwich",
+          "quick",
+          "comfort-food",
+          "budget"
+        ],
+        "image_url": "",
+        "ingredients_list": [
+          "4 slices thick-cut bologna",
+          "2 slices white sandwich bread",
+          "2 slices American cheese",
+          "1 tbsp yellow mustard",
+          "1 tbsp butter"
+        ],
+        "shopping_list": [
+          "🥩 Proteins: thick-cut bologna",
+          "🧀 Dairy: American cheese, butter",
+          "🍞 Bread: white sandwich bread",
+          "🫙 Pantry: yellow mustard"
+        ],
+        "recipe_steps": [
+          "Cut 4 small slits around the outer edge of each bologna slice to keep them flat.",
+          "Melt 1 tbsp butter in a skillet over medium-high heat. Add 2 slices of bologna and cook 2 minutes until browned and slightly puffed.",
+          "Flip each slice with tongs and cook the second side 2 minutes until browned.",
+          "Place 1 slice of American cheese on each, remove from heat, and let melt 30 seconds. Transfer to a plate.",
+          "Repeat with the remaining 2 bologna slices.",
+          "Toast 2 slices of bread, then spread 1/2 tbsp mustard on one side of each.",
+          "Stack all 4 bologna slices on one piece of toast, top with the second piece mustard-side down, slice in half, and serve."
+        ],
+        "cuisine": "American",
+        "created_at": "2026-06-08 12:00:00+00",
+        "servings": 1,
+        "user_id": null,
+        "is_user_created": false,
+        "source_url": null,
+        "source_name": null
+      },
+      "image": {
+        "kind": "licensed-photo",
+        "creator": "bnpositive",
+        "title": "Fried bologna sandwich",
+        "source_url": "https://www.flickr.com/photos/74089168@N00/14666810430",
+        "license": "CC BY-SA 2.0",
+        "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+        "primary_license_url": "https://creativecommons.org/licenses/by-sa/2.0/deed.en",
+        "primary_license_name": "CC BY-SA 2.0",
+        "license_verified_at": "2026-09-12",
+        "changes": "Resized and converted to JPEG.",
+        "credit": "Representative photo: \"Fried bologna sandwich\" by bnpositive, CC BY-SA 2.0. Resized and converted to JPEG. This image adaptation remains licensed under CC BY-SA 2.0. Serving example shows the fried bologna beside toasted bread; assemble with the cheese and mustard in the recipe. Source: https://www.flickr.com/photos/74089168@N00/14666810430 License: https://creativecommons.org/licenses/by-sa/2.0/",
+        "file": "assets/recipe-photos/fried-bologna-sandwich-795c7b84f1dd.jpg",
+        "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/fried-bologna-sandwich-795c7b84f1dd.jpg",
+        "sha256": "795c7b84f1dd46237118c407e316fede0ded911f5178d97c84c4d2a346a5b3db",
+        "bytes": 71885,
+        "width": 640,
+        "height": 640
+      },
+      "review": {
+        "status": "visually-reviewed",
+        "date": "2026-09-12",
+        "notes": "Clearly browned, notched bologna and toasted sliced bread. No wrong protein. Cheese is not visible in this serving arrangement.",
+        "serving_variation": "Serving example shows the fried bologna beside toasted bread; assemble with the cheese and mustard in the recipe."
+      }
+    },
+    {
+      "id": "557e9052-9f40-4a5e-96b9-dab6328f4b00",
+      "title": "Homemade Ramen",
+      "before": {
+        "id": "557e9052-9f40-4a5e-96b9-dab6328f4b00",
+        "title": "Homemade Ramen",
+        "description": "Rich, deeply flavored ramen broth built by charring onion and ginger directly in a dry pot, simmered with chicken and shiitake mushrooms for an hour, then finished with soy, mirin, and sesame. The 6.5-minute soft-boiled egg is the detail that separates good ramen from great ramen.",
+        "meal_time": [
+          "dinner",
+          "lunch"
+        ],
+        "prep_time_mins": 90,
+        "effort_score": 3,
+        "tags": [
+          "soup",
+          "asian",
+          "noodles",
+          "impressive",
+          "japanese"
+        ],
+        "image_url": "",
+        "ingredients_list": [
+          "2 lbs bone-in, skin-on chicken thighs",
+          "6 cups low-sodium chicken broth",
+          "2 cups low-sodium beef broth",
+          "1 large yellow onion, halved (skin on)",
+          "6 garlic cloves, smashed",
+          "2-inch piece fresh ginger, sliced into rounds",
+          "1/2 cup dried shiitake mushrooms",
+          "3 tbsp soy sauce",
+          "2 tbsp mirin",
+          "1 tsp sesame oil",
+          "1 tsp sugar",
+          "Salt, to taste",
+          "12 oz fresh or dried ramen noodles",
+          "4 large eggs",
+          "2 small heads baby bok choy, halved lengthwise",
+          "4 green onions, thinly sliced",
+          "1/2 cup corn kernels (canned or frozen)",
+          "4 tsp sesame seeds",
+          "Chili oil or sriracha, for serving",
+          "Nori sheets, for serving (optional)"
+        ],
+        "shopping_list": [
+          "🥩 Proteins: bone-in, skin-on chicken thighs, low-sodium chicken broth, low-sodium beef broth, large eggs",
+          "🥬 Produce: yellow onion, garlic cloves, fresh ginger, baby bok choy, green onions",
+          "🧊 Frozen: corn kernels (or canned)",
+          "🍞 Bread: fresh or dried ramen noodles",
+          "🛒 Other: dried shiitake mushrooms, soy sauce, mirin, sesame oil, sugar, sesame seeds, chili oil or sriracha, nori sheets (optional)"
+        ],
+        "recipe_steps": [
+          "Halve 1 yellow onion skin-on. Smash 6 garlic cloves. Slice a 2-inch piece of ginger into rounds. Halve 2 baby bok choy lengthwise. Slice 4 green onions.",
+          "Heat a large pot over high heat until very hot. Place the onion halves cut-side down in the dry pot. Char for 3-4 minutes without moving until deeply browned. Add the smashed garlic and ginger slices and char for 2 more minutes.",
+          "Add 2 lbs chicken thighs, 6 cups chicken broth, 2 cups beef broth, and 1/2 cup dried shiitake mushrooms. Bring to a boil then reduce to low. Simmer uncovered for 1 hour.",
+          "Remove the chicken thighs and transfer to a cutting board. Strain the broth through a fine-mesh strainer into a clean pot, discarding all solids.",
+          "Add 3 tbsp soy sauce, 2 tbsp mirin, 1 tsp sesame oil, and 1 tsp sugar to the strained broth. Taste and add salt as needed. Keep warm over low heat. Pull the chicken meat from the bones, shred into bite-sized pieces, and discard skin and bones.",
+          "Bring a small saucepan of water to a boil. Lower 4 eggs gently into the water. Cook for exactly 6 minutes 30 seconds. Transfer immediately to an ice bath for 5 minutes. Peel carefully and halve lengthwise.",
+          "Blanch the halved bok choy in boiling water for 1 minute. Remove with tongs and set aside. Cook 12 oz ramen noodles in salted boiling water for 2-3 minutes until just tender. Drain.",
+          "Ladle 1 1/2 cups of hot broth into each of 4 deep bowls. Divide the noodles among the bowls.",
+          "Arrange the shredded chicken, 2 bok choy halves, 2 egg halves yolk-side up, 2 tbsp corn, sliced green onions, and 1 tsp sesame seeds in each bowl. Add a sheet of nori if desired. Drizzle chili oil or sriracha to taste. Serve immediately."
+        ],
+        "cuisine": "Japanese",
+        "created_at": "2026-03-29 12:00:00+00",
+        "servings": 4,
+        "user_id": null,
+        "is_user_created": false,
+        "source_url": null,
+        "source_name": null
+      },
+      "image": {
+        "kind": "licensed-photo",
+        "creator": "City Foodsters",
+        "title": "Special Chicken Ramen",
+        "source_url": "https://www.flickr.com/photos/89060048@N03/21421392715",
+        "license": "CC BY 2.0",
+        "license_url": "https://creativecommons.org/licenses/by/2.0/",
+        "primary_license_url": "https://creativecommons.org/licenses/by/2.0/deed.en",
+        "primary_license_name": "CC BY 2.0",
+        "license_verified_at": "2026-09-12",
+        "changes": "Resized and converted to JPEG.",
+        "credit": "Representative photo: \"Special Chicken Ramen\" by City Foodsters, CC BY 2.0. Resized and converted to JPEG. Representative chicken ramen with egg. Broth, chicken cut and vegetable toppings differ from this homemade version. Source: https://www.flickr.com/photos/89060048@N03/21421392715 License: https://creativecommons.org/licenses/by/2.0/",
+        "file": "assets/recipe-photos/homemade-ramen-3a143a47ec5f.jpg",
+        "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/homemade-ramen-3a143a47ec5f.jpg",
+        "sha256": "3a143a47ec5f322f414b87308ee4cb10c31f33e19d9e2aab8f7f7a3482b4d1df",
+        "bytes": 40229,
+        "width": 900,
+        "height": 600
+      },
+      "review": {
+        "status": "visually-reviewed",
+        "date": "2026-09-12",
+        "notes": "Primary photographer identifies chicken ramen; egg, chicken and ramen broth are visible. Replaces the previously rejected pork-chashu image.",
+        "serving_variation": "Representative chicken ramen with egg. Broth, chicken cut and vegetable toppings differ from this homemade version."
+      }
+    },
+    {
+      "id": "65826ce2-ebf7-400c-a155-2a1c8d6e3b57",
+      "title": "Loaded Baked Potato Dinner",
+      "before": {
+        "id": "65826ce2-ebf7-400c-a155-2a1c8d6e3b57",
+        "title": "Loaded Baked Potato Dinner",
+        "description": "Oven-baked russet potatoes with crisp skins, loaded with sour cream, cheddar, crumbled bacon, and green onions. A hearty meal-in-one.",
+        "meal_time": [
+          "dinner"
+        ],
+        "prep_time_mins": 70,
+        "effort_score": 2,
+        "tags": [
+          "potatoes",
+          "bacon",
+          "cheese",
+          "comfort-food",
+          "dinner"
+        ],
+        "image_url": "",
+        "ingredients_list": [
+          "4 large russet potatoes",
+          "4 strips bacon",
+          "3 green onions",
+          "1 cup sour cream",
+          "1 cup shredded cheddar cheese",
+          "2 tbsp butter",
+          "Salt",
+          "Black pepper"
+        ],
+        "shopping_list": [
+          "🥩 Proteins: bacon",
+          "🥬 Produce: russet potatoes, green onions",
+          "🧀 Dairy: sour cream, shredded cheddar cheese, butter",
+          "🫙 Pantry: salt, black pepper"
+        ],
+        "recipe_steps": [
+          "Preheat the oven to 400°F. Wash and dry the potatoes, then pierce each 8 times all over with a fork.",
+          "Rub each potato with 1/2 tbsp butter and season with 1/4 tsp salt and 1/8 tsp pepper.",
+          "Place the potatoes directly on the oven rack and bake 55 to 60 minutes until a fork slides through easily.",
+          "While the potatoes bake, place 4 bacon strips in a cold skillet, turn heat to medium, and cook 4 to 5 minutes per side until crispy. Drain on paper towels, cool 5 minutes, and crumble.",
+          "Trim and thinly slice the 3 green onions into rounds.",
+          "Remove the potatoes and rest 5 minutes. Cut a lengthwise slit in each and push the ends toward the center to open.",
+          "Top each potato with 1/4 cup sour cream, 1/4 cup cheddar, a quarter of the bacon, and a quarter of the green onions. Serve immediately."
+        ],
+        "cuisine": "American",
+        "created_at": "2026-06-08 12:00:00+00",
+        "servings": 4,
+        "user_id": null,
+        "is_user_created": false,
+        "source_url": null,
+        "source_name": null
+      },
+      "image": {
+        "kind": "existing-library-image",
+        "creator": "Existing Mealsolved image library",
+        "storage_object": "hero/loaded_twice_baked_potatoes.jpg",
+        "source_url": "https://yhfqlvblqlpacjdkltfi.supabase.co/storage/v1/object/public/meal-photos/hero/loaded_twice_baked_potatoes.jpg",
+        "provenance_note": "Existing public Mealsolved asset, reused without generation or a new paid service. Historical creation/license records were not independently reconstructed.",
+        "credit": "Serving illustration from the existing Mealsolved image library. Serving illustration uses a mashed, twice-baked filling with bacon and cheese. This recipe keeps the baked potato filling fluffy and adds sour cream.",
+        "file": "assets/recipe-photos/loaded-baked-potato-dinner-2167e235bb68.jpg",
+        "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/loaded-baked-potato-dinner-2167e235bb68.jpg",
+        "sha256": "2167e235bb68d5ec2bef45ce556ec26b325db9240f3a5adad89b03390d0c8f5f",
+        "bytes": 88860,
+        "width": 900,
+        "height": 672
+      },
+      "review": {
+        "status": "visually-reviewed",
+        "date": "2026-09-12",
+        "notes": "Baked russet potato halves with bacon, cheddar and green onion match the core loaded-potato dinner. Filling presentation varies.",
+        "serving_variation": "Serving illustration uses a mashed, twice-baked filling with bacon and cheese. This recipe keeps the baked potato filling fluffy and adds sour cream."
+      }
+    },
+    {
+      "id": "eace11b6-3fe4-4d13-ae37-eaaafe7d7ef1",
+      "title": "One-Pan Creamy Chicken and Rice",
+      "before": {
+        "id": "eace11b6-3fe4-4d13-ae37-eaaafe7d7ef1",
+        "title": "One-Pan Creamy Chicken and Rice",
+        "description": "Bite-sized chicken thighs and long-grain rice cooked together in a creamy, herb-seasoned broth until everything is tender and the sauce is absorbed. A tight-fitting lid during the final 18-minute simmer is non-negotiable — lifting it lets the steam escape and the rice won't cook through.",
+        "meal_time": [
+          "dinner"
+        ],
+        "prep_time_mins": 30,
+        "effort_score": 2,
+        "tags": [
+          "chicken",
+          "one-pan",
+          "comfort-food",
+          "rice",
+          "kid-friendly",
+          "make-ahead"
+        ],
+        "image_url": "",
+        "ingredients_list": [
+          "1½ lbs boneless skinless chicken thighs, cut into 1-inch pieces",
+          "1½ cups white long-grain rice",
+          "2½ cups chicken broth",
+          "½ cup heavy cream",
+          "½ yellow onion, finely diced",
+          "4 cloves garlic, minced",
+          "3 tbsp unsalted butter, divided",
+          "½ tsp garlic powder",
+          "½ tsp onion powder",
+          "½ tsp dried thyme",
+          "½ tsp dried parsley",
+          "½ tsp salt",
+          "¼ tsp black pepper",
+          "¼ cup Parmesan cheese, grated (optional)"
+        ],
+        "shopping_list": [
+          "🥩 Proteins: boneless skinless chicken thighs",
+          "🧀 Dairy: heavy cream, unsalted butter, Parmesan cheese block (optional)",
+          "🥬 Produce: yellow onion, garlic",
+          "🥫 Canned: chicken broth",
+          "🫙 Pantry: white long-grain rice, garlic powder, onion powder, dried thyme, dried parsley, salt, black pepper"
+        ],
+        "recipe_steps": [
+          "Cut 1½ lbs chicken thighs into 1-inch pieces and pat dry. Season with ½ tsp salt, ¼ tsp black pepper, and ½ tsp garlic powder. Dice onion, mince garlic, and grate Parmesan if using.",
+          "Melt 2 tbsp butter in a large deep skillet over medium-high heat. Add the chicken and cook for 4 minutes until golden on the outside. Transfer to a plate — it will finish cooking with the rice.",
+          "Add 1 tbsp butter to the skillet. Add the diced onion and cook for 3 minutes until softened. Add the minced garlic and cook 1 minute, stirring constantly.",
+          "Add 1½ cups of white rice and stir into the vegetables. Cook for 1 minute to toast lightly.",
+          "Pour in 2½ cups of chicken broth and ½ cup of heavy cream. Add ½ tsp dried thyme, ½ tsp dried parsley, ½ tsp onion powder, and ½ tsp salt. Stir everything together.",
+          "Return the chicken to the skillet. Bring to a boil over high heat, then reduce to low and cover with a tight-fitting lid. Cook for 18 minutes until all liquid is absorbed and the rice is tender — do not lift the lid.",
+          "Remove from heat, sprinkle with Parmesan if using, fluff with a fork, and serve directly from the skillet."
+        ],
+        "cuisine": "American",
+        "created_at": "2026-03-29 12:00:00+00",
+        "servings": 4,
+        "user_id": null,
+        "is_user_created": false,
+        "source_url": null,
+        "source_name": null
+      },
+      "image": {
+        "kind": "licensed-photo",
+        "creator": "idovermani",
+        "title": "Chicken Rice Casserole",
+        "source_url": "https://www.flickr.com/photos/11155746@N00/3264550785",
+        "license": "CC BY 2.0",
+        "license_url": "https://creativecommons.org/licenses/by/2.0/",
+        "primary_license_url": "https://creativecommons.org/licenses/by/2.0/deed.en",
+        "primary_license_name": "CC BY 2.0",
+        "license_verified_at": "2026-09-12",
+        "changes": "Resized and converted to JPEG.",
+        "credit": "Representative photo: \"Chicken Rice Casserole\" by idovermani, CC BY 2.0. Resized and converted to JPEG. Serving example is a baked chicken-and-rice casserole; this recipe is cooked on the stovetop. Source: https://www.flickr.com/photos/11155746@N00/3264550785 License: https://creativecommons.org/licenses/by/2.0/",
+        "file": "assets/recipe-photos/one-pan-creamy-chicken-and-rice-a72b64b2cad5.jpg",
+        "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/one-pan-creamy-chicken-and-rice-a72b64b2cad5.jpg",
+        "sha256": "a72b64b2cad5f26751178ac40ba589a6c73ac7247643e5955bea5c27deb173c8",
+        "bytes": 37831,
+        "width": 900,
+        "height": 600
+      },
+      "review": {
+        "status": "visually-reviewed",
+        "date": "2026-09-12",
+        "notes": "Clearly browned boneless chicken pieces in a creamy chicken-and-rice casserole. The serving dish and cooking method vary, disclosed in the caption.",
+        "serving_variation": "Serving example is a baked chicken-and-rice casserole; this recipe is cooked on the stovetop."
+      }
+    },
+    {
+      "id": "7536d75f-5abd-404a-9755-c8f28a828992",
+      "title": "One-Pot Creamy Sausage Pasta",
+      "before": {
+        "id": "7536d75f-5abd-404a-9755-c8f28a828992",
+        "title": "One-Pot Creamy Sausage Pasta",
+        "description": "Smoked sausage, rotini pasta, and diced tomatoes simmered together in a creamy, spiced sauce — everything cooks in one pot and the pasta soaks up the flavor as it goes. Stirring every few minutes during the uncovered simmer prevents sticking and helps the sauce thicken evenly.",
+        "meal_time": [
+          "dinner"
+        ],
+        "prep_time_mins": 25,
+        "effort_score": 2,
+        "tags": [
+          "sausage",
+          "pasta",
+          "one-pot",
+          "comfort-food",
+          "quick",
+          "kid-friendly"
+        ],
+        "image_url": "",
+        "ingredients_list": [
+          "14 oz smoked sausage (kielbasa), sliced into ½-inch rounds",
+          "2 cups dry rotini or penne pasta",
+          "2 cups chicken broth",
+          "1 cup heavy cream",
+          "14 oz diced tomatoes (1 can), with liquid",
+          "½ yellow onion, finely diced",
+          "4 cloves garlic, minced",
+          "1 tbsp olive oil",
+          "1 tsp Italian seasoning",
+          "½ tsp smoked paprika",
+          "½ tsp salt",
+          "¼ tsp black pepper",
+          "½ cup Parmesan cheese, grated",
+          "2 tbsp fresh parsley, chopped"
+        ],
+        "shopping_list": [
+          "🥩 Proteins: smoked sausage (kielbasa)",
+          "🧀 Dairy: heavy cream, Parmesan cheese block",
+          "🥬 Produce: yellow onion, garlic, fresh parsley",
+          "🥫 Canned: chicken broth, diced tomatoes",
+          "🫙 Pantry: rotini or penne pasta, olive oil, Italian seasoning, smoked paprika, salt, black pepper"
+        ],
+        "recipe_steps": [
+          "Slice sausage into ½-inch rounds. Dice onion, mince garlic, grate Parmesan, and chop parsley.",
+          "Heat 1 tbsp olive oil in a large pot over medium-high heat. Add sausage rounds and cook for 3 minutes until browned on one side, then flip and cook 2 more minutes. Transfer to a plate.",
+          "Add the diced onion to the pot and cook for 3 minutes, stirring occasionally. Add the minced garlic and cook 1 minute, stirring constantly.",
+          "Add 1 tsp Italian seasoning, ½ tsp smoked paprika, ½ tsp salt, and ¼ tsp black pepper. Stir for 30 seconds.",
+          "Pour in 2 cups chicken broth, 1 cup heavy cream, and one 14-oz can of diced tomatoes with all its liquid. Add 2 cups of dry rotini and stir everything together.",
+          "Bring to a boil over high heat, then reduce to medium. Cook uncovered for 12–14 minutes, stirring every 2–3 minutes, until the pasta is tender and the sauce has thickened.",
+          "Return the sausage to the pot. Stir in ½ cup grated Parmesan until melted into the sauce. Top with chopped parsley and serve."
+        ],
+        "cuisine": "American",
+        "created_at": "2026-03-29 12:00:00+00",
+        "servings": 4,
+        "user_id": null,
+        "is_user_created": false,
+        "source_url": null,
+        "source_name": null
+      },
+      "image": {
+        "kind": "licensed-photo",
+        "creator": "Ruth and Dave",
+        "title": "Mac and cheese with sausage",
+        "source_url": "https://www.flickr.com/photos/95142644@N00/11594881594",
+        "license": "CC BY 2.0",
+        "license_url": "https://creativecommons.org/licenses/by/2.0/",
+        "primary_license_url": "https://creativecommons.org/licenses/by/2.0/deed.en",
+        "primary_license_name": "CC BY 2.0",
+        "license_verified_at": "2026-09-12",
+        "changes": "Resized and converted to JPEG.",
+        "credit": "Representative photo: \"Mac and cheese with sausage\" by Ruth and Dave, CC BY 2.0. Resized and converted to JPEG. Serving example shows creamy sausage macaroni with cheese. This recipe uses rotini or penne, cream and tomatoes. Source: https://www.flickr.com/photos/95142644@N00/11594881594 License: https://creativecommons.org/licenses/by/2.0/",
+        "file": "assets/recipe-photos/one-pot-creamy-sausage-pasta-a2d4166441aa.jpg",
+        "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/one-pot-creamy-sausage-pasta-a2d4166441aa.jpg",
+        "sha256": "a2d4166441aab3f9becf17b77b110f0f52a9540873d55bac184717883eac91b8",
+        "bytes": 50666,
+        "width": 900,
+        "height": 506
+      },
+      "review": {
+        "status": "visually-reviewed",
+        "date": "2026-09-12",
+        "notes": "Sausage pieces and creamy short pasta match the meal family. Pasta shape and sauce variation are explicitly disclosed.",
+        "serving_variation": "Serving example shows creamy sausage macaroni with cheese. This recipe uses rotini or penne, cream and tomatoes."
+      }
+    },
+    {
+      "id": "c0e1fab4-8370-440b-a1a6-fc4911ab7a8e",
+      "title": "Pan-Seared Pork Chops with Pan Gravy",
+      "before": {
+        "id": "c0e1fab4-8370-440b-a1a6-fc4911ab7a8e",
+        "title": "Pan-Seared Pork Chops with Pan Gravy",
+        "description": "Thick bone-in pork chops seared to a golden crust and served with a rich pan gravy built from the drippings left in the skillet. Scraping up every browned bit when the broth hits the pan is where all the gravy's flavor comes from.",
+        "meal_time": [
+          "dinner"
+        ],
+        "prep_time_mins": 25,
+        "effort_score": 2,
+        "tags": [
+          "pork",
+          "one-pan",
+          "comfort-food",
+          "impressive",
+          "gravy",
+          "quick"
+        ],
+        "image_url": "",
+        "ingredients_list": [
+          "4 bone-in pork chops, ¾-inch thick",
+          "3 cloves garlic, minced",
+          "2 tbsp unsalted butter, divided",
+          "1 tbsp olive oil",
+          "1 cup chicken broth",
+          "¼ cup heavy cream",
+          "1 tbsp all-purpose flour, plus more for dusting",
+          "½ tsp garlic powder",
+          "½ tsp onion powder",
+          "½ tsp smoked paprika",
+          "½ tsp dried thyme",
+          "½ tsp salt",
+          "¼ tsp black pepper",
+          "2 tbsp fresh parsley, chopped",
+          "Mashed potatoes or egg noodles, for serving"
+        ],
+        "shopping_list": [
+          "🥩 Proteins: bone-in pork chops",
+          "🧀 Dairy: unsalted butter, heavy cream",
+          "🥬 Produce: garlic, fresh parsley",
+          "🥫 Canned: chicken broth",
+          "🫙 Pantry: olive oil, all-purpose flour, garlic powder, onion powder, smoked paprika, dried thyme, salt, black pepper"
+        ],
+        "recipe_steps": [
+          "Pat 4 pork chops dry. Season both sides with ½ tsp salt, ¼ tsp black pepper, ½ tsp garlic powder, and ½ tsp smoked paprika. Dust both sides lightly with flour and shake off excess. Mince garlic and chop parsley.",
+          "Heat 1 tbsp olive oil and 1 tbsp butter together in a large skillet over medium-high heat. Place all 4 chops in the hot skillet.",
+          "Cook for 4 minutes without moving until deeply golden brown on the bottom. Flip each chop and cook for 3–4 more minutes until the second side is golden and cooked through.",
+          "Transfer the chops to a plate and tent loosely with foil to keep warm.",
+          "Reduce heat to medium. Add 1 tbsp butter and the minced garlic to the skillet. Cook for 1 minute, stirring constantly.",
+          "Add ½ tsp dried thyme, ½ tsp onion powder, and 1 tbsp flour. Stir the flour into the butter for 1 minute. Pour in 1 cup chicken broth, scraping up all the browned bits from the bottom. Add ¼ cup heavy cream and whisk for 2–3 minutes until the gravy thickens. Season with salt if needed.",
+          "Return the pork chops to the skillet, spoon gravy over each chop, and cook 1 more minute to warm through. Sprinkle with chopped parsley and serve with mashed potatoes or egg noodles."
+        ],
+        "cuisine": "American",
+        "created_at": "2026-03-29 12:00:00+00",
+        "servings": 4,
+        "user_id": null,
+        "is_user_created": false,
+        "source_url": null,
+        "source_name": null
+      },
+      "image": {
+        "kind": "existing-library-image",
+        "creator": "Existing Mealsolved image library",
+        "storage_object": "pork_chops_gravy.jpg",
+        "source_url": "https://yhfqlvblqlpacjdkltfi.supabase.co/storage/v1/object/public/meal-photos/pork_chops_gravy.jpg",
+        "provenance_note": "Existing public Mealsolved asset, reused without generation or a new paid service. Historical creation/license records were not independently reconstructed.",
+        "credit": "Serving illustration from the existing Mealsolved image library. Serving illustration includes onion gravy, mashed potatoes and green beans. This recipe makes a simple creamy pan gravy.",
+        "file": "assets/recipe-photos/pan-seared-pork-chops-with-pan-gravy-651f3d770f12.jpg",
+        "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/pan-seared-pork-chops-with-pan-gravy-651f3d770f12.jpg",
+        "sha256": "651f3d770f123579d2f873c3fc5d6a4af9e5ed56c462b1c3534304daf32cb59c",
+        "bytes": 90763,
+        "width": 900,
+        "height": 672
+      },
+      "review": {
+        "status": "visually-reviewed",
+        "date": "2026-09-12",
+        "notes": "Pan-seared pork chops covered with gravy and mashed potatoes match the core dinner. Onion gravy variation is disclosed.",
+        "serving_variation": "Serving illustration includes onion gravy, mashed potatoes and green beans. This recipe makes a simple creamy pan gravy."
+      }
+    },
+    {
+      "id": "cef7325f-146f-4f55-b530-25889b908ae9",
+      "title": "Pinto Beans and Cornbread",
+      "before": {
+        "id": "cef7325f-146f-4f55-b530-25889b908ae9",
+        "title": "Pinto Beans and Cornbread",
+        "description": "Bacon-simmered pinto beans served with a golden cast iron cornbread baked in melted butter. A classic Southern pairing made from pantry staples.",
+        "meal_time": [
+          "dinner"
+        ],
+        "prep_time_mins": 55,
+        "effort_score": 3,
+        "tags": [
+          "beans",
+          "cornbread",
+          "comfort-food",
+          "southern",
+          "budget"
+        ],
+        "image_url": "",
+        "ingredients_list": [
+          "3 cans (15 oz each) pinto beans",
+          "4 strips bacon",
+          "1 small yellow onion",
+          "2 garlic cloves",
+          "2 cups water",
+          "1 tsp cumin",
+          "1 cup yellow cornmeal",
+          "1 cup all-purpose flour",
+          "1/4 cup granulated sugar",
+          "1 tbsp baking powder",
+          "1 cup buttermilk",
+          "2 large eggs",
+          "1/4 cup butter",
+          "Salt",
+          "Black pepper"
+        ],
+        "shopping_list": [
+          "🫘 Canned: pinto beans",
+          "🥩 Proteins: bacon, large eggs",
+          "🥬 Produce: yellow onion, garlic cloves",
+          "🧀 Dairy: buttermilk, butter",
+          "🫙 Pantry: cumin, yellow cornmeal, all-purpose flour, sugar, baking powder, salt, black pepper"
+        ],
+        "recipe_steps": [
+          "Beans: Drain and rinse all 3 cans of pinto beans. Peel and dice the onion. Peel and mince 2 garlic cloves. Cut the bacon into 1-inch pieces.",
+          "Cook the bacon in a large pot over medium heat 5 minutes until the fat is rendered and edges are crispy.",
+          "Add the onion and cook 4 minutes until softened, then add the garlic and cook 1 minute.",
+          "Add the beans, 2 cups water, 1 tsp cumin, 1/2 tsp salt, and 1/4 tsp pepper. Bring to a boil, reduce to low, and simmer 20 minutes until thickened. Taste and adjust.",
+          "Cornbread: Preheat the oven to 400°F. Place 1/4 cup butter in a 9-inch cast iron skillet and put it in the oven 5 minutes to melt.",
+          "In a large bowl, whisk 1 cup cornmeal, 1 cup flour, 1/4 cup sugar, 1 tbsp baking powder, and 1/2 tsp salt.",
+          "In a separate bowl, whisk 2 eggs with 1 cup buttermilk.",
+          "Remove the hot skillet and pour the melted butter into the buttermilk mixture; whisk to combine.",
+          "Pour the wet mixture into the dry ingredients and stir until just combined — do not overmix.",
+          "Pour the batter into the hot skillet and bake 20 to 25 minutes until golden and a toothpick comes out clean.",
+          "Cool the cornbread 5 minutes, then cut and serve alongside the pinto beans."
+        ],
+        "cuisine": "American",
+        "created_at": "2026-06-08 12:00:00+00",
+        "servings": 6,
+        "user_id": null,
+        "is_user_created": false,
+        "source_url": null,
+        "source_name": null
+      },
+      "image": {
+        "kind": "licensed-photo",
+        "creator": "trekkyandy",
+        "title": "Supper",
+        "source_url": "https://www.flickr.com/photos/87054972@N00/2429667213",
+        "license": "CC BY-SA 2.0",
+        "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+        "primary_license_url": "https://creativecommons.org/licenses/by-sa/2.0/deed.en",
+        "primary_license_name": "CC BY-SA 2.0",
+        "license_verified_at": "2026-09-12",
+        "changes": "Resized and converted to JPEG.",
+        "credit": "Representative photo: \"Supper\" by trekkyandy, CC BY-SA 2.0. Resized and converted to JPEG. This image adaptation remains licensed under CC BY-SA 2.0. Serving example includes mustard greens on the side. Source: https://www.flickr.com/photos/87054972@N00/2429667213 License: https://creativecommons.org/licenses/by-sa/2.0/",
+        "file": "assets/recipe-photos/pinto-beans-and-cornbread-05f1b330957c.jpg",
+        "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/pinto-beans-and-cornbread-05f1b330957c.jpg",
+        "sha256": "05f1b330957cf607f75215ff79f97e33794a9676c8d73d4b8ecad99af6feebda",
+        "bytes": 112652,
+        "width": 900,
+        "height": 675
+      },
+      "review": {
+        "status": "visually-reviewed",
+        "date": "2026-09-12",
+        "notes": "Photographer explicitly identifies pinto beans, cornbread and mustard greens. Beans on cornbread are visible; no ham substitution.",
+        "serving_variation": "Serving example includes mustard greens on the side."
+      }
+    },
+    {
+      "id": "f6c1b1e2-47a5-488b-a9d1-4adf2f4a3f39",
+      "title": "Quick Beef and Broccoli over Rice",
+      "before": {
+        "id": "f6c1b1e2-47a5-488b-a9d1-4adf2f4a3f39",
+        "title": "Quick Beef and Broccoli over Rice",
+        "description": "Ground beef and broccoli florets tossed in a savory soy and sesame sauce, served over steamed white rice. Whisking the cornstarch into the sauce before it hits the pan is what keeps it from clumping.",
+        "meal_time": [
+          "dinner"
+        ],
+        "prep_time_mins": 25,
+        "effort_score": 2,
+        "tags": [
+          "beef",
+          "quick",
+          "asian",
+          "one-pan",
+          "broccoli",
+          "kid-friendly"
+        ],
+        "image_url": "",
+        "ingredients_list": [
+          "1 lb ground beef (80/20)",
+          "3 cups broccoli florets (fresh or frozen)",
+          "4 cloves garlic, minced",
+          "3 tbsp soy sauce",
+          "½ cup beef broth",
+          "1 tbsp brown sugar",
+          "1 tsp cornstarch",
+          "1 tsp sesame oil",
+          "1 tbsp vegetable oil",
+          "½ tsp garlic powder",
+          "½ tsp salt",
+          "¼ tsp black pepper",
+          "3 green onions, sliced (optional)",
+          "2 cups white rice, for serving"
+        ],
+        "shopping_list": [
+          "🥩 Proteins: ground beef",
+          "🥬 Produce: broccoli, garlic, green onions",
+          "🥫 Canned: beef broth",
+          "🫙 Pantry: soy sauce, brown sugar, cornstarch, sesame oil, vegetable oil, garlic powder, salt, black pepper, white rice"
+        ],
+        "recipe_steps": [
+          "Start 2 cups of white rice cooking. Cut broccoli into small florets, mince 4 cloves of garlic, and slice green onions if using.",
+          "Whisk together 3 tbsp soy sauce, ½ cup beef broth, 1 tbsp brown sugar, 1 tsp cornstarch, and 1 tsp sesame oil until the cornstarch fully dissolves. Set aside.",
+          "Heat 1 tbsp vegetable oil in a large skillet over high heat. Add the broccoli florets and cook for 4 minutes, stirring occasionally, until bright green and slightly tender. Transfer to a plate.",
+          "Add 1 lb ground beef to the skillet. Break into crumbles and add ½ tsp garlic powder, ½ tsp salt, and ¼ tsp black pepper. Cook for 5 minutes until no pink remains. Drain excess fat.",
+          "Add the minced garlic and cook for 1 minute, stirring constantly.",
+          "Return the broccoli to the skillet. Pour the sauce over everything and toss to combine.",
+          "Cook for 2–3 minutes, stirring constantly, until the sauce thickens and coats everything evenly. Serve over rice and scatter sliced green onions over the top if desired."
+        ],
+        "cuisine": "Asian",
+        "created_at": "2026-03-29 12:00:00+00",
+        "servings": 4,
+        "user_id": null,
+        "is_user_created": false,
+        "source_url": null,
+        "source_name": null
+      },
+      "image": {
+        "kind": "licensed-photo",
+        "creator": "tedeytan",
+        "title": "019.08.19 Primal Ground Beef and Broccoli, Washington, DC USA 231 25216",
+        "source_url": "https://www.flickr.com/photos/22526649@N03/48588252551",
+        "license": "CC BY-SA 2.0",
+        "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+        "primary_license_url": "https://creativecommons.org/licenses/by-sa/2.0/deed.en",
+        "primary_license_name": "CC BY-SA 2.0",
+        "license_verified_at": "2026-09-12",
+        "changes": "Resized and converted to JPEG.",
+        "credit": "Representative photo: \"019.08.19 Primal Ground Beef and Broccoli, Washington, DC USA 231 25216\" by tedeytan, CC BY-SA 2.0. Resized and converted to JPEG. This image adaptation remains licensed under CC BY-SA 2.0. Photo shows the ground beef and broccoli before serving over rice. Source: https://www.flickr.com/photos/22526649@N03/48588252551 License: https://creativecommons.org/licenses/by-sa/2.0/",
+        "file": "assets/recipe-photos/quick-beef-and-broccoli-over-rice-6bcf0271f855.jpg",
+        "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/quick-beef-and-broccoli-over-rice-6bcf0271f855.jpg",
+        "sha256": "6bcf0271f855c2f06d168dabd39ffa841347918154ff763c8b3afe9b9f48e5a8",
+        "bytes": 96280,
+        "width": 900,
+        "height": 720
+      },
+      "review": {
+        "status": "visually-reviewed",
+        "date": "2026-09-12",
+        "notes": "Sharp skillet photo clearly shows ground beef, not steak strips, with broccoli. Rice is prepared separately in this recipe.",
+        "serving_variation": "Photo shows the ground beef and broccoli before serving over rice."
+      }
+    },
+    {
+      "id": "f79824db-75b1-4b5a-8d39-1d7b391a0f7d",
+      "title": "Roasted Pepper and Hummus Pitas",
+      "before": {
+        "id": "f79824db-75b1-4b5a-8d39-1d7b391a0f7d",
+        "title": "Roasted Pepper and Hummus Pitas",
+        "description": "Ready-made hummus makes these vegetable-filled pitas a quick, no-cook lunch.",
+        "meal_time": [
+          "lunch",
+          "dinner"
+        ],
+        "prep_time_mins": 10,
+        "effort_score": 1,
+        "tags": [
+          "easy",
+          "no-cook",
+          "packed-lunch",
+          "small-batch"
+        ],
+        "image_url": "",
+        "ingredients_list": [
+          "2 pita breads",
+          "1/2 cup prepared chickpea hummus with sesame tahini",
+          "2 oz jarred roasted red peppers, drained",
+          "1/3 cucumber",
+          "1 oz feta cheese",
+          "2 cups baby spinach"
+        ],
+        "shopping_list": [
+          "2 pita breads",
+          "1/2 cup prepared chickpea hummus with sesame tahini",
+          "2 oz jarred roasted red peppers, drained",
+          "1/3 cucumber",
+          "1 oz feta cheese",
+          "2 cups baby spinach"
+        ],
+        "recipe_steps": [
+          "Wash the cucumber and spinach unless the spinach is ready to eat. Thinly slice the cucumber and drained peppers.",
+          "Cut the pitas open to make pockets. Spread the hummus inside.",
+          "Fill with spinach, cucumber, peppers and crumbled feta. Serve immediately, or refrigerate and pack with ice packs for lunch."
+        ],
+        "cuisine": "Mediterranean-inspired",
+        "created_at": "2026-09-12 18:37:30.474451+00",
+        "servings": 2,
+        "user_id": null,
+        "is_user_created": false,
+        "source_url": "https://www.budgetbytes.com/roasted-red-pepper-hummus-wraps/",
+        "source_name": "Beth Moncel, Budget Bytes"
+      },
+      "image": {
+        "kind": "licensed-photo",
+        "creator": "Satdeep Gill",
+        "title": "Homemade hummus and pita 03.jpg",
+        "source_url": "https://commons.wikimedia.org/wiki/File:Homemade_hummus_and_pita_03.jpg",
+        "license": "CC BY-SA 4.0",
+        "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+        "primary_license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+        "primary_license_name": "CC BY-SA 4.0",
+        "license_verified_at": "2026-09-12",
+        "changes": "Resized and converted to JPEG.",
+        "credit": "Representative photo: \"Homemade hummus and pita 03.jpg\" by Satdeep Gill, CC BY-SA 4.0. Resized and converted to JPEG. This image adaptation remains licensed under CC BY-SA 4.0. Serving example shows homemade pita, hummus and chopped vegetables. This recipe uses roasted peppers, cucumber, spinach and feta. Source: https://commons.wikimedia.org/wiki/File:Homemade_hummus_and_pita_03.jpg License: https://creativecommons.org/licenses/by-sa/4.0",
+        "file": "assets/recipe-photos/roasted-pepper-and-hummus-pitas-d5eaa97b3e35.jpg",
+        "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/roasted-pepper-and-hummus-pitas-d5eaa97b3e35.jpg",
+        "sha256": "d5eaa97b3e35e1b9c0550e81b6d48798f0cc4acb98d3a5eb306f72923031d09c",
+        "bytes": 92790,
+        "width": 900,
+        "height": 675
+      },
+      "review": {
+        "status": "visually-reviewed",
+        "date": "2026-09-12",
+        "notes": "Homemade pita pockets, hummus and chopped vegetables match the meal type. Specific vegetable preparation and toppings vary.",
+        "serving_variation": "Serving example shows homemade pita, hummus and chopped vegetables. This recipe uses roasted peppers, cucumber, spinach and feta."
+      }
+    },
+    {
+      "id": "96622c69-2738-404e-afef-ae34f9e507ab",
+      "title": "Sausage and Potato Skillet",
+      "before": {
+        "id": "96622c69-2738-404e-afef-ae34f9e507ab",
+        "title": "Sausage and Potato Skillet",
+        "description": "Crispy Yukon Gold potatoes, browned smoked sausage, and sautéed peppers and onions all cooked together in one heavy skillet. Resisting the urge to stir the potatoes for the first 8 minutes is what gets them genuinely crispy.",
+        "meal_time": [
+          "dinner",
+          "breakfast"
+        ],
+        "prep_time_mins": 28,
+        "effort_score": 2,
+        "tags": [
+          "sausage",
+          "one-pan",
+          "comfort-food",
+          "kid-friendly",
+          "potato",
+          "quick"
+        ],
+        "image_url": "",
+        "ingredients_list": [
+          "14 oz smoked sausage (kielbasa), sliced into ½-inch rounds",
+          "1½ lbs Yukon Gold potatoes, cut into ½-inch cubes",
+          "1 green bell pepper, diced",
+          "1 yellow onion, diced",
+          "3 cloves garlic, minced",
+          "2 tbsp olive oil",
+          "1 tsp smoked paprika",
+          "½ tsp garlic powder",
+          "½ tsp Italian seasoning",
+          "½ tsp salt",
+          "¼ tsp black pepper",
+          "½ cup cheddar cheese, grated (optional)",
+          "2 tbsp fresh parsley, chopped"
+        ],
+        "shopping_list": [
+          "🥩 Proteins: smoked sausage (kielbasa)",
+          "🧀 Dairy: cheddar cheese block (optional)",
+          "🥬 Produce: Yukon Gold potatoes, green bell pepper, yellow onion, garlic, fresh parsley",
+          "🫙 Pantry: olive oil, smoked paprika, garlic powder, Italian seasoning, salt, black pepper"
+        ],
+        "recipe_steps": [
+          "Slice sausage into ½-inch rounds. Cube potatoes into ½-inch pieces (no need to peel). Dice bell pepper and onion, mince garlic, chop parsley, and grate cheese if using.",
+          "Heat 2 tbsp olive oil in a large heavy skillet over medium-high heat. Add the potato cubes in a single layer and cook for 8 minutes without stirring until golden brown on the bottom.",
+          "Flip the potatoes and cook for 5 more minutes until golden on the second side.",
+          "Add the sausage rounds and cook for 3 minutes until they begin to brown.",
+          "Add the diced bell pepper and onion. Stir and cook for 4 minutes until softened.",
+          "Add the minced garlic and cook for 1 minute, stirring constantly. Add 1 tsp smoked paprika, ½ tsp garlic powder, ½ tsp Italian seasoning, ½ tsp salt, and ¼ tsp black pepper. Toss to coat and cook 2 more minutes.",
+          "Sprinkle grated cheddar over the top if using, cover for 1 minute to melt, then top with chopped parsley and serve."
+        ],
+        "cuisine": "American",
+        "created_at": "2026-03-29 12:00:00+00",
+        "servings": 4,
+        "user_id": null,
+        "is_user_created": false,
+        "source_url": null,
+        "source_name": null
+      },
+      "image": {
+        "kind": "licensed-photo",
+        "creator": "jeffreyw",
+        "title": "fried potatoes,sausage,beans",
+        "source_url": "https://www.flickr.com/photos/7927684@N03/32556579956",
+        "license": "CC BY 2.0",
+        "license_url": "https://creativecommons.org/licenses/by/2.0/",
+        "primary_license_url": "https://creativecommons.org/licenses/by/2.0/deed.en",
+        "primary_license_name": "CC BY 2.0",
+        "license_verified_at": "2026-09-12",
+        "changes": "Resized and converted to JPEG.",
+        "credit": "Representative photo: \"fried potatoes,sausage,beans\" by jeffreyw, CC BY 2.0. Resized and converted to JPEG. Serving example includes baked beans on the side; this recipe adds bell pepper and onion to the skillet. Source: https://www.flickr.com/photos/7927684@N03/32556579956 License: https://creativecommons.org/licenses/by/2.0/",
+        "file": "assets/recipe-photos/sausage-and-potato-skillet-9485acb69753.jpg",
+        "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/sausage-and-potato-skillet-9485acb69753.jpg",
+        "sha256": "9485acb69753c7f1f4a710a5e483f8415643103e00339aba5f6b02adbd10c717",
+        "bytes": 94286,
+        "width": 900,
+        "height": 506
+      },
+      "review": {
+        "status": "visually-reviewed",
+        "date": "2026-09-12",
+        "notes": "Browned sausage coins and fried potato cubes clearly match the main meal. Side beans and garnish are disclosed.",
+        "serving_variation": "Serving example includes baked beans on the side; this recipe adds bell pepper and onion to the skillet."
+      }
+    },
+    {
+      "id": "a9ee83a7-4d30-4f8b-af5f-4d2b04a5335c",
+      "title": "Sausage, White Bean and Spinach Skillet",
+      "before": {
+        "id": "a9ee83a7-4d30-4f8b-af5f-4d2b04a5335c",
+        "title": "Sausage, White Bean and Spinach Skillet",
+        "description": "One pan and a short ingredient list for a warm dinner after work.",
+        "meal_time": [
+          "lunch",
+          "dinner"
+        ],
+        "prep_time_mins": 25,
+        "effort_score": 2,
+        "tags": [
+          "easy",
+          "one-pan",
+          "small-batch"
+        ],
+        "image_url": "",
+        "ingredients_list": [
+          "8 oz raw ground Italian pork sausage",
+          "1/2 tbsp olive oil",
+          "1 can cannellini beans, 15 oz, drained and rinsed",
+          "4 oz baby spinach",
+          "1/8 tsp black pepper",
+          "2 tbsp water"
+        ],
+        "shopping_list": [
+          "8 oz raw ground Italian pork sausage",
+          "1/2 tbsp olive oil",
+          "1 can cannellini beans, 15 oz, drained and rinsed",
+          "4 oz baby spinach",
+          "1/8 tsp black pepper"
+        ],
+        "recipe_steps": [
+          "Heat the oil in a skillet over medium heat. Add the sausage; break it apart and cook about 10 minutes, until a food thermometer reads 160 F.",
+          "Rinse and drain the beans. Wash the spinach unless its package says ready to eat.",
+          "Stir the beans, pepper and water into the sausage. Cook for 3 to 5 minutes until hot.",
+          "Add the spinach a handful at a time, stirring until wilted. Divide between bowls."
+        ],
+        "cuisine": "Italian-inspired",
+        "created_at": "2026-09-12 18:37:30.474451+00",
+        "servings": 2,
+        "user_id": null,
+        "is_user_created": false,
+        "source_url": "https://www.budgetbytes.com/italian-sausage-white-bean-skillet/",
+        "source_name": "Beth Moncel, Budget Bytes"
+      },
+      "image": {
+        "kind": "licensed-photo",
+        "creator": "Neeta Lind",
+        "title": "White bean sausage cassoulet",
+        "source_url": "https://www.flickr.com/photos/71132408@N00/16045274215",
+        "license": "CC BY 2.0",
+        "license_url": "https://creativecommons.org/licenses/by/2.0/",
+        "primary_license_url": "https://creativecommons.org/licenses/by/2.0/deed.en",
+        "primary_license_name": "CC BY 2.0",
+        "license_verified_at": "2026-09-12",
+        "changes": "Resized and converted to JPEG.",
+        "credit": "Representative photo: \"White bean sausage cassoulet\" by Neeta Lind, CC BY 2.0. Resized and converted to JPEG. Serving example is a white-bean and sausage bake with a crumb topping. This recipe uses crumbled sausage and spinach in a skillet, without crumbs. Source: https://www.flickr.com/photos/71132408@N00/16045274215 License: https://creativecommons.org/licenses/by/2.0/",
+        "file": "assets/recipe-photos/sausage-white-bean-and-spinach-skillet-8ae88462fd03.jpg",
+        "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/sausage-white-bean-and-spinach-skillet-8ae88462fd03.jpg",
+        "sha256": "8ae88462fd03fd0a4c20783215aa84203f2c02f1f7e7ceb5c2095362bef761d8",
+        "bytes": 132063,
+        "width": 900,
+        "height": 675
+      },
+      "review": {
+        "status": "visually-reviewed",
+        "date": "2026-09-12",
+        "notes": "White beans, browned sausage and greens are clearly visible. Sausage shape and baked crumb topping differ from the skillet recipe and are disclosed.",
+        "serving_variation": "Serving example is a white-bean and sausage bake with a crumb topping. This recipe uses crumbled sausage and spinach in a skillet, without crumbs."
+      }
+    },
+    {
+      "id": "26c4a3e4-625c-431c-b68e-506ff4c18870",
+      "title": "Sheet Pan Sausage and Peppers",
+      "before": {
+        "id": "26c4a3e4-625c-431c-b68e-506ff4c18870",
+        "title": "Sheet Pan Sausage and Peppers",
+        "description": "Smoked sausage, bell peppers, and onions roasted together on one pan until the edges char and the flavors concentrate. A 425°F oven is hot enough to get real browning — don't go lower or it'll just steam.",
+        "meal_time": [
+          "dinner",
+          "lunch"
+        ],
+        "prep_time_mins": 25,
+        "effort_score": 1,
+        "tags": [
+          "sausage",
+          "one-pan",
+          "quick",
+          "kid-friendly",
+          "comfort-food",
+          "baked"
+        ],
+        "image_url": "",
+        "ingredients_list": [
+          "14 oz smoked sausage (kielbasa), sliced into ½-inch rounds",
+          "1 green bell pepper, sliced into strips",
+          "1 red bell pepper, sliced into strips",
+          "1 yellow onion, sliced into ½-inch strips",
+          "2 tbsp olive oil",
+          "1 tsp garlic powder",
+          "1 tsp Italian seasoning",
+          "½ tsp smoked paprika",
+          "½ tsp salt",
+          "¼ tsp black pepper",
+          "2 cups white rice, for serving"
+        ],
+        "shopping_list": [
+          "🥩 Proteins: smoked sausage (kielbasa)",
+          "🥬 Produce: green bell pepper, red bell pepper, yellow onion",
+          "🫙 Pantry: olive oil, garlic powder, Italian seasoning, smoked paprika, salt, black pepper, white rice"
+        ],
+        "recipe_steps": [
+          "Preheat oven to 425°F and line a large baking sheet with aluminum foil. Start 2 cups of white rice cooking according to package directions.",
+          "Slice 14 oz of smoked sausage into ½-inch rounds. Slice 1 green bell pepper, 1 red bell pepper, and 1 yellow onion into strips.",
+          "Spread the sausage, peppers, and onion on the baking sheet. Drizzle with 2 tbsp olive oil.",
+          "Sprinkle 1 tsp garlic powder, 1 tsp Italian seasoning, ½ tsp smoked paprika, ½ tsp salt, and ¼ tsp black pepper over everything. Toss to coat evenly and spread into a single layer.",
+          "Roast for 20 minutes until the sausage is browned and the vegetables are tender with slightly charred edges.",
+          "Serve over the cooked white rice."
+        ],
+        "cuisine": "American",
+        "created_at": "2026-03-29 12:00:00+00",
+        "servings": 4,
+        "user_id": null,
+        "is_user_created": false,
+        "source_url": null,
+        "source_name": null
+      },
+      "image": {
+        "kind": "licensed-photo",
+        "creator": "Key West Wedding Photography",
+        "title": "Italian Sausages, Peppers, and Onions",
+        "source_url": "https://www.flickr.com/photos/58003213@N00/45205797612",
+        "license": "CC BY 2.0",
+        "license_url": "https://creativecommons.org/licenses/by/2.0/",
+        "primary_license_url": "https://creativecommons.org/licenses/by/2.0/deed.en",
+        "primary_license_name": "CC BY 2.0",
+        "license_verified_at": "2026-09-12",
+        "changes": "Resized and converted to JPEG.",
+        "credit": "Representative photo: \"Italian Sausages, Peppers, and Onions\" by Key West Wedding Photography, CC BY 2.0. Resized and converted to JPEG. Serving example shows whole Italian sausages and peppers in a skillet. This recipe roasts sliced kielbasa and peppers on a sheet pan. Source: https://www.flickr.com/photos/58003213@N00/45205797612 License: https://creativecommons.org/licenses/by/2.0/",
+        "file": "assets/recipe-photos/sheet-pan-sausage-and-peppers-2efa90b214d3.jpg",
+        "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/sheet-pan-sausage-and-peppers-2efa90b214d3.jpg",
+        "sha256": "2efa90b214d30e8e6108c1804146404e602de9da8ca09f38aadc06f394a82b50",
+        "bytes": 82050,
+        "width": 900,
+        "height": 647
+      },
+      "review": {
+        "status": "visually-reviewed",
+        "date": "2026-09-12",
+        "notes": "Clear photo of cooked pork sausages, bell peppers and onions. Sausage cut and pan type vary; the core meal is the same.",
+        "serving_variation": "Serving example shows whole Italian sausages and peppers in a skillet. This recipe roasts sliced kielbasa and peppers on a sheet pan."
+      }
+    },
+    {
+      "id": "5d47553f-e017-4ef9-9f01-8982fce494f4",
+      "title": "Simple Bean and Cheese Burritos",
+      "before": {
+        "id": "5d47553f-e017-4ef9-9f01-8982fce494f4",
+        "title": "Simple Bean and Cheese Burritos",
+        "description": "Seasoned refried beans and melted cheddar wrapped in a warm flour tortilla — fast, filling, and budget-friendly. Crisping the seam-side down in a dry skillet is what keeps the burrito from unraveling and adds a satisfying crunch.",
+        "meal_time": [
+          "dinner",
+          "lunch"
+        ],
+        "prep_time_mins": 15,
+        "effort_score": 1,
+        "tags": [
+          "vegetarian",
+          "quick",
+          "kid-friendly",
+          "mexican",
+          "budget",
+          "beans"
+        ],
+        "image_url": "",
+        "ingredients_list": [
+          "8 large flour tortillas (10-inch)",
+          "16 oz refried beans (1 can)",
+          "1½ cups cheddar cheese, grated",
+          "½ tsp cumin",
+          "½ tsp garlic powder",
+          "¼ tsp chili powder",
+          "Sour cream, for serving",
+          "Salsa, for serving",
+          "Hot sauce, optional"
+        ],
+        "shopping_list": [
+          "🧀 Dairy: cheddar cheese block, sour cream",
+          "🥫 Canned: refried beans",
+          "🍞 Bread: large flour tortillas",
+          "🛒 Other: salsa, hot sauce",
+          "🫙 Pantry: cumin, garlic powder, chili powder"
+        ],
+        "recipe_steps": [
+          "Grate 1½ cups of cheddar cheese.",
+          "Pour one 16-oz can of refried beans into a medium saucepan over medium heat. Add ½ tsp cumin, ½ tsp garlic powder, and ¼ tsp chili powder. Stir and cook for 3–4 minutes until heated through and smooth.",
+          "Warm one flour tortilla in a dry skillet over medium heat for 20 seconds per side.",
+          "Lay the warm tortilla flat. Spoon 3 tbsp of seasoned beans down the center, sprinkle with 3 tbsp of cheddar, and add hot sauce if desired.",
+          "Fold the left and right sides in over the filling, then roll up tightly from the bottom. Place seam-side down in the skillet.",
+          "Cook for 1 minute until lightly golden on the bottom, then flip and cook 1 more minute.",
+          "Repeat with remaining tortillas. Serve with sour cream and salsa on the side."
+        ],
+        "cuisine": "Mexican",
+        "created_at": "2026-03-29 12:00:00+00",
+        "servings": 4,
+        "user_id": null,
+        "is_user_created": false,
+        "source_url": null,
+        "source_name": null
+      },
+      "image": {
+        "kind": "licensed-photo",
+        "creator": "jeffreyw",
+        "title": "Mmm... bean and cheese burrito",
+        "source_url": "https://www.flickr.com/photos/7927684@N03/8169763053",
+        "license": "CC BY 2.0",
+        "license_url": "https://creativecommons.org/licenses/by/2.0/",
+        "primary_license_url": "https://creativecommons.org/licenses/by/2.0/deed.en",
+        "primary_license_name": "CC BY 2.0",
+        "license_verified_at": "2026-09-12",
+        "changes": "Resized and converted to JPEG.",
+        "credit": "Representative photo: \"Mmm... bean and cheese burrito\" by jeffreyw, CC BY 2.0. Resized and converted to JPEG. Serving example includes extra vegetables and crumbled cheese as garnish. Source: https://www.flickr.com/photos/7927684@N03/8169763053 License: https://creativecommons.org/licenses/by/2.0/",
+        "file": "assets/recipe-photos/simple-bean-and-cheese-burritos-00003e6170b5.jpg",
+        "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/simple-bean-and-cheese-burritos-00003e6170b5.jpg",
+        "sha256": "00003e6170b5d0774ecab9cacda36468728d1a0fab9a4c07a6007cf853ae07bc",
+        "bytes": 55583,
+        "width": 900,
+        "height": 596
+      },
+      "review": {
+        "status": "visually-reviewed",
+        "date": "2026-09-12",
+        "notes": "Photographer identifies a bean-and-cheese burrito; the cut flour tortilla shows cooked bean filling. Correct core dish with a different garnish.",
+        "serving_variation": "Serving example includes extra vegetables and crumbled cheese as garnish."
+      }
+    },
+    {
+      "id": "3d8935a6-04a7-476e-beb5-7a3a3ef22bf1",
+      "title": "Simple Beef Vegetable Soup",
+      "before": {
+        "id": "3d8935a6-04a7-476e-beb5-7a3a3ef22bf1",
+        "title": "Simple Beef Vegetable Soup",
+        "description": "A hearty ground beef and vegetable soup with potatoes, carrots, celery, tomatoes, and green beans in a savory broth. A whole meal in a bowl.",
+        "meal_time": [
+          "dinner",
+          "lunch"
+        ],
+        "prep_time_mins": 45,
+        "effort_score": 2,
+        "tags": [
+          "soup",
+          "beef",
+          "vegetables",
+          "comfort-food",
+          "family"
+        ],
+        "image_url": "",
+        "ingredients_list": [
+          "1 lb ground beef",
+          "3 medium carrots",
+          "3 stalks celery",
+          "1 medium yellow onion",
+          "3 garlic cloves",
+          "2 medium russet potatoes",
+          "1 can (14.5 oz) diced tomatoes",
+          "1 can (15 oz) cut green beans",
+          "6 cups beef broth",
+          "1 tsp Worcestershire sauce",
+          "1 tsp dried thyme",
+          "1 bay leaf",
+          "Oil",
+          "Salt",
+          "Black pepper"
+        ],
+        "shopping_list": [
+          "🥩 Proteins: ground beef, beef broth",
+          "🥬 Produce: carrots, celery, yellow onion, garlic cloves, russet potatoes",
+          "🍅 Canned: diced tomatoes, cut green beans",
+          "🫙 Pantry: Worcestershire sauce, dried thyme, bay leaf, oil, salt, black pepper"
+        ],
+        "recipe_steps": [
+          "Peel and slice the carrots. Wash and slice the celery. Peel and dice the onion. Peel and mince 3 garlic cloves. Peel the potatoes and cut into 1-inch cubes.",
+          "Heat 1 tbsp oil in a large pot over medium-high heat. Add 1 lb ground beef, break into pieces, and cook 6 minutes until browned. Spoon off excess fat.",
+          "Add the onion and cook 3 minutes, then add the garlic and cook 1 minute.",
+          "Add the carrots and celery and stir to combine.",
+          "Add the entire can of diced tomatoes with liquid, 6 cups beef broth, 1 tsp Worcestershire, 1 tsp thyme, 1 bay leaf, 1/2 tsp salt, and 1/4 tsp pepper. Stir.",
+          "Bring to a boil, add the potato cubes, reduce to medium-low, and simmer 20 minutes until the potatoes and carrots are fork-tender.",
+          "Drain the can of green beans, add them to the pot, and cook 5 more minutes.",
+          "Remove and discard the bay leaf. Taste, adjust seasoning, and serve."
+        ],
+        "cuisine": "American",
+        "created_at": "2026-06-08 12:00:00+00",
+        "servings": 6,
+        "user_id": null,
+        "is_user_created": false,
+        "source_url": null,
+        "source_name": null
+      },
+      "image": {
+        "kind": "licensed-photo",
+        "creator": "Carol (vanhookc)",
+        "title": "Homemade Vegetable Beef Soup",
+        "source_url": "https://www.flickr.com/photos/97651299@N00/16237834089",
+        "license": "CC BY 2.0",
+        "license_url": "https://creativecommons.org/licenses/by/2.0/",
+        "primary_license_url": "https://creativecommons.org/licenses/by/2.0/deed.en",
+        "primary_license_name": "CC BY 2.0",
+        "license_verified_at": "2026-09-12",
+        "changes": "Resized and converted to JPEG.",
+        "credit": "Representative photo: \"Homemade Vegetable Beef Soup\" by Carol (vanhookc), CC BY 2.0. Resized and converted to JPEG. Serving example includes extra corn, beans and noodles. Follow the simpler ingredients listed below. Source: https://www.flickr.com/photos/97651299@N00/16237834089 License: https://creativecommons.org/licenses/by/2.0/",
+        "file": "assets/recipe-photos/simple-beef-vegetable-soup-431c4ff693de.jpg",
+        "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/simple-beef-vegetable-soup-431c4ff693de.jpg",
+        "sha256": "431c4ff693ded39883c6e0b671502278b89f14fe94bb3ffafbef569dd99a9acc",
+        "bytes": 60412,
+        "width": 900,
+        "height": 601
+      },
+      "review": {
+        "status": "visually-reviewed",
+        "date": "2026-09-12",
+        "notes": "Primary description confirms hamburger beef, potatoes, carrots, green beans and tomatoes. Macro photo focuses on vegetables with a shallow depth of field; extra ingredients are disclosed.",
+        "serving_variation": "Serving example includes extra corn, beans and noodles. Follow the simpler ingredients listed below."
+      }
+    },
+    {
+      "id": "7646efc3-02b1-4406-a837-e1fed70b141a",
+      "title": "Stovetop Tuna Noodle Skillet",
+      "before": {
+        "id": "7646efc3-02b1-4406-a837-e1fed70b141a",
+        "title": "Stovetop Tuna Noodle Skillet",
+        "description": "A quick weeknight version of tuna noodle casserole made entirely on the stovetop in about 20 minutes. Using the same pot for the noodles and the sauce means less cleanup and more flavor carried through.",
+        "meal_time": [
+          "dinner",
+          "lunch"
+        ],
+        "prep_time_mins": 20,
+        "effort_score": 1,
+        "tags": [
+          "tuna",
+          "pasta",
+          "one-pot",
+          "quick",
+          "comfort-food",
+          "kid-friendly"
+        ],
+        "image_url": "",
+        "ingredients_list": [
+          "8 oz wide egg noodles",
+          "2 cans (5 oz each) tuna in water, drained",
+          "10.5 oz cream of mushroom soup (1 can)",
+          "1 cup frozen peas",
+          "½ cup whole milk",
+          "1 cup cheddar cheese, grated",
+          "2 tbsp unsalted butter",
+          "½ tsp garlic powder",
+          "½ tsp onion powder",
+          "¼ tsp black pepper",
+          "1 tsp salt (for pasta water)"
+        ],
+        "shopping_list": [
+          "🥩 Proteins: canned tuna in water",
+          "🧀 Dairy: whole milk, cheddar cheese block, unsalted butter",
+          "🧊 Frozen: frozen peas",
+          "🥫 Canned: cream of mushroom soup",
+          "🫙 Pantry: wide egg noodles, garlic powder, onion powder, black pepper, salt"
+        ],
+        "recipe_steps": [
+          "Drain 2 cans of tuna completely and grate 1 cup of cheddar cheese.",
+          "Bring a large pot of water to a boil. Add 1 tsp salt and 8 oz of wide egg noodles. Cook for 7 minutes until tender, then drain and set aside.",
+          "Melt 2 tbsp butter in the same pot over medium heat. Add one 10.5-oz can of cream of mushroom soup and ½ cup of whole milk. Stir until smooth and heated through.",
+          "Add ½ tsp garlic powder, ½ tsp onion powder, and ¼ tsp black pepper. Stir to combine.",
+          "Add both cans of drained tuna and 1 cup of frozen peas. Stir into the sauce.",
+          "Add the drained egg noodles and toss until fully coated.",
+          "Sprinkle the grated cheddar over the top, stir until melted, and serve immediately from the pot."
+        ],
+        "cuisine": "American",
+        "created_at": "2026-03-29 12:00:00+00",
+        "servings": 4,
+        "user_id": null,
+        "is_user_created": false,
+        "source_url": null,
+        "source_name": null
+      },
+      "image": {
+        "kind": "licensed-photo",
+        "creator": "Micah Sittig",
+        "title": "Creamy tuna noodles",
+        "source_url": "https://www.flickr.com/photos/35468134321@N01/3394865184",
+        "license": "CC BY 2.0",
+        "license_url": "https://creativecommons.org/licenses/by/2.0/",
+        "primary_license_url": "https://creativecommons.org/licenses/by/2.0/deed.en",
+        "primary_license_name": "CC BY 2.0",
+        "license_verified_at": "2026-09-12",
+        "changes": "Resized and converted to JPEG.",
+        "credit": "Representative photo: \"Creamy tuna noodles\" by Micah Sittig, CC BY 2.0. Resized and converted to JPEG. Serving example uses long noodles. This recipe uses egg noodles and finishes with cheddar. Source: https://www.flickr.com/photos/35468134321@N01/3394865184 License: https://creativecommons.org/licenses/by/2.0/",
+        "file": "assets/recipe-photos/stovetop-tuna-noodle-skillet-5aaeb09d2654.jpg",
+        "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/stovetop-tuna-noodle-skillet-5aaeb09d2654.jpg",
+        "sha256": "5aaeb09d2654eb1cef394101fb6d64000c9e1f8666a012ffd659476669be6b7f",
+        "bytes": 83917,
+        "width": 900,
+        "height": 675
+      },
+      "review": {
+        "status": "visually-reviewed",
+        "date": "2026-09-12",
+        "notes": "Cooked tuna, peas and cream sauce over noodles match. Pasta shape and cheddar presentation differ and are disclosed.",
+        "serving_variation": "Serving example uses long noodles. This recipe uses egg noodles and finishes with cheddar."
+      }
+    },
+    {
+      "id": "729982fe-caf6-4917-85c4-084462689521",
+      "title": "Tuna and Mixed Bean Lunch Bowls",
+      "before": {
+        "id": "729982fe-caf6-4917-85c4-084462689521",
+        "title": "Tuna and Mixed Bean Lunch Bowls",
+        "description": "A filling cold lunch with canned staples. Keep it refrigerated at work until your break.",
+        "meal_time": [
+          "lunch",
+          "dinner"
+        ],
+        "prep_time_mins": 15,
+        "effort_score": 1,
+        "tags": [
+          "easy",
+          "no-cook",
+          "packed-lunch",
+          "small-batch"
+        ],
+        "image_url": "",
+        "ingredients_list": [
+          "1 can mixed beans, 15 oz, drained and rinsed",
+          "2 cans tuna in water, 5 oz each, drained",
+          "1 cup cucumber, diced",
+          "1 cup cherry tomatoes, halved",
+          "2 tbsp olive oil",
+          "1 tbsp lemon juice",
+          "1/4 tsp black pepper",
+          "4 slices whole-wheat bread"
+        ],
+        "shopping_list": [
+          "1 can mixed beans, 15 oz, drained and rinsed",
+          "2 cans tuna in water, 5 oz each, drained",
+          "1 cup cucumber, diced",
+          "1 cup cherry tomatoes, halved",
+          "2 tbsp olive oil",
+          "1 tbsp lemon juice",
+          "1/4 tsp black pepper",
+          "4 slices whole-wheat bread"
+        ],
+        "recipe_steps": [
+          "Wash and cut the cucumber and tomatoes. Drain the tuna; rinse and drain the beans.",
+          "Mix the oil, lemon juice and pepper in a bowl. Fold in the beans, tuna and vegetables.",
+          "Divide between bowls and serve with the bread. For a packed lunch, refrigerate promptly and transport with ice packs; keep at 40 F or colder until eating."
+        ],
+        "cuisine": "American",
+        "created_at": "2026-09-12 18:37:30.474451+00",
+        "servings": 2,
+        "user_id": null,
+        "is_user_created": false,
+        "source_url": "https://www.reddit.com/r/mealprep/comments/z25vr9/best_lunches_for_12_hour_shifts/",
+        "source_name": "12-hour-shift lunch discussion, Reddit"
+      },
+      "image": {
+        "kind": "licensed-photo",
+        "creator": "Katrin Gilger",
+        "title": "Insalata di Fagioli e Tonno – Bohnensalat mit Thunfisch",
+        "source_url": "https://www.flickr.com/photos/26242865@N04/7327273414",
+        "license": "CC BY-SA 2.0",
+        "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+        "primary_license_url": "https://creativecommons.org/licenses/by-sa/2.0/deed.en",
+        "primary_license_name": "CC BY-SA 2.0",
+        "license_verified_at": "2026-09-12",
+        "changes": "Resized and converted to JPEG.",
+        "credit": "Representative photo: \"Insalata di Fagioli e Tonno – Bohnensalat mit Thunfisch\" by Katrin Gilger, CC BY-SA 2.0. Resized and converted to JPEG. This image adaptation remains licensed under CC BY-SA 2.0. Serving example uses white beans, red onion and herbs; this recipe uses mixed beans and cucumber. Source: https://www.flickr.com/photos/26242865@N04/7327273414 License: https://creativecommons.org/licenses/by-sa/2.0/",
+        "file": "assets/recipe-photos/tuna-and-mixed-bean-lunch-bowls-640e4df8ba58.jpg",
+        "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/tuna-and-mixed-bean-lunch-bowls-640e4df8ba58.jpg",
+        "sha256": "640e4df8ba58143452684242e7c8363b2870d682bb77a35a9f0d85849206141f",
+        "bytes": 79122,
+        "width": 900,
+        "height": 600
+      },
+      "review": {
+        "status": "visually-reviewed",
+        "date": "2026-09-12",
+        "notes": "High-resolution bowl of flaked canned tuna, beans and cherry tomatoes, with no wrong protein. Bean mix and garnishes vary.",
+        "serving_variation": "Serving example uses white beans, red onion and herbs; this recipe uses mixed beans and cucumber."
+      }
+    },
+    {
+      "id": "233b09f4-f295-4f3e-8542-f82c13aab18d",
+      "title": "Tuna Noodle Casserole",
+      "before": {
+        "id": "233b09f4-f295-4f3e-8542-f82c13aab18d",
+        "title": "Tuna Noodle Casserole",
+        "description": "A creamy baked casserole of egg noodles, tuna, and peas in a mushroom sauce, topped with buttery breadcrumbs and cheddar. The ultimate weeknight pantry dinner.",
+        "meal_time": [
+          "dinner"
+        ],
+        "prep_time_mins": 45,
+        "effort_score": 2,
+        "tags": [
+          "casserole",
+          "pasta",
+          "tuna",
+          "comfort-food",
+          "family"
+        ],
+        "image_url": "",
+        "ingredients_list": [
+          "3 cups egg noodles (uncooked)",
+          "2 cans (5 oz each) tuna in water",
+          "1 can (10.5 oz) cream of mushroom soup",
+          "1 cup frozen peas",
+          "1 cup milk",
+          "1 cup shredded cheddar cheese",
+          "1/2 cup sour cream",
+          "1/2 cup plain breadcrumbs",
+          "2 tbsp butter",
+          "Salt",
+          "Black pepper"
+        ],
+        "shopping_list": [
+          "🐟 Canned: tuna in water, cream of mushroom soup",
+          "🥬 Produce: frozen peas",
+          "🧀 Dairy: milk, shredded cheddar cheese, sour cream, butter",
+          "🍞 Pantry: egg noodles, plain breadcrumbs, salt, black pepper"
+        ],
+        "recipe_steps": [
+          "Preheat the oven to 375°F and grease a 9x13-inch baking dish with butter.",
+          "Bring a large pot of water to a boil, add 1 tsp salt and 3 cups egg noodles, and cook 1 minute less than package directions. Drain.",
+          "Drain both cans of tuna and flake with a fork.",
+          "In a large bowl, stir the cream of mushroom soup with 1 cup milk until smooth, then stir in 1/2 cup sour cream.",
+          "Add the flaked tuna, 1 cup frozen peas, 3/4 cup cheddar, and 1/4 tsp pepper. Stir together.",
+          "Add the drained noodles and stir gently to coat. Pour into the prepared dish and spread evenly.",
+          "Microwave 2 tbsp butter 20 seconds until melted, then stir in 1/2 cup breadcrumbs.",
+          "Sprinkle the remaining 1/4 cup cheddar over the casserole, then top with the buttered breadcrumbs.",
+          "Bake 25 to 30 minutes until golden and bubbling. Let cool 5 minutes before serving."
+        ],
+        "cuisine": "American",
+        "created_at": "2026-06-08 12:00:00+00",
+        "servings": 6,
+        "user_id": null,
+        "is_user_created": false,
+        "source_url": null,
+        "source_name": null
+      },
+      "image": {
+        "kind": "licensed-photo",
+        "creator": "Hammer51012",
+        "title": "Tuna Noodle Casserole",
+        "source_url": "https://www.flickr.com/photos/7365168@N03/27237574821",
+        "license": "CC BY-SA 2.0",
+        "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+        "primary_license_url": "https://creativecommons.org/licenses/by-sa/2.0/deed.en",
+        "primary_license_name": "CC BY-SA 2.0",
+        "license_verified_at": "2026-09-12",
+        "changes": "Resized and converted to JPEG.",
+        "credit": "Representative photo: \"Tuna Noodle Casserole\" by Hammer51012, CC BY-SA 2.0. Resized and converted to JPEG. This image adaptation remains licensed under CC BY-SA 2.0. Serving example includes toast on the side; the breadcrumb topping may look different. Source: https://www.flickr.com/photos/7365168@N03/27237574821 License: https://creativecommons.org/licenses/by-sa/2.0/",
+        "file": "assets/recipe-photos/tuna-noodle-casserole-35300f5af913.jpg",
+        "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/tuna-noodle-casserole-35300f5af913.jpg",
+        "sha256": "35300f5af913e572e0eca7ce87bea35e21f2105459872f1e8455b8c648ee84eb",
+        "bytes": 98370,
+        "width": 900,
+        "height": 900
+      },
+      "review": {
+        "status": "visually-reviewed",
+        "date": "2026-09-12",
+        "notes": "Clearly shows a creamy tuna-noodle casserole portion with peas and melted cheddar. Photographer watermark is preserved.",
+        "serving_variation": "Serving example includes toast on the side; the breadcrumb topping may look different."
+      }
+    },
+    {
+      "id": "e4aa28e2-01e3-4cbf-b018-a0331be681be",
+      "title": "Turkey and Hummus Cold Plates",
+      "before": {
+        "id": "e4aa28e2-01e3-4cbf-b018-a0331be681be",
+        "title": "Turkey and Hummus Cold Plates",
+        "description": "A ten-minute dinner to assemble when cooking feels like too much.",
+        "meal_time": [
+          "lunch",
+          "dinner"
+        ],
+        "prep_time_mins": 10,
+        "effort_score": 1,
+        "tags": [
+          "easy",
+          "no-cook",
+          "low-cleanup",
+          "family-friendly",
+          "small-batch"
+        ],
+        "image_url": "",
+        "ingredients_list": [
+          "4 oz ready-to-eat deli turkey",
+          "2 oz cheddar cheese",
+          "1/2 cup prepared chickpea hummus with sesame tahini",
+          "2 oz crackers",
+          "1 cup carrot sticks",
+          "1/2 cucumber",
+          "2 apples"
+        ],
+        "shopping_list": [
+          "4 oz ready-to-eat deli turkey",
+          "2 oz cheddar cheese",
+          "1/2 cup prepared chickpea hummus with sesame tahini",
+          "2 oz crackers",
+          "1 cup carrot sticks",
+          "1/2 cucumber",
+          "2 apples"
+        ],
+        "recipe_steps": [
+          "Wash the cucumber and apples. Slice the cucumber; core and slice the apples.",
+          "Cut the cheese into bite-size pieces and roll or fold the turkey.",
+          "Divide everything between plates, with hummus for dipping. Cut firm foods into pieces suitable for the people eating.",
+          "Eat promptly. Refrigerate perishable ingredients until serving."
+        ],
+        "cuisine": "American",
+        "created_at": "2026-09-12 18:37:30.474451+00",
+        "servings": 2,
+        "user_id": null,
+        "is_user_created": false,
+        "source_url": "https://www.reddit.com/r/Parenting/comments/1txzrbo/single_parents_what_do_you_cook_for_dinner/",
+        "source_name": "Single-parent cold-plate discussion, Reddit"
+      },
+      "image": {
+        "kind": "licensed-photo",
+        "creator": "anotherlunch.com",
+        "title": "5th grader school lunch pears, carrots, cheese, turkey, & crackers",
+        "source_url": "https://www.flickr.com/photos/44176993@N03/8538636041",
+        "license": "CC BY 2.0",
+        "license_url": "https://creativecommons.org/licenses/by/2.0/",
+        "primary_license_url": "https://creativecommons.org/licenses/by/2.0/deed.en",
+        "primary_license_name": "CC BY 2.0",
+        "license_verified_at": "2026-09-12",
+        "changes": "Resized and converted to JPEG.",
+        "credit": "Representative photo: \"5th grader school lunch pears, carrots, cheese, turkey, & crackers\" by anotherlunch.com, CC BY 2.0. Resized and converted to JPEG. Packed-lunch serving example shows turkey, cheese, crackers, carrots and pear. This recipe includes hummus, cucumber and apple. Source: https://www.flickr.com/photos/44176993@N03/8538636041 License: https://creativecommons.org/licenses/by/2.0/",
+        "file": "assets/recipe-photos/turkey-and-hummus-cold-plates-52fce7653976.jpg",
+        "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/turkey-and-hummus-cold-plates-52fce7653976.jpg",
+        "sha256": "52fce765397617ec4ebea02d7134ee4d70e8edfb82356ae64c6d2836465638fc",
+        "bytes": 81272,
+        "width": 668,
+        "height": 900
+      },
+      "review": {
+        "status": "visually-reviewed",
+        "date": "2026-09-12",
+        "notes": "Photographer identifies turkey, not ham. Simple deli turkey, cheddar, crackers and fruit/vegetables match the cold-plate meal; hummus is not pictured.",
+        "serving_variation": "Packed-lunch serving example shows turkey, cheese, crackers, carrots and pear. This recipe includes hummus, cucumber and apple."
+      }
+    }
+  ]
+}
