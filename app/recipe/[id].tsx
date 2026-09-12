@@ -2,7 +2,6 @@ import React, { useMemo, useState, useCallback, useEffect } from 'react';
 import {
   View,
   Text,
-  Image,
   ScrollView,
   Pressable,
   StyleSheet,
@@ -28,9 +27,8 @@ import {
   type Recipe,
   type DbRecipe,
 } from '@/lib/types';
-import { recipeImageUri } from '@/lib/recipeImageUri';
 import { getRecipeSource } from '@/lib/recipeSource';
-import { RecipeImagePlaceholder } from '@/components/RecipeImagePlaceholder';
+import { RecipeImage } from '@/components/RecipeImage';
 import { supabase } from '@/lib/supabase';
 import { useSession } from '@/hooks/useSession';
 import { usePreferences } from '@/hooks/usePreferences';
@@ -249,7 +247,6 @@ export default function RecipeDetailScreen() {
     [selectedServings, recipe?.servings]
   );
 
-  const detailImageUri = recipe ? recipeImageUri(recipe.image_url) : null;
   const detailHeroPlaceholderIcon = isTablet
     ? Math.max(56, Math.min(96, Math.round(Math.min(leftColW, heroHTablet) * 0.12)))
     : Math.max(56, Math.min(96, Math.round(Math.min(winW, heroHPhone) * 0.09)));
@@ -638,18 +635,7 @@ export default function RecipeDetailScreen() {
             <View style={styles.tabletColumns}>
               <View style={[styles.tabletLeft, { width: leftColW }]}>
                 <View style={[styles.tabletHero, { height: heroHTablet }]}>
-                  {detailImageUri ? (
-                    <Image
-                      source={{ uri: detailImageUri }}
-                      style={styles.heroImage}
-                      resizeMode="cover"
-                    />
-                  ) : (
-                    <RecipeImagePlaceholder
-                      style={styles.heroImage}
-                      iconSize={detailHeroPlaceholderIcon}
-                    />
-                  )}
+                  <RecipeImage url={recipe.image_url} style={styles.heroImage} iconSize={detailHeroPlaceholderIcon} accessibilityLabel={recipe.title} />
                   {heroChrome}
                 </View>
                 {statsSection}
@@ -662,18 +648,7 @@ export default function RecipeDetailScreen() {
         ) : (
           <>
             <View style={[styles.hero, { width: winW, height: heroHPhone }]}>
-              {detailImageUri ? (
-                <Image
-                  source={{ uri: detailImageUri }}
-                  style={styles.heroImage}
-                  resizeMode="cover"
-                />
-              ) : (
-                <RecipeImagePlaceholder
-                  style={styles.heroImage}
-                  iconSize={detailHeroPlaceholderIcon}
-                />
-              )}
+              <RecipeImage url={recipe.image_url} style={styles.heroImage} iconSize={detailHeroPlaceholderIcon} accessibilityLabel={recipe.title} />
               {heroChrome}
             </View>
             <View style={styles.content}>

@@ -1,0 +1,1029 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-09-12",
+  "policy": "Prefer owned or free licensed photos. No automatic AI generation, paid API calls or keyword-based photo assignments. Original recipe batches remain immutable; apply the reviewed photo overlay afterwards.",
+  "entries": [
+    {
+      "id": "52a89349-e919-4452-b6b3-3878098fa951",
+      "title": "Boxed Mac and Canned Chili Dinner",
+      "before": {
+        "id": "52a89349-e919-4452-b6b3-3878098fa951",
+        "title": "Boxed Mac and Canned Chili Dinner",
+        "description": "An easy chili mac using a whole box and a can. Make dinner and save a portion for another day.",
+        "meal_time": [
+          "lunch",
+          "dinner"
+        ],
+        "prep_time_mins": 25,
+        "effort_score": 1,
+        "tags": [
+          "easy",
+          "comfort-food",
+          "boxed-dinner",
+          "beginner-friendly",
+          "quick"
+        ],
+        "image_url": "",
+        "ingredients_list": [
+          "1 box original macaroni and cheese, 7.25 oz",
+          "4 tbsp butter",
+          "1/4 cup milk",
+          "1 can beef chili with beans, 15 oz"
+        ],
+        "shopping_list": [
+          "1 box original macaroni and cheese, 7.25 oz",
+          "4 tbsp butter",
+          "1/4 cup milk",
+          "1 can beef chili with beans, 15 oz"
+        ],
+        "recipe_steps": [
+          "Boil the macaroni in a saucepan following its box directions, usually 7-8 minutes after the water boils. Drain carefully.",
+          "Return the pasta to the pan. Mix in the cheese packet, butter and milk. The amounts listed suit a standard original box; follow your package if it differs.",
+          "Stir in the canned chili. Heat gently, stirring often, until hot throughout, about 3-5 minutes. Refrigerate spare portions promptly and reheat leftovers to 165°F."
+        ],
+        "cuisine": "American",
+        "created_at": "2026-09-12 19:14:33.209949+00",
+        "servings": 3,
+        "user_id": null,
+        "is_user_created": false,
+        "source_url": "https://www.reddit.com/r/EatCheapAndHealthy/comments/cu0slr/",
+        "source_name": "r/EatCheapAndHealthy community meal idea"
+      },
+      "image": {
+        "file": "assets/recipe-photos/boxed-mac-and-canned-chili-d45813fbe7d7.jpg",
+        "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/boxed-mac-and-canned-chili-d45813fbe7d7.jpg",
+        "sha256": "d45813fbe7d7e1334aab4c2c91489604f2eaaa3b23c4d8fb0559a36e9ba12353",
+        "bytes": 126144,
+        "width": 900,
+        "height": 900,
+        "kind": "generated",
+        "creator": "Mealsolved using built-in image generation",
+        "prompt": "Use case: photorealistic-natural. Asset: Mealsolved recipe illustration. One realistic home-cooked bowl of chili macaroni and cheese: small elbow macaroni coated in orange cheese sauce mixed with canned beef chili and visible kidney beans. Simple weekday comfort food, not fancy. Plain white bowl on a light wooden kitchen table, natural window light, overhead three-quarter close-up. Square image, food centered with generous crop-safe margins for both tall cards and wide banners. Only the described meal. No chicken, no salad, no green garnish, no extra dishes, no text, no logo, no packaging. It should accurately illustrate boxed mac and canned chili combined, not claim to be a photograph of a tested recipe.",
+        "generation_mode": "built-in",
+        "credit": "Photo: AI-generated serving illustration."
+      },
+      "review": {
+        "status": "visually-reviewed",
+        "date": "2026-09-12",
+        "notes": "Serving illustration checked against the listed ingredients and preparation. Not proof of a cooked test."
+      }
+    },
+    {
+      "id": "d1a537ea-c118-4a5a-b3a0-8a2a2f74ffa8",
+      "title": "Boxed Beef Pasta with Green Beans",
+      "before": {
+        "id": "d1a537ea-c118-4a5a-b3a0-8a2a2f74ffa8",
+        "title": "Boxed Beef Pasta with Green Beans",
+        "description": "A familiar Hamburger Helper dinner with frozen green beans. Makes four meal portions; check your box's liquid amounts before starting.",
+        "meal_time": [
+          "lunch",
+          "dinner"
+        ],
+        "prep_time_mins": 30,
+        "effort_score": 1,
+        "tags": [
+          "easy",
+          "comfort-food",
+          "boxed-dinner",
+          "one-pan",
+          "family-dinner",
+          "quick"
+        ],
+        "image_url": "",
+        "ingredients_list": [
+          "1 lb ground beef",
+          "1 box Hamburger Helper beef pasta, regular size",
+          "2 cups hot water",
+          "1 cup milk",
+          "1 1/2 cups frozen cut green beans"
+        ],
+        "shopping_list": [
+          "1 lb ground beef",
+          "1 box Hamburger Helper beef pasta, regular size",
+          "1 cup milk",
+          "1 1/2 cups frozen cut green beans"
+        ],
+        "recipe_steps": [
+          "In a deep skillet over medium-high heat, crumble and cook the beef for about 7 minutes, until it reaches 160°F. Spoon excess fat into a heatproof container.",
+          "Add the pasta and seasoning from the box, green beans, milk and water. If your box specifies different liquid amounts, use those. Bring to a boil.",
+          "Cover and simmer on low, stirring occasionally, until the pasta and beans are tender, about 10-12 minutes or the package time. Add a splash of water if needed. Rest off the heat for 5 minutes."
+        ],
+        "cuisine": "American",
+        "created_at": "2026-09-12 19:14:33.209949+00",
+        "servings": 4,
+        "user_id": null,
+        "is_user_created": false,
+        "source_url": "https://www.bettycrocker.com/recipes/green-bean-and-beef-pasta-supper/56a3af35-f2d7-4e97-a8e3-198cba211f1a",
+        "source_name": "Betty Crocker Kitchens"
+      },
+      "image": {
+        "file": "assets/recipe-photos/boxed-beef-pasta-with-green-beans-28ca2fd4a3e0.jpg",
+        "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/boxed-beef-pasta-with-green-beans-28ca2fd4a3e0.jpg",
+        "sha256": "28ca2fd4a3e07eda70f44841c12d8bd94cf42e50c45f4f166a2f3a85debd1e8b",
+        "bytes": 153625,
+        "width": 900,
+        "height": 900,
+        "kind": "generated",
+        "creator": "Mealsolved using built-in image generation",
+        "prompt": "Use case: photorealistic-natural. Create a square recipe illustration for Mealsolved: Boxed Beef Pasta with Green Beans. Precisely depict the finished cooked meal using only these ingredients: 1 lb ground beef; 1 box Hamburger Helper beef pasta, regular size; 2 cups hot water; 1 cup milk; 1 1/2 cups frozen cut green beans. Cooking method for appearance: In a deep skillet over medium-high heat, crumble and cook the beef for about 7 minutes, until it reaches 160°F. Spoon excess fat into a heatproof container. Add the pasta and seasoning from the box, green beans, milk and water. If your box specifies different liquid amounts, use those. Bring to a boil. Cover and simmer on low, stirring occasionally, until the pasta and beans are tender, about 10-12 minutes or the package time. Add a splash of water if needed. Rest off the heat for 5 minutes.. Natural home-kitchen food photography style, plain everyday white dish or simple pan on pale wood, soft window light, appetizing but achievable homemade result. Three-quarter overhead view. Food centered for tall-card and wide-banner cropping. No other meal, no extra garnishes or ingredients, no salad unless specified, no packaging, no people, no text, no logo. One finished meal only. This is an illustrative generated image, not evidence of cook-testing.",
+        "generation_mode": "built-in",
+        "credit": "Photo: AI-generated serving illustration."
+      },
+      "review": {
+        "status": "visually-reviewed",
+        "date": "2026-09-12",
+        "notes": "Serving illustration checked against the listed ingredients and preparation. Not proof of a cooked test."
+      }
+    },
+    {
+      "id": "348ffdd4-1165-4773-9475-c0e723668203",
+      "title": "Chicken and Potato Enchilada Skillet",
+      "before": {
+        "id": "348ffdd4-1165-4773-9475-c0e723668203",
+        "title": "Chicken and Potato Enchilada Skillet",
+        "description": "About 15 minutes of hands-on work and 55 minutes total. Small potato cubes simmer with canned chicken in a mild enchilada sauce.",
+        "meal_time": [
+          "lunch",
+          "dinner"
+        ],
+        "prep_time_mins": 55,
+        "effort_score": 2,
+        "tags": [
+          "easy",
+          "comfort-food",
+          "one-pan",
+          "low-active-time",
+          "small-batch"
+        ],
+        "image_url": "",
+        "ingredients_list": [
+          "1 lb russet potatoes, scrubbed and cut into small cubes",
+          "1 cup frozen diced peppers and onions",
+          "1 can cooked chicken breast, 12.5 oz, drained",
+          "1 can mild red enchilada sauce, 10 oz",
+          "1/2 cup water",
+          "1 tsp taco seasoning",
+          "1/2 cup shredded cheddar cheese"
+        ],
+        "shopping_list": [
+          "1 lb russet potatoes, scrubbed and cut into small cubes",
+          "1 cup frozen diced peppers and onions",
+          "1 can cooked chicken breast, 12.5 oz, drained",
+          "1 can mild red enchilada sauce, 10 oz",
+          "1 tsp taco seasoning",
+          "1/2 cup shredded cheddar cheese"
+        ],
+        "recipe_steps": [
+          "Put the potatoes, frozen vegetables, drained chicken, enchilada sauce, water and taco seasoning in a deep skillet. Stir and bring to a simmer over medium heat.",
+          "Cover and lower the heat. Simmer for 30-40 minutes, stirring occasionally, until the potatoes are fork-tender and the chicken is hot throughout. Add a splash of water if the sauce begins sticking.",
+          "Sprinkle with cheddar, cover for a minute to melt, and serve. If the potatoes are still firm, keep simmering; their size changes the cooking time."
+        ],
+        "cuisine": "Tex-Mex",
+        "created_at": "2026-09-12 19:14:33.209949+00",
+        "servings": 2,
+        "user_id": null,
+        "is_user_created": false,
+        "source_url": "https://www.juliapacheco.com/enchilada-potato-skillet/",
+        "source_name": "Julia Pacheco"
+      },
+      "image": {
+        "file": "assets/recipe-photos/chicken-and-potato-enchilada-skillet-ff3458e30035.jpg",
+        "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/chicken-and-potato-enchilada-skillet-ff3458e30035.jpg",
+        "sha256": "ff3458e30035bce42d5cf3641153924666f07562ef219370a273687b1fc65126",
+        "bytes": 150662,
+        "width": 900,
+        "height": 900,
+        "kind": "generated",
+        "creator": "Mealsolved using built-in image generation",
+        "prompt": "Use case: photorealistic-natural. Create a square recipe illustration for Mealsolved: Chicken and Potato Enchilada Skillet. Precisely depict the finished cooked meal using only these ingredients: 1 lb russet potatoes, scrubbed and cut into small cubes; 1 cup frozen diced peppers and onions; 1 can cooked chicken breast, 12.5 oz, drained; 1 can mild red enchilada sauce, 10 oz; 1/2 cup water; 1 tsp taco seasoning; 1/2 cup shredded cheddar cheese. Cooking method for appearance: Put the potatoes, frozen vegetables, drained chicken, enchilada sauce, water and taco seasoning in a deep skillet. Stir and bring to a simmer over medium heat. Cover and lower the heat. Simmer for 30-40 minutes, stirring occasionally, until the potatoes are fork-tender and the chicken is hot throughout. Add a splash of water if the sauce begins sticking. Sprinkle with cheddar, cover for a minute to melt, and serve. If the potatoes are still firm, keep simmering; their size changes the cooking time.. Natural home-kitchen food photography style, plain everyday white dish or simple pan on pale wood, soft window light, appetizing but achievable homemade result. Three-quarter overhead view. Food centered for tall-card and wide-banner cropping. No other meal, no extra garnishes or ingredients, no salad unless specified, no packaging, no people, no text, no logo. One finished meal only. This is an illustrative generated image, not evidence of cook-testing.",
+        "generation_mode": "built-in",
+        "credit": "Photo: AI-generated serving illustration."
+      },
+      "review": {
+        "status": "visually-reviewed",
+        "date": "2026-09-12",
+        "notes": "Serving illustration checked against the listed ingredients and preparation. Not proof of a cooked test."
+      }
+    },
+    {
+      "id": "5f3839a4-8804-47a2-bd9a-711db1a01c5f",
+      "title": "Four-Ingredient Ravioli Bake",
+      "before": {
+        "id": "5f3839a4-8804-47a2-bd9a-711db1a01c5f",
+        "title": "Four-Ingredient Ravioli Bake",
+        "description": "About 15 minutes of hands-on work and 45 minutes total. Frozen cheese ravioli and jarred sauce make a simple pasta dinner.",
+        "meal_time": [
+          "lunch",
+          "dinner"
+        ],
+        "prep_time_mins": 45,
+        "effort_score": 2,
+        "tags": [
+          "easy",
+          "comfort-food",
+          "oven-meal",
+          "low-active-time",
+          "family-dinner",
+          "pasta"
+        ],
+        "image_url": "",
+        "ingredients_list": [
+          "1 bag frozen cheese ravioli pasta, 25 oz",
+          "3 cups jarred marinara sauce",
+          "1 1/2 cups shredded mozzarella cheese",
+          "1 tsp cooking oil"
+        ],
+        "shopping_list": [
+          "1 bag frozen cheese ravioli pasta, 25 oz",
+          "3 cups jarred marinara sauce",
+          "1 1/2 cups shredded mozzarella cheese",
+          "1 tsp cooking oil"
+        ],
+        "recipe_steps": [
+          "Heat the oven to 350°F and oil a 9-by-13-inch baking dish. Bring a pot of water to a boil.",
+          "Boil the ravioli following the bag directions, then drain. Spread a little sauce in the dish. Add the ravioli and remaining sauce, then cover with mozzarella.",
+          "Cover with foil and bake for about 20 minutes, until bubbling and 165°F in the center. Uncover for 5 minutes to melt any remaining cheese; rest 5 minutes before serving."
+        ],
+        "cuisine": "Italian-American",
+        "created_at": "2026-09-12 19:14:33.209949+00",
+        "servings": 4,
+        "user_id": null,
+        "is_user_created": false,
+        "source_url": "https://www.budgetbytes.com/baked-ravioli/",
+        "source_name": "Beth Moncel, Budget Bytes"
+      },
+      "image": {
+        "file": "assets/recipe-photos/four-ingredient-ravioli-bake-1a9ffc780304.jpg",
+        "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/four-ingredient-ravioli-bake-1a9ffc780304.jpg",
+        "sha256": "1a9ffc780304379d0f2981192ffb13ba6d1dc26ac90afa00c61e8cb9b3d8f491",
+        "bytes": 170869,
+        "width": 900,
+        "height": 900,
+        "kind": "generated",
+        "creator": "Mealsolved using built-in image generation",
+        "prompt": "Use case: photorealistic-natural. Create a square recipe illustration for Mealsolved: Four-Ingredient Ravioli Bake. Precisely depict the finished cooked meal using only these ingredients: 1 bag frozen cheese ravioli pasta, 25 oz; 3 cups jarred marinara sauce; 1 1/2 cups shredded mozzarella cheese; 1 tsp cooking oil. Cooking method for appearance: Heat the oven to 350°F and oil a 9-by-13-inch baking dish. Bring a pot of water to a boil. Boil the ravioli following the bag directions, then drain. Spread a little sauce in the dish. Add the ravioli and remaining sauce, then cover with mozzarella. Cover with foil and bake for about 20 minutes, until bubbling and 165°F in the center. Uncover for 5 minutes to melt any remaining cheese; rest 5 minutes before serving.. Natural home-kitchen food photography style, plain everyday white dish or simple pan on pale wood, soft window light, appetizing but achievable homemade result. Three-quarter overhead view. Food centered for tall-card and wide-banner cropping. No other meal, no extra garnishes or ingredients, no salad unless specified, no packaging, no people, no text, no logo. One finished meal only. This is an illustrative generated image, not evidence of cook-testing.",
+        "generation_mode": "built-in",
+        "credit": "Photo: AI-generated serving illustration."
+      },
+      "review": {
+        "status": "visually-reviewed",
+        "date": "2026-09-12",
+        "notes": "Serving illustration checked against the listed ingredients and preparation. Not proof of a cooked test."
+      }
+    },
+    {
+      "id": "4ba8be94-9633-4882-8014-908d39376fb7",
+      "title": "Rotisserie Chicken and Stuffing Bake",
+      "before": {
+        "id": "4ba8be94-9633-4882-8014-908d39376fb7",
+        "title": "Rotisserie Chicken and Stuffing Bake",
+        "description": "About 15 minutes of hands-on work and 60 minutes total. Cooked chicken, boxed stuffing and zucchini make a filling oven dinner.",
+        "meal_time": [
+          "lunch",
+          "dinner"
+        ],
+        "prep_time_mins": 60,
+        "effort_score": 2,
+        "tags": [
+          "easy",
+          "comfort-food",
+          "oven-meal",
+          "low-active-time",
+          "family-dinner"
+        ],
+        "image_url": "",
+        "ingredients_list": [
+          "1 box herb stuffing mix, 6 oz",
+          "4 tbsp butter, melted",
+          "4 cups cooked shredded rotisserie chicken",
+          "2 medium zucchini, diced small",
+          "1 can condensed cream of chicken soup, 10.5 oz",
+          "1/2 cup sour cream",
+          "1 tsp cooking oil"
+        ],
+        "shopping_list": [
+          "1 box herb stuffing mix, 6 oz",
+          "4 tbsp butter, melted",
+          "4 cups cooked shredded rotisserie chicken",
+          "2 medium zucchini, diced small",
+          "1 can condensed cream of chicken soup, 10.5 oz",
+          "1/2 cup sour cream",
+          "1 tsp cooking oil"
+        ],
+        "recipe_steps": [
+          "Heat the oven to 350°F. Lightly oil a 9-by-13-inch baking dish.",
+          "Toss the dry stuffing with melted butter. Set aside a small handful for the top. Mix the rest with chicken, zucchini, condensed soup and sour cream.",
+          "Spread in the dish and scatter the reserved stuffing over it. Bake for 40-45 minutes, until the zucchini is tender and the center reaches 165°F; allow longer if needed. Rest 5 minutes before serving."
+        ],
+        "cuisine": "American",
+        "created_at": "2026-09-12 19:14:33.209949+00",
+        "servings": 4,
+        "user_id": null,
+        "is_user_created": false,
+        "source_url": "https://www.juliapacheco.com/zucchini-stuffing-chicken-casserole/",
+        "source_name": "Julia Pacheco"
+      },
+      "image": {
+        "file": "assets/recipe-photos/rotisserie-chicken-and-stuffing-bake-24800395f685.jpg",
+        "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/rotisserie-chicken-and-stuffing-bake-24800395f685.jpg",
+        "sha256": "24800395f685fc58cf730395cb1010529fd9679403b8238dc7454f0b1353e874",
+        "bytes": 157046,
+        "width": 900,
+        "height": 900,
+        "kind": "generated",
+        "creator": "Mealsolved using built-in image generation",
+        "prompt": "Use case: photorealistic-natural. Create a square recipe illustration for Mealsolved: Rotisserie Chicken and Stuffing Bake. Precisely depict the finished cooked meal using only these ingredients: 1 box herb stuffing mix, 6 oz; 4 tbsp butter, melted; 4 cups cooked shredded rotisserie chicken; 2 medium zucchini, diced small; 1 can condensed cream of chicken soup, 10.5 oz; 1/2 cup sour cream; 1 tsp cooking oil. Cooking method for appearance: Heat the oven to 350°F. Lightly oil a 9-by-13-inch baking dish. Toss the dry stuffing with melted butter. Set aside a small handful for the top. Mix the rest with chicken, zucchini, condensed soup and sour cream. Spread in the dish and scatter the reserved stuffing over it. Bake for 40-45 minutes, until the zucchini is tender and the center reaches 165°F; allow longer if needed. Rest 5 minutes before serving.. Natural home-kitchen food photography style, plain everyday white dish or simple pan on pale wood, soft window light, appetizing but achievable homemade result. Three-quarter overhead view. Food centered for tall-card and wide-banner cropping. No other meal, no extra garnishes or ingredients, no salad unless specified, no packaging, no people, no text, no logo. One finished meal only. This is an illustrative generated image, not evidence of cook-testing.",
+        "generation_mode": "built-in",
+        "credit": "Photo: AI-generated serving illustration."
+      },
+      "review": {
+        "status": "visually-reviewed",
+        "date": "2026-09-12",
+        "notes": "Serving illustration checked against the listed ingredients and preparation. Not proof of a cooked test."
+      }
+    },
+    {
+      "id": "6e2ba476-bc37-4224-b296-32267543dc4e",
+      "title": "Shortcut Biscuits and Sausage Gravy",
+      "before": {
+        "id": "6e2ba476-bc37-4224-b296-32267543dc4e",
+        "title": "Shortcut Biscuits and Sausage Gravy",
+        "description": "Breakfast for dinner with store-bought biscuits and simple skillet gravy. Use biscuits that bake in about 15 minutes.",
+        "meal_time": [
+          "breakfast",
+          "dinner"
+        ],
+        "prep_time_mins": 30,
+        "effort_score": 1,
+        "tags": [
+          "easy",
+          "comfort-food",
+          "breakfast-for-dinner",
+          "small-batch",
+          "quick"
+        ],
+        "image_url": "",
+        "ingredients_list": [
+          "4 refrigerated biscuit dough rounds",
+          "1/4 lb bulk pork breakfast sausage",
+          "3/4 tbsp butter",
+          "1 tbsp all-purpose flour",
+          "1 cup milk",
+          "1/8 tsp black pepper"
+        ],
+        "shopping_list": [
+          "4 refrigerated biscuit dough rounds",
+          "1/4 lb bulk pork breakfast sausage",
+          "3/4 tbsp butter",
+          "1 tbsp all-purpose flour",
+          "1 cup milk",
+          "1/8 tsp black pepper"
+        ],
+        "recipe_steps": [
+          "Preheat the oven and bake the biscuits on a tray according to their package directions.",
+          "While they bake, crumble the sausage into a skillet over medium heat. Cook until it reaches 160°F, about 6-8 minutes. Stir in butter and flour; cook while stirring for 2 minutes.",
+          "Gradually stir in milk, breaking up any flour lumps. Simmer gently, stirring, until thickened, about 5 minutes. Add pepper and spoon the gravy over the baked biscuits."
+        ],
+        "cuisine": "American",
+        "created_at": "2026-09-12 19:14:33.209949+00",
+        "servings": 2,
+        "user_id": null,
+        "is_user_created": false,
+        "source_url": "https://www.budgetbytes.com/country-sausage-gravy/",
+        "source_name": "Beth Moncel, Budget Bytes"
+      },
+      "image": {
+        "file": "assets/recipe-photos/shortcut-biscuits-and-sausage-gravy-d9846894ea29.jpg",
+        "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/shortcut-biscuits-and-sausage-gravy-d9846894ea29.jpg",
+        "sha256": "d9846894ea29aba20e20ff48712a409ba94f3316d1fcf2a922874a7e5a567914",
+        "bytes": 114843,
+        "width": 900,
+        "height": 900,
+        "kind": "generated",
+        "creator": "Mealsolved using built-in image generation",
+        "prompt": "Use case: photorealistic-natural. Create a square recipe illustration for Mealsolved: Shortcut Biscuits and Sausage Gravy. Precisely depict the finished cooked meal using only these ingredients: 4 refrigerated biscuit dough rounds; 1/4 lb bulk pork breakfast sausage; 3/4 tbsp butter; 1 tbsp all-purpose flour; 1 cup milk; 1/8 tsp black pepper. Cooking method for appearance: Preheat the oven and bake the biscuits on a tray according to their package directions. While they bake, crumble the sausage into a skillet over medium heat. Cook until it reaches 160°F, about 6-8 minutes. Stir in butter and flour; cook while stirring for 2 minutes. Gradually stir in milk, breaking up any flour lumps. Simmer gently, stirring, until thickened, about 5 minutes. Add pepper and spoon the gravy over the baked biscuits.. Natural home-kitchen food photography style, plain everyday white dish or simple pan on pale wood, soft window light, appetizing but achievable homemade result. Three-quarter overhead view. Food centered for tall-card and wide-banner cropping. No other meal, no extra garnishes or ingredients, no salad unless specified, no packaging, no people, no text, no logo. One finished meal only. This is an illustrative generated image, not evidence of cook-testing.",
+        "generation_mode": "built-in",
+        "credit": "Photo: AI-generated serving illustration."
+      },
+      "review": {
+        "status": "visually-reviewed",
+        "date": "2026-09-12",
+        "notes": "Serving illustration checked against the listed ingredients and preparation. Not proof of a cooked test."
+      }
+    },
+    {
+      "id": "63112421-3d9e-42d8-8b68-2990379106e3",
+      "title": "Chickpea and Pickle Sandwiches",
+      "before": {
+        "id": "63112421-3d9e-42d8-8b68-2990379106e3",
+        "title": "Chickpea and Pickle Sandwiches",
+        "description": "A no-cook lunch with a mashed chickpea filling, ready in about 15 minutes.",
+        "meal_time": [
+          "lunch",
+          "dinner"
+        ],
+        "prep_time_mins": 15,
+        "effort_score": 1,
+        "tags": [
+          "easy",
+          "no-cook",
+          "beginner-friendly",
+          "small-batch"
+        ],
+        "image_url": "",
+        "ingredients_list": [
+          "1 can chickpeas, 15 oz, drained and rinsed",
+          "1/4 cup onion, finely diced",
+          "2 tbsp mayonnaise",
+          "1 tbsp lemon juice",
+          "1 1/2 tsp Dijon mustard",
+          "1 tbsp pickle relish",
+          "4 slices sandwich bread",
+          "2 lettuce leaves"
+        ],
+        "shopping_list": [
+          "1 can chickpeas, 15 oz, drained and rinsed",
+          "1/4 cup onion, finely diced",
+          "2 tbsp mayonnaise",
+          "1 tbsp lemon juice",
+          "1 1/2 tsp Dijon mustard",
+          "1 tbsp pickle relish",
+          "4 slices sandwich bread",
+          "2 lettuce leaves"
+        ],
+        "recipe_steps": [
+          "Mash the drained chickpeas in a bowl with a fork until chunky.",
+          "Stir in the onion, mayonnaise, lemon juice, mustard and relish.",
+          "Wash and dry the lettuce. Divide the filling and lettuce between the bread to make sandwiches.",
+          "Serve now, or refrigerate the filling and keep the bread separate until eating."
+        ],
+        "cuisine": "American",
+        "created_at": "2026-09-12 18:37:30.474451+00",
+        "servings": 2,
+        "user_id": null,
+        "is_user_created": false,
+        "source_url": "https://www.reddit.com/r/EatCheapAndHealthy/comments/mv5h1s/chickpea_salad_sandwich_filling_recipe_this/",
+        "source_name": "yellowjacquet / CraftyCookbook on Reddit"
+      },
+      "image": {
+        "file": "assets/recipe-photos/chickpea-and-pickle-sandwiches-4d18b2365da8.jpg",
+        "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/chickpea-and-pickle-sandwiches-4d18b2365da8.jpg",
+        "sha256": "4d18b2365da8f562bdb8b8fc69960a60e63703fc0e63dbe48750bb5fcee3cb6d",
+        "bytes": 115588,
+        "width": 900,
+        "height": 900,
+        "kind": "generated",
+        "creator": "Mealsolved using built-in image generation",
+        "prompt": "Use case: photorealistic-natural. Square recipe illustration for Mealsolved, depicting Chickpea and Pickle Sandwiches. Finished meal from exactly these ingredients: 1 can chickpeas, 15 oz, drained and rinsed; 1/4 cup onion, finely diced; 2 tbsp mayonnaise; 1 tbsp lemon juice; 1 1/2 tsp Dijon mustard; 1 tbsp pickle relish; 4 slices sandwich bread; 2 lettuce leaves. Appearance follows this method: Mash the drained chickpeas in a bowl with a fork until chunky. Stir in the onion, mayonnaise, lemon juice, mustard and relish. Wash and dry the lettuce. Divide the filling and lettuce between the bread to make sandwiches. Serve now, or refrigerate the filling and keep the bread separate until eating.. Plain everyday white plate or bowl on pale wood, soft natural window light, realistic homemade result, close three-quarter overhead view. Center the complete food for tall and wide cropping. Do not add garnishes, ingredients, props, text, people, packaging or logos. Not a claim of cook-testing.",
+        "generation_mode": "built-in",
+        "credit": "Photo: AI-generated serving illustration."
+      },
+      "review": {
+        "status": "visually-reviewed",
+        "date": "2026-09-12",
+        "notes": "Serving illustration checked against the listed ingredients and preparation. Not proof of a cooked test."
+      }
+    },
+    {
+      "id": "21d9ad98-d99d-4420-b9bd-dbf84ec2ebc4",
+      "title": "Creamy Tortellini and Vegetable Soup",
+      "before": {
+        "id": "21d9ad98-d99d-4420-b9bd-dbf84ec2ebc4",
+        "title": "Creamy Tortellini and Vegetable Soup",
+        "description": "A simple pot of soup using frozen vegetables and frozen cheese tortellini.",
+        "meal_time": [
+          "lunch",
+          "dinner"
+        ],
+        "prep_time_mins": 25,
+        "effort_score": 1,
+        "tags": [
+          "easy",
+          "one-pot",
+          "family-friendly",
+          "small-batch"
+        ],
+        "image_url": "",
+        "ingredients_list": [
+          "4 cups vegetable broth",
+          "6 oz frozen peas and carrots",
+          "8 oz frozen cheese tortellini pasta",
+          "1/4 cup heavy cream",
+          "1/2 tsp Italian seasoning",
+          "1/8 tsp black pepper",
+          "2 slices bread"
+        ],
+        "shopping_list": [
+          "4 cups vegetable broth",
+          "6 oz frozen peas and carrots",
+          "8 oz frozen cheese tortellini pasta",
+          "1/4 cup heavy cream",
+          "1/2 tsp Italian seasoning",
+          "1/8 tsp black pepper",
+          "2 slices bread"
+        ],
+        "recipe_steps": [
+          "Bring the broth to a boil in a saucepan.",
+          "Stir in the frozen vegetables, tortellini, Italian seasoning and pepper. Return to a gentle boil and cook, stirring occasionally, for the package cooking time, until the pasta and filling are hot and the vegetables are tender.",
+          "Reduce to low. Stir in the cream and warm for 2 minutes without a hard boil.",
+          "Divide into bowls and serve with the bread."
+        ],
+        "cuisine": "Italian-inspired",
+        "created_at": "2026-09-12 18:37:30.474451+00",
+        "servings": 2,
+        "user_id": null,
+        "is_user_created": false,
+        "source_url": "https://www.juliapacheco.com/creamy-tortellini-soup/",
+        "source_name": "Julia Pacheco"
+      },
+      "image": {
+        "file": "assets/recipe-photos/creamy-tortellini-and-vegetable-soup-ec5322626dad.jpg",
+        "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/creamy-tortellini-and-vegetable-soup-ec5322626dad.jpg",
+        "sha256": "ec5322626dad418de903e0d3858977f587c42b32b1e554083f5166cce1ecbba8",
+        "bytes": 112240,
+        "width": 900,
+        "height": 900,
+        "kind": "generated",
+        "creator": "Mealsolved using built-in image generation",
+        "prompt": "Use case: photorealistic-natural. Square recipe illustration for Mealsolved, depicting Creamy Tortellini and Vegetable Soup. Finished meal from exactly these ingredients: 4 cups vegetable broth; 6 oz frozen peas and carrots; 8 oz frozen cheese tortellini pasta; 1/4 cup heavy cream; 1/2 tsp Italian seasoning; 1/8 tsp black pepper; 2 slices bread. Appearance follows this method: Bring the broth to a boil in a saucepan. Stir in the frozen vegetables, tortellini, Italian seasoning and pepper. Return to a gentle boil and cook, stirring occasionally, for the package cooking time, until the pasta and filling are hot and the vegetables are tender. Reduce to low. Stir in the cream and warm for 2 minutes without a hard boil. Divide into bowls and serve with the bread.. Plain everyday white plate or bowl on pale wood, soft natural window light, realistic homemade result, close three-quarter overhead view. Center the complete food for tall and wide cropping. Do not add garnishes, ingredients, props, text, people, packaging or logos. Not a claim of cook-testing.",
+        "generation_mode": "built-in",
+        "credit": "Photo: AI-generated serving illustration."
+      },
+      "review": {
+        "status": "visually-reviewed",
+        "date": "2026-09-12",
+        "notes": "Serving illustration checked against the listed ingredients and preparation. Not proof of a cooked test."
+      }
+    },
+    {
+      "id": "ccbb3b85-31b2-4140-9e6c-8ea6f059060d",
+      "title": "Mild White Bean and Spinach Quesadillas",
+      "before": {
+        "id": "ccbb3b85-31b2-4140-9e6c-8ea6f059060d",
+        "title": "Mild White Bean and Spinach Quesadillas",
+        "description": "Creamy bean-filled tortillas with mild cheese and no raw meat to handle.",
+        "meal_time": [
+          "lunch",
+          "dinner"
+        ],
+        "prep_time_mins": 25,
+        "effort_score": 1,
+        "tags": [
+          "easy",
+          "one-pan",
+          "family-friendly",
+          "small-batch"
+        ],
+        "image_url": "",
+        "ingredients_list": [
+          "1/2 can cannellini beans, 15 oz can, drained and rinsed",
+          "1 cup baby spinach, chopped",
+          "2 oz shredded Monterey Jack cheese",
+          "1/4 cup sour cream",
+          "1/2 tsp mild chili powder",
+          "1/8 tsp ground cumin",
+          "2 flour tortillas, 8-inch"
+        ],
+        "shopping_list": [
+          "1/2 can cannellini beans, 15 oz can, drained and rinsed",
+          "1 cup baby spinach, chopped",
+          "2 oz shredded Monterey Jack cheese",
+          "1/4 cup sour cream",
+          "1/2 tsp mild chili powder",
+          "1/8 tsp ground cumin",
+          "2 flour tortillas, 8-inch"
+        ],
+        "recipe_steps": [
+          "Mash the drained beans lightly in a bowl. Mix with the chopped spinach, cheese, sour cream and spices.",
+          "Spread the filling over half of each tortilla, then fold the empty half over it.",
+          "Heat a nonstick skillet over medium heat. Cook the folded tortillas in batches for 3 to 5 minutes per side, until crisp and the filling is hot with melted cheese. Lower the heat if they brown too quickly.",
+          "Rest briefly, then cut into wedges. Refrigerate the unused canned beans in a covered container."
+        ],
+        "cuisine": "Mexican-inspired",
+        "created_at": "2026-09-12 18:37:30.474451+00",
+        "servings": 2,
+        "user_id": null,
+        "is_user_created": false,
+        "source_url": "https://www.budgetbytes.com/creamy-white-bean-and-spinach-quesadillas/",
+        "source_name": "Beth Moncel, Budget Bytes"
+      },
+      "image": {
+        "file": "assets/recipe-photos/mild-white-bean-and-spinach-quesadillas-a40bdce0ef00.jpg",
+        "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/mild-white-bean-and-spinach-quesadillas-a40bdce0ef00.jpg",
+        "sha256": "a40bdce0ef006b2e6ba05cbd8cf3dffa154af11a5a8430061b86f89d44996a9f",
+        "bytes": 135017,
+        "width": 900,
+        "height": 900,
+        "kind": "generated",
+        "creator": "Mealsolved using built-in image generation",
+        "prompt": "Use case: photorealistic-natural. Square recipe illustration for Mealsolved, depicting Mild White Bean and Spinach Quesadillas. Finished meal from exactly these ingredients: 1/2 can cannellini beans, 15 oz can, drained and rinsed; 1 cup baby spinach, chopped; 2 oz shredded Monterey Jack cheese; 1/4 cup sour cream; 1/2 tsp mild chili powder; 1/8 tsp ground cumin; 2 flour tortillas, 8-inch. Appearance follows this method: Mash the drained beans lightly in a bowl. Mix with the chopped spinach, cheese, sour cream and spices. Spread the filling over half of each tortilla, then fold the empty half over it. Heat a nonstick skillet over medium heat. Cook the folded tortillas in batches for 3 to 5 minutes per side, until crisp and the filling is hot with melted cheese. Lower the heat if they brown too quickly. Rest briefly, then cut into wedges. Refrigerate the unused canned beans in a covered container.. Plain everyday white plate or bowl on pale wood, soft natural window light, realistic homemade result, close three-quarter overhead view. Center the complete food for tall and wide cropping. Do not add garnishes, ingredients, props, text, people, packaging or logos. Not a claim of cook-testing.",
+        "generation_mode": "built-in",
+        "credit": "Photo: AI-generated serving illustration."
+      },
+      "review": {
+        "status": "visually-reviewed",
+        "date": "2026-09-12",
+        "notes": "Serving illustration checked against the listed ingredients and preparation. Not proof of a cooked test."
+      }
+    },
+    {
+      "id": "94a7cd4a-7353-4ada-8b48-6d3bf4db0fa1",
+      "title": "Peanut Ramen with Edamame",
+      "before": {
+        "id": "94a7cd4a-7353-4ada-8b48-6d3bf4db0fa1",
+        "title": "Peanut Ramen with Edamame",
+        "description": "A single-serving noodle bowl with a pantry peanut sauce and frozen edamame.",
+        "meal_time": [
+          "lunch",
+          "dinner"
+        ],
+        "prep_time_mins": 20,
+        "effort_score": 1,
+        "tags": [
+          "easy",
+          "one-pot",
+          "single-serving"
+        ],
+        "image_url": "",
+        "ingredients_list": [
+          "1 packet instant ramen noodles, 3 oz, seasoning unused",
+          "2 tbsp peanut butter",
+          "1 tsp chili garlic sauce",
+          "1 tbsp soy sauce",
+          "1 tsp brown sugar",
+          "1/2 cup frozen shelled edamame",
+          "1 green onion",
+          "1/4 cup water"
+        ],
+        "shopping_list": [
+          "1 packet instant ramen noodles, 3 oz, seasoning unused",
+          "2 tbsp peanut butter",
+          "1 tsp chili garlic sauce",
+          "1 tbsp soy sauce",
+          "1 tsp brown sugar",
+          "1/2 cup frozen shelled edamame",
+          "1 green onion"
+        ],
+        "recipe_steps": [
+          "Mix the peanut butter, chili garlic sauce, soy sauce, sugar and measured water in a bowl.",
+          "Boil water in a small saucepan. Cook the edamame for its package time; scoop out with a slotted spoon.",
+          "Use the same boiling water to cook the ramen for its package time. Do not add the seasoning packet. Drain.",
+          "Return noodles and edamame to the warm pan with the heat off. Stir in the sauce, then top with washed, sliced green onion."
+        ],
+        "cuisine": "Asian-inspired",
+        "created_at": "2026-09-12 18:37:30.474451+00",
+        "servings": 1,
+        "user_id": null,
+        "is_user_created": false,
+        "source_url": "https://www.budgetbytes.com/spicy-peanut-butter-ramen/",
+        "source_name": "Beth Moncel, Budget Bytes"
+      },
+      "image": {
+        "file": "assets/recipe-photos/peanut-ramen-with-edamame-ded5291ecdb1.jpg",
+        "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/peanut-ramen-with-edamame-ded5291ecdb1.jpg",
+        "sha256": "ded5291ecdb1a798548ea9b3448d069e052ea8f26bd97df6d7151decd65f0222",
+        "bytes": 114872,
+        "width": 900,
+        "height": 900,
+        "kind": "generated",
+        "creator": "Mealsolved using built-in image generation",
+        "prompt": "Use case: photorealistic-natural. Square Mealsolved recipe illustration of Peanut Ramen with Edamame. Finished meal containing exactly: 1 packet instant ramen noodles, 3 oz, seasoning unused; 2 tbsp peanut butter; 1 tsp chili garlic sauce; 1 tbsp soy sauce; 1 tsp brown sugar; 1/2 cup frozen shelled edamame; 1 green onion; 1/4 cup water. Visual cooking reference: Mix the peanut butter, chili garlic sauce, soy sauce, sugar and measured water in a bowl. Boil water in a small saucepan. Cook the edamame for its package time; scoop out with a slotted spoon. Use the same boiling water to cook the ramen for its package time. Do not add the seasoning packet. Drain. Return noodles and edamame to the warm pan with the heat off. Stir in the sauce, then top with washed, sliced green onion.. Plain everyday white plate or bowl on pale wood, soft window light, natural achievable home cooking. Close three-quarter overhead view, food centered for tall and wide crops. No additional garnishes, unrelated foods, packaging, people, text or logos. Generated illustration, not a cook-testing claim.",
+        "generation_mode": "built-in",
+        "credit": "Photo: AI-generated serving illustration."
+      },
+      "review": {
+        "status": "visually-reviewed",
+        "date": "2026-09-12",
+        "notes": "Serving illustration checked against the listed ingredients and preparation. Not proof of a cooked test."
+      }
+    },
+    {
+      "id": "ad6066f1-1fa4-4bff-8710-c042d278a567",
+      "title": "Pepperoni and Pepper Pizzadillas",
+      "before": {
+        "id": "ad6066f1-1fa4-4bff-8710-c042d278a567",
+        "title": "Pepperoni and Pepper Pizzadillas",
+        "description": "Skillet pizza pockets with ready-made sauce for dipping, without heating the oven.",
+        "meal_time": [
+          "lunch",
+          "dinner"
+        ],
+        "prep_time_mins": 20,
+        "effort_score": 1,
+        "tags": [
+          "easy",
+          "one-pan",
+          "family-friendly",
+          "small-batch"
+        ],
+        "image_url": "",
+        "ingredients_list": [
+          "2 flour tortillas, 10-inch",
+          "2/3 cup shredded mozzarella cheese",
+          "10 slices ready-to-eat pepperoni",
+          "1/2 green bell pepper",
+          "1/2 cup jarred pizza sauce"
+        ],
+        "shopping_list": [
+          "2 flour tortillas, 10-inch",
+          "2/3 cup shredded mozzarella cheese",
+          "10 slices ready-to-eat pepperoni",
+          "1/2 green bell pepper",
+          "1/2 cup jarred pizza sauce"
+        ],
+        "recipe_steps": [
+          "Wash the pepper and cut into thin strips.",
+          "Put half the cheese on one side of the tortillas. Add pepper strips and pepperoni, then the remaining cheese. Fold closed.",
+          "Heat a nonstick skillet over medium heat. Cook each pocket for 3 to 4 minutes per side, until crisp with melted cheese; reduce heat if it browns before melting.",
+          "Rest for one minute, cut into wedges and serve with the pizza sauce for dipping."
+        ],
+        "cuisine": "American",
+        "created_at": "2026-09-12 18:37:30.474451+00",
+        "servings": 2,
+        "user_id": null,
+        "is_user_created": false,
+        "source_url": "https://www.budgetbytes.com/pizzadillas/",
+        "source_name": "Beth Moncel, Budget Bytes"
+      },
+      "image": {
+        "file": "assets/recipe-photos/pepperoni-and-pepper-pizzadillas-fff5fbbfec47.jpg",
+        "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/pepperoni-and-pepper-pizzadillas-fff5fbbfec47.jpg",
+        "sha256": "fff5fbbfec470861912584e5efbb0f44db43709ceeeae47c216e029a80efa78b",
+        "bytes": 119515,
+        "width": 900,
+        "height": 900,
+        "kind": "generated",
+        "creator": "Mealsolved using built-in image generation",
+        "prompt": "Use case: photorealistic-natural. Square Mealsolved recipe illustration of Pepperoni and Pepper Pizzadillas. Finished meal containing exactly: 2 flour tortillas, 10-inch; 2/3 cup shredded mozzarella cheese; 10 slices ready-to-eat pepperoni; 1/2 green bell pepper; 1/2 cup jarred pizza sauce. Visual cooking reference: Wash the pepper and cut into thin strips. Put half the cheese on one side of the tortillas. Add pepper strips and pepperoni, then the remaining cheese. Fold closed. Heat a nonstick skillet over medium heat. Cook each pocket for 3 to 4 minutes per side, until crisp with melted cheese; reduce heat if it browns before melting. Rest for one minute, cut into wedges and serve with the pizza sauce for dipping.. Plain everyday white plate or bowl on pale wood, soft window light, natural achievable home cooking. Close three-quarter overhead view, food centered for tall and wide crops. No additional garnishes, unrelated foods, packaging, people, text or logos. Generated illustration, not a cook-testing claim.",
+        "generation_mode": "built-in",
+        "credit": "Photo: AI-generated serving illustration."
+      },
+      "review": {
+        "status": "visually-reviewed",
+        "date": "2026-09-12",
+        "notes": "Serving illustration checked against the listed ingredients and preparation. Not proof of a cooked test."
+      }
+    },
+    {
+      "id": "d2cd0746-954b-4854-b8e3-ce03887c098d",
+      "title": "Pesto Couscous and Feta Bowls",
+      "before": {
+        "id": "d2cd0746-954b-4854-b8e3-ce03887c098d",
+        "title": "Pesto Couscous and Feta Bowls",
+        "description": "Instant couscous, crunchy vegetables and pesto make a small-batch lunch.",
+        "meal_time": [
+          "lunch",
+          "dinner"
+        ],
+        "prep_time_mins": 20,
+        "effort_score": 1,
+        "tags": [
+          "easy",
+          "small-batch",
+          "beginner-friendly"
+        ],
+        "image_url": "",
+        "ingredients_list": [
+          "100 g dry instant couscous, not pearl couscous",
+          "200 ml vegetable broth",
+          "2 green onions",
+          "1 red bell pepper",
+          "1/2 cucumber",
+          "50 g feta cheese",
+          "2 tbsp prepared basil pesto",
+          "2 tbsp pine nuts"
+        ],
+        "shopping_list": [
+          "100 g dry instant couscous, not pearl couscous",
+          "200 ml vegetable broth",
+          "2 green onions",
+          "1 red bell pepper",
+          "1/2 cucumber",
+          "50 g feta cheese",
+          "2 tbsp prepared basil pesto",
+          "2 tbsp pine nuts"
+        ],
+        "recipe_steps": [
+          "Heat the broth to boiling. Put the instant couscous in a heatproof bowl and pour over the broth. Cover for 10 minutes, or follow the package liquid ratio and standing time.",
+          "While it stands, wash and chop the green onions, pepper and cucumber.",
+          "Fluff the couscous with a fork. Mix in the vegetables and pesto, then crumble the feta and scatter the pine nuts over the bowls."
+        ],
+        "cuisine": "Mediterranean-inspired",
+        "created_at": "2026-09-12 18:37:30.474451+00",
+        "servings": 2,
+        "user_id": null,
+        "is_user_created": false,
+        "source_url": "https://www.bbcgoodfood.com/recipes/10minute-couscous-salad",
+        "source_name": "Jemma Morphet, Good Food"
+      },
+      "image": {
+        "file": "assets/recipe-photos/pesto-couscous-and-feta-bowls-413b73a74dbe.jpg",
+        "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/pesto-couscous-and-feta-bowls-413b73a74dbe.jpg",
+        "sha256": "413b73a74dbe73a4be7cf151d9032d0e80b2ddc33802cf6bd8f48d4fd70c2973",
+        "bytes": 142240,
+        "width": 900,
+        "height": 900,
+        "kind": "generated",
+        "creator": "Mealsolved using built-in image generation",
+        "prompt": "Use case: photorealistic-natural. Square Mealsolved recipe illustration of Pesto Couscous and Feta Bowls. Finished meal containing exactly: 100 g dry instant couscous, not pearl couscous; 200 ml vegetable broth; 2 green onions; 1 red bell pepper; 1/2 cucumber; 50 g feta cheese; 2 tbsp prepared basil pesto; 2 tbsp pine nuts. Visual cooking reference: Heat the broth to boiling. Put the instant couscous in a heatproof bowl and pour over the broth. Cover for 10 minutes, or follow the package liquid ratio and standing time. While it stands, wash and chop the green onions, pepper and cucumber. Fluff the couscous with a fork. Mix in the vegetables and pesto, then crumble the feta and scatter the pine nuts over the bowls.. Plain everyday white plate or bowl on pale wood, soft window light, natural achievable home cooking. Close three-quarter overhead view, food centered for tall and wide crops. No additional garnishes, unrelated foods, packaging, people, text or logos. Generated illustration, not a cook-testing claim.",
+        "generation_mode": "built-in",
+        "credit": "Photo: AI-generated serving illustration."
+      },
+      "review": {
+        "status": "visually-reviewed",
+        "date": "2026-09-12",
+        "notes": "Serving illustration checked against the listed ingredients and preparation. Not proof of a cooked test."
+      }
+    },
+    {
+      "id": "93f3cc87-86a7-41f9-a7b5-357013555f7d",
+      "title": "One-Pot Cheeseburger Pasta",
+      "before": {
+        "id": "93f3cc87-86a7-41f9-a7b5-357013555f7d",
+        "title": "One-Pot Cheeseburger Pasta",
+        "description": "Homemade Hamburger Helper-style pasta with ground beef and cheddar. One pot, no chopping, and about 30 minutes total.",
+        "meal_time": [
+          "dinner",
+          "lunch"
+        ],
+        "prep_time_mins": 30,
+        "effort_score": 1,
+        "tags": [
+          "beef",
+          "pasta",
+          "one-pot",
+          "easy",
+          "quick",
+          "comfort-food"
+        ],
+        "image_url": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663417307705/PLLddPvEeMmBPsxO.jpg",
+        "ingredients_list": [
+          "1 lb ground beef",
+          "1 1/2 cups dry elbow macaroni",
+          "2 cups beef broth",
+          "1 cup milk",
+          "1 1/2 cups shredded cheddar cheese",
+          "1 tbsp ketchup",
+          "1 tsp yellow mustard",
+          "1/2 tsp garlic powder",
+          "1/4 tsp black pepper"
+        ],
+        "shopping_list": [
+          "1 lb ground beef",
+          "1 1/2 cups dry elbow macaroni",
+          "2 cups beef broth",
+          "1 cup milk",
+          "1 1/2 cups shredded cheddar cheese",
+          "1 tbsp ketchup",
+          "1 tsp yellow mustard",
+          "1/2 tsp garlic powder",
+          "1/4 tsp black pepper"
+        ],
+        "recipe_steps": [
+          "In a deep pot over medium-high heat, crumble and cook the beef for about 7 minutes, until it reaches 160°F. Spoon excess fat into a heatproof container.",
+          "Add broth, milk, macaroni, ketchup, mustard, garlic powder and pepper. Bring to a gentle boil, then reduce to a steady simmer.",
+          "Cook uncovered for about 10-12 minutes, stirring often, until the pasta is tender. Add a splash of water if it gets dry before the pasta cooks.",
+          "Turn off the heat. Stir in cheddar until melted and let the sauce settle for 2 minutes before serving."
+        ],
+        "cuisine": "American",
+        "created_at": "2026-03-29 12:00:00+00",
+        "servings": 4,
+        "user_id": null,
+        "is_user_created": false,
+        "source_url": null,
+        "source_name": null
+      },
+      "image": {
+        "file": "assets/recipe-photos/one-pot-cheeseburger-pasta-17d92566ff8a.jpg",
+        "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/one-pot-cheeseburger-pasta-17d92566ff8a.jpg",
+        "sha256": "17d92566ff8a268be99ad2e237fefa44948aee1b037f231ca0ddda3095685644",
+        "bytes": 74706,
+        "width": 900,
+        "height": 602,
+        "kind": "licensed-photo",
+        "title": "Hamburger Helper",
+        "creator": "LWYang",
+        "source_url": "https://commons.wikimedia.org/wiki/File:Hamburger_Helper.jpg",
+        "license": "CC BY 2.0",
+        "license_url": "https://creativecommons.org/licenses/by/2.0/",
+        "changes": "Resized and converted to JPEG.",
+        "credit": "Representative photo: \"Hamburger Helper\" by LWYang, CC BY 2.0. Resized and converted to JPEG. Source: https://commons.wikimedia.org/wiki/File:Hamburger_Helper.jpg License: https://creativecommons.org/licenses/by/2.0/"
+      },
+      "review": {
+        "status": "visually-reviewed",
+        "date": "2026-09-12",
+        "notes": "Elbow macaroni, ground beef and orange cheese sauce match the simplified cheeseburger pasta. Representative prepared Hamburger Helper; not a photograph of this exact recipe."
+      }
+    }
+  ],
+  "pending": [
+    {
+      "id": "0f3613aa-d164-48cb-92b9-e82552b31eb4",
+      "title": "Beef and Rice Skillet",
+      "status": "awaiting-suitable-free-photo",
+      "notes": "No sufficiently close, visually approved, reusable photo selected. Keep the neutral placeholder."
+    },
+    {
+      "id": "53faedf2-f560-4996-a672-4bbd01529de9",
+      "title": "Buttered Garlic Egg Noodles",
+      "status": "retained-existing-photo",
+      "notes": "Loads successfully and shows the dish, but garnish or tortilla differs from the simplified recipe. Keep under review."
+    },
+    {
+      "id": "9a76d701-d812-433a-bc6e-1d4a9dbab4e5",
+      "title": "Chicken and Drop Dumplings",
+      "status": "awaiting-suitable-free-photo",
+      "notes": "No sufficiently close, visually approved, reusable photo selected. Keep the neutral placeholder."
+    },
+    {
+      "id": "e4448bf2-61d9-43b7-a349-279a30c9f155",
+      "title": "Classic Rice and Beans",
+      "status": "awaiting-suitable-free-photo",
+      "notes": "No sufficiently close, visually approved, reusable photo selected. Keep the neutral placeholder."
+    },
+    {
+      "id": "5237ade9-017f-4402-998f-8614f599cdff",
+      "title": "Fried Bologna Sandwich",
+      "status": "awaiting-suitable-free-photo",
+      "notes": "No sufficiently close, visually approved, reusable photo selected. Keep the neutral placeholder."
+    },
+    {
+      "id": "fbe9af8e-e8dc-4b23-b1a8-717c2f9988f7",
+      "title": "Fried Egg Sandwich",
+      "status": "awaiting-suitable-free-photo",
+      "notes": "No sufficiently close, visually approved, reusable photo selected. Keep the neutral placeholder."
+    },
+    {
+      "id": "18fc0b1c-6942-418c-a04a-95af6fa670b7",
+      "title": "Ground Beef Tacos",
+      "status": "retained-existing-photo",
+      "notes": "Loads successfully and shows the dish, but garnish or tortilla differs from the simplified recipe. Keep under review."
+    },
+    {
+      "id": "65826ce2-ebf7-400c-a155-2a1c8d6e3b57",
+      "title": "Loaded Baked Potato Dinner",
+      "status": "awaiting-suitable-free-photo",
+      "notes": "No sufficiently close, visually approved, reusable photo selected. Keep the neutral placeholder."
+    },
+    {
+      "id": "cef7325f-146f-4f55-b530-25889b908ae9",
+      "title": "Pinto Beans and Cornbread",
+      "status": "awaiting-suitable-free-photo",
+      "notes": "No sufficiently close, visually approved, reusable photo selected. Keep the neutral placeholder."
+    },
+    {
+      "id": "f79824db-75b1-4b5a-8d39-1d7b391a0f7d",
+      "title": "Roasted Pepper and Hummus Pitas",
+      "status": "awaiting-suitable-free-photo",
+      "notes": "No sufficiently close, visually approved, reusable photo selected. Keep the neutral placeholder."
+    },
+    {
+      "id": "a9ee83a7-4d30-4f8b-af5f-4d2b04a5335c",
+      "title": "Sausage, White Bean and Spinach Skillet",
+      "status": "awaiting-suitable-free-photo",
+      "notes": "No sufficiently close, visually approved, reusable photo selected. Keep the neutral placeholder."
+    },
+    {
+      "id": "48248a2f-6951-41e3-9894-edc319bb3cb3",
+      "title": "Shortcut Rotisserie Chicken Noodle Soup",
+      "status": "awaiting-suitable-free-photo",
+      "notes": "No sufficiently close, visually approved, reusable photo selected. Keep the neutral placeholder."
+    },
+    {
+      "id": "3d8935a6-04a7-476e-beb5-7a3a3ef22bf1",
+      "title": "Simple Beef Vegetable Soup",
+      "status": "awaiting-suitable-free-photo",
+      "notes": "No sufficiently close, visually approved, reusable photo selected. Keep the neutral placeholder."
+    },
+    {
+      "id": "c653bb10-2153-4261-82e6-79cb2c31a894",
+      "title": "Simple Potato Soup",
+      "status": "awaiting-suitable-free-photo",
+      "notes": "No sufficiently close, visually approved, reusable photo selected. Keep the neutral placeholder."
+    },
+    {
+      "id": "f0ab42dc-093e-485c-a9ef-30170feaf6a6",
+      "title": "Southern Fried Potatoes and Onions",
+      "status": "awaiting-suitable-free-photo",
+      "notes": "No sufficiently close, visually approved, reusable photo selected. Keep the neutral placeholder."
+    },
+    {
+      "id": "729982fe-caf6-4917-85c4-084462689521",
+      "title": "Tuna and Mixed Bean Lunch Bowls",
+      "status": "awaiting-suitable-free-photo",
+      "notes": "No sufficiently close, visually approved, reusable photo selected. Keep the neutral placeholder."
+    },
+    {
+      "id": "233b09f4-f295-4f3e-8542-f82c13aab18d",
+      "title": "Tuna Noodle Casserole",
+      "status": "awaiting-suitable-free-photo",
+      "notes": "No sufficiently close, visually approved, reusable photo selected. Keep the neutral placeholder."
+    },
+    {
+      "id": "e4aa28e2-01e3-4cbf-b018-a0331be681be",
+      "title": "Turkey and Hummus Cold Plates",
+      "status": "awaiting-suitable-free-photo",
+      "notes": "No sufficiently close, visually approved, reusable photo selected. Keep the neutral placeholder."
+    }
+  ]
+}

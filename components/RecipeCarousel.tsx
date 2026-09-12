@@ -1,8 +1,8 @@
+import { RecipeImage } from '@/components/RecipeImage';
 import React, { useRef, useState, useCallback } from 'react';
 import {
   View,
   Text,
-  Image,
   FlatList,
   StyleSheet,
   Dimensions,
@@ -67,11 +67,7 @@ function StepCard({ item, Colors }: StepCardProps) {
 
         {/* ── Top: Recipe image ─────────────────────────── */}
         <View style={styles.imageWrap}>
-          <Image
-            source={{ uri: item.image }}
-            style={styles.image}
-            resizeMode="cover"
-          />
+          <RecipeImage url={item.image} style={styles.image} />
           <View style={styles.stepCountBadge}>
             <Text style={styles.stepCountText}>
               {stepNumber} / {item.total}

@@ -1,13 +1,12 @@
 import React, { useCallback } from 'react';
-import { View, Text, Image, Pressable, StyleSheet, useWindowDimensions } from 'react-native';
+import { View, Text, Pressable, StyleSheet, useWindowDimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 import { useRouter } from 'expo-router';
 import { useTheme } from '@/context/ThemeContext';
 import { Recipe, difficultyLabel } from '@/lib/types';
-import { recipeImageUri } from '@/lib/recipeImageUri';
-import { RecipeImagePlaceholder } from '@/components/RecipeImagePlaceholder';
+import { RecipeImage } from '@/components/RecipeImage';
 import { TABLET_BREAKPOINT } from '@/hooks/useIsTablet';
 
 /** Default horizontal carousel card width — phone / tablet per layout spec. */
@@ -45,7 +44,6 @@ export function RecipeCard({
     carouselWidth ??
     (winW >= TABLET_BREAKPOINT ? CAROUSEL_CARD_WIDTH_TABLET : CAROUSEL_CARD_WIDTH_PHONE);
   const h = w * 1.18;
-  const imageUri = recipeImageUri(recipe.image_url);
   const placeholderIcon = Math.max(28, Math.min(52, Math.round(w * 0.26)));
 
   const handlePress = useCallback(() => {
@@ -73,11 +71,7 @@ export function RecipeCard({
       onPress={handlePress}
       android_ripple={{ color: 'rgba(255,255,255,0.05)' }}
     >
-      {imageUri ? (
-        <Image source={{ uri: imageUri }} style={styles.image} resizeMode="cover" />
-      ) : (
-        <RecipeImagePlaceholder style={styles.image} iconSize={placeholderIcon} />
-      )}
+      <RecipeImage url={recipe.image_url} style={styles.image} iconSize={placeholderIcon} accessibilityLabel={recipe.title} />
 
       {/* Bottom gradient overlay */}
       <LinearGradient
@@ -155,7 +149,6 @@ export function HeroCard({ recipe, onFavoriteToggle }: HeroCardProps) {
   const { width: winW } = useWindowDimensions();
   const heroWidth  = Math.min(winW - 32, winW >= TABLET_BREAKPOINT ? 560 : winW - 32);
   const heroHeight = heroWidth * 0.9;
-  const imageUri = recipeImageUri(recipe.image_url);
   const placeholderIcon = Math.max(
     48,
     Math.min(80, Math.round(Math.min(heroWidth, heroHeight) * 0.14))
@@ -187,11 +180,7 @@ export function HeroCard({ recipe, onFavoriteToggle }: HeroCardProps) {
       ]}
       onPress={handlePress}
     >
-      {imageUri ? (
-        <Image source={{ uri: imageUri }} style={styles.heroImage} resizeMode="cover" />
-      ) : (
-        <RecipeImagePlaceholder style={styles.heroImage} iconSize={placeholderIcon} />
-      )}
+      <RecipeImage url={recipe.image_url} style={styles.heroImage} iconSize={placeholderIcon} accessibilityLabel={recipe.title} />
 
       <LinearGradient
         colors={['rgba(0,0,0,0.1)', 'rgba(0,0,0,0.75)']}
@@ -257,7 +246,6 @@ interface ChoiceCardProps {
 export function ChoiceCard({ recipe, index, onFavoriteToggle }: ChoiceCardProps) {
   const router     = useRouter();
   const { Colors } = useTheme();
-  const imageUri = recipeImageUri(recipe.image_url);
 
   const handlePress = useCallback(() => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -266,11 +254,7 @@ export function ChoiceCard({ recipe, index, onFavoriteToggle }: ChoiceCardProps)
 
   return (
     <Pressable style={[styles.choice, { backgroundColor: Colors.surface }]} onPress={handlePress}>
-      {imageUri ? (
-        <Image source={{ uri: imageUri }} style={styles.choiceImage} resizeMode="cover" />
-      ) : (
-        <RecipeImagePlaceholder style={styles.choiceImage} iconSize={44} />
-      )}
+      <RecipeImage url={recipe.image_url} style={styles.choiceImage} iconSize={44} accessibilityLabel={recipe.title} />
       <LinearGradient
         colors={['transparent', 'rgba(0,0,0,0.88)']}
         style={StyleSheet.absoluteFillObject}

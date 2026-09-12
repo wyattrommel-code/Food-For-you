@@ -60,7 +60,7 @@ Tacos now use mild packet seasoning and measured toppings. Noodles use garlic po
 
 ## Editorial status and sources
 
-All 16 additions and three revisions are editorially reviewed, **not cook-tested**. New recipes have blank image fields. Concise original wording uses cooking facts and attributed community ideas; no publisher photos or stories were copied. Attribution does not claim permission or endorsement.
+All 16 additions and three revisions are editorially reviewed, **not cook-tested**. The original import snapshots keep blank image fields. A separate reviewed photo overlay now supplies 12 of the 16 additions and replaces the broken cheeseburger pasta photo; see [photo workflow](recipe-photos.md). Concise original wording uses cooking facts and attributed community ideas; no publisher photos or stories were copied. Attribution does not claim permission or endorsement.
 
 [Julia Pacheco's public Facebook page](https://www.facebook.com/JuliaPachecoYouTube/) was accessible in the browser. Methods in this batch were verified on her website; no Facebook-only recipe is counted. No messages, posts or comments were sent.
 
@@ -83,3 +83,6 @@ Validation: 38 tests, TypeScript, Android export and public API checks. Repeated
 The effort label in source changed from Quick to Easy so difficulty is separate from cooking time. This and source-link display require the next app build. The existing testing app can receive the recipe data after refreshing. No Google Play build was submitted.
 
 Work in C:\Users\wyatt\food-for-you from this task. Read docs/security/2026-09-12.md for applied security fixes; do not replay the old baseline schema. The remaining credential action is to confirm revocation of the old key in [Spoonacular's API console](https://spoonacular.com/food-api/console).
+
+
+Photo overlays run after recipe imports and revisions. Historical import snapshots stay unchanged and intentionally reject content conflicts after a photo overlay; do not rerun them to erase credits. Use the API verifier for the final composed state.

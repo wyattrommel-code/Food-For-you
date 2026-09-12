@@ -2,7 +2,6 @@ import React, { useState, useRef, useMemo, useCallback, useEffect } from 'react'
 import {
   View,
   Text,
-  Image,
   ScrollView,
   Pressable,
   StyleSheet,
@@ -28,6 +27,7 @@ import { useIsTablet } from '@/hooks/useIsTablet';
 import { scaleCookingStep } from '@/lib/servingScale';
 import { supabase } from '@/lib/supabase';
 import { recipeImageUri } from '@/lib/recipeImageUri';
+import { RecipeImage } from '@/components/RecipeImage';
 import { RecipeImagePlaceholder } from '@/components/RecipeImagePlaceholder';
 
 function parsePositiveFloat(raw: string | string[] | undefined): number | null {
@@ -328,11 +328,7 @@ export default function CookingModeScreen() {
       <Animated.View style={[styles.stepBody, { opacity: fadeAnim }]}>
         {hasStepImage ? (
           <View style={styles.imageWrap}>
-            <Image
-              source={{ uri: stepImageUrl! }}
-              style={styles.stepImage}
-              resizeMode="cover"
-            />
+            <RecipeImage url={stepImageUrl} style={styles.stepImage} accessibilityLabel={recipe.title} />
             <LinearGradient
               colors={['transparent', 'rgba(0,0,0,0.25)']}
               style={StyleSheet.absoluteFillObject}

@@ -40,8 +40,7 @@ import {
 import { SectionHeader } from '@/components/SectionHeader';
 import { LoadingScreen } from '@/components/LoadingScreen';
 import { useIsLandscape, useIsTablet } from '@/hooks/useIsTablet';
-import { recipeImageUri } from '@/lib/recipeImageUri';
-import { RecipeImagePlaceholder } from '@/components/RecipeImagePlaceholder';
+import { RecipeImage } from '@/components/RecipeImage';
 
 // ─── Types ────────────────────────────────────────────────────
 type ActiveMode = 'pickForMe' | 'hungryNow' | 'feelingBold' | null;
@@ -235,7 +234,6 @@ function HomeRecipeCard({
     recipe.effort_score <= 2 ? Colors.success
     : recipe.effort_score === 3 ? Colors.warning
     : Colors.accent;
-  const homeImageUri = recipeImageUri(recipe.image_url);
   const homePlaceholderIcon = Math.max(28, Math.min(52, Math.round(cardWidth * 0.24)));
 
   return (
@@ -247,11 +245,7 @@ function HomeRecipeCard({
       }}
       android_ripple={{ color: Colors.overlayLight }}
     >
-      {homeImageUri ? (
-        <Image source={{ uri: homeImageUri }} style={hcard.image} resizeMode="cover" />
-      ) : (
-        <RecipeImagePlaceholder style={hcard.image} iconSize={homePlaceholderIcon} />
-      )}
+      <RecipeImage url={recipe.image_url} style={hcard.image} iconSize={homePlaceholderIcon} accessibilityLabel={recipe.title} />
       <LinearGradient
         colors={['transparent', 'rgba(0,0,0,0.88)']}
         style={hcard.gradient}
