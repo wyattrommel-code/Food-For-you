@@ -2,7 +2,7 @@
 
 Implemented September 12, 2026 (database migrations applied September 13 UTC). Previously the grocery list was a single device-wide AsyncStorage array. Two people can now sign in separately, join the same household and add or check off groceries together.
 
-**The backend is deployed and the client is implemented and verified. This feature is not included in the already published Android 1.0.3 (9) binary. It needs the next Android build to appear in the installed Play testing app. No cloud build, paid service or new subscription was started for this change.**
+**Released in Android 1.0.4 (10) on the existing Google Play internal testing track. Play Console confirms it is available to internal testers. The backend is deployed. Update the app, then open Settings → Household. The build used existing Expo allowance; subscription renewal remains canceled. See the [release record](testing-release-1.0.4.md).**
 
 ## User flow
 
