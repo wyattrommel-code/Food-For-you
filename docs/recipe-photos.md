@@ -1,10 +1,10 @@
 # Recipe photos without a paid photo API
 
-The current library has **219 shared recipes with zero empty photo URLs**. The [historical shared-library checklist](photo-audit-2026-09-12.md) records all 169 assignments after completing the 21 missing photos. The subsequent [50 easy meals batch](easy-050.md) adds 50 more reviewed JPEGs. The public API verifier checks both sets and confirms anonymous requests expose no private recipes. Earlier pending lists in the first manifests are historical.
+The current library has **269 shared recipes with zero empty photo URLs**. The [historical shared-library checklist](photo-audit-2026-09-12.md) records all 169 assignments after completing the 21 missing photos. The subsequent [50 easy meals batch](easy-050.md) adds 50 more reviewed JPEGs. The [next 50 everyday meals and desserts](easy-100.md) add another 50 reviewed JPEGs. The public API verifier checks all three sets and confirms anonymous requests expose no private recipes. Earlier pending lists in the first manifests are historical.
 
 Apply photo overlays in order: `photo-manifest.json`, `photo-repairs-002.json`, then `photo-completion-003.json`. The API verifier composes them with the newest assignment winning. Never replay an old recipe import over a newer reviewed photo description.
 
-The completion overlay adds 18 free Creative Commons photos and reuses 3 existing library assets. Its 21 delivery files total 1,660,967 bytes. The following 50-meal batch reuses 49 existing library images and one licensed Creative Commons photo, totaling 4,837,273 bytes. Illustrations generated in earlier work remain in use; no new generation or paid service was used for either batch.
+The completion overlay adds 18 free Creative Commons photos and reuses 3 existing library assets. Its 21 delivery files total 1,660,967 bytes. The following 50-meal batch reuses 49 existing library images and one licensed Creative Commons photo, totaling 4,837,273 bytes. The latest 50-recipe batch uses 45 freely licensed community photos and five existing library images, totaling 4,924,663 bytes. Illustrations generated in earlier work remain in use; no new generation or paid service was used for these batches.
 
 ## Free-photo workflow
 
@@ -17,6 +17,6 @@ The completion overlay adds 18 free Creative Commons photos and reuses 3 existin
 
 ## Delivery
 
-The existing testing app reads image URLs from Supabase. These data changes appear on refresh without a new Google Play binary. Image loading/fallback improvements are included in [Android 1.0.2 (8)](testing-release-1.0.2.md), now available to Google Play internal testers. No private user recipe was modified.
+The existing testing app reads image URLs from Supabase. These data changes appear on refresh without a new Google Play binary. Image loading/fallback improvements shipped in [Android 1.0.2 (8)](testing-release-1.0.2.md). [Android 1.0.3 (9)](testing-release-1.0.3.md), now available to internal testers, adds expandable credits. No private user recipe was modified.
 
 Files use immutable, content-named URLs in the existing public GitHub repository during testing. This introduces no subscription or photo-generation API. GitHub raw hosting is not a dedicated production image CDN; optimized files can later move to the existing Supabase Storage allowance without changing recipe content.

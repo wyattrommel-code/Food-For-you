@@ -69,4 +69,8 @@ These are editorially reviewed recipes, **not cook-tested**. Total times are est
 
 ## Publication
 
-Staged for guarded import after the photo assets are published and verified. Expected catalog total: 269 shared recipes. Private recipes are outside the import scope. The 500-recipe launch target remains unmet.
+Published to the live testing catalog on September 12, 2026, after Android 1.0.3 (9) was available to internal testers. All 50 JPEG URLs passed HTTP status, MIME type, byte-count and SHA-256 checks before import. Source/assets commit: `a6e123844a111dc3e234083d863a1fe8dd0459f8`.
+
+The guarded transaction was trialed with rollback (50 accepted rows, catalog unchanged at 219) and then committed (exactly 50 additions). The final public API check passed: **269 shared recipes, all with photos; 32 total desserts**. It compares 119 reviewed additions/revisions, 41 photo overlays and all 169 historical image assignments, and returns zero private recipes to anonymous clients. The private-row count and fingerprint were unchanged by both transactions. No existing recipe was updated or deleted.
+
+All **82 regression tests** pass; source credential scanning and whitespace checks pass. These data changes reach the testing app on refresh without another binary or paid photo service. The 500-recipe launch target remains unmet.

@@ -4,7 +4,7 @@ Updated September 12, 2026. Work continues here in Codex using C:\Users\wyatt\fo
 
 Prioritize American-style tacos, burgers, burritos, Hamburger Helper-style pasta, buttered noodles, oven chicken, boxed dinners and breakfast for dinner. Common prepared shortcuts are welcome. No paid recipe service or subscription is part of the workflow.
 
-The live testing library now has **219 shared recipes, all with photo URLs**, and one private recipe. The [50 easy meals batch](easy-050.md) followed completion of the 21 missing photos. It adds 41 meals ready in 30 minutes or less and nine longer oven meals with 5–15 minutes of active work. This is not yet 500 reviewed easy meals.
+The live testing library now has **269 shared recipes, all with photo URLs**, including 32 desserts. The [first 50 easy meals](easy-050.md) followed completion of the 21 missing photos. The [next 50 everyday meals and desserts](easy-100.md) add 35 meals and 15 desserts, including simple sandwiches with chips and ready-made grocery shortcuts. Of the latest additions, 49 take at most 30 minutes; the oven apple discloses 50 minutes total and five minutes of active work. This is not yet 500 reviewed easy meals.
 
 Allow meals ready in 30 minutes and longer meals with about 15 minutes of hands-on work. Show full cooking time honestly. Whole-package family portions are fine. Improve existing meals instead of adding renamed duplicates.
 
@@ -16,7 +16,7 @@ The authoritative records are in the actual project:
 
 Facebook is signed in; public recipe pages are accessible. Current detailed methods were checked on publisher websites. Supabase is connected. Spoonacular's API console was signed out; revocation of the exposed legacy key still needs confirmation.
 
-The goal remains 500 distinct, useful, reviewed easy meals before production launch. Editorial checks do not replace cooking tests. Recipe data is live, and [Android 1.0.2 (8)](testing-release-1.0.2.md) is available to Google Play internal testers with the new preference setup, varied feed and layout fixes. No production release was submitted.
+The goal remains 500 distinct, useful, reviewed easy meals before production launch. Editorial checks do not replace cooking tests. Recipe data is live, and [Android 1.0.3 (9)](testing-release-1.0.3.md) is available to Google Play internal testers with compact recipe credits, plus the preference setup, varied feed and layout fixes from 1.0.2. No production release was submitted.
 
 
 ## Comfort batch
@@ -60,27 +60,27 @@ Tacos now use mild packet seasoning and measured toppings. Noodles use garlic po
 
 ## Editorial status and sources
 
-The original 16 additions and three revisions are editorially reviewed, **not cook-tested**. Their import snapshots keep blank image fields; apply the later photo overlays to obtain their complete current photo assignments. The new 50-meal batch includes reviewed images directly; see [photo workflow](recipe-photos.md). Concise original wording uses cooking facts and attributed community ideas; no publisher stories were copied. Reused photos carry their recorded license or existing library provenance. Attribution does not claim endorsement.
+The original 16 additions and three revisions are editorially reviewed, **not cook-tested**. Their import snapshots keep blank image fields; apply the later photo overlays to obtain their complete current photo assignments. Both subsequent 50-recipe batches include reviewed images directly; see [photo workflow](recipe-photos.md). Concise original wording uses cooking facts and attributed community ideas; no publisher stories were copied. Reused photos carry their recorded license or existing library provenance. Attribution does not claim endorsement.
 
 [Julia Pacheco's public Facebook page](https://www.facebook.com/JuliaPachecoYouTube/) was accessible in the browser. Methods in this batch were verified on her website; no Facebook-only recipe is counted. No messages, posts or comments were sent.
 
 Safety endpoints were checked against [FoodSafety.gov's temperature chart](https://www.foodsafety.gov/food-safety-charts/safe-minimum-internal-temperatures). Timings remain estimates. These recipes do not claim nutritional completeness. Whole-package batches may be simpler to cook and portion than using fractional packets from the serving slider.
 
-There are 72 shared rows with effort <=2 and time <=30 minutes, plus three new meals with little active work and longer total times. The 72 is a candidate count; older rows include sides, desserts and preparation-only timings. Do not count all 169 shared rows as verified easy meals.
+The original 169-recipe snapshot contained 72 candidates with effort <=2 and time <=30 minutes. That historical count included sides, desserts and preparation-only timings. The two later batches have their own detailed reviews; do not count all 269 shared rows as verified easy meals.
 
 ## Repeatable import and validation
 
-The editorial records are in data/recipes/community-001.json, comfort-002.json and comfort-revisions-001.json. The first two generate CSV and SQL from the same validated rows. The revisions include complete before/after snapshots and generate guarded SQL updates. Generation and local tests never write to Supabase.
+The editorial records include data/recipes/community-001.json, comfort-002.json, comfort-revisions-001.json, easy-050.json and easy-100.json. The first two generate CSV and SQL from the same validated rows. The revisions include complete before/after snapshots and generate guarded SQL updates. Generation and local tests never write to Supabase.
 
 1. Inspect live column details and current shared titles and ingredients before another batch. Never import XLSX.
 2. Verify quantities, complete portions, equipment, active and total time, and meaningful differences. Keep unverified images blank.
-3. Run npm run recipes:check. A new batch can use batch_kind: easy-comfort for portions up to six and total times up to 75 minutes; meals longer than 30 minutes require at most 15 active minutes, an explicit description of both times, and no quick tag. The default quick batch remains stricter.
+3. Run npm run recipes:check. A new batch can use batch_kind: easy-comfort for portions up to six and total times up to 75 minutes; meals longer than 30 minutes require at most 15 active minutes, an explicit description of both times, and no quick tag. The default quick batch remains stricter. The easy-everyday kind additionally permits dessert-only records; sides alone still cannot count as meals. Validate new batches directly with node scripts/recipe-batch.cjs followed by their JSON path.
 4. Review and trial SQL with ROLLBACK before applying. Imports skip identical shared titles and reject conflicting contents. Revisions lock rows and reject changes since review. Both require trusted administrative access; the mobile public key cannot publish shared recipes.
-5. Run node scripts/verify-recipe-api.cjs after import. It compares all 19 reviewed rows through the public API without printing credentials and verifies private recipes are hidden.
+5. Run node scripts/verify-recipe-api.cjs after import. It verifies all 269 shared recipe titles and photo assignments, the complete fields of 119 reviewed additions/revisions, and private-recipe isolation without printing credentials.
 
-Validation: 38 tests, TypeScript, Android export and public API checks. Repeated additions and revisions made zero changes. Database access policies remain in effect.
+Current validation: 82 regression tests and public API checks pass. TypeScript, Android export and cloud-build checks passed for the shipped application. Database access policies remain in effect.
 
-The effort label in source changed from Quick to Easy so difficulty is separate from cooking time. This and source-link display require the next app build. The existing testing app can receive the recipe data after refreshing. No Google Play build was submitted.
+The shipped application labels effort as Easy so difficulty is separate from cooking time. Sources and photo credits are expandable in Android 1.0.3 (9), available to internal testers. Recipe data loads on refresh.
 
 Work in C:\Users\wyatt\food-for-you from this task. Read docs/security/2026-09-12.md for applied security fixes; do not replay the old baseline schema. The remaining credential action is to confirm revocation of the old key in [Spoonacular's API console](https://spoonacular.com/food-api/console).
 
