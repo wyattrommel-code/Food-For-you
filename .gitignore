@@ -33,3 +33,4 @@ Thumbs.db
 # Local CLI state and browser QA artifacts
 supabase/.temp/
 artifacts/ui-qa/
+artifacts/household-ui/

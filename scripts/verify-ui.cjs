@@ -13,7 +13,7 @@ const user={id:fixtureId,aud:'authenticated',role:'authenticated',email:'qa@exam
 const token=Buffer.from(JSON.stringify({alg:'HS256',typ:'JWT'})).toString('base64url')+'.'+Buffer.from(JSON.stringify({sub:fixtureId,role:'authenticated',exp:Math.floor(Date.now()/1000)+3600})).toString('base64url')+'.local-test-signature';
 const session={access_token:token,refresh_token:'local-test-only',expires_in:3600,expires_at:Math.floor(Date.now()/1000)+3600,token_type:'bearer',user};
 (async()=>{
- const response=await fetch(api+'/rest/v1/recipes?select=*&is_user_created=eq.false',{headers:{apikey:key}});assert.ok(response.ok);const catalog=await response.json();assert.equal(catalog.length,219);
+ const response=await fetch(api+'/rest/v1/recipes?select=*&is_user_created=eq.false',{headers:{apikey:key}});assert.ok(response.ok);const catalog=await response.json();assert.equal(catalog.length,269);
  const browser=await chromium.launch({channel:process.env.UI_QA_BROWSER||'msedge',headless:true});
  const context=await browser.newContext({viewport:{width:390,height:844},deviceScaleFactor:1});
  let cloudPrefs=null,saveCalls=0,failCloud=false;const errors=[];
@@ -22,6 +22,7 @@ const session={access_token:token,refresh_token:'local-test-only',expires_in:360
    if(p.startsWith('/storage/'))return route.continue();
    let data;
    if(p.startsWith('/auth/'))data=p.endsWith('/user')?user:session;
+   else if(p.endsWith('/rpc/household_action'))data={household:null};
    else if(p.endsWith('/user_preferences')){
      if(req.method()==='POST'){if(failCloud)return route.fulfill({status:503,json:{message:'QA simulated offline'}});cloudPrefs={...cloudPrefs,...req.postDataJSON()};saveCalls++;data=[];}
      else data=cloudPrefs?[cloudPrefs]:[];

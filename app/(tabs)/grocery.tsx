@@ -12,7 +12,7 @@ import {
   type TextInput as TextInputType,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useFocusEffect } from 'expo-router';
+import { useFocusEffect, useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 
@@ -34,10 +34,12 @@ import {
 // ─── Checkbox component ───────────────────────────────────────
 
 function Checkbox({
+  name,
   checked,
   color,
   onPress,
 }: {
+  name: string;
   checked: boolean;
   color: string;
   onPress: () => void;
@@ -46,6 +48,9 @@ function Checkbox({
 
   return (
     <Pressable
+      accessibilityRole="checkbox"
+      accessibilityState={{checked}}
+      accessibilityLabel={checked ? `Mark ${name} as needed` : `Mark ${name} as bought`}
       onPress={onPress}
       hitSlop={10}
       style={[
@@ -81,6 +86,7 @@ function GroceryRow({
   return (
     <View style={styles.row}>
       <Checkbox
+        name={item.name}
         checked={item.checked}
         color={accentColor}
         onPress={() => {
@@ -102,7 +108,7 @@ function GroceryRow({
           {item.sourceNames.join(', ')}
         </Text>
       </View>
-      <Pressable onPress={onRemove} hitSlop={10} style={styles.removeBtn}>
+      <Pressable accessibilityRole="button" accessibilityLabel={'Remove '+item.name} onPress={onRemove} hitSlop={10} style={styles.removeBtn}>
         <Ionicons name="close" size={16} color={Colors.textMuted} />
       </Pressable>
     </View>
@@ -207,6 +213,7 @@ function EmptyState() {
 // ─── Main Screen ──────────────────────────────────────────────
 
 export default function GroceryScreen() {
+  const router = useRouter();
   const { Colors } = useTheme();
   const styles = useMemo(() => makeStyles(Colors), [Colors]);
 
@@ -221,7 +228,15 @@ export default function GroceryScreen() {
     removeItem,
     clearChecked,
     clearAll,
+    household,
+    pending,
+    syncing,
+    error,
+    importCount,
+    importItems,
   } = useGroceryList();
+
+  const reportError = useCallback((err:unknown) => Alert.alert('Grocery list', err instanceof Error ? err.message : 'Could not save. Try again.'),[]);
 
   const [inputText, setInputText] = useState('');
   const inputRef = useRef<TextInputType>(null);
@@ -252,7 +267,7 @@ export default function GroceryScreen() {
     async (id: string) => {
       const item = items.find((i) => i.id === id);
       const willCheck = item !== undefined && !item.checked;
-      await toggleItem(id);
+      try { await toggleItem(id); } catch(err) { reportError(err); return; }
       if (!willCheck || !item) return;
 
       const parts = parseGroceryLineToPantryIngredients(item.name);
@@ -261,17 +276,17 @@ export default function GroceryScreen() {
         showPantryToast();
       }
     },
-    [items, toggleItem, showPantryToast]
+    [items, toggleItem, showPantryToast, reportError]
   );
 
   const handleManualAdd = useCallback(async () => {
     const trimmed = inputText.trim();
     if (!trimmed) return;
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    await addItem(trimmed);
+    try { await addItem(trimmed); } catch(err) { reportError(err); return; }
     setInputText('');
     inputRef.current?.blur();
-  }, [inputText, addItem]);
+  }, [inputText, addItem, reportError]);
 
   useFocusEffect(
     useCallback(() => {
@@ -293,12 +308,12 @@ export default function GroceryScreen() {
           style: 'destructive',
           onPress: () => {
             Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-            clearChecked();
+            void clearChecked().catch(reportError);
           },
         },
       ]
     );
-  }, [checkedCount, clearChecked]);
+  }, [checkedCount, clearChecked, reportError]);
 
   const handleClearAll = useCallback(() => {
     if (items.length === 0) return;
@@ -312,20 +327,21 @@ export default function GroceryScreen() {
           style: 'destructive',
           onPress: () => {
             Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
-            clearAll();
+            void clearAll().catch(reportError);
           },
         },
       ]
     );
-  }, [items.length, clearAll]);
+  }, [items.length, clearAll, reportError]);
 
   if (loading) return null;
 
   return (
     <SafeAreaView style={[styles.safe, styles.screenFill]} edges={['top']}>
+      <ScrollView style={{flex:1}} contentContainerStyle={{flexGrow:1}} keyboardShouldPersistTaps="handled">
       {/* ── Header ──────────────────────────────────────────── */}
       <View style={styles.header}>
-        <View>
+        <View style={{flexShrink:1}}>
           <Text style={styles.headerTitle}>Grocery List</Text>
           <Text style={styles.headerSub}>
             {items.length === 0
@@ -366,6 +382,17 @@ export default function GroceryScreen() {
         )}
       </View>
 
+      <View style={{paddingHorizontal:20,paddingBottom:12,gap:8}}>
+        <Pressable accessibilityRole="button" onPress={()=>router.push('/household')} style={{minHeight:44,justifyContent:'center'}}>
+          <Text style={{color:Colors.accent,fontWeight:'700'}}>{household ? household.name+' · Shared list' : 'Share a list with your household'}</Text>
+        </Pressable>
+        <Text accessibilityLiveRegion="polite" style={{color:Colors.textSecondary}}>
+          {pending.length ? `${pending.length} change${pending.length===1?'':'s'} saved on this phone · waiting to sync` : syncing ? 'Syncing household list…' : error ? 'Showing the last saved list' : household ? 'Shared list is up to date' : 'Personal list · saved on this phone'}
+        </Text>
+        {error&&<Pressable accessibilityRole="button" onPress={()=>void reload()} style={{minHeight:44}}><Text accessibilityRole="alert" style={{color:Colors.accent}}>{error} Tap to retry.</Text></Pressable>}
+        {importCount>0&&<Pressable accessibilityRole="button" onPress={()=>Alert.alert(household?'Copy your personal items?':'Import your old grocery list?',household?`Copy ${importCount} items into the list everyone in your household can see?`:`Import ${importCount} items saved by the older app on this phone into your personal list?`,[{text:'Cancel',style:'cancel'},{text:'Copy items',onPress:()=>void importItems().catch(reportError)}])} style={{minHeight:44,justifyContent:'center'}}><Text style={{color:Colors.accent}}>{household?'Copy personal items to household':'Import items from the older app'} ({importCount})</Text></Pressable>}
+      </View>
+
       {/* ── Manual add input ────────────────────────────────── */}
       <View style={styles.addRow}>
         <TextInput
@@ -374,12 +401,16 @@ export default function GroceryScreen() {
           value={inputText}
           onChangeText={setInputText}
           placeholder="Add an item..."
+          accessibilityLabel="Grocery item"
+          maxLength={200}
           placeholderTextColor={Colors.textMuted}
           returnKeyType="done"
           onSubmitEditing={handleManualAdd}
           blurOnSubmit={false}
         />
         <Pressable
+          accessibilityRole="button"
+          accessibilityLabel="Add grocery item"
           onPress={handleManualAdd}
           style={({ pressed }) => [
             styles.addBtn,
@@ -406,24 +437,21 @@ export default function GroceryScreen() {
       {items.length === 0 ? (
         <EmptyState />
       ) : (
-        <ScrollView
-          style={[styles.scroll, styles.scrollWide]}
-          contentContainerStyle={[styles.scrollContent, { flexGrow: 1 }]}
-          showsVerticalScrollIndicator={false}
-        >
+        <View style={[styles.scrollWide, styles.scrollContent]}>
           {CATEGORY_ORDER.map((cat) => (
             <CategorySection
               key={cat}
               category={cat}
               items={grouped[cat]}
               onToggle={handleToggleWithPantry}
-              onRemove={removeItem}
+              onRemove={id=>void removeItem(id).catch(reportError)}
             />
           ))}
           <View style={{ height: 40 }} />
-        </ScrollView>
+        </View>
       )}
 
+      </ScrollView>
       {inlineToastVisible && (
         <View style={styles.toastOverlay} pointerEvents="none">
           <View style={[styles.toastBubble, { backgroundColor: Colors.surfaceElevated }]}>
@@ -453,6 +481,8 @@ function makeStyles(Colors: AppColors) {
     header: {
       flexDirection: 'row',
       alignItems: 'flex-start',
+      flexWrap: 'wrap',
+      gap: 8,
       justifyContent: 'space-between',
       paddingHorizontal: 20,
       paddingTop: 16,

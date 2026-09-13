@@ -283,7 +283,7 @@ export default function RecipeDetailScreen() {
         setTimeout(() => setGroceryFeedback('idle'), 2000);
       }
     } catch (err) {
-      console.error('[RecipeDetail] handleGroceryToggle error:', err);
+      Alert.alert('Grocery list', err instanceof Error ? err.message : 'Could not save. Try again.');
     }
   }, [recipe, inGroceryList, addRecipe, removeRecipe, scaledIngredients]);
 

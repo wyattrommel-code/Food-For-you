@@ -3,6 +3,9 @@
 export type GroceryCategory = 'protein' | 'produce' | 'pantry';
 
 export interface GroceryItem {
+  /** Shared row incarnation and revision protect against stale offline removals. */
+  entryId?: string;
+  revision?: number;
   /**
    * Stable ID: the normalized (lowercase, trimmed) ingredient name.
    * e.g. "garlic" — shared across all recipes that use this ingredient.

@@ -9,6 +9,8 @@ import * as Linking from 'expo-linking';
 
 import { ThemeProvider, useTheme } from '@/context/ThemeContext';
 import {SessionProvider} from '@/context/SessionContext';
+import {HouseholdProvider} from '@/context/HouseholdContext';
+import {GroceryProvider} from '@/context/GroceryContext';
 import { useSession } from '@/hooks/useSession';
 import { PreferencesProvider } from '@/context/PreferencesContext';
 import { PreferenceOnboardingGate } from '@/components/PreferenceOnboardingGate';
@@ -188,7 +190,12 @@ function RootLayoutInner() {
 export default function RootLayout() {
   return (
     <ThemeProvider>
-      <SessionProvider><RootLayoutInner /></SessionProvider>
+      <SessionProvider><AccountProviders /></SessionProvider>
     </ThemeProvider>
   );
+}
+
+function AccountProviders(){
+  const {userId}=useSession();
+  return <HouseholdProvider key={userId||'signed-out'}><GroceryProvider><RootLayoutInner /></GroceryProvider></HouseholdProvider>;
 }

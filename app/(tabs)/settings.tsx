@@ -460,6 +460,13 @@ export default function SettingsScreen() {
         {/* ── SECTION 1: My Account ─────────────────────────── */}
         <Section label="MY ACCOUNT" Colors={Colors}>
           <SettingRow
+            icon="people-outline"
+            title="Household"
+            subtitle="Share a grocery list with your household"
+            onPress={() => router.push('/household')}
+            Colors={Colors}
+          />
+          <SettingRow
             icon="person-outline"
             title="Profile"
             subtitle={profileName || email}
