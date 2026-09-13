@@ -2,11 +2,15 @@
 
 The current library has **269 shared recipes with zero empty photo URLs**. The [historical shared-library checklist](photo-audit-2026-09-12.md) records all 169 assignments after completing the 21 missing photos. The subsequent [50 easy meals batch](easy-050.md) adds 50 more reviewed JPEGs. The [next 50 everyday meals and desserts](easy-100.md) add another 50 reviewed JPEGs. The public API verifier checks all three sets and confirms anonymous requests expose no private recipes. Earlier pending lists in the first manifests are historical.
 
-Apply photo overlays in order: `photo-manifest.json`, `photo-repairs-002.json`, then `photo-completion-003.json`. The API verifier composes them with the newest assignment winning. Never replay an old recipe import over a newer reviewed photo description.
+Apply photo overlays in order: `photo-manifest.json`, `photo-repairs-002.json`, `photo-completion-003.json`, then `photo-ai-replacements-004.json`. The API verifier composes them with the newest assignment winning. Never replay an old recipe import over a newer reviewed photo description.
 
 The completion overlay adds 18 free Creative Commons photos and reuses 3 existing library assets. Its 21 delivery files total 1,660,967 bytes. The following 50-meal batch reuses 49 existing library images and one licensed Creative Commons photo, totaling 4,837,273 bytes. The latest 50-recipe batch uses 45 freely licensed community photos and five existing library images, totaling 4,924,663 bytes. Illustrations generated in earlier work remain in use; no new generation or paid service was used for these batches.
 
-## Free-photo workflow
+## Current AI replacements
+
+All 68 currently assigned licensed/downloaded photos are replaced by recipe-specific AI illustrations in [the AI replacement overlay](ai-photo-replacements.md). This supersedes the photo assignments described in the historical batches below. The new assets total 7,685,065 bytes and retain clear AI illustration credits. No paid API integration, new subscription or app build is required.
+
+## Historical free-photo workflow
 
 1. Find an owned or explicitly reusable image. Public Facebook, Reddit and recipe-blog posts do not automatically grant photo reuse rights. Openverse can help find candidates, but verify the photographer's actual source page and license.
 2. Inspect the dish against recipe ingredients and steps. Keep a visible serving-variation caption where presentation differs. Preserve creator watermarks. Record creator, source URL, license URL and modifications; retain share-alike licensing for adapted images.

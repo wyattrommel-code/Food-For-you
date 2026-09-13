@@ -8,7 +8,8 @@ const photos = require('../data/recipes/photo-manifest.json');
 const { validateManifest, photoAfter } = require('./recipe-photos.cjs');
 const repairs = require('../data/recipes/photo-repairs-002.json');
 const completion = require('../data/recipes/photo-completion-003.json');
-const reviewedPhotos = [...new Map([...validateManifest(photos), ...validateManifest(repairs), ...validateManifest(completion)].map(e => [e.id, e])).values()];
+const generatedReplacements = require('../data/recipes/photo-ai-replacements-004.json');
+const reviewedPhotos = [...new Map([...validateManifest(photos), ...validateManifest(repairs), ...validateManifest(completion), ...validateManifest(generatedReplacements)].map(e => [e.id, e])).values()];
 const env = {};
 for (const line of fs.readFileSync('.env', 'utf8').split(/\r?\n/)) {
   const match = line.match(/^(EXPO_PUBLIC_SUPABASE_(?:URL|ANON_KEY))=(.*)$/);
@@ -54,7 +55,8 @@ async function get(query) {
   assert.ok(catalog.every(r => r.image_url?.trim()), 'Every shared recipe must have a photo');
   for (const reviewed of audit.entries) {
     const actual = catalog.find(r => r.id === reviewed.id);
-    assert.equal(actual.image_url, reviewed.final_image_url, reviewed.title + ': full-audit photo URL');
+    const newestPhoto = reviewedPhotos.find(e => e.id === reviewed.id);
+    assert.equal(actual.image_url, newestPhoto ? photoAfter(newestPhoto).image_url : reviewed.final_image_url, reviewed.title + ': full-audit photo URL');
   }
   assert.deepEqual(await get('recipes?select=id&is_user_created=eq.true'), [], 'Anonymous clients must not see private recipes');
   console.log(`Public API verified ${expectedRows.length} reviewed recipes and revisions plus ${reviewedPhotos.length} photo overlays and ${audit.entries.length} audited image assignments (${catalog.length} shared recipes, zero missing photos); private recipe access returned zero rows.`);

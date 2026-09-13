@@ -9,7 +9,17 @@ function httpsUrl(value) {
   assert.ok(url.protocol === 'https:' && !url.username && !url.password, 'Public HTTPS URL required');
 }
 function photoAfter(entry) {
-  return { ...entry.before, image_url: entry.image.url, description: entry.image.credit ? entry.before.description.trimEnd() + '\n\n' + entry.image.credit : entry.before.description };
+  let description = entry.before.description;
+  if (entry.replaces_photo) {
+    const previous = validateImageAsset(entry.replaces_photo);
+    assert.equal(previous.kind, 'licensed-photo', 'Only a recorded licensed photo credit may be replaced');
+    assert.equal(entry.image.kind, 'generated', 'Replacement must disclose the generated image');
+    assert.equal(previous.url, entry.before.image_url, 'Previous photo must match the recipe snapshot');
+    assert.ok(description.endsWith(previous.credit), 'Previous credit must match the complete description suffix');
+    description = description.slice(0, -previous.credit.length).trimEnd();
+    assert.ok(description.trim(), 'Original recipe description must remain');
+  }
+  return { ...entry.before, image_url: entry.image.url, description: entry.image.credit ? description.trimEnd() + '\n\n' + entry.image.credit : description };
 }
 function validateImageAsset(image) {
     assert.match(image.file, /^assets\/recipe-photos\/[a-z0-9-]+-[a-f0-9]{12}\.jpg$/);
@@ -60,6 +70,7 @@ function validateManifest(manifest) {
     }
     assert.equal(e.review.status, 'visually-reviewed');
     validateImageAsset(e.image);
+    photoAfter(e);
   }
   return manifest.entries;
 }
