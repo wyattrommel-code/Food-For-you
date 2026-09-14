@@ -45,7 +45,9 @@ import { useIsLandscape, useIsTablet } from '@/hooks/useIsTablet';
 import { RecipeImage } from '@/components/RecipeImage';
 
 // ─── Types ────────────────────────────────────────────────────
-type ActiveMode = 'pickForMe' | 'hungryNow' | 'feelingBold' | null;
+import { hungryCandidates, pickTreats, TREAT_LABELS } from '@/lib/treats';
+
+type ActiveMode = 'pickForMe' | 'hungryNow' | 'feelingBold' | 'sweetTreat' | null;
 
 type HungryHeadingKind = '30' | '45' | 'any';
 
@@ -53,12 +55,6 @@ type HungryHeadingKind = '30' | '45' | 'any';
 
 function pickForMeSetKey(ids: string[]): string {
   return ids.join('\0');
-}
-
-/** Recipes with prep_time_mins <= maxPrep (inclusive). maxPrep null = no cap. */
-function filterByMaxPrep(recipes: Recipe[], maxPrep: number | null): Recipe[] {
-  if (maxPrep === null) return [...recipes];
-  return recipes.filter((r) => r.prep_time_mins <= maxPrep);
 }
 
 /**
@@ -89,7 +85,7 @@ function buildHungryPool(
   hour: number,
   maxPrep: number | null
 ): Recipe[] {
-  const byPrep = filterByMaxPrep(visibleRecipes, maxPrep);
+  const byPrep = hungryCandidates(visibleRecipes, maxPrep);
   return applySoftMealPreference(byPrep, hour, 3);
 }
 
@@ -160,6 +156,7 @@ const BROWSE_SECTION_TITLE: Record<MealTime, string> = {
   dinner:    'Dinner',
   snack:     'Snacks',
   dessert:   'Desserts & Sweets',
+  smoothie: 'Smoothies & Shakes',
   sides:     'Side Dishes',
 };
 
@@ -528,7 +525,20 @@ export default function HomeScreen() {
     snack:   [],
     dessert: [],
     sides:   [],
+    smoothie: [],
   };
+
+  const [treats,setTreats] = useState<ReturnType<typeof pickTreats>>([]);
+  const lastTreats = useRef<string[]>([]);
+  const rollTreats = useCallback(()=>{
+    const next=pickTreats(visibleRecipes,lastTreats.current);
+    lastTreats.current=next.flatMap(p=>p.recipe?[p.recipe.id]:[]);
+    setTreats(next);setPickedRecipes([]);setActiveMode('sweetTreat');setSearchQuery('');
+  },[visibleRecipes]);
+  const sweetButton = <Pressable accessibilityRole="button" accessibilityLabel="I need a sweet treat" onPress={rollTreats} style={{minHeight:56,padding:12,borderRadius:16,borderWidth:1,borderColor:Colors.dessert,backgroundColor:Colors.surface,marginVertical:8}}>
+    <Text style={{color:Colors.textPrimary,fontSize:17,fontWeight:'700'}}>I need a sweet treat</Text>
+    <Text style={{color:Colors.textSecondary,fontSize:13}}>1 hot · 1 cold · 1 quick & easy</Text>
+  </Pressable>;
 
   // ── Handlers ──────────────────────────────────────────────
   const handleHungry = useCallback(() => {
@@ -743,6 +753,7 @@ export default function HomeScreen() {
                   <Text style={styles.secondSub}>Challenge · 3 picks</Text>
                 </Pressable>
               </View>
+              {sweetButton}
               <Pressable
                 style={({ pressed }) => [
                   styles.pantryHomeBtn,
@@ -772,6 +783,7 @@ export default function HomeScreen() {
                 </View>
               </Pressable>
 
+              {sweetButton}
               <View style={styles.secondaryRow}>
                 <Pressable
                   style={({ pressed }) => [
@@ -814,6 +826,18 @@ export default function HomeScreen() {
           )}
         </View>
 
+        <View style={{paddingHorizontal:20,gap:10,marginBottom:16}}>
+          <Pressable accessibilityRole="button" accessibilityLabel="Weekly planner" onPress={()=>router.push('/planner' as Href)} style={{minHeight:60,padding:16,borderRadius:16,backgroundColor:Colors.surface,borderWidth:1,borderColor:Colors.border}}>
+            <Text style={{color:Colors.textPrimary,fontSize:19,fontWeight:'800'}}>Weekly planner →</Text><Text style={{color:Colors.textSecondary}}>Plan your week, one meal at a time</Text>
+          </Pressable>
+          <Pressable accessibilityRole="button" accessibilityLabel="Smoothies & Shakes" onPress={()=>router.push('/browse?category=smoothie&title=Smoothies%20%26%20Shakes' as Href)} style={{minHeight:48,padding:14,borderRadius:16,backgroundColor:Colors.surface,borderWidth:1,borderColor:Colors.border}}>
+            <Text style={{color:Colors.textPrimary,fontSize:17,fontWeight:'700'}}>🥤 Smoothies & Shakes →</Text>
+          </Pressable>
+        </View>
+        {searchResults===null && activeMode==='sweetTreat' && <View style={{paddingHorizontal:20,gap:16}}>
+          <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between'}}><Text style={{fontSize:22,fontWeight:'800',color:Colors.textPrimary}}>Something sweet</Text><PillButton label="Re-roll" color={Colors.dessert} onPress={rollTreats}/></View>
+          {treats.map(({kind,recipe})=><View key={kind} style={{gap:8}}><Text style={{color:Colors.dessert,fontWeight:'800',fontSize:18}}>{TREAT_LABELS[kind]}</Text>{recipe?<HeroCard recipe={recipe} onFavoriteToggle={toggleFavorite}/>:<Text style={{color:Colors.textSecondary}}>No {TREAT_LABELS[kind].toLowerCase()} matches your food preferences yet.</Text>}</View>)}
+        </View>}
         {/* ── Search results ────────────────────────────── */}
         {searchResults !== null && (
           <>

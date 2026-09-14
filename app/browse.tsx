@@ -9,7 +9,7 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useFocusEffect, useLocalSearchParams, useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -32,6 +32,7 @@ const VALID_MEALS: MealTime[] = [
   'snack',
   'dessert',
   'sides',
+  'smoothie',
 ];
 
 function paramString(v: string | string[] | undefined): string {
@@ -54,6 +55,7 @@ export default function BrowseScreen() {
   const { toggleFavorite } = useRecipes(userId, preferences);
 
   const [recipes, setRecipes] = useState<Recipe[]>([]);
+  const [error,setError]=useState('');
   const [loading, setLoading] = useState(true);
 
   const favsKey = userId ? `favs:${userId}` : null;
@@ -76,13 +78,13 @@ export default function BrowseScreen() {
       return;
     }
 
-    setLoading(true);
+    setLoading(true);setError('');
     try {
       const runQuery = () =>
         supabase
           .from('recipes')
           .select('*')
-          .eq('is_user_created', false)
+          .or(category==='smoothie' && userId ? `is_user_created.eq.false,user_id.eq.${userId}` : 'is_user_created.eq.false')
           .contains('meal_time', [category])
           .order('title', { ascending: true });
 
@@ -101,6 +103,7 @@ export default function BrowseScreen() {
 
       const favSet = await loadFavSet();
       if (res.error) {
+        setError('Could not load recipes. Check your connection and retry.');
         setRecipes([]);
         return;
       }
@@ -116,15 +119,14 @@ export default function BrowseScreen() {
 
       setRecipes(mapped);
     } catch {
+      setError('Could not load recipes. Check your connection and retry.');
       setRecipes([]);
     } finally {
       setLoading(false);
     }
-  }, [category, preferences, loadFavSet]);
+  }, [category, preferences, loadFavSet, userId]);
 
-  useEffect(() => {
-    void fetchCategory();
-  }, [fetchCategory]);
+  useFocusEffect(useCallback(() => { void fetchCategory(); }, [fetchCategory]));
 
   const horizontalPad = 20;
   const columnGap = 14;
@@ -168,7 +170,8 @@ export default function BrowseScreen() {
         <View style={styles.headerSpacer} />
       </View>
 
-      {loading ? (
+      {category==='smoothie'&&<Pressable accessibilityRole="button" accessibilityLabel="Add a smoothie or shake" onPress={()=>router.push('/(tabs)/create?category=smoothie' as never)} style={{minHeight:48,padding:16}}><Text style={{color:Colors.accent,fontWeight:'700'}}>+ Add a smoothie or shake</Text></Pressable>}
+      {error?<View style={styles.centered}><Text accessibilityRole="alert" style={styles.emptyText}>{error}</Text><Pressable accessibilityRole="button" onPress={()=>void fetchCategory()} style={{minHeight:48,padding:12}}><Text style={{color:Colors.accent}}>Retry</Text></Pressable></View>:loading ? (
         <View style={styles.centered}>
           <ActivityIndicator size="large" color={Colors.accent} />
         </View>
@@ -178,7 +181,7 @@ export default function BrowseScreen() {
         </View>
       ) : recipes.length === 0 ? (
         <View style={styles.centered}>
-          <Text style={styles.emptyText}>No recipes here yet — check back soon!</Text>
+          <Text style={styles.emptyText}>{category==='smoothie'?'No smoothies or shakes match yet. Add your own using the button above.':'No recipes here yet — check back soon!'}</Text>
         </View>
       ) : (
         <>

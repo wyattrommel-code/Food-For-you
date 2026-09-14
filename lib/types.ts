@@ -27,7 +27,7 @@ export interface DbUserFavorite {
   created_at: string;
 }
 
-export type MealTime = 'breakfast' | 'lunch' | 'dinner' | 'snack' | 'dessert' | 'sides';
+export type MealTime = 'breakfast' | 'lunch' | 'dinner' | 'snack' | 'dessert' | 'sides' | 'smoothie';
 
 /** effort_score: 1 = very easy → 5 = weekend project */
 export type EffortScore = 1 | 2 | 3 | 4 | 5;
@@ -400,6 +400,7 @@ export const MEAL_TIME_META: Record<
     emoji: "🍰",
     color: "#EC4899",
   },
+  smoothie: { label: 'Smoothies & Shakes', greeting: 'Blend something good', emoji: '🥤', color: '#14B8A6' },
   sides: {
     label: "Sides",
     greeting: "What's on the side?",

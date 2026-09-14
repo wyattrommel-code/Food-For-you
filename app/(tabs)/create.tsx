@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef, useMemo } from 'react';
+import React, { useEffect, useState, useCallback, useRef, useMemo } from 'react';
 import {
   View,
   Text,
@@ -12,7 +12,7 @@ import {
   Animated,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 
@@ -30,6 +30,7 @@ const MEAL_TIME_KEYS: MealTime[] = [
   'snack',
   'dessert',
   'sides',
+  'smoothie',
 ];
 
 const DIFFICULTIES: { label: string; score: EffortScore; color: string }[] = [
@@ -120,6 +121,8 @@ export default function CreateScreen() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [selectedMealTimes, setSelectedMealTimes] = useState<Set<MealTime>>(new Set());
+  const {category}=useLocalSearchParams<{category?:string}>();
+  useEffect(()=>{if(category==='smoothie')setSelectedMealTimes(previous=>new Set([...previous,'smoothie']));},[category]);
   const [prepTime, setPrepTime] = useState('');
   const [servings, setServings] = useState('');
   const [difficulty, setDifficulty] = useState<EffortScore>(1);
@@ -356,6 +359,10 @@ export default function CreateScreen() {
                 return (
                   <Pressable
                     key={key}
+                    accessibilityRole="checkbox"
+                    aria-checked={active}
+                    accessibilityLabel={meta.label}
+                    accessibilityState={{checked:active}}
                     style={[styles.chip, active && styles.chipActive]}
                     onPress={() => toggleMealTime(key)}
                   >
