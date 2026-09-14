@@ -1,12 +1,12 @@
 # Mealsolved 1.0.5 testing release
 
-Release candidate: Android **1.0.5, version code 11**, from commit `0ebf464`. The intended destination is the existing Google Play internal testing track; no production or iOS release is included.
+Published September 14, 2026: Android **1.0.5, version code 11**, from commit `0ebf464`, on the existing Google Play internal testing track. No production or iOS release was submitted.
 
 ## Delivery status
 
 The [Expo build](https://expo.dev/accounts/wyattrommel/projects/food-for-you/builds/be0fb000-a7e7-4675-a2b6-d3bebf0f8a35) finished successfully September 14, 2026 at 20:43 UTC. The signed AAB is 50,130,578 bytes with SHA-256 `cea7c494fec3870598d4be4ea43b1df17bb4123892643cf50d90dda0ba00328f`.
 
-The Google Play internal release draft is saved as `11 (1.0.5) - Planner and meal discovery`, with release notes. **Bundle upload and publication are pending:** Chrome's extension file-upload permission rejected the chooser upload. The user must enable **Allow access to file URLs** under the ChatGPT browser extension's Details in `chrome://extensions`, then the existing bundle can be uploaded without another build. Browser security also prevents the agent from opening that settings URL itself. [Upload setup](https://developers.openai.com/codex/app/chrome-extension#upload-files)
+Google Play confirms **Available to internal testers** for `11 (1.0.5) - Planner and meal discovery`, released September 14 at 3:08 PM America/Denver (21:08 UTC). Upload succeeded after the user enabled Chrome extension file access. Play reported no previously supported devices lost. The only nonblocking warning was the absent deobfuscation file, as in previous releases. The existing signed build was used; no rebuild was needed. Google says updates usually appear within an hour but can occasionally take longer.
 
 Caleb Meade's internal tester list was created and enabled for the app; the enrollment invitation was sent from Wyatt's Gmail account. The tester's personal email is intentionally not recorded in this public repository.
 
