@@ -203,6 +203,7 @@ function makeStyles(Colors: AppColors) {
     inputIcon: { marginRight: 10 },
     input: {
       flex: 1,
+      minWidth: 0,
       color: Colors.textPrimary,
       fontSize: 15,
       fontWeight: '500',

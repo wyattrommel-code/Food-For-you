@@ -150,6 +150,7 @@ export default function LoginScreen() {
                 />
                 <TextInput
                   style={styles.input}
+                  accessibilityLabel="Email"
                   value={email}
                   onChangeText={(t) => { setEmail(t); clearMessages(); }}
                   placeholder="you@example.com"
@@ -178,6 +179,7 @@ export default function LoginScreen() {
                 <TextInput
                   ref={passwordRef}
                   style={[styles.input, styles.inputWithToggle]}
+                  accessibilityLabel="Password"
                   value={password}
                   onChangeText={(t) => { setPassword(t); clearMessages(); }}
                   placeholder={mode === 'signup' ? 'Min. 6 characters' : '••••••••'}
@@ -191,6 +193,8 @@ export default function LoginScreen() {
                   editable={!loading}
                 />
                 <Pressable
+                  accessibilityRole="button"
+                  accessibilityLabel={showPassword ? 'Hide password' : 'Show password'}
                   onPress={() => setShowPassword((v) => !v)}
                   style={styles.eyeBtn}
                   hitSlop={8}
@@ -394,6 +398,7 @@ function makeStyles(Colors: AppColors) {
     },
     input: {
       flex: 1,
+      minWidth: 0,
       color: Colors.textPrimary,
       fontSize: 15,
       fontWeight: '500',
