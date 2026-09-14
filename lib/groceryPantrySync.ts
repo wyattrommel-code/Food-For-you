@@ -49,7 +49,7 @@ async function mergeIngredientsImpl(parsed: string[]): Promise<number> {
       ? parsedJson.filter((s): s is string => typeof s === 'string')
       : [];
   } catch {
-    existing = [];
+    throw new Error('Could not read your pantry. Retry before adding groceries.');
   }
 
   const lowerSeen = new Set(existing.map((s) => s.toLowerCase()));
@@ -70,7 +70,7 @@ async function mergeIngredientsImpl(parsed: string[]): Promise<number> {
     await AsyncStorage.setItem(USER_PANTRY_KEY, JSON.stringify(next));
     return added;
   } catch {
-    return 0;
+    throw new Error('Could not save your pantry. Your groceries are still checked; try again.');
   }
 }
 

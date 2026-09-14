@@ -23,42 +23,11 @@ interface TabConfig {
 }
 
 const TABS: TabConfig[] = [
-  {
-    name: 'index',
-    title: 'Home',
-    icon: 'home-outline',
-    activeIcon: 'home',
-  },
-  {
-    name: 'favorites',
-    title: 'Saved',
-    icon: 'heart-outline',
-    activeIcon: 'heart',
-  },
-  {
-    name: 'grocery',
-    title: 'Grocery',
-    icon: 'cart-outline',
-    activeIcon: 'cart',
-  },
-  {
-    name: 'pantry',
-    title: 'Pantry',
-    icon: 'basket-outline',
-    activeIcon: 'basket',
-  },
-  {
-    name: 'create',
-    title: 'Create',
-    icon: 'add-circle-outline',
-    activeIcon: 'add-circle',
-  },
-  {
-    name: 'settings',
-    title: 'Settings',
-    icon: 'settings-outline',
-    activeIcon: 'settings',
-  },
+  {name:'index',title:'Home',icon:'home-outline',activeIcon:'home'},
+  {name:'planner',title:'Planner',icon:'calendar-outline',activeIcon:'calendar'},
+  {name:'grocery',title:'Grocery',icon:'cart-outline',activeIcon:'cart'},
+  {name:'pantry',title:'Pantry',icon:'basket-outline',activeIcon:'basket'},
+  {name:'more',title:'More',icon:'grid-outline',activeIcon:'grid'},
 ];
 
 export default function TabLayout() {
@@ -94,6 +63,7 @@ export default function TabLayout() {
         },
       }}
     >
+      {['favorites','create','settings'].map(name=><Tabs.Screen key={name} name={name} options={{href:null}}/>)}
       {TABS.map((tab) => (
         <Tabs.Screen
           key={tab.name}

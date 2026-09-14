@@ -8,7 +8,9 @@ import {usePlanner} from '@/hooks/usePlanner';
 import {useTheme} from '@/context/ThemeContext';
 import {supabase} from '@/lib/supabase';
 import {DbRecipe,isRecipeBanned} from '@/lib/types';
-import {dateKey,weekDays,shiftDay,dayLabel,PLAN_SLOTS,PlanSlot,PlanEntry} from '@/lib/planner';
+import {useLocalToday} from '@/hooks/useLocalToday';
+import {monthBounds,monthWeeks,shiftMonth} from '@/lib/plannerShopping';
+import {dateKey,parseDay,weekDays,shiftDay,dayLabel,PLAN_SLOTS,PlanSlot,PlanEntry} from '@/lib/planner';
 
 export default function PlannerScreen(){
   const {userId}=useSession();
@@ -19,9 +21,16 @@ function Planner({userId}:{userId:string|null}){
   const params=useLocalSearchParams<{recipeId?:string}>();
   const recipeId=typeof params.recipeId==='string'?params.recipeId:undefined;
   const {preferences}=usePreferences(userId);
-  const [day,setDay]=useState(()=>dateKey(new Date()));
+  const today=useLocalToday();
+  const [day,setDay]=useState(today),[view,setView]=useState<'today'|'week'>('today');
+  const previousToday=useRef(today);
+  useEffect(()=>{if(day===previousToday.current)setDay(today);previousToday.current=today;},[today,day]);
+  const weeks=useMemo(()=>monthWeeks(day),[day]);
+  const month=monthBounds(day);
+  const monthTitle=parseDay(day).toLocaleDateString(undefined,{month:'long',year:'numeric'});
   const days=useMemo(()=>weekDays(day),[day]);
   const planner=usePlanner(userId,days[0],days[6]);
+  const groceries=(scope:'day'|'week'|'all',date=day)=>router.push({pathname:'/(tabs)/grocery',params:{scope,day:date}} as never);
   const [slot,setSlot]=useState<PlanSlot>('menu');
   const [candidate,setCandidate]=useState<{id:string;title:string}|null>(null);
   const [moving,setMoving]=useState<PlanEntry|null>(null);
@@ -55,17 +64,20 @@ function Planner({userId}:{userId:string|null}){
   const button=(label:string,onPress:()=>void,selected=false,disabled=false,accessibilityLabel=label)=><Pressable accessibilityRole="button" accessibilityLabel={accessibilityLabel} accessibilityState={{selected,disabled}} disabled={disabled} onPress={onPress} style={[s.button,selected&&s.chosen,disabled&&{opacity:0.5}]}><Text style={selected?s.chosenText:s.text}>{label}</Text></Pressable>;
   async function save(){
     if(!candidate)return;setActionError('');setMessage('');
-    try{if(moving)await planner.move(moving,day,slot);else await planner.add(day,slot,candidate);setMessage(`${candidate.title} ${moving?'moved':'added'} to ${dayLabel(day)} · ${PLAN_SLOTS[slot]}.`);setCandidate(null);setMoving(null);router.setParams({recipeId:undefined});}
+    try{if(moving)await planner.move(moving,day,slot);else await planner.add(day,slot,candidate);setMessage(`${candidate.title} ${moving?'moved':'added'} to ${dayLabel(day)} · ${PLAN_SLOTS[slot]}.`);if(day!==today)setView('week');setCandidate(null);setMoving(null);router.setParams({recipeId:undefined});}
     catch(e){setActionError(e instanceof Error?e.message:'Could not save. Try again.');}
   }
   function choose(date:string){setDay(date);setSlot('menu');setMoving(null);setCandidate(null);setQuery('');setPicker(true);setActionError('');}
-  return <SafeAreaView style={s.page} edges={['top','bottom']}>
+  return <SafeAreaView style={s.page} edges={['top']}>
     <ScrollView ref={scroll} contentContainerStyle={s.content} keyboardShouldPersistTaps="handled">
-      {button('Back',()=>router.canGoBack()?router.back():router.replace('/(tabs)'))}
-      <Text style={s.title}>Weekly planner</Text><Text style={s.muted}>Build a menu for each day. Add a recipe to a meal, or keep it in the day’s menu.</Text>
+      <Text style={s.title}>Meal planner</Text><Text style={s.muted}>{dayLabel(today)} · Plan a month, one week at a time.</Text>
+      <View style={s.row}>{button('Today',()=>{setDay(today);setView('today');},view==='today')}{button('Week view',()=>setView('week'),view==='week')}</View>
       {!userId?<><Text style={s.text}>Sign in to save your weekly menu.</Text>{button('Sign in',()=>router.push('/login'))}</>:<>
+      {(view==='week'||candidate)&&<>
+      <View style={[s.row,{justifyContent:'space-between'}]}>{button('‹',()=>setDay(shiftMonth(day,-1)),false,planner.busy,'Previous month')}<Text style={[s.text,{fontSize:20,fontWeight:'800'}]}>{monthTitle}</Text>{button('›',()=>setDay(shiftMonth(day,1)),false,planner.busy,'Next month')}</View>
+      <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{gap:8}}>{weeks.map(w=><View key={w[0]}>{button(`${dayLabel(w[0])} – ${dayLabel(w[6])}`,()=>setDay(w[0]<month.start?month.start:w[0]),w[0]===days[0],planner.busy,`Plan week ${w[0]}`)}</View>)}</ScrollView>
       <View style={s.row}>{button('Previous week',()=>setDay(shiftDay(day,-7)),false,planner.busy)}{button('This week',()=>setDay(dateKey(new Date())),false,planner.busy)}{button('Next week',()=>setDay(shiftDay(day,7)),false,planner.busy)}</View>
-      <Text style={s.text}>{dayLabel(days[0])} – {dayLabel(days[6])}</Text>
+      <Text style={s.text}>{dayLabel(days[0])} – {dayLabel(days[6])}</Text></>}
       {catalogLoading&&recipeId&&<ActivityIndicator accessibilityLabel="Loading recipe"/>}
       {!!catalogError&&<View><Text accessibilityRole="alert" style={s.text}>{catalogError}</Text>{button('Retry recipes',()=>setRetry(n=>n+1))}</View>}
       {candidate&&<View style={s.box}>
@@ -78,16 +90,17 @@ function Planner({userId}:{userId:string|null}){
       {!!actionError&&<Text accessibilityRole="alert" style={s.text}>{actionError}</Text>}
       {!!message&&<Text accessibilityLiveRegion="polite" style={s.text}>{message}</Text>}
       {!!planner.error&&<View><Text accessibilityRole="alert" style={s.text}>{planner.error}</Text>{button('Retry menu',()=>void planner.reload())}</View>}
-      {planner.loading?<ActivityIndicator accessibilityLabel="Loading weekly menu"/>:days.map(date=><View key={date} style={s.box}>
-        <Text style={[s.text,{fontWeight:'800'}]}>{dayLabel(date)}{date===dateKey(new Date())?' · Today':''}</Text>
+      {planner.loading?<ActivityIndicator accessibilityLabel="Loading weekly menu"/>:(view==='today'&&!candidate?[today]:days).map(date=><View key={date} style={s.box}>
+        <Text style={[s.text,{fontWeight:'800'}]}>{dayLabel(date)}{date===today?' · Today':''}</Text>
         {planner.entries.filter(e=>e.plan_date===date).length===0&&<Text style={s.muted}>No recipes planned yet.</Text>}
         {(Object.keys(PLAN_SLOTS) as PlanSlot[]).flatMap(k=>planner.entries.filter(e=>e.plan_date===date&&e.meal_slot===k).map(entry=><View key={entry.id} style={{gap:6}}>
           <Text style={s.muted}>{PLAN_SLOTS[k]}</Text>
           {button(entry.recipe_title,()=>router.push(`/recipe/${entry.recipe_id}`))}
           <View style={s.row}>{button('Move',()=>{setDay(date);setSlot(entry.meal_slot);setCandidate({id:entry.recipe_id,title:entry.recipe_title});setMoving(entry);setActionError('');},false,planner.busy,`Move ${entry.recipe_title}`)}{button('Remove',()=>{setActionError('');void planner.remove(entry).catch(e=>setActionError(e.message));},false,planner.busy,`Remove ${entry.recipe_title}`)}</View>
         </View>))}
-        {button('+ Add recipe',()=>choose(date),false,planner.busy,`Add recipe to ${dayLabel(date)}`)}
+        <View style={s.row}>{button('+ Add recipe',()=>choose(date),false,planner.busy,`Add recipe to ${dayLabel(date)}`)}{button('Day’s groceries',()=>groceries('day',date),false,false,`Groceries for ${dayLabel(date)}`)}</View>
       </View>)}
+      <View style={s.box}><Text style={[s.text,{fontWeight:'800'}]}>Shopping for your plan</Text><View style={s.row}>{button('Today’s groceries',()=>groceries('day',today))}{button('This week’s groceries',()=>groceries('week',view==='today'?today:day))}{button('Entire grocery list',()=>groceries('all'))}</View><Text style={s.muted}>Your planned ingredients update when you add, move or remove meals.</Text></View>
       </>}
     </ScrollView>
     <Modal visible={picker} animationType="slide" onRequestClose={()=>setPicker(false)}>

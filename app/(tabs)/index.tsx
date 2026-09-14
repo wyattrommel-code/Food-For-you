@@ -827,9 +827,6 @@ export default function HomeScreen() {
         </View>
 
         <View style={{paddingHorizontal:20,gap:10,marginBottom:16}}>
-          <Pressable accessibilityRole="button" accessibilityLabel="Weekly planner" onPress={()=>router.push('/planner' as Href)} style={{minHeight:60,padding:16,borderRadius:16,backgroundColor:Colors.surface,borderWidth:1,borderColor:Colors.border}}>
-            <Text style={{color:Colors.textPrimary,fontSize:19,fontWeight:'800'}}>Weekly planner →</Text><Text style={{color:Colors.textSecondary}}>Plan your week, one meal at a time</Text>
-          </Pressable>
           <Pressable accessibilityRole="button" accessibilityLabel="Smoothies & Shakes" onPress={()=>router.push('/browse?category=smoothie&title=Smoothies%20%26%20Shakes' as Href)} style={{minHeight:48,padding:14,borderRadius:16,backgroundColor:Colors.surface,borderWidth:1,borderColor:Colors.border}}>
             <Text style={{color:Colors.textPrimary,fontSize:17,fontWeight:'700'}}>🥤 Smoothies & Shakes →</Text>
           </Pressable>
