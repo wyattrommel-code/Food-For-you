@@ -9,6 +9,8 @@ Current order agreed with Wyatt:
 3. Hold further feature expansion during catalog completion.
 4. Design household sharing as a coherent experience: shared meal plans, groceries and pantry, with clear individual preferences and member permissions. Existing grocery-only sharing is not the full intended household experience.
 5. Add optional ingredient details: tap an ingredient to attach a brand/product photo and set an expiration date. Treat these as part of the future pantry model, avoiding a separate device-only feature that will require rework for household sharing.
+
+   Brand preferences can be reused, but expiration dates should be stored per purchased item or batch: two cartons of the same milk can have different dates. Photos and dates should be optional. Shared inventory must not overwrite each member's personal food preferences.
 6. Continue the accepted priorities: real-user cooking and shopping trials, servings per planned meal, reusable weeks and leftover notes.
 
 The earlier product review's budget-first positioning is superseded by this direction. No budgeting paywall is planned for launch.
