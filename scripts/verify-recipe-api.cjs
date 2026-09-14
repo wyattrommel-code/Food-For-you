@@ -1,7 +1,7 @@
 // Read-only smoke check using the app's public key. Never prints credentials.
 const fs = require('node:fs');
 const assert = require('node:assert/strict');
-const batches = ['community-001', 'comfort-002', 'easy-050', 'easy-100'].map(name => require('../data/recipes/' + name + '.json'));
+const batches = ['community-001', 'comfort-002', 'easy-050', 'easy-100', 'drinks-024'].map(name => require('../data/recipes/' + name + '.json'));
 const revisions = require('../data/recipes/comfort-revisions-001.json');
 const { validateBatch } = require('./recipe-batch.cjs');
 const photos = require('../data/recipes/photo-manifest.json');
@@ -49,7 +49,7 @@ async function get(query) {
     for (const field of Object.keys(expected)) assert.deepEqual(actual[field], expected[field], photo.title + ': ' + field);
   }
   const audit = require('../data/recipes/photo-audit-2026-09-12.json');
-  const newBatches = batches.filter(b => ['easy-050', 'easy-100'].includes(b.batch_id));
+  const newBatches = batches.filter(b => ['easy-050', 'easy-100', 'drinks-024'].includes(b.batch_id));
   const reviewedTitles = [...audit.entries.map(r => r.title), ...newBatches.flatMap(b => b.recipes.map(r => r.title))];
   assert.deepEqual(catalog.map(r => r.title).sort(), reviewedTitles.sort(), 'Shared catalog differs from reviewed recipes');
   assert.ok(catalog.every(r => r.image_url?.trim()), 'Every shared recipe must have a photo');

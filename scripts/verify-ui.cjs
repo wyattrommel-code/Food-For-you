@@ -13,7 +13,7 @@ const user={id:fixtureId,aud:'authenticated',role:'authenticated',email:'qa@exam
 const token=Buffer.from(JSON.stringify({alg:'HS256',typ:'JWT'})).toString('base64url')+'.'+Buffer.from(JSON.stringify({sub:fixtureId,role:'authenticated',exp:Math.floor(Date.now()/1000)+3600})).toString('base64url')+'.local-test-signature';
 const session={access_token:token,refresh_token:'local-test-only',expires_in:3600,expires_at:Math.floor(Date.now()/1000)+3600,token_type:'bearer',user};
 (async()=>{
- const response=await fetch(api+'/rest/v1/recipes?select=*&is_user_created=eq.false',{headers:{apikey:key}});assert.ok(response.ok);const catalog=await response.json();assert.equal(catalog.length,269);
+ const response=await fetch(api+'/rest/v1/recipes?select=*&is_user_created=eq.false',{headers:{apikey:key}});assert.ok(response.ok);const catalog=await response.json();assert.equal(catalog.length,293);
  const browser=await chromium.launch({channel:process.env.UI_QA_BROWSER||'msedge',headless:true});
  const context=await browser.newContext({viewport:{width:390,height:844},deviceScaleFactor:1});
  let cloudPrefs=null,saveCalls=0,failCloud=false;const errors=[];

@@ -15,14 +15,16 @@ function validateBatch(batch) {
   assert.equal(batch.status, 'editorially-reviewed-not-cook-tested');
   assert.ok(Array.isArray(batch.recipes) && batch.recipes.length > 0);
   const kind = batch.batch_kind ?? 'quick';
-  assert.ok(['quick', 'easy-comfort', 'easy-everyday'].includes(kind), 'Unknown batch kind');
+  assert.ok(['quick', 'easy-comfort', 'easy-everyday', 'original-drinks'].includes(kind), 'Unknown batch kind');
   const comfort = kind !== 'quick';
+  const originalDrinks = kind === 'original-drinks';
+  if (originalDrinks) assert.equal(batch.photo_policy, 'reviewed-local-assets', 'Original drinks require reviewed photos');
   assert.ok(batch.photo_policy === undefined || batch.photo_policy === 'reviewed-local-assets', 'Unknown photo policy');
   const photoReady = batch.photo_policy === 'reviewed-local-assets';
   const titles = new Set();
   for (const row of batch.recipes) {
     for (const field of columns) assert.ok(Object.hasOwn(row, field), `${row.title}: missing ${field}`);
-    for (const field of ['title', 'description', 'source_name']) {
+    for (const field of ['title', 'description', ...(originalDrinks ? [] : ['source_name'])]) {
       assert.ok(typeof row[field] === 'string' && row[field].trim(), `Missing ${field}`);
     }
     const title = normalizeTitle(row.title);
@@ -46,7 +48,7 @@ function validateBatch(batch) {
       assert.equal(new Set(row[field]).size, row[field].length, `${row.title}: duplicate ${field}`);
     }
     assert.ok(row.meal_time.every(t => ['breakfast', 'lunch', 'dinner', 'snack', 'dessert', 'sides'].includes(t)));
-    assert.ok(row.meal_time.some(t => ['breakfast', 'lunch', 'dinner', ...(kind === 'easy-everyday' ? ['dessert'] : [])].includes(t)), 'Meal or explicitly supported dessert required, not just a side');
+    assert.ok(row.meal_time.some(t => ['breakfast', 'lunch', 'dinner', ...((kind === 'easy-everyday' || originalDrinks) ? ['dessert'] : [])].includes(t)), 'Meal or explicitly supported dessert required, not just a side');
     assert.ok(row.ingredients_list.length <= 10, `${row.title}: review long ingredient list`);
     assert.ok(row.ingredients_list.every(x => /^\d/.test(x)), `${row.title}: measured ingredients required`);
     assert.ok(row.recipe_steps.length >= 3 && row.recipe_steps.length <= 6, `${row.title}: review step count`);
@@ -58,12 +60,23 @@ function validateBatch(batch) {
       assert.match(row.review.photo_review.reviewed_on, /^\d{4}-\d{2}-\d{2}$/);
       const image = validateImageAsset(row.review.photo);
       assert.equal(row.image_url, image.url, row.title + ': photo URL mismatch');
-      assert.ok(row.description.includes(image.credit), row.title + ': visible photo credit required');
+      if (originalDrinks) assert.equal(image.kind, 'generated', 'Sourceless drinks require original AI photos');
+      else assert.ok(row.description.includes(image.credit), row.title + ': visible photo credit required');
     } else assert.equal(row.image_url, '', 'Unverified images must remain blank');
     assert.equal(row.user_id, null);
     assert.equal(row.is_user_created, false);
-    const source = new URL(row.source_url);
-    assert.ok(source.protocol === 'https:' && !source.username && !source.password, 'Source must be a public HTTPS URL');
+    if (originalDrinks) {
+      assert.equal(row.source_url, null);
+      assert.equal(row.source_name, null);
+      assert.equal(row.review?.source_kind, 'original');
+      assert.ok(row.tags.includes('smoothies-and-shakes'));
+      assert.notEqual(row.tags.includes('shake'), row.tags.includes('smoothie'), 'Exactly one drink kind required');
+      assert.equal(row.meal_time.includes('dessert'), row.tags.includes('shake'));
+      assert.ok(row.prep_time_mins <= 10 && row.servings <= 2, 'Drinks must be quick and small-batch');
+    } else {
+      const source = new URL(row.source_url);
+      assert.ok(source.protocol === 'https:' && !source.username && !source.password, 'Source must be a public HTTPS URL');
+    }
     for (const field of ['source_kind', 'adaptation', 'audience_evidence', 'duplicate_review']) {
       assert.ok(row.review?.[field]?.trim(), `${row.title}: missing review ${field}`);
     }

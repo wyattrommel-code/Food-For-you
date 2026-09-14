@@ -80,13 +80,17 @@ export default function BrowseScreen() {
 
     setLoading(true);setError('');
     try {
-      const runQuery = () =>
-        supabase
+      const runQuery = () => {
+        const query = supabase
           .from('recipes')
           .select('*')
-          .or(category==='smoothie' && userId ? `is_user_created.eq.false,user_id.eq.${userId}` : 'is_user_created.eq.false')
-          .contains('meal_time', [category])
+          .or(category === 'smoothie'
+            ? `and(or(is_user_created.eq.false${userId ? `,user_id.eq.${userId}` : ''}),or(meal_time.cs.{smoothie},tags.cs.{smoothies-and-shakes}))`
+            : 'is_user_created.eq.false');
+        // Public drinks retain legacy meal labels so installed 1.0.4 clients can open them.
+        return (category === 'smoothie' ? query : query.contains('meal_time', [category]))
           .order('title', { ascending: true });
+      };
 
       let res = await runQuery();
       const msg = res.error?.message ?? '';

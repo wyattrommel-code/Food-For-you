@@ -1,0 +1,1695 @@
+{
+  "batch_id": "drinks-024",
+  "batch_kind": "original-drinks",
+  "status": "editorially-reviewed-not-cook-tested",
+  "photo_policy": "reviewed-local-assets",
+  "created_on": "2026-09-14",
+  "recipes": [
+    {
+      "title": "Simple Vanilla Milkshake",
+      "description": "A small vanilla shake made with everyday freezer and fridge staples.",
+      "ingredients_list": [
+        "1/4 cup cold milk",
+        "1 cup vanilla ice cream",
+        "1/4 teaspoon vanilla extract"
+      ],
+      "recipe_steps": [
+        "Measure the milk into a blender. Let the ice cream stand for 2 minutes so it is easy to scoop.",
+        "Add the ice cream and the remaining measured ingredients. Cover and blend in short bursts until the mixture is smooth and pourable.",
+        "Turn off the blender before scraping down the sides if needed. Pour into one glass and enjoy right away."
+      ],
+      "meal_time": [
+        "dessert",
+        "snack"
+      ],
+      "prep_time_mins": 5,
+      "effort_score": 1,
+      "servings": 1,
+      "tags": [
+        "shake",
+        "smoothies-and-shakes",
+        "quick",
+        "easy",
+        "treat-cold"
+      ],
+      "image_url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/simple-vanilla-milkshake-956764265bba.jpg",
+      "shopping_list": [
+        "1/4 cup cold milk",
+        "1 cup vanilla ice cream",
+        "1/4 teaspoon vanilla extract"
+      ],
+      "cuisine": "American",
+      "user_id": null,
+      "is_user_created": false,
+      "source_url": null,
+      "source_name": null,
+      "review": {
+        "source_kind": "original",
+        "adaptation": "Original ingredient quantities and instructions for a familiar home-blended drink; no publisher recipe text copied.",
+        "audience_evidence": "One serving, everyday grocery ingredients, one blender, 5 minutes, no powders or specialty equipment.",
+        "duplicate_review": "No smoothie or shake found among the 269 existing shared recipes; distinct flavor and ingredient combination within this 24-drink batch.",
+        "active_time_mins": 5,
+        "equipment": [
+          "blender",
+          "measuring cups",
+          "measuring spoons"
+        ],
+        "photo": {
+          "kind": "generated",
+          "file": "assets/recipe-photos/simple-vanilla-milkshake-956764265bba.jpg",
+          "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/simple-vanilla-milkshake-956764265bba.jpg",
+          "sha256": "956764265bbafbb0809f191ed1a9558d4a6aa26c5b3e7ecfbd477d93556fd46b",
+          "bytes": 52529,
+          "width": 900,
+          "height": 900,
+          "creator": "OpenAI image generation for Mealsolved",
+          "credit": "AI-generated serving illustration. Actual results may vary.",
+          "prompt": "Original photorealistic food photograph for a mobile recipe app. Simple Vanilla Milkshake: ONE ordinary clear drinking glass containing a freshly blended creamy ivory-white shake, smooth thick but drinkable texture, realistically made only from these ingredients: 1/4 cup cold milk; 1 cup vanilla ice cream; 1/4 teaspoon vanilla extract. Finished blended drink, all mix-ins finely blended into the drink, not layered. Full glass visible, centered large and comfortably framed with generous margins for portrait card cropping. Camera slightly above rim height. Plain home kitchen counter, softly blurred neutral kitchen, natural window light, appetizing and honest homemade appearance. No toppings, no whipped cream, no garnish, no fruit pieces on rim, no extra food, no text, no logo, no packaging, no hands, no collage. Square image.",
+          "generation_method": "built-in image_gen",
+          "changes": "Proportional resize and JPEG compression for mobile delivery."
+        },
+        "photo_review": {
+          "status": "visually-reviewed",
+          "reviewed_on": "2026-09-14",
+          "notes": "Centered ivory vanilla shake in a clear glass; smooth creamy texture, no extra toppings or ingredients."
+        }
+      }
+    },
+    {
+      "title": "Easy Chocolate Milkshake",
+      "description": "Chocolate ice cream makes this two-ingredient shake easy to blend after dinner.",
+      "ingredients_list": [
+        "1/4 cup cold milk",
+        "1 cup chocolate ice cream"
+      ],
+      "recipe_steps": [
+        "Measure the milk into a blender. Let the ice cream stand for 2 minutes so it is easy to scoop.",
+        "Add the ice cream and the remaining measured ingredients. Cover and blend in short bursts until the mixture is smooth and pourable.",
+        "Turn off the blender before scraping down the sides if needed. Pour into one glass and enjoy right away."
+      ],
+      "meal_time": [
+        "dessert",
+        "snack"
+      ],
+      "prep_time_mins": 5,
+      "effort_score": 1,
+      "servings": 1,
+      "tags": [
+        "shake",
+        "smoothies-and-shakes",
+        "quick",
+        "easy",
+        "treat-cold"
+      ],
+      "image_url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/easy-chocolate-milkshake-3ea6cc98e181.jpg",
+      "shopping_list": [
+        "1/4 cup cold milk",
+        "1 cup chocolate ice cream"
+      ],
+      "cuisine": "American",
+      "user_id": null,
+      "is_user_created": false,
+      "source_url": null,
+      "source_name": null,
+      "review": {
+        "source_kind": "original",
+        "adaptation": "Original ingredient quantities and instructions for a familiar home-blended drink; no publisher recipe text copied.",
+        "audience_evidence": "One serving, everyday grocery ingredients, one blender, 5 minutes, no powders or specialty equipment.",
+        "duplicate_review": "No smoothie or shake found among the 269 existing shared recipes; distinct flavor and ingredient combination within this 24-drink batch.",
+        "active_time_mins": 5,
+        "equipment": [
+          "blender",
+          "measuring cups",
+          "measuring spoons"
+        ],
+        "photo": {
+          "kind": "generated",
+          "file": "assets/recipe-photos/easy-chocolate-milkshake-3ea6cc98e181.jpg",
+          "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/easy-chocolate-milkshake-3ea6cc98e181.jpg",
+          "sha256": "3ea6cc98e18180b29ed93b2cdb03dcf950e10e4b85c98ab4b59739f00c94a1e5",
+          "bytes": 74004,
+          "width": 900,
+          "height": 900,
+          "creator": "OpenAI image generation for Mealsolved",
+          "credit": "AI-generated serving illustration. Actual results may vary.",
+          "prompt": "Original photorealistic food photograph for a mobile recipe app. Easy Chocolate Milkshake: ONE ordinary clear drinking glass containing a freshly blended medium cocoa brown shake, smooth thick but drinkable texture, realistically made only from these ingredients: 1/4 cup cold milk; 1 cup chocolate ice cream. Finished blended drink, all mix-ins finely blended into the drink, not layered. Full glass visible, centered large and comfortably framed with generous margins for portrait card cropping. Camera slightly above rim height. Plain home kitchen counter, softly blurred neutral kitchen, natural window light, appetizing and honest homemade appearance. No toppings, no whipped cream, no garnish, no fruit pieces on rim, no extra food, no text, no logo, no packaging, no hands, no collage. Square image.",
+          "generation_method": "built-in image_gen",
+          "changes": "Proportional resize and JPEG compression for mobile delivery."
+        },
+        "photo_review": {
+          "status": "visually-reviewed",
+          "reviewed_on": "2026-09-14",
+          "notes": "Centered cocoa-brown chocolate shake, blended texture and plain serving match the two ingredients."
+        }
+      }
+    },
+    {
+      "title": "Strawberry Jam Milkshake",
+      "description": "A spoonful of strawberry jam adds berry flavor without chopping fruit.",
+      "ingredients_list": [
+        "1/4 cup cold milk",
+        "1 cup vanilla ice cream",
+        "1 tablespoon strawberry jam"
+      ],
+      "recipe_steps": [
+        "Measure the milk into a blender. Let the ice cream stand for 2 minutes so it is easy to scoop.",
+        "Add the ice cream and the remaining measured ingredients. Cover and blend in short bursts until the mixture is smooth and pourable.",
+        "Turn off the blender before scraping down the sides if needed. Pour into one glass and enjoy right away."
+      ],
+      "meal_time": [
+        "dessert",
+        "snack"
+      ],
+      "prep_time_mins": 5,
+      "effort_score": 1,
+      "servings": 1,
+      "tags": [
+        "shake",
+        "smoothies-and-shakes",
+        "quick",
+        "easy",
+        "treat-cold"
+      ],
+      "image_url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/strawberry-jam-milkshake-299bff3bbb53.jpg",
+      "shopping_list": [
+        "1/4 cup cold milk",
+        "1 cup vanilla ice cream",
+        "1 tablespoon strawberry jam"
+      ],
+      "cuisine": "American",
+      "user_id": null,
+      "is_user_created": false,
+      "source_url": null,
+      "source_name": null,
+      "review": {
+        "source_kind": "original",
+        "adaptation": "Original ingredient quantities and instructions for a familiar home-blended drink; no publisher recipe text copied.",
+        "audience_evidence": "One serving, everyday grocery ingredients, one blender, 5 minutes, no powders or specialty equipment.",
+        "duplicate_review": "No smoothie or shake found among the 269 existing shared recipes; distinct flavor and ingredient combination within this 24-drink batch.",
+        "active_time_mins": 5,
+        "equipment": [
+          "blender",
+          "measuring cups",
+          "measuring spoons"
+        ],
+        "photo": {
+          "kind": "generated",
+          "file": "assets/recipe-photos/strawberry-jam-milkshake-299bff3bbb53.jpg",
+          "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/strawberry-jam-milkshake-299bff3bbb53.jpg",
+          "sha256": "299bff3bbb53cd2327ec8075698393087c957fa799738214e13f54c829f2d6f2",
+          "bytes": 77228,
+          "width": 900,
+          "height": 900,
+          "creator": "OpenAI image generation for Mealsolved",
+          "credit": "AI-generated serving illustration. Actual results may vary.",
+          "prompt": "Original photorealistic food photograph for a mobile recipe app. Strawberry Jam Milkshake: ONE ordinary clear drinking glass containing a freshly blended very pale strawberry pink with tiny red specks shake, smooth thick but drinkable texture, realistically made only from these ingredients: 1/4 cup cold milk; 1 cup vanilla ice cream; 1 tablespoon strawberry jam. Finished blended drink, all mix-ins finely blended into the drink, not layered. Full glass visible, centered large and comfortably framed with generous margins for portrait card cropping. Camera slightly above rim height. Plain home kitchen counter, softly blurred neutral kitchen, natural window light, appetizing and honest homemade appearance. No toppings, no whipped cream, no garnish, no fruit pieces on rim, no extra food, no text, no logo, no packaging, no hands, no collage. Square image.",
+          "generation_method": "built-in image_gen",
+          "changes": "Proportional resize and JPEG compression for mobile delivery."
+        },
+        "photo_review": {
+          "status": "visually-reviewed",
+          "reviewed_on": "2026-09-14",
+          "notes": "Pale strawberry pink shake with small blended red flecks; no unlisted toppings."
+        }
+      }
+    },
+    {
+      "title": "Cookies and Cream Milkshake",
+      "description": "Crunchy sandwich cookies turn vanilla ice cream into a quick cookies-and-cream treat.",
+      "ingredients_list": [
+        "1/4 cup cold milk",
+        "1 cup vanilla ice cream",
+        "2 chocolate sandwich cookies, broken into pieces"
+      ],
+      "recipe_steps": [
+        "Measure the milk into a blender. Let the ice cream stand for 2 minutes so it is easy to scoop.",
+        "Add the ice cream and the remaining measured ingredients. Cover and blend in short bursts until the mixture is smooth and pourable.",
+        "Turn off the blender before scraping down the sides if needed. Pour into one glass and enjoy right away."
+      ],
+      "meal_time": [
+        "dessert",
+        "snack"
+      ],
+      "prep_time_mins": 5,
+      "effort_score": 1,
+      "servings": 1,
+      "tags": [
+        "shake",
+        "smoothies-and-shakes",
+        "quick",
+        "easy",
+        "treat-cold"
+      ],
+      "image_url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/cookies-and-cream-milkshake-711ab7b9203c.jpg",
+      "shopping_list": [
+        "1/4 cup cold milk",
+        "1 cup vanilla ice cream",
+        "2 chocolate sandwich cookies, broken into pieces"
+      ],
+      "cuisine": "American",
+      "user_id": null,
+      "is_user_created": false,
+      "source_url": null,
+      "source_name": null,
+      "review": {
+        "source_kind": "original",
+        "adaptation": "Original ingredient quantities and instructions for a familiar home-blended drink; no publisher recipe text copied.",
+        "audience_evidence": "One serving, everyday grocery ingredients, one blender, 5 minutes, no powders or specialty equipment.",
+        "duplicate_review": "No smoothie or shake found among the 269 existing shared recipes; distinct flavor and ingredient combination within this 24-drink batch.",
+        "active_time_mins": 5,
+        "equipment": [
+          "blender",
+          "measuring cups",
+          "measuring spoons"
+        ],
+        "photo": {
+          "kind": "generated",
+          "file": "assets/recipe-photos/cookies-and-cream-milkshake-711ab7b9203c.jpg",
+          "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/cookies-and-cream-milkshake-711ab7b9203c.jpg",
+          "sha256": "711ab7b9203cf40b2a036e81f71161cbce987d62119260529d25c282b98e10f2",
+          "bytes": 87822,
+          "width": 900,
+          "height": 900,
+          "creator": "OpenAI image generation for Mealsolved",
+          "credit": "AI-generated serving illustration. Actual results may vary.",
+          "prompt": "Original photorealistic food photograph for a mobile recipe app. Cookies and Cream Milkshake: ONE ordinary clear drinking glass containing a freshly blended ivory gray with finely blended dark cookie flecks shake, smooth thick but drinkable texture, realistically made only from these ingredients: 1/4 cup cold milk; 1 cup vanilla ice cream; 2 chocolate sandwich cookies, broken into pieces. Finished blended drink, all mix-ins finely blended into the drink, not layered. Full glass visible, centered large and comfortably framed with generous margins for portrait card cropping. Camera slightly above rim height. Plain home kitchen counter, softly blurred neutral kitchen, natural window light, appetizing and honest homemade appearance. No toppings, no whipped cream, no garnish, no fruit pieces on rim, no extra food, no text, no logo, no packaging, no hands, no collage. Square image.",
+          "generation_method": "built-in image_gen",
+          "changes": "Proportional resize and JPEG compression for mobile delivery."
+        },
+        "photo_review": {
+          "status": "visually-reviewed",
+          "reviewed_on": "2026-09-14",
+          "notes": "Cookies-and-cream drink has visible fine dark cookie crumbs blended through an ivory base; plain full glass."
+        }
+      }
+    },
+    {
+      "title": "Peanut Butter Milkshake",
+      "description": "A creamy peanut butter shake with three basic ingredients.",
+      "ingredients_list": [
+        "1/4 cup cold milk",
+        "1 cup vanilla ice cream",
+        "1 tablespoon creamy peanut butter"
+      ],
+      "recipe_steps": [
+        "Measure the milk into a blender. Let the ice cream stand for 2 minutes so it is easy to scoop.",
+        "Add the ice cream and the remaining measured ingredients. Cover and blend in short bursts until the mixture is smooth and pourable.",
+        "Turn off the blender before scraping down the sides if needed. Pour into one glass and enjoy right away."
+      ],
+      "meal_time": [
+        "dessert",
+        "snack"
+      ],
+      "prep_time_mins": 5,
+      "effort_score": 1,
+      "servings": 1,
+      "tags": [
+        "shake",
+        "smoothies-and-shakes",
+        "quick",
+        "easy",
+        "treat-cold"
+      ],
+      "image_url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/peanut-butter-milkshake-db8826a3c77c.jpg",
+      "shopping_list": [
+        "1/4 cup cold milk",
+        "1 cup vanilla ice cream",
+        "1 tablespoon creamy peanut butter"
+      ],
+      "cuisine": "American",
+      "user_id": null,
+      "is_user_created": false,
+      "source_url": null,
+      "source_name": null,
+      "review": {
+        "source_kind": "original",
+        "adaptation": "Original ingredient quantities and instructions for a familiar home-blended drink; no publisher recipe text copied.",
+        "audience_evidence": "One serving, everyday grocery ingredients, one blender, 5 minutes, no powders or specialty equipment.",
+        "duplicate_review": "No smoothie or shake found among the 269 existing shared recipes; distinct flavor and ingredient combination within this 24-drink batch.",
+        "active_time_mins": 5,
+        "equipment": [
+          "blender",
+          "measuring cups",
+          "measuring spoons"
+        ],
+        "photo": {
+          "kind": "generated",
+          "file": "assets/recipe-photos/peanut-butter-milkshake-db8826a3c77c.jpg",
+          "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/peanut-butter-milkshake-db8826a3c77c.jpg",
+          "sha256": "db8826a3c77c3bb63fa7029a71d273d4c0a3b07b58ffdd593bcb11f227941864",
+          "bytes": 58298,
+          "width": 900,
+          "height": 900,
+          "creator": "OpenAI image generation for Mealsolved",
+          "credit": "AI-generated serving illustration. Actual results may vary.",
+          "prompt": "Original photorealistic food photograph for a mobile recipe app. Peanut Butter Milkshake: ONE ordinary clear drinking glass containing a freshly blended light warm beige shake, smooth thick but drinkable texture, realistically made only from these ingredients: 1/4 cup cold milk; 1 cup vanilla ice cream; 1 tablespoon creamy peanut butter. Finished blended drink, all mix-ins finely blended into the drink, not layered. Full glass visible, centered large and comfortably framed with generous margins for portrait card cropping. Camera slightly above rim height. Plain home kitchen counter, softly blurred neutral kitchen, natural window light, appetizing and honest homemade appearance. No toppings, no whipped cream, no garnish, no fruit pieces on rim, no extra food, no text, no logo, no packaging, no hands, no collage. Square image.",
+          "generation_method": "built-in image_gen",
+          "changes": "Proportional resize and JPEG compression for mobile delivery."
+        },
+        "photo_review": {
+          "status": "visually-reviewed",
+          "reviewed_on": "2026-09-14",
+          "notes": "Warm beige peanut butter shake with creamy blended texture; no nuts or garnish added."
+        }
+      }
+    },
+    {
+      "title": "Chocolate Peanut Butter Milkshake",
+      "description": "Chocolate ice cream and peanut butter make an easy dessert for one.",
+      "ingredients_list": [
+        "1/4 cup cold milk",
+        "1 cup chocolate ice cream",
+        "1 tablespoon creamy peanut butter"
+      ],
+      "recipe_steps": [
+        "Measure the milk into a blender. Let the ice cream stand for 2 minutes so it is easy to scoop.",
+        "Add the ice cream and the remaining measured ingredients. Cover and blend in short bursts until the mixture is smooth and pourable.",
+        "Turn off the blender before scraping down the sides if needed. Pour into one glass and enjoy right away."
+      ],
+      "meal_time": [
+        "dessert",
+        "snack"
+      ],
+      "prep_time_mins": 5,
+      "effort_score": 1,
+      "servings": 1,
+      "tags": [
+        "shake",
+        "smoothies-and-shakes",
+        "quick",
+        "easy",
+        "treat-cold"
+      ],
+      "image_url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/chocolate-peanut-butter-milkshake-a95b33007425.jpg",
+      "shopping_list": [
+        "1/4 cup cold milk",
+        "1 cup chocolate ice cream",
+        "1 tablespoon creamy peanut butter"
+      ],
+      "cuisine": "American",
+      "user_id": null,
+      "is_user_created": false,
+      "source_url": null,
+      "source_name": null,
+      "review": {
+        "source_kind": "original",
+        "adaptation": "Original ingredient quantities and instructions for a familiar home-blended drink; no publisher recipe text copied.",
+        "audience_evidence": "One serving, everyday grocery ingredients, one blender, 5 minutes, no powders or specialty equipment.",
+        "duplicate_review": "No smoothie or shake found among the 269 existing shared recipes; distinct flavor and ingredient combination within this 24-drink batch.",
+        "active_time_mins": 5,
+        "equipment": [
+          "blender",
+          "measuring cups",
+          "measuring spoons"
+        ],
+        "photo": {
+          "kind": "generated",
+          "file": "assets/recipe-photos/chocolate-peanut-butter-milkshake-a95b33007425.jpg",
+          "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/chocolate-peanut-butter-milkshake-a95b33007425.jpg",
+          "sha256": "a95b330074257f885348367014abebaa35c3811b62f3cebc34d8430a06a5712c",
+          "bytes": 83684,
+          "width": 900,
+          "height": 900,
+          "creator": "OpenAI image generation for Mealsolved",
+          "credit": "AI-generated serving illustration. Actual results may vary.",
+          "prompt": "Original photorealistic food photograph for a mobile recipe app. Chocolate Peanut Butter Milkshake: ONE ordinary clear drinking glass containing a freshly blended light chocolate brown shake, smooth thick but drinkable texture, realistically made only from these ingredients: 1/4 cup cold milk; 1 cup chocolate ice cream; 1 tablespoon creamy peanut butter. Finished blended drink, all mix-ins finely blended into the drink, not layered. Full glass visible, centered large and comfortably framed with generous margins for portrait card cropping. Camera slightly above rim height. Plain home kitchen counter, softly blurred neutral kitchen, natural window light, appetizing and honest homemade appearance. No toppings, no whipped cream, no garnish, no fruit pieces on rim, no extra food, no text, no logo, no packaging, no hands, no collage. Square image.",
+          "generation_method": "built-in image_gen",
+          "changes": "Proportional resize and JPEG compression for mobile delivery."
+        },
+        "photo_review": {
+          "status": "visually-reviewed",
+          "reviewed_on": "2026-09-14",
+          "notes": "Chocolate peanut butter shake shown as smooth light chocolate brown, no extra syrup or toppings."
+        }
+      }
+    },
+    {
+      "title": "Banana Vanilla Milkshake",
+      "description": "Half a ripe banana adds sweetness and a soft banana flavor to vanilla ice cream.",
+      "ingredients_list": [
+        "1/4 cup cold milk",
+        "1 cup vanilla ice cream",
+        "1/2 medium ripe banana, peeled and sliced"
+      ],
+      "recipe_steps": [
+        "Measure the milk into a blender. Let the ice cream stand for 2 minutes so it is easy to scoop.",
+        "Add the ice cream and the remaining measured ingredients. Cover and blend in short bursts until the mixture is smooth and pourable.",
+        "Turn off the blender before scraping down the sides if needed. Pour into one glass and enjoy right away."
+      ],
+      "meal_time": [
+        "dessert",
+        "snack"
+      ],
+      "prep_time_mins": 5,
+      "effort_score": 1,
+      "servings": 1,
+      "tags": [
+        "shake",
+        "smoothies-and-shakes",
+        "quick",
+        "easy",
+        "treat-cold"
+      ],
+      "image_url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/banana-vanilla-milkshake-7b6cf2a3fe20.jpg",
+      "shopping_list": [
+        "1/4 cup cold milk",
+        "1 cup vanilla ice cream",
+        "1/2 medium ripe banana, peeled and sliced"
+      ],
+      "cuisine": "American",
+      "user_id": null,
+      "is_user_created": false,
+      "source_url": null,
+      "source_name": null,
+      "review": {
+        "source_kind": "original",
+        "adaptation": "Original ingredient quantities and instructions for a familiar home-blended drink; no publisher recipe text copied.",
+        "audience_evidence": "One serving, everyday grocery ingredients, one blender, 5 minutes, no powders or specialty equipment.",
+        "duplicate_review": "No smoothie or shake found among the 269 existing shared recipes; distinct flavor and ingredient combination within this 24-drink batch.",
+        "active_time_mins": 5,
+        "equipment": [
+          "blender",
+          "measuring cups",
+          "measuring spoons"
+        ],
+        "photo": {
+          "kind": "generated",
+          "file": "assets/recipe-photos/banana-vanilla-milkshake-7b6cf2a3fe20.jpg",
+          "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/banana-vanilla-milkshake-7b6cf2a3fe20.jpg",
+          "sha256": "7b6cf2a3fe204d14a49f7fbcb40f687a5b36c78f52e2f2e8e5cb919afec5ab37",
+          "bytes": 67268,
+          "width": 900,
+          "height": 900,
+          "creator": "OpenAI image generation for Mealsolved",
+          "credit": "AI-generated serving illustration. Actual results may vary.",
+          "prompt": "Original photorealistic food photograph for a mobile recipe app. Banana Vanilla Milkshake: ONE ordinary clear drinking glass containing a freshly blended pale creamy yellow shake, smooth thick but drinkable texture, realistically made only from these ingredients: 1/4 cup cold milk; 1 cup vanilla ice cream; 1/2 medium ripe banana, peeled and sliced. Finished blended drink, all mix-ins finely blended into the drink, not layered. Full glass visible, centered large and comfortably framed with generous margins for portrait card cropping. Camera slightly above rim height. Plain home kitchen counter, softly blurred neutral kitchen, natural window light, appetizing and honest homemade appearance. No toppings, no whipped cream, no garnish, no fruit pieces on rim, no extra food, no text, no logo, no packaging, no hands, no collage. Square image.",
+          "generation_method": "built-in image_gen",
+          "changes": "Proportional resize and JPEG compression for mobile delivery."
+        },
+        "photo_review": {
+          "status": "visually-reviewed",
+          "reviewed_on": "2026-09-14",
+          "notes": "Pale banana-yellow creamy shake; blended banana rather than visible unlisted garnish."
+        }
+      }
+    },
+    {
+      "title": "Caramel Milkshake",
+      "description": "Use a little caramel topping for a simple diner-style shake at home.",
+      "ingredients_list": [
+        "1/4 cup cold milk",
+        "1 cup vanilla ice cream",
+        "1 tablespoon caramel ice cream topping"
+      ],
+      "recipe_steps": [
+        "Measure the milk into a blender. Let the ice cream stand for 2 minutes so it is easy to scoop.",
+        "Add the ice cream and the remaining measured ingredients. Cover and blend in short bursts until the mixture is smooth and pourable.",
+        "Turn off the blender before scraping down the sides if needed. Pour into one glass and enjoy right away."
+      ],
+      "meal_time": [
+        "dessert",
+        "snack"
+      ],
+      "prep_time_mins": 5,
+      "effort_score": 1,
+      "servings": 1,
+      "tags": [
+        "shake",
+        "smoothies-and-shakes",
+        "quick",
+        "easy",
+        "treat-cold"
+      ],
+      "image_url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/caramel-milkshake-79c05db643a3.jpg",
+      "shopping_list": [
+        "1/4 cup cold milk",
+        "1 cup vanilla ice cream",
+        "1 tablespoon caramel ice cream topping"
+      ],
+      "cuisine": "American",
+      "user_id": null,
+      "is_user_created": false,
+      "source_url": null,
+      "source_name": null,
+      "review": {
+        "source_kind": "original",
+        "adaptation": "Original ingredient quantities and instructions for a familiar home-blended drink; no publisher recipe text copied.",
+        "audience_evidence": "One serving, everyday grocery ingredients, one blender, 5 minutes, no powders or specialty equipment.",
+        "duplicate_review": "No smoothie or shake found among the 269 existing shared recipes; distinct flavor and ingredient combination within this 24-drink batch.",
+        "active_time_mins": 5,
+        "equipment": [
+          "blender",
+          "measuring cups",
+          "measuring spoons"
+        ],
+        "photo": {
+          "kind": "generated",
+          "file": "assets/recipe-photos/caramel-milkshake-79c05db643a3.jpg",
+          "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/caramel-milkshake-79c05db643a3.jpg",
+          "sha256": "79c05db643a32beaf7582532cddc767891895540c3ce94cc2b9bb68e44161d98",
+          "bytes": 69406,
+          "width": 900,
+          "height": 900,
+          "creator": "OpenAI image generation for Mealsolved",
+          "credit": "AI-generated serving illustration. Actual results may vary.",
+          "prompt": "Original photorealistic food photograph for a mobile recipe app. Caramel Milkshake: ONE ordinary clear drinking glass containing a freshly blended pale golden beige shake, smooth thick but drinkable texture, realistically made only from these ingredients: 1/4 cup cold milk; 1 cup vanilla ice cream; 1 tablespoon caramel ice cream topping. Finished blended drink, all mix-ins finely blended into the drink, not layered. Full glass visible, centered large and comfortably framed with generous margins for portrait card cropping. Camera slightly above rim height. Plain home kitchen counter, softly blurred neutral kitchen, natural window light, appetizing and honest homemade appearance. No toppings, no whipped cream, no garnish, no fruit pieces on rim, no extra food, no text, no logo, no packaging, no hands, no collage. Square image.",
+          "generation_method": "built-in image_gen",
+          "changes": "Proportional resize and JPEG compression for mobile delivery."
+        },
+        "photo_review": {
+          "status": "visually-reviewed",
+          "reviewed_on": "2026-09-14",
+          "notes": "Golden beige caramel shake, thick blended appearance with no topping or decorative sauce."
+        }
+      }
+    },
+    {
+      "title": "Coffee Vanilla Milkshake",
+      "description": "Instant coffee gives a vanilla shake a coffee-shop flavor without brewing a pot. Contains caffeine.",
+      "ingredients_list": [
+        "1/4 cup cold milk",
+        "1 cup vanilla ice cream",
+        "1 teaspoon instant coffee granules"
+      ],
+      "recipe_steps": [
+        "Stir the instant coffee into the cold milk until dissolved. Pour into a blender. Let the ice cream stand for 2 minutes so it is easy to scoop.",
+        "Add the ice cream and the remaining measured ingredients. Cover and blend in short bursts until the mixture is smooth and pourable.",
+        "Turn off the blender before scraping down the sides if needed. Pour into one glass and enjoy right away."
+      ],
+      "meal_time": [
+        "dessert",
+        "snack"
+      ],
+      "prep_time_mins": 5,
+      "effort_score": 1,
+      "servings": 1,
+      "tags": [
+        "shake",
+        "smoothies-and-shakes",
+        "quick",
+        "easy",
+        "treat-cold"
+      ],
+      "image_url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/coffee-vanilla-milkshake-569dbb733565.jpg",
+      "shopping_list": [
+        "1/4 cup cold milk",
+        "1 cup vanilla ice cream",
+        "1 teaspoon instant coffee granules"
+      ],
+      "cuisine": "American",
+      "user_id": null,
+      "is_user_created": false,
+      "source_url": null,
+      "source_name": null,
+      "review": {
+        "source_kind": "original",
+        "adaptation": "Original ingredient quantities and instructions for a familiar home-blended drink; no publisher recipe text copied.",
+        "audience_evidence": "One serving, everyday grocery ingredients, one blender, 5 minutes, no powders or specialty equipment.",
+        "duplicate_review": "No smoothie or shake found among the 269 existing shared recipes; distinct flavor and ingredient combination within this 24-drink batch.",
+        "active_time_mins": 5,
+        "equipment": [
+          "blender",
+          "measuring cups",
+          "measuring spoons"
+        ],
+        "photo": {
+          "kind": "generated",
+          "file": "assets/recipe-photos/coffee-vanilla-milkshake-569dbb733565.jpg",
+          "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/coffee-vanilla-milkshake-569dbb733565.jpg",
+          "sha256": "569dbb7335656163aa7daaffc82efdac831ceb70bdcbecae5c51e8b651b6e09c",
+          "bytes": 83837,
+          "width": 900,
+          "height": 900,
+          "creator": "OpenAI image generation for Mealsolved",
+          "credit": "AI-generated serving illustration. Actual results may vary.",
+          "prompt": "Original photorealistic food photograph for a mobile recipe app. Coffee Vanilla Milkshake: ONE ordinary clear drinking glass containing a freshly blended light coffee tan shake, smooth thick but drinkable texture, realistically made only from these ingredients: 1/4 cup cold milk; 1 cup vanilla ice cream; 1 teaspoon instant coffee granules. Finished blended drink, all mix-ins finely blended into the drink, not layered. Full glass visible, centered large and comfortably framed with generous margins for portrait card cropping. Camera slightly above rim height. Plain home kitchen counter, softly blurred neutral kitchen, natural window light, appetizing and honest homemade appearance. No toppings, no whipped cream, no garnish, no fruit pieces on rim, no extra food, no text, no logo, no packaging, no hands, no collage. Square image.",
+          "generation_method": "built-in image_gen",
+          "changes": "Proportional resize and JPEG compression for mobile delivery."
+        },
+        "photo_review": {
+          "status": "visually-reviewed",
+          "reviewed_on": "2026-09-14",
+          "notes": "Light coffee-tan blended shake; dissolved coffee appearance with no beans or cream topping."
+        }
+      }
+    },
+    {
+      "title": "Mint Chocolate Chip Milkshake",
+      "description": "A two-ingredient minty shake with little flecks of chocolate.",
+      "ingredients_list": [
+        "1/4 cup cold milk",
+        "1 cup green mint chocolate chip ice cream"
+      ],
+      "recipe_steps": [
+        "Measure the milk into a blender. Let the ice cream stand for 2 minutes so it is easy to scoop.",
+        "Add the ice cream and the remaining measured ingredients. Cover and blend in short bursts until the mixture is smooth and pourable.",
+        "Turn off the blender before scraping down the sides if needed. Pour into one glass and enjoy right away."
+      ],
+      "meal_time": [
+        "dessert",
+        "snack"
+      ],
+      "prep_time_mins": 5,
+      "effort_score": 1,
+      "servings": 1,
+      "tags": [
+        "shake",
+        "smoothies-and-shakes",
+        "quick",
+        "easy",
+        "treat-cold"
+      ],
+      "image_url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/mint-chocolate-chip-milkshake-b9932005924e.jpg",
+      "shopping_list": [
+        "1/4 cup cold milk",
+        "1 cup green mint chocolate chip ice cream"
+      ],
+      "cuisine": "American",
+      "user_id": null,
+      "is_user_created": false,
+      "source_url": null,
+      "source_name": null,
+      "review": {
+        "source_kind": "original",
+        "adaptation": "Original ingredient quantities and instructions for a familiar home-blended drink; no publisher recipe text copied.",
+        "audience_evidence": "One serving, everyday grocery ingredients, one blender, 5 minutes, no powders or specialty equipment.",
+        "duplicate_review": "No smoothie or shake found among the 269 existing shared recipes; distinct flavor and ingredient combination within this 24-drink batch.",
+        "active_time_mins": 5,
+        "equipment": [
+          "blender",
+          "measuring cups",
+          "measuring spoons"
+        ],
+        "photo": {
+          "kind": "generated",
+          "file": "assets/recipe-photos/mint-chocolate-chip-milkshake-b9932005924e.jpg",
+          "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/mint-chocolate-chip-milkshake-b9932005924e.jpg",
+          "sha256": "b9932005924eb92aab3719f53b0e09cddc845341b559adefa193642cb70065c7",
+          "bytes": 80061,
+          "width": 900,
+          "height": 900,
+          "creator": "OpenAI image generation for Mealsolved",
+          "credit": "AI-generated serving illustration. Actual results may vary.",
+          "prompt": "Original photorealistic food photograph for a mobile recipe app. Mint Chocolate Chip Milkshake: ONE ordinary clear drinking glass containing a freshly blended pale mint green with small dark chocolate flecks shake, smooth thick but drinkable texture, realistically made only from these ingredients: 1/4 cup cold milk; 1 cup green mint chocolate chip ice cream. Finished blended drink, all mix-ins finely blended into the drink, not layered. Full glass visible, centered large and comfortably framed with generous margins for portrait card cropping. Camera slightly above rim height. Plain home kitchen counter, softly blurred neutral kitchen, natural window light, appetizing and honest homemade appearance. No toppings, no whipped cream, no garnish, no fruit pieces on rim, no extra food, no text, no logo, no packaging, no hands, no collage. Square image.",
+          "generation_method": "built-in image_gen",
+          "changes": "Proportional resize and JPEG compression for mobile delivery."
+        },
+        "photo_review": {
+          "status": "visually-reviewed",
+          "reviewed_on": "2026-09-14",
+          "notes": "Pale green mint shake with small dispersed chocolate flakes; matches green mint chocolate chip ice cream."
+        }
+      }
+    },
+    {
+      "title": "Brownie Bite Milkshake",
+      "description": "A ready-made brownie turns vanilla ice cream into an easy chocolate dessert.",
+      "ingredients_list": [
+        "1/4 cup cold milk",
+        "1 cup vanilla ice cream",
+        "1 small ready-to-eat brownie (about 1 ounce), crumbled"
+      ],
+      "recipe_steps": [
+        "Measure the milk into a blender. Let the ice cream stand for 2 minutes so it is easy to scoop.",
+        "Add the ice cream and the remaining measured ingredients. Cover and blend in short bursts until the mixture is smooth and pourable.",
+        "Turn off the blender before scraping down the sides if needed. Pour into one glass and enjoy right away."
+      ],
+      "meal_time": [
+        "dessert",
+        "snack"
+      ],
+      "prep_time_mins": 5,
+      "effort_score": 1,
+      "servings": 1,
+      "tags": [
+        "shake",
+        "smoothies-and-shakes",
+        "quick",
+        "easy",
+        "treat-cold"
+      ],
+      "image_url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/brownie-bite-milkshake-1c4661b61965.jpg",
+      "shopping_list": [
+        "1/4 cup cold milk",
+        "1 cup vanilla ice cream",
+        "1 small ready-to-eat brownie (about 1 ounce), crumbled"
+      ],
+      "cuisine": "American",
+      "user_id": null,
+      "is_user_created": false,
+      "source_url": null,
+      "source_name": null,
+      "review": {
+        "source_kind": "original",
+        "adaptation": "Original ingredient quantities and instructions for a familiar home-blended drink; no publisher recipe text copied.",
+        "audience_evidence": "One serving, everyday grocery ingredients, one blender, 5 minutes, no powders or specialty equipment.",
+        "duplicate_review": "No smoothie or shake found among the 269 existing shared recipes; distinct flavor and ingredient combination within this 24-drink batch.",
+        "active_time_mins": 5,
+        "equipment": [
+          "blender",
+          "measuring cups",
+          "measuring spoons"
+        ],
+        "photo": {
+          "kind": "generated",
+          "file": "assets/recipe-photos/brownie-bite-milkshake-1c4661b61965.jpg",
+          "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/brownie-bite-milkshake-1c4661b61965.jpg",
+          "sha256": "1c4661b6196596167e29d22cf8cec3eebc2978955790a03541e88dc3baa7518a",
+          "bytes": 75516,
+          "width": 900,
+          "height": 900,
+          "creator": "OpenAI image generation for Mealsolved",
+          "credit": "AI-generated serving illustration. Actual results may vary.",
+          "prompt": "Original photorealistic food photograph for a mobile recipe app. Brownie Bite Milkshake: ONE ordinary clear drinking glass containing a freshly blended light cocoa tan with tiny dark brownie crumbs shake, smooth thick but drinkable texture, realistically made only from these ingredients: 1/4 cup cold milk; 1 cup vanilla ice cream; 1 small ready-to-eat brownie (about 1 ounce), crumbled. Finished blended drink, all mix-ins finely blended into the drink, not layered. Full glass visible, centered large and comfortably framed with generous margins for portrait card cropping. Camera slightly above rim height. Plain home kitchen counter, softly blurred neutral kitchen, natural window light, appetizing and honest homemade appearance. No toppings, no whipped cream, no garnish, no fruit pieces on rim, no extra food, no text, no logo, no packaging, no hands, no collage. Square image.",
+          "generation_method": "built-in image_gen",
+          "changes": "Proportional resize and JPEG compression for mobile delivery."
+        },
+        "photo_review": {
+          "status": "visually-reviewed",
+          "reviewed_on": "2026-09-14",
+          "notes": "Light brown brownie shake with fine dark brownie crumbs visible, no raw batter or added toppings."
+        }
+      }
+    },
+    {
+      "title": "Orange Cream Milkshake",
+      "description": "Frozen orange juice concentrate gives vanilla ice cream a bright orange-cream flavor.",
+      "ingredients_list": [
+        "1/4 cup cold milk",
+        "1 cup vanilla ice cream",
+        "1 tablespoon frozen orange juice concentrate"
+      ],
+      "recipe_steps": [
+        "Measure the milk into a blender. Let the ice cream stand for 2 minutes so it is easy to scoop.",
+        "Add the ice cream and the remaining measured ingredients. Cover and blend in short bursts until the mixture is smooth and pourable.",
+        "Turn off the blender before scraping down the sides if needed. Pour into one glass and enjoy right away."
+      ],
+      "meal_time": [
+        "dessert",
+        "snack"
+      ],
+      "prep_time_mins": 5,
+      "effort_score": 1,
+      "servings": 1,
+      "tags": [
+        "shake",
+        "smoothies-and-shakes",
+        "quick",
+        "easy",
+        "treat-cold"
+      ],
+      "image_url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/orange-cream-milkshake-326d9217cbf1.jpg",
+      "shopping_list": [
+        "1/4 cup cold milk",
+        "1 cup vanilla ice cream",
+        "1 tablespoon frozen orange juice concentrate"
+      ],
+      "cuisine": "American",
+      "user_id": null,
+      "is_user_created": false,
+      "source_url": null,
+      "source_name": null,
+      "review": {
+        "source_kind": "original",
+        "adaptation": "Original ingredient quantities and instructions for a familiar home-blended drink; no publisher recipe text copied.",
+        "audience_evidence": "One serving, everyday grocery ingredients, one blender, 5 minutes, no powders or specialty equipment.",
+        "duplicate_review": "No smoothie or shake found among the 269 existing shared recipes; distinct flavor and ingredient combination within this 24-drink batch.",
+        "active_time_mins": 5,
+        "equipment": [
+          "blender",
+          "measuring cups",
+          "measuring spoons"
+        ],
+        "photo": {
+          "kind": "generated",
+          "file": "assets/recipe-photos/orange-cream-milkshake-326d9217cbf1.jpg",
+          "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/orange-cream-milkshake-326d9217cbf1.jpg",
+          "sha256": "326d9217cbf1d804c64df165ca72dff57b7e6045b7f124bd949a6402b75855c4",
+          "bytes": 75049,
+          "width": 900,
+          "height": 900,
+          "creator": "OpenAI image generation for Mealsolved",
+          "credit": "AI-generated serving illustration. Actual results may vary.",
+          "prompt": "Original photorealistic food photograph for a mobile recipe app. Orange Cream Milkshake: ONE ordinary clear drinking glass containing a freshly blended pale orange cream shake, smooth thick but drinkable texture, realistically made only from these ingredients: 1/4 cup cold milk; 1 cup vanilla ice cream; 1 tablespoon frozen orange juice concentrate. Finished blended drink, all mix-ins finely blended into the drink, not layered. Full glass visible, centered large and comfortably framed with generous margins for portrait card cropping. Camera slightly above rim height. Plain home kitchen counter, softly blurred neutral kitchen, natural window light, appetizing and honest homemade appearance. No toppings, no whipped cream, no garnish, no fruit pieces on rim, no extra food, no text, no logo, no packaging, no hands, no collage. Square image.",
+          "generation_method": "built-in image_gen",
+          "changes": "Proportional resize and JPEG compression for mobile delivery."
+        },
+        "photo_review": {
+          "status": "visually-reviewed",
+          "reviewed_on": "2026-09-14",
+          "notes": "Pale orange creamy shake, blended orange concentrate appearance and plain single glass."
+        }
+      }
+    },
+    {
+      "title": "Strawberry Banana Smoothie",
+      "description": "An easy berry-and-banana blend using frozen strawberries and plain yogurt.",
+      "ingredients_list": [
+        "1/2 cup cold milk",
+        "1/4 cup plain yogurt",
+        "1 cup frozen sliced strawberries",
+        "1/2 medium ripe banana, peeled and sliced"
+      ],
+      "recipe_steps": [
+        "Measure the liquid into a blender, then add the yogurt or other soft ingredients if listed.",
+        "Add the fruit and all remaining measured ingredients. Cover and blend until smooth, about 45 to 60 seconds.",
+        "If the mixture stops moving, turn off the blender and scrape down the sides before blending again. Pour into one large glass and serve right away."
+      ],
+      "meal_time": [
+        "breakfast",
+        "snack"
+      ],
+      "prep_time_mins": 5,
+      "effort_score": 1,
+      "servings": 1,
+      "tags": [
+        "smoothie",
+        "smoothies-and-shakes",
+        "quick",
+        "easy"
+      ],
+      "image_url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/strawberry-banana-smoothie-49109ae1202b.jpg",
+      "shopping_list": [
+        "1/2 cup cold milk",
+        "1/4 cup plain yogurt",
+        "1 cup frozen sliced strawberries",
+        "1/2 medium ripe banana, peeled and sliced"
+      ],
+      "cuisine": "American",
+      "user_id": null,
+      "is_user_created": false,
+      "source_url": null,
+      "source_name": null,
+      "review": {
+        "source_kind": "original",
+        "adaptation": "Original ingredient quantities and instructions for a familiar home-blended drink; no publisher recipe text copied.",
+        "audience_evidence": "One serving, everyday grocery ingredients, one blender, 5 minutes, no powders or specialty equipment.",
+        "duplicate_review": "No smoothie or shake found among the 269 existing shared recipes; distinct flavor and ingredient combination within this 24-drink batch.",
+        "active_time_mins": 5,
+        "equipment": [
+          "blender",
+          "measuring cups",
+          "measuring spoons"
+        ],
+        "photo": {
+          "kind": "generated",
+          "file": "assets/recipe-photos/strawberry-banana-smoothie-49109ae1202b.jpg",
+          "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/strawberry-banana-smoothie-49109ae1202b.jpg",
+          "sha256": "49109ae1202ba8290a692e5511824d6a09db7f7555bae5f167c7445108dfda99",
+          "bytes": 74207,
+          "width": 900,
+          "height": 900,
+          "creator": "OpenAI image generation for Mealsolved",
+          "credit": "AI-generated serving illustration. Actual results may vary.",
+          "prompt": "Original photorealistic food photograph for a mobile recipe app. Strawberry Banana Smoothie: ONE ordinary clear drinking glass containing a freshly blended rosy strawberry pink smoothie, smooth thick but drinkable texture, realistically made only from these ingredients: 1/2 cup cold milk; 1/4 cup plain yogurt; 1 cup frozen sliced strawberries; 1/2 medium ripe banana, peeled and sliced. Finished blended drink, all mix-ins finely blended into the drink, not layered. Full glass visible, centered large and comfortably framed with generous margins for portrait card cropping. Camera slightly above rim height. Plain home kitchen counter, softly blurred neutral kitchen, natural window light, appetizing and honest homemade appearance. No toppings, no whipped cream, no garnish, no fruit pieces on rim, no extra food, no text, no logo, no packaging, no hands, no collage. Square image.",
+          "generation_method": "built-in image_gen",
+          "changes": "Proportional resize and JPEG compression for mobile delivery."
+        },
+        "photo_review": {
+          "status": "visually-reviewed",
+          "reviewed_on": "2026-09-14",
+          "notes": "Rosy strawberry-banana smoothie with fine berry flecks, thicker fruit texture, no decorative garnish."
+        }
+      }
+    },
+    {
+      "title": "Mango Banana Smoothie",
+      "description": "Frozen mango and orange juice make a bright, simple fruit smoothie.",
+      "ingredients_list": [
+        "1/2 cup orange juice",
+        "1 cup frozen mango chunks",
+        "1/2 medium ripe banana, peeled and sliced"
+      ],
+      "recipe_steps": [
+        "Measure the liquid into a blender, then add the yogurt or other soft ingredients if listed.",
+        "Add the fruit and all remaining measured ingredients. Cover and blend until smooth, about 45 to 60 seconds.",
+        "If the mixture stops moving, turn off the blender and scrape down the sides before blending again. Pour into one large glass and serve right away."
+      ],
+      "meal_time": [
+        "breakfast",
+        "snack"
+      ],
+      "prep_time_mins": 5,
+      "effort_score": 1,
+      "servings": 1,
+      "tags": [
+        "smoothie",
+        "smoothies-and-shakes",
+        "quick",
+        "easy"
+      ],
+      "image_url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/mango-banana-smoothie-65e350c0343c.jpg",
+      "shopping_list": [
+        "1/2 cup orange juice",
+        "1 cup frozen mango chunks",
+        "1/2 medium ripe banana, peeled and sliced"
+      ],
+      "cuisine": "American",
+      "user_id": null,
+      "is_user_created": false,
+      "source_url": null,
+      "source_name": null,
+      "review": {
+        "source_kind": "original",
+        "adaptation": "Original ingredient quantities and instructions for a familiar home-blended drink; no publisher recipe text copied.",
+        "audience_evidence": "One serving, everyday grocery ingredients, one blender, 5 minutes, no powders or specialty equipment.",
+        "duplicate_review": "No smoothie or shake found among the 269 existing shared recipes; distinct flavor and ingredient combination within this 24-drink batch.",
+        "active_time_mins": 5,
+        "equipment": [
+          "blender",
+          "measuring cups",
+          "measuring spoons"
+        ],
+        "photo": {
+          "kind": "generated",
+          "file": "assets/recipe-photos/mango-banana-smoothie-65e350c0343c.jpg",
+          "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/mango-banana-smoothie-65e350c0343c.jpg",
+          "sha256": "65e350c0343c68fef2c6c6f69a67c5a443c0b9c629b68513c7851d9e42e5df41",
+          "bytes": 67089,
+          "width": 900,
+          "height": 900,
+          "creator": "OpenAI image generation for Mealsolved",
+          "credit": "AI-generated serving illustration. Actual results may vary.",
+          "prompt": "Original photorealistic food photograph for a mobile recipe app. Mango Banana Smoothie: ONE ordinary clear drinking glass containing a freshly blended rich golden yellow-orange smoothie, smooth thick but drinkable texture, realistically made only from these ingredients: 1/2 cup orange juice; 1 cup frozen mango chunks; 1/2 medium ripe banana, peeled and sliced. Finished blended drink, all mix-ins finely blended into the drink, not layered. Full glass visible, centered large and comfortably framed with generous margins for portrait card cropping. Camera slightly above rim height. Plain home kitchen counter, softly blurred neutral kitchen, natural window light, appetizing and honest homemade appearance. No toppings, no whipped cream, no garnish, no fruit pieces on rim, no extra food, no text, no logo, no packaging, no hands, no collage. Square image.",
+          "generation_method": "built-in image_gen",
+          "changes": "Proportional resize and JPEG compression for mobile delivery."
+        },
+        "photo_review": {
+          "status": "visually-reviewed",
+          "reviewed_on": "2026-09-14",
+          "notes": "Rich golden mango-banana blend, smooth pulpy texture, matching orange juice and mango ingredients."
+        }
+      }
+    },
+    {
+      "title": "Blueberry Yogurt Smoothie",
+      "description": "Blueberries and yogurt blend into a creamy purple smoothie with a little banana for sweetness.",
+      "ingredients_list": [
+        "1/2 cup cold milk",
+        "1/4 cup plain yogurt",
+        "3/4 cup frozen blueberries",
+        "1/2 medium ripe banana, peeled and sliced"
+      ],
+      "recipe_steps": [
+        "Measure the liquid into a blender, then add the yogurt or other soft ingredients if listed.",
+        "Add the fruit and all remaining measured ingredients. Cover and blend until smooth, about 45 to 60 seconds.",
+        "If the mixture stops moving, turn off the blender and scrape down the sides before blending again. Pour into one large glass and serve right away."
+      ],
+      "meal_time": [
+        "breakfast",
+        "snack"
+      ],
+      "prep_time_mins": 5,
+      "effort_score": 1,
+      "servings": 1,
+      "tags": [
+        "smoothie",
+        "smoothies-and-shakes",
+        "quick",
+        "easy"
+      ],
+      "image_url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/blueberry-yogurt-smoothie-35d0f97bcb91.jpg",
+      "shopping_list": [
+        "1/2 cup cold milk",
+        "1/4 cup plain yogurt",
+        "3/4 cup frozen blueberries",
+        "1/2 medium ripe banana, peeled and sliced"
+      ],
+      "cuisine": "American",
+      "user_id": null,
+      "is_user_created": false,
+      "source_url": null,
+      "source_name": null,
+      "review": {
+        "source_kind": "original",
+        "adaptation": "Original ingredient quantities and instructions for a familiar home-blended drink; no publisher recipe text copied.",
+        "audience_evidence": "One serving, everyday grocery ingredients, one blender, 5 minutes, no powders or specialty equipment.",
+        "duplicate_review": "No smoothie or shake found among the 269 existing shared recipes; distinct flavor and ingredient combination within this 24-drink batch.",
+        "active_time_mins": 5,
+        "equipment": [
+          "blender",
+          "measuring cups",
+          "measuring spoons"
+        ],
+        "photo": {
+          "kind": "generated",
+          "file": "assets/recipe-photos/blueberry-yogurt-smoothie-35d0f97bcb91.jpg",
+          "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/blueberry-yogurt-smoothie-35d0f97bcb91.jpg",
+          "sha256": "35d0f97bcb915f5c679b43385be04efa8b6faf8257d52fd34ac148495a7e95c8",
+          "bytes": 100117,
+          "width": 900,
+          "height": 900,
+          "creator": "OpenAI image generation for Mealsolved",
+          "credit": "AI-generated serving illustration. Actual results may vary.",
+          "prompt": "Original photorealistic food photograph for a mobile recipe app. Blueberry Yogurt Smoothie: ONE ordinary clear drinking glass containing a freshly blended deep lavender purple with tiny blueberry skin specks smoothie, smooth thick but drinkable texture, realistically made only from these ingredients: 1/2 cup cold milk; 1/4 cup plain yogurt; 3/4 cup frozen blueberries; 1/2 medium ripe banana, peeled and sliced. Finished blended drink, all mix-ins finely blended into the drink, not layered. Full glass visible, centered large and comfortably framed with generous margins for portrait card cropping. Camera slightly above rim height. Plain home kitchen counter, softly blurred neutral kitchen, natural window light, appetizing and honest homemade appearance. No toppings, no whipped cream, no garnish, no fruit pieces on rim, no extra food, no text, no logo, no packaging, no hands, no collage. Square image.",
+          "generation_method": "built-in image_gen",
+          "changes": "Proportional resize and JPEG compression for mobile delivery."
+        },
+        "photo_review": {
+          "status": "visually-reviewed",
+          "reviewed_on": "2026-09-14",
+          "notes": "Purple blueberry yogurt smoothie with dark blueberry skin flecks, appropriate creamy texture."
+        }
+      }
+    },
+    {
+      "title": "Mixed Berry Smoothie",
+      "description": "A bag of mixed berries makes this fruity smoothie easy to keep on hand.",
+      "ingredients_list": [
+        "3/4 cup apple juice",
+        "1/4 cup plain yogurt",
+        "1 cup frozen mixed berries"
+      ],
+      "recipe_steps": [
+        "Measure the liquid into a blender, then add the yogurt or other soft ingredients if listed.",
+        "Add the fruit and all remaining measured ingredients. Cover and blend until smooth, about 45 to 60 seconds.",
+        "If the mixture stops moving, turn off the blender and scrape down the sides before blending again. Pour into one large glass and serve right away."
+      ],
+      "meal_time": [
+        "breakfast",
+        "snack"
+      ],
+      "prep_time_mins": 5,
+      "effort_score": 1,
+      "servings": 1,
+      "tags": [
+        "smoothie",
+        "smoothies-and-shakes",
+        "quick",
+        "easy"
+      ],
+      "image_url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/mixed-berry-smoothie-ad93bc392fbb.jpg",
+      "shopping_list": [
+        "3/4 cup apple juice",
+        "1/4 cup plain yogurt",
+        "1 cup frozen mixed berries"
+      ],
+      "cuisine": "American",
+      "user_id": null,
+      "is_user_created": false,
+      "source_url": null,
+      "source_name": null,
+      "review": {
+        "source_kind": "original",
+        "adaptation": "Original ingredient quantities and instructions for a familiar home-blended drink; no publisher recipe text copied.",
+        "audience_evidence": "One serving, everyday grocery ingredients, one blender, 5 minutes, no powders or specialty equipment.",
+        "duplicate_review": "No smoothie or shake found among the 269 existing shared recipes; distinct flavor and ingredient combination within this 24-drink batch.",
+        "active_time_mins": 5,
+        "equipment": [
+          "blender",
+          "measuring cups",
+          "measuring spoons"
+        ],
+        "photo": {
+          "kind": "generated",
+          "file": "assets/recipe-photos/mixed-berry-smoothie-ad93bc392fbb.jpg",
+          "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/mixed-berry-smoothie-ad93bc392fbb.jpg",
+          "sha256": "ad93bc392fbba684eac72cc49627fd8d2848a2dab6596331d5885e14997c67d0",
+          "bytes": 84701,
+          "width": 900,
+          "height": 900,
+          "creator": "OpenAI image generation for Mealsolved",
+          "credit": "AI-generated serving illustration. Actual results may vary.",
+          "prompt": "Original photorealistic food photograph for a mobile recipe app. Mixed Berry Smoothie: ONE ordinary clear drinking glass containing a freshly blended deep raspberry purple with fine berry seeds smoothie, smooth thick but drinkable texture, realistically made only from these ingredients: 3/4 cup apple juice; 1/4 cup plain yogurt; 1 cup frozen mixed berries. Finished blended drink, all mix-ins finely blended into the drink, not layered. Full glass visible, centered large and comfortably framed with generous margins for portrait card cropping. Camera slightly above rim height. Plain home kitchen counter, softly blurred neutral kitchen, natural window light, appetizing and honest homemade appearance. No toppings, no whipped cream, no garnish, no fruit pieces on rim, no extra food, no text, no logo, no packaging, no hands, no collage. Square image.",
+          "generation_method": "built-in image_gen",
+          "changes": "Proportional resize and JPEG compression for mobile delivery."
+        },
+        "photo_review": {
+          "status": "visually-reviewed",
+          "reviewed_on": "2026-09-14",
+          "notes": "Deep berry-red smoothie with small seed and skin flecks, matching mixed berries and apple juice."
+        }
+      }
+    },
+    {
+      "title": "Pineapple Banana Smoothie",
+      "description": "A bright pineapple-and-banana drink made with three everyday ingredients.",
+      "ingredients_list": [
+        "1/2 cup orange juice",
+        "1 cup frozen pineapple chunks",
+        "1/2 medium ripe banana, peeled and sliced"
+      ],
+      "recipe_steps": [
+        "Measure the liquid into a blender, then add the yogurt or other soft ingredients if listed.",
+        "Add the fruit and all remaining measured ingredients. Cover and blend until smooth, about 45 to 60 seconds.",
+        "If the mixture stops moving, turn off the blender and scrape down the sides before blending again. Pour into one large glass and serve right away."
+      ],
+      "meal_time": [
+        "breakfast",
+        "snack"
+      ],
+      "prep_time_mins": 5,
+      "effort_score": 1,
+      "servings": 1,
+      "tags": [
+        "smoothie",
+        "smoothies-and-shakes",
+        "quick",
+        "easy"
+      ],
+      "image_url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/pineapple-banana-smoothie-15c286dbe214.jpg",
+      "shopping_list": [
+        "1/2 cup orange juice",
+        "1 cup frozen pineapple chunks",
+        "1/2 medium ripe banana, peeled and sliced"
+      ],
+      "cuisine": "American",
+      "user_id": null,
+      "is_user_created": false,
+      "source_url": null,
+      "source_name": null,
+      "review": {
+        "source_kind": "original",
+        "adaptation": "Original ingredient quantities and instructions for a familiar home-blended drink; no publisher recipe text copied.",
+        "audience_evidence": "One serving, everyday grocery ingredients, one blender, 5 minutes, no powders or specialty equipment.",
+        "duplicate_review": "No smoothie or shake found among the 269 existing shared recipes; distinct flavor and ingredient combination within this 24-drink batch.",
+        "active_time_mins": 5,
+        "equipment": [
+          "blender",
+          "measuring cups",
+          "measuring spoons"
+        ],
+        "photo": {
+          "kind": "generated",
+          "file": "assets/recipe-photos/pineapple-banana-smoothie-15c286dbe214.jpg",
+          "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/pineapple-banana-smoothie-15c286dbe214.jpg",
+          "sha256": "15c286dbe214ac3de10dede2f96194319f5e59576808bb30a73bcb9b26747f76",
+          "bytes": 71558,
+          "width": 900,
+          "height": 900,
+          "creator": "OpenAI image generation for Mealsolved",
+          "credit": "AI-generated serving illustration. Actual results may vary.",
+          "prompt": "Original photorealistic food photograph for a mobile recipe app. Pineapple Banana Smoothie: ONE ordinary clear drinking glass containing a freshly blended sunny light yellow smoothie, smooth thick but drinkable texture, realistically made only from these ingredients: 1/2 cup orange juice; 1 cup frozen pineapple chunks; 1/2 medium ripe banana, peeled and sliced. Finished blended drink, all mix-ins finely blended into the drink, not layered. Full glass visible, centered large and comfortably framed with generous margins for portrait card cropping. Camera slightly above rim height. Plain home kitchen counter, softly blurred neutral kitchen, natural window light, appetizing and honest homemade appearance. No toppings, no whipped cream, no garnish, no fruit pieces on rim, no extra food, no text, no logo, no packaging, no hands, no collage. Square image.",
+          "generation_method": "built-in image_gen",
+          "changes": "Proportional resize and JPEG compression for mobile delivery."
+        },
+        "photo_review": {
+          "status": "visually-reviewed",
+          "reviewed_on": "2026-09-14",
+          "notes": "Yellow pineapple-banana drink with blended fruit texture; single centered glass without added garnish."
+        }
+      }
+    },
+    {
+      "title": "Peach Vanilla Yogurt Smoothie",
+      "description": "Frozen peaches and vanilla yogurt make a creamy smoothie without peeling fresh fruit.",
+      "ingredients_list": [
+        "1/2 cup cold milk",
+        "1/2 cup vanilla yogurt",
+        "1 cup frozen peach slices"
+      ],
+      "recipe_steps": [
+        "Measure the liquid into a blender, then add the yogurt or other soft ingredients if listed.",
+        "Add the fruit and all remaining measured ingredients. Cover and blend until smooth, about 45 to 60 seconds.",
+        "If the mixture stops moving, turn off the blender and scrape down the sides before blending again. Pour into one large glass and serve right away."
+      ],
+      "meal_time": [
+        "breakfast",
+        "snack"
+      ],
+      "prep_time_mins": 5,
+      "effort_score": 1,
+      "servings": 1,
+      "tags": [
+        "smoothie",
+        "smoothies-and-shakes",
+        "quick",
+        "easy"
+      ],
+      "image_url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/peach-vanilla-yogurt-smoothie-86f693c3fdc5.jpg",
+      "shopping_list": [
+        "1/2 cup cold milk",
+        "1/2 cup vanilla yogurt",
+        "1 cup frozen peach slices"
+      ],
+      "cuisine": "American",
+      "user_id": null,
+      "is_user_created": false,
+      "source_url": null,
+      "source_name": null,
+      "review": {
+        "source_kind": "original",
+        "adaptation": "Original ingredient quantities and instructions for a familiar home-blended drink; no publisher recipe text copied.",
+        "audience_evidence": "One serving, everyday grocery ingredients, one blender, 5 minutes, no powders or specialty equipment.",
+        "duplicate_review": "No smoothie or shake found among the 269 existing shared recipes; distinct flavor and ingredient combination within this 24-drink batch.",
+        "active_time_mins": 5,
+        "equipment": [
+          "blender",
+          "measuring cups",
+          "measuring spoons"
+        ],
+        "photo": {
+          "kind": "generated",
+          "file": "assets/recipe-photos/peach-vanilla-yogurt-smoothie-86f693c3fdc5.jpg",
+          "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/peach-vanilla-yogurt-smoothie-86f693c3fdc5.jpg",
+          "sha256": "86f693c3fdc544f252274183826aa679d24eacf95b99011ea43a80aaac85ffe8",
+          "bytes": 67510,
+          "width": 900,
+          "height": 900,
+          "creator": "OpenAI image generation for Mealsolved",
+          "credit": "AI-generated serving illustration. Actual results may vary.",
+          "prompt": "Original photorealistic food photograph for a mobile recipe app. Peach Vanilla Yogurt Smoothie: ONE ordinary clear drinking glass containing a freshly blended soft creamy peach orange smoothie, smooth thick but drinkable texture, realistically made only from these ingredients: 1/2 cup cold milk; 1/2 cup vanilla yogurt; 1 cup frozen peach slices. Finished blended drink, all mix-ins finely blended into the drink, not layered. Full glass visible, centered large and comfortably framed with generous margins for portrait card cropping. Camera slightly above rim height. Plain home kitchen counter, softly blurred neutral kitchen, natural window light, appetizing and honest homemade appearance. No toppings, no whipped cream, no garnish, no fruit pieces on rim, no extra food, no text, no logo, no packaging, no hands, no collage. Square image.",
+          "generation_method": "built-in image_gen",
+          "changes": "Proportional resize and JPEG compression for mobile delivery."
+        },
+        "photo_review": {
+          "status": "visually-reviewed",
+          "reviewed_on": "2026-09-14",
+          "notes": "Creamy peach-orange yogurt smoothie; uniform blended appearance, no fruit chunks or extra toppings."
+        }
+      }
+    },
+    {
+      "title": "Peanut Butter Banana Oat Smoothie",
+      "description": "Banana, peanut butter and quick oats blend into an easy breakfast or snack.",
+      "ingredients_list": [
+        "3/4 cup cold milk",
+        "1 medium ripe banana, peeled and sliced",
+        "2 tablespoons quick oats",
+        "1 tablespoon creamy peanut butter",
+        "1/4 cup ice cubes"
+      ],
+      "recipe_steps": [
+        "Pour the milk into a blender and add the quick oats. Let them soften for 2 minutes while you peel and slice the banana.",
+        "Add the fruit and all remaining measured ingredients. Cover and blend until smooth, about 45 to 60 seconds.",
+        "If the mixture stops moving, turn off the blender and scrape down the sides before blending again. Pour into one large glass and serve right away."
+      ],
+      "meal_time": [
+        "breakfast",
+        "snack"
+      ],
+      "prep_time_mins": 5,
+      "effort_score": 1,
+      "servings": 1,
+      "tags": [
+        "smoothie",
+        "smoothies-and-shakes",
+        "quick",
+        "easy"
+      ],
+      "image_url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/peanut-butter-banana-oat-smoothie-1d903d99c364.jpg",
+      "shopping_list": [
+        "3/4 cup cold milk",
+        "1 medium ripe banana, peeled and sliced",
+        "2 tablespoons quick oats",
+        "1 tablespoon creamy peanut butter",
+        "1/4 cup ice cubes"
+      ],
+      "cuisine": "American",
+      "user_id": null,
+      "is_user_created": false,
+      "source_url": null,
+      "source_name": null,
+      "review": {
+        "source_kind": "original",
+        "adaptation": "Original ingredient quantities and instructions for a familiar home-blended drink; no publisher recipe text copied.",
+        "audience_evidence": "One serving, everyday grocery ingredients, one blender, 5 minutes, no powders or specialty equipment.",
+        "duplicate_review": "No smoothie or shake found among the 269 existing shared recipes; distinct flavor and ingredient combination within this 24-drink batch.",
+        "active_time_mins": 5,
+        "equipment": [
+          "blender",
+          "measuring cups",
+          "measuring spoons"
+        ],
+        "photo": {
+          "kind": "generated",
+          "file": "assets/recipe-photos/peanut-butter-banana-oat-smoothie-1d903d99c364.jpg",
+          "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/peanut-butter-banana-oat-smoothie-1d903d99c364.jpg",
+          "sha256": "1d903d99c3645e95d020f11a20266e8e87b2e28cfc2f2875f8e0ab06565a114b",
+          "bytes": 73859,
+          "width": 900,
+          "height": 900,
+          "creator": "OpenAI image generation for Mealsolved",
+          "credit": "AI-generated serving illustration. Actual results may vary.",
+          "prompt": "Original photorealistic food photograph for a mobile recipe app. Peanut Butter Banana Oat Smoothie: ONE ordinary clear drinking glass containing a freshly blended light oatmeal beige with fine oat flecks smoothie, smooth thick but drinkable texture, realistically made only from these ingredients: 3/4 cup cold milk; 1 medium ripe banana, peeled and sliced; 2 tablespoons quick oats; 1 tablespoon creamy peanut butter; 1/4 cup ice cubes. Finished blended drink, all mix-ins finely blended into the drink, not layered. Full glass visible, centered large and comfortably framed with generous margins for portrait card cropping. Camera slightly above rim height. Plain home kitchen counter, softly blurred neutral kitchen, natural window light, appetizing and honest homemade appearance. No toppings, no whipped cream, no garnish, no fruit pieces on rim, no extra food, no text, no logo, no packaging, no hands, no collage. Square image.",
+          "generation_method": "built-in image_gen",
+          "changes": "Proportional resize and JPEG compression for mobile delivery."
+        },
+        "photo_review": {
+          "status": "visually-reviewed",
+          "reviewed_on": "2026-09-14",
+          "notes": "Beige banana-oat smoothie with fine oat texture, no whole nuts or unlisted toppings."
+        }
+      }
+    },
+    {
+      "title": "Chocolate Banana Smoothie",
+      "description": "A ripe banana sweetens this cocoa smoothie without needing chocolate ice cream.",
+      "ingredients_list": [
+        "1/2 cup cold milk",
+        "1/4 cup plain yogurt",
+        "1 medium ripe banana, peeled and sliced",
+        "1 tablespoon unsweetened cocoa powder",
+        "1/4 cup ice cubes"
+      ],
+      "recipe_steps": [
+        "Measure the liquid into a blender, then add the yogurt or other soft ingredients if listed.",
+        "Add the fruit and all remaining measured ingredients. Cover and blend until smooth, about 45 to 60 seconds.",
+        "If the mixture stops moving, turn off the blender and scrape down the sides before blending again. Pour into one large glass and serve right away."
+      ],
+      "meal_time": [
+        "breakfast",
+        "snack"
+      ],
+      "prep_time_mins": 5,
+      "effort_score": 1,
+      "servings": 1,
+      "tags": [
+        "smoothie",
+        "smoothies-and-shakes",
+        "quick",
+        "easy"
+      ],
+      "image_url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/chocolate-banana-smoothie-c63cdce8aab5.jpg",
+      "shopping_list": [
+        "1/2 cup cold milk",
+        "1/4 cup plain yogurt",
+        "1 medium ripe banana, peeled and sliced",
+        "1 tablespoon unsweetened cocoa powder",
+        "1/4 cup ice cubes"
+      ],
+      "cuisine": "American",
+      "user_id": null,
+      "is_user_created": false,
+      "source_url": null,
+      "source_name": null,
+      "review": {
+        "source_kind": "original",
+        "adaptation": "Original ingredient quantities and instructions for a familiar home-blended drink; no publisher recipe text copied.",
+        "audience_evidence": "One serving, everyday grocery ingredients, one blender, 5 minutes, no powders or specialty equipment.",
+        "duplicate_review": "No smoothie or shake found among the 269 existing shared recipes; distinct flavor and ingredient combination within this 24-drink batch.",
+        "active_time_mins": 5,
+        "equipment": [
+          "blender",
+          "measuring cups",
+          "measuring spoons"
+        ],
+        "photo": {
+          "kind": "generated",
+          "file": "assets/recipe-photos/chocolate-banana-smoothie-c63cdce8aab5.jpg",
+          "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/chocolate-banana-smoothie-c63cdce8aab5.jpg",
+          "sha256": "c63cdce8aab5bbca9ecbe404a7bcc9ce53c4afe30c322c66ef042b30cdbb52ec",
+          "bytes": 79576,
+          "width": 900,
+          "height": 900,
+          "creator": "OpenAI image generation for Mealsolved",
+          "credit": "AI-generated serving illustration. Actual results may vary.",
+          "prompt": "Original photorealistic food photograph for a mobile recipe app. Chocolate Banana Smoothie: ONE ordinary clear drinking glass containing a freshly blended milk chocolate brown smoothie, smooth thick but drinkable texture, realistically made only from these ingredients: 1/2 cup cold milk; 1/4 cup plain yogurt; 1 medium ripe banana, peeled and sliced; 1 tablespoon unsweetened cocoa powder; 1/4 cup ice cubes. Finished blended drink, all mix-ins finely blended into the drink, not layered. Full glass visible, centered large and comfortably framed with generous margins for portrait card cropping. Camera slightly above rim height. Plain home kitchen counter, softly blurred neutral kitchen, natural window light, appetizing and honest homemade appearance. No toppings, no whipped cream, no garnish, no fruit pieces on rim, no extra food, no text, no logo, no packaging, no hands, no collage. Square image.",
+          "generation_method": "built-in image_gen",
+          "changes": "Proportional resize and JPEG compression for mobile delivery."
+        },
+        "photo_review": {
+          "status": "visually-reviewed",
+          "reviewed_on": "2026-09-14",
+          "notes": "Cocoa-brown banana smoothie with fine blended texture; plain serving matches listed ingredients."
+        }
+      }
+    },
+    {
+      "title": "Spinach Mango Smoothie",
+      "description": "Sweet mango and banana soften the flavor of a small handful of spinach.",
+      "ingredients_list": [
+        "3/4 cup orange juice",
+        "1 cup frozen mango chunks",
+        "1/2 cup washed fresh baby spinach",
+        "1/2 medium ripe banana, peeled and sliced"
+      ],
+      "recipe_steps": [
+        "Measure the liquid into a blender, then add the yogurt or other soft ingredients if listed.",
+        "Add the fruit and all remaining measured ingredients. Cover and blend until smooth, about 45 to 60 seconds.",
+        "If the mixture stops moving, turn off the blender and scrape down the sides before blending again. Pour into one large glass and serve right away."
+      ],
+      "meal_time": [
+        "breakfast",
+        "snack"
+      ],
+      "prep_time_mins": 5,
+      "effort_score": 1,
+      "servings": 1,
+      "tags": [
+        "smoothie",
+        "smoothies-and-shakes",
+        "quick",
+        "easy"
+      ],
+      "image_url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/spinach-mango-smoothie-6ec7cfe07368.jpg",
+      "shopping_list": [
+        "3/4 cup orange juice",
+        "1 cup frozen mango chunks",
+        "1/2 cup washed fresh baby spinach",
+        "1/2 medium ripe banana, peeled and sliced"
+      ],
+      "cuisine": "American",
+      "user_id": null,
+      "is_user_created": false,
+      "source_url": null,
+      "source_name": null,
+      "review": {
+        "source_kind": "original",
+        "adaptation": "Original ingredient quantities and instructions for a familiar home-blended drink; no publisher recipe text copied.",
+        "audience_evidence": "One serving, everyday grocery ingredients, one blender, 5 minutes, no powders or specialty equipment.",
+        "duplicate_review": "No smoothie or shake found among the 269 existing shared recipes; distinct flavor and ingredient combination within this 24-drink batch.",
+        "active_time_mins": 5,
+        "equipment": [
+          "blender",
+          "measuring cups",
+          "measuring spoons"
+        ],
+        "photo": {
+          "kind": "generated",
+          "file": "assets/recipe-photos/spinach-mango-smoothie-6ec7cfe07368.jpg",
+          "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/spinach-mango-smoothie-6ec7cfe07368.jpg",
+          "sha256": "6ec7cfe07368640b230155583e159675917936d3df3b01cdd27458f959f72269",
+          "bytes": 81634,
+          "width": 900,
+          "height": 900,
+          "creator": "OpenAI image generation for Mealsolved",
+          "credit": "AI-generated serving illustration. Actual results may vary.",
+          "prompt": "Original photorealistic food photograph for a mobile recipe app. Spinach Mango Smoothie: ONE ordinary clear drinking glass containing a freshly blended fresh light leafy green smoothie, smooth thick but drinkable texture, realistically made only from these ingredients: 3/4 cup orange juice; 1 cup frozen mango chunks; 1/2 cup washed fresh baby spinach; 1/2 medium ripe banana, peeled and sliced. Finished blended drink, all mix-ins finely blended into the drink, not layered. Full glass visible, centered large and comfortably framed with generous margins for portrait card cropping. Camera slightly above rim height. Plain home kitchen counter, softly blurred neutral kitchen, natural window light, appetizing and honest homemade appearance. No toppings, no whipped cream, no garnish, no fruit pieces on rim, no extra food, no text, no logo, no packaging, no hands, no collage. Square image.",
+          "generation_method": "built-in image_gen",
+          "changes": "Proportional resize and JPEG compression for mobile delivery."
+        },
+        "photo_review": {
+          "status": "visually-reviewed",
+          "reviewed_on": "2026-09-14",
+          "notes": "Yellow-green mango-spinach smoothie with small leafy flecks, expected blended color without garnish."
+        }
+      }
+    },
+    {
+      "title": "Apple Cinnamon Oat Smoothie",
+      "description": "Unsweetened applesauce makes an easy apple smoothie with no peeling or chopping.",
+      "ingredients_list": [
+        "1/2 cup cold milk",
+        "1/2 cup unsweetened applesauce",
+        "1/4 cup vanilla yogurt",
+        "2 tablespoons quick oats",
+        "1/4 teaspoon ground cinnamon",
+        "1/4 cup ice cubes"
+      ],
+      "recipe_steps": [
+        "Pour the milk into a blender and add the quick oats. Let them soften for 2 minutes, then add the applesauce and vanilla yogurt.",
+        "Add the fruit and all remaining measured ingredients. Cover and blend until smooth, about 45 to 60 seconds.",
+        "If the mixture stops moving, turn off the blender and scrape down the sides before blending again. Pour into one large glass and serve right away."
+      ],
+      "meal_time": [
+        "breakfast",
+        "snack"
+      ],
+      "prep_time_mins": 5,
+      "effort_score": 1,
+      "servings": 1,
+      "tags": [
+        "smoothie",
+        "smoothies-and-shakes",
+        "quick",
+        "easy"
+      ],
+      "image_url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/apple-cinnamon-oat-smoothie-dbb96002376b.jpg",
+      "shopping_list": [
+        "1/2 cup cold milk",
+        "1/2 cup unsweetened applesauce",
+        "1/4 cup vanilla yogurt",
+        "2 tablespoons quick oats",
+        "1/4 teaspoon ground cinnamon",
+        "1/4 cup ice cubes"
+      ],
+      "cuisine": "American",
+      "user_id": null,
+      "is_user_created": false,
+      "source_url": null,
+      "source_name": null,
+      "review": {
+        "source_kind": "original",
+        "adaptation": "Original ingredient quantities and instructions for a familiar home-blended drink; no publisher recipe text copied.",
+        "audience_evidence": "One serving, everyday grocery ingredients, one blender, 5 minutes, no powders or specialty equipment.",
+        "duplicate_review": "No smoothie or shake found among the 269 existing shared recipes; distinct flavor and ingredient combination within this 24-drink batch.",
+        "active_time_mins": 5,
+        "equipment": [
+          "blender",
+          "measuring cups",
+          "measuring spoons"
+        ],
+        "photo": {
+          "kind": "generated",
+          "file": "assets/recipe-photos/apple-cinnamon-oat-smoothie-dbb96002376b.jpg",
+          "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/apple-cinnamon-oat-smoothie-dbb96002376b.jpg",
+          "sha256": "dbb96002376bab496b818ecdbe1d1c738b60e76e729b1a845f819744bf63a95e",
+          "bytes": 88895,
+          "width": 900,
+          "height": 900,
+          "creator": "OpenAI image generation for Mealsolved",
+          "credit": "AI-generated serving illustration. Actual results may vary.",
+          "prompt": "Original photorealistic food photograph for a mobile recipe app. Apple Cinnamon Oat Smoothie: ONE ordinary clear drinking glass containing a freshly blended creamy pale tan with very fine cinnamon specks smoothie, smooth thick but drinkable texture, realistically made only from these ingredients: 1/2 cup cold milk; 1/2 cup unsweetened applesauce; 1/4 cup vanilla yogurt; 2 tablespoons quick oats; 1/4 teaspoon ground cinnamon; 1/4 cup ice cubes. Finished blended drink, all mix-ins finely blended into the drink, not layered. Full glass visible, centered large and comfortably framed with generous margins for portrait card cropping. Camera slightly above rim height. Plain home kitchen counter, softly blurred neutral kitchen, natural window light, appetizing and honest homemade appearance. No toppings, no whipped cream, no garnish, no fruit pieces on rim, no extra food, no text, no logo, no packaging, no hands, no collage. Square image.",
+          "generation_method": "built-in image_gen",
+          "changes": "Proportional resize and JPEG compression for mobile delivery."
+        },
+        "photo_review": {
+          "status": "visually-reviewed",
+          "reviewed_on": "2026-09-14",
+          "notes": "Pale tan apple-oat smoothie with cinnamon flecks; smooth drinkable texture and no extra toppings."
+        }
+      }
+    },
+    {
+      "title": "Raspberry Banana Smoothie",
+      "description": "Tart raspberries and a ripe banana make a simple pink smoothie with a naturally seedy texture.",
+      "ingredients_list": [
+        "3/4 cup cold milk",
+        "3/4 cup frozen raspberries",
+        "1 medium ripe banana, peeled and sliced"
+      ],
+      "recipe_steps": [
+        "Measure the liquid into a blender, then add the yogurt or other soft ingredients if listed.",
+        "Add the fruit and all remaining measured ingredients. Cover and blend until smooth, about 45 to 60 seconds.",
+        "If the mixture stops moving, turn off the blender and scrape down the sides before blending again. Pour into one large glass and serve right away."
+      ],
+      "meal_time": [
+        "breakfast",
+        "snack"
+      ],
+      "prep_time_mins": 5,
+      "effort_score": 1,
+      "servings": 1,
+      "tags": [
+        "smoothie",
+        "smoothies-and-shakes",
+        "quick",
+        "easy"
+      ],
+      "image_url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/raspberry-banana-smoothie-ccec0a29290e.jpg",
+      "shopping_list": [
+        "3/4 cup cold milk",
+        "3/4 cup frozen raspberries",
+        "1 medium ripe banana, peeled and sliced"
+      ],
+      "cuisine": "American",
+      "user_id": null,
+      "is_user_created": false,
+      "source_url": null,
+      "source_name": null,
+      "review": {
+        "source_kind": "original",
+        "adaptation": "Original ingredient quantities and instructions for a familiar home-blended drink; no publisher recipe text copied.",
+        "audience_evidence": "One serving, everyday grocery ingredients, one blender, 5 minutes, no powders or specialty equipment.",
+        "duplicate_review": "No smoothie or shake found among the 269 existing shared recipes; distinct flavor and ingredient combination within this 24-drink batch.",
+        "active_time_mins": 5,
+        "equipment": [
+          "blender",
+          "measuring cups",
+          "measuring spoons"
+        ],
+        "photo": {
+          "kind": "generated",
+          "file": "assets/recipe-photos/raspberry-banana-smoothie-ccec0a29290e.jpg",
+          "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/raspberry-banana-smoothie-ccec0a29290e.jpg",
+          "sha256": "ccec0a29290e9bb551d261fe21f1c569caf60bf9b6a24ca34d5c001e5da80a16",
+          "bytes": 84473,
+          "width": 900,
+          "height": 900,
+          "creator": "OpenAI image generation for Mealsolved",
+          "credit": "AI-generated serving illustration. Actual results may vary.",
+          "prompt": "Original photorealistic food photograph for a mobile recipe app. Raspberry Banana Smoothie: ONE ordinary clear drinking glass containing a freshly blended bright raspberry pink with fine seeds smoothie, smooth thick but drinkable texture, realistically made only from these ingredients: 3/4 cup cold milk; 3/4 cup frozen raspberries; 1 medium ripe banana, peeled and sliced. Finished blended drink, all mix-ins finely blended into the drink, not layered. Full glass visible, centered large and comfortably framed with generous margins for portrait card cropping. Camera slightly above rim height. Plain home kitchen counter, softly blurred neutral kitchen, natural window light, appetizing and honest homemade appearance. No toppings, no whipped cream, no garnish, no fruit pieces on rim, no extra food, no text, no logo, no packaging, no hands, no collage. Square image.",
+          "generation_method": "built-in image_gen",
+          "changes": "Proportional resize and JPEG compression for mobile delivery."
+        },
+        "photo_review": {
+          "status": "visually-reviewed",
+          "reviewed_on": "2026-09-14",
+          "notes": "Bright raspberry-pink smoothie with fine raspberry seeds, matching banana and milk blend."
+        }
+      }
+    },
+    {
+      "title": "Orange Banana Yogurt Smoothie",
+      "description": "Orange juice, banana and vanilla yogurt make a quick creamy fruit drink.",
+      "ingredients_list": [
+        "1/2 cup orange juice",
+        "1/2 cup vanilla yogurt",
+        "1 medium ripe banana, peeled and sliced",
+        "1/4 cup ice cubes"
+      ],
+      "recipe_steps": [
+        "Measure the liquid into a blender, then add the yogurt or other soft ingredients if listed.",
+        "Add the fruit and all remaining measured ingredients. Cover and blend until smooth, about 45 to 60 seconds.",
+        "If the mixture stops moving, turn off the blender and scrape down the sides before blending again. Pour into one large glass and serve right away."
+      ],
+      "meal_time": [
+        "breakfast",
+        "snack"
+      ],
+      "prep_time_mins": 5,
+      "effort_score": 1,
+      "servings": 1,
+      "tags": [
+        "smoothie",
+        "smoothies-and-shakes",
+        "quick",
+        "easy"
+      ],
+      "image_url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/orange-banana-yogurt-smoothie-5225b3184226.jpg",
+      "shopping_list": [
+        "1/2 cup orange juice",
+        "1/2 cup vanilla yogurt",
+        "1 medium ripe banana, peeled and sliced",
+        "1/4 cup ice cubes"
+      ],
+      "cuisine": "American",
+      "user_id": null,
+      "is_user_created": false,
+      "source_url": null,
+      "source_name": null,
+      "review": {
+        "source_kind": "original",
+        "adaptation": "Original ingredient quantities and instructions for a familiar home-blended drink; no publisher recipe text copied.",
+        "audience_evidence": "One serving, everyday grocery ingredients, one blender, 5 minutes, no powders or specialty equipment.",
+        "duplicate_review": "No smoothie or shake found among the 269 existing shared recipes; distinct flavor and ingredient combination within this 24-drink batch.",
+        "active_time_mins": 5,
+        "equipment": [
+          "blender",
+          "measuring cups",
+          "measuring spoons"
+        ],
+        "photo": {
+          "kind": "generated",
+          "file": "assets/recipe-photos/orange-banana-yogurt-smoothie-5225b3184226.jpg",
+          "url": "https://raw.githubusercontent.com/wyattrommel-code/Food-For-you/main/assets/recipe-photos/orange-banana-yogurt-smoothie-5225b3184226.jpg",
+          "sha256": "5225b31842261bae8d20193527bb04d03be3416834e834b741ff999b04b8e72d",
+          "bytes": 69212,
+          "width": 900,
+          "height": 900,
+          "creator": "OpenAI image generation for Mealsolved",
+          "credit": "AI-generated serving illustration. Actual results may vary.",
+          "prompt": "Original photorealistic food photograph for a mobile recipe app. Orange Banana Yogurt Smoothie: ONE ordinary clear drinking glass containing a freshly blended very pale creamy yellow-orange smoothie, smooth thick but drinkable texture, realistically made only from these ingredients: 1/2 cup orange juice; 1/2 cup vanilla yogurt; 1 medium ripe banana, peeled and sliced; 1/4 cup ice cubes. Finished blended drink, all mix-ins finely blended into the drink, not layered. Full glass visible, centered large and comfortably framed with generous margins for portrait card cropping. Camera slightly above rim height. Plain home kitchen counter, softly blurred neutral kitchen, natural window light, appetizing and honest homemade appearance. No toppings, no whipped cream, no garnish, no fruit pieces on rim, no extra food, no text, no logo, no packaging, no hands, no collage. Square image.",
+          "generation_method": "built-in image_gen",
+          "changes": "Proportional resize and JPEG compression for mobile delivery."
+        },
+        "photo_review": {
+          "status": "visually-reviewed",
+          "reviewed_on": "2026-09-14",
+          "notes": "Pale yellow-orange creamy smoothie; smooth blended orange juice, banana and vanilla yogurt appearance."
+        }
+      }
+    }
+  ]
+}

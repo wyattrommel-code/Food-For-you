@@ -1,3 +1,4 @@
+import { visibleRecipeTags } from '@/lib/recipe-tags';
 import React, { useMemo, useState, useCallback, useEffect } from 'react';
 import {
   View,
@@ -582,7 +583,7 @@ export default function RecipeDetailScreen() {
   const listsSection = (
     <>
       <View style={styles.tagsRow}>
-        {recipe.tags.map((tag) => (
+        {visibleRecipeTags(recipe.tags).map((tag) => (
           <TagChip key={tag} label={tag} small />
         ))}
       </View>

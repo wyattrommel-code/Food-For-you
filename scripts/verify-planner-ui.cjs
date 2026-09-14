@@ -13,10 +13,10 @@ const user={id:fixtureId,aud:'authenticated',role:'authenticated',email:'qa@exam
 const token=Buffer.from(JSON.stringify({alg:'HS256',typ:'JWT'})).toString('base64url')+'.'+Buffer.from(JSON.stringify({sub:fixtureId,role:'authenticated',exp:Math.floor(Date.now()/1000)+3600})).toString('base64url')+'.local-test-signature';
 const session={access_token:token,refresh_token:'local-test-only',expires_in:3600,expires_at:Math.floor(Date.now()/1000)+3600,token_type:'bearer',user};
 (async()=>{
- const response=await fetch(api+'/rest/v1/recipes?select=*&is_user_created=eq.false',{headers:{apikey:key}});assert.ok(response.ok);const catalog=await response.json();assert.equal(catalog.length,269);
+ const response=await fetch(api+'/rest/v1/recipes?select=*&is_user_created=eq.false',{headers:{apikey:key}});assert.ok(response.ok);const catalog=await response.json();assert.equal(catalog.length,293);
  const browser=await chromium.launch({channel:process.env.UI_QA_BROWSER||'msedge',headless:true});
  const context=await browser.newContext({viewport:{width:390,height:844},deviceScaleFactor:1});
- let plans=[],failPlan=false,hasPrivateSmoothie=false; let cloudPrefs=null,saveCalls=0,failCloud=false;const errors=[];
+ let plans=[],failPlan=false,hasPrivateSmoothie=false,showPublicDrinks=false; let cloudPrefs=null,saveCalls=0,failCloud=false;const errors=[];
  const privateSmoothie={...catalog[0],id:'33333333-3333-4333-8333-333333333333',title:'QA private smoothie',meal_time:['smoothie'],user_id:fixtureId,is_user_created:true};
  await context.route(api+'/**',async route=>{
    const req=route.request(),url=new URL(req.url()),p=url.pathname;
@@ -28,7 +28,7 @@ const session={access_token:token,refresh_token:'local-test-only',expires_in:360
      if(req.method()==='POST'){if(failCloud)return route.fulfill({status:503,json:{message:'QA simulated offline'}});cloudPrefs={...cloudPrefs,...req.postDataJSON()};saveCalls++;data=[];}
      else data=cloudPrefs?[cloudPrefs]:[];
    }else if(p.endsWith('/users'))data=[{id:fixtureId,name:'QA Cook',avatar_url:null}];
-   else if(p.endsWith('/recipes')){data=url.searchParams.get('meal_time')?.includes('smoothie')?(hasPrivateSmoothie?[privateSmoothie]:[]):[...catalog,...(hasPrivateSmoothie&&!url.searchParams.has('is_user_created')?[privateSmoothie]:[])];if(url.searchParams.has('id'))data=data.filter(r=>r.id===url.searchParams.get('id').replace(/^eq\./,''));if(url.searchParams.get('is_user_created')==='eq.true')data=[];}
+   else if(p.endsWith('/recipes')){data=(url.searchParams.get('meal_time')?.includes('smoothie') || url.searchParams.get('or')?.includes('smoothies-and-shakes'))?[...(showPublicDrinks?catalog.filter(r=>r.tags.includes('smoothies-and-shakes')):[]),...(hasPrivateSmoothie?[privateSmoothie]:[])]:[...catalog,...(hasPrivateSmoothie&&!url.searchParams.has('is_user_created')?[privateSmoothie]:[])];if(url.searchParams.has('id'))data=data.filter(r=>r.id===url.searchParams.get('id').replace(/^eq\./,''));if(url.searchParams.get('is_user_created')==='eq.true')data=[];}
    else if(p.endsWith('/meal_plans')){
      if(req.method()!=='GET'&&failPlan)return route.fulfill({status:503,json:{message:'Simulated network failure'}});
      const body=req.postDataJSON();const rowId=url.searchParams.get('id')?.replace(/^eq\./,'');
@@ -76,7 +76,22 @@ const session={access_token:token,refresh_token:'local-test-only',expires_in:360
  await page.getByRole('button',{name:'Add a smoothie or shake',exact:true}).click();
  const smoothieChoice=page.getByRole('checkbox',{name:'Smoothies & Shakes',exact:true});await smoothieChoice.scrollIntoViewIfNeeded();await page.waitForFunction(()=>document.querySelector('[role="checkbox"][aria-label="Smoothies & Shakes"]')?.getAttribute('aria-checked')==='true');assert.equal(await smoothieChoice.isChecked(),true);await page.screenshot({path:path.join(out,'create-smoothie.png')});
  hasPrivateSmoothie=true;await page.goto(base+'/browse?category=smoothie&title=Smoothies');await page.getByRole('img',{name:privateSmoothie.title,exact:true}).waitFor();
- const recipe=catalog.find(r=>r.title==='Boxed Mac with Hot Dogs and Peas');
+ showPublicDrinks=true;hasPrivateSmoothie=false;
+ const drinks=catalog.filter(r=>r.tags.includes('smoothies-and-shakes'));assert.equal(drinks.length,24);
+ await page.goto(base+'/browse?category=smoothie&title=Smoothies%20%26%20Shakes');await page.getByText('24 recipes',{exact:true}).waitFor();
+ await page.waitForFunction(()=>Array.from(document.images).some(i=>i.complete&&i.naturalWidth>0));
+ assert.equal(await page.getByText('smoothies-and-shakes',{exact:true}).count(),0);
+ await page.screenshot({path:path.join(out,'drinks-category.png')});
+ for(const drink of drinks){
+  await page.goto(base+'/recipe/'+drink.id);await page.getByRole('img',{name:drink.title,exact:true}).waitFor();
+  await page.waitForFunction(url=>Array.from(document.images).some(i=>i.src===url&&i.complete&&i.naturalWidth>0),drink.image_url);
+  assert.equal(await page.getByRole('button',{name:'Sources & photo credits',exact:true}).count(),0);
+  assert.equal(await page.getByText('smoothies-and-shakes',{exact:true}).count(),0);
+  assert.equal(await page.getByText('treat-cold',{exact:true}).count(),0);
+  await page.getByText(drink.description,{exact:true}).waitFor();
+ }
+ await page.screenshot({path:path.join(out,'drink-detail.png')});
+ const recipe=drinks.find(r=>r.title==='Strawberry Banana Smoothie');
  await page.goto(base+'/recipe/'+recipe.id);await page.getByRole('button',{name:'Add to planner',exact:true}).click();
  await page.getByRole('button',{name:'Save to day',exact:true}).waitFor();
  await page.getByRole('button',{name:'Dinner',exact:true}).click();await page.getByRole('button',{name:'Save to day',exact:true}).click();
@@ -93,6 +108,6 @@ const session={access_token:token,refresh_token:'local-test-only',expires_in:360
  await page.screenshot({path:path.join(out,'planner-saved.png')});
  await page.getByRole('button',{name:'Remove Quick Banana Pudding Cups',exact:true}).click();await page.getByRole('button',{name:'Quick Banana Pudding Cups',exact:true}).waitFor({state:'hidden'});assert.equal(plans.length,1);
  assert.deepEqual(errors,[]);
- fs.writeFileSync(path.join(out,'planner-results.json'),JSON.stringify({hungryDessertExclusion:true,treatOptions:labels,plannerSaveReloadMoveRemove:true,failedSavePreserved:true,categoryCreate:true,errors},null,2));
+ fs.writeFileSync(path.join(out,'planner-results.json'),JSON.stringify({hungryDessertExclusion:true,treatOptions:labels,plannerSaveReloadMoveRemove:true,failedSavePreserved:true,categoryCreate:true,publicDrinks:24,drinkPhotosAndDescriptions:true,noDrinkSourceCredits:true,errors},null,2));
  await browser.close();console.log('Planner and treats browser QA passed.');
 })().catch(e=>{console.error(e);process.exit(1);});

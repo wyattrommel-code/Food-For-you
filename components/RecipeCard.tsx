@@ -1,3 +1,4 @@
+import { visibleRecipeTags } from '@/lib/recipe-tags';
 import React, { useCallback } from 'react';
 import { View, Text, Pressable, StyleSheet, useWindowDimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -93,7 +94,7 @@ export function RecipeCard({
       {/* Text content */}
       <View style={styles.textContainer}>
         <View style={styles.tagsRow}>
-          {recipe.tags.slice(0, 2).map((tag) => (
+          {visibleRecipeTags(recipe.tags).slice(0, 2).map((tag) => (
             <View key={tag} style={styles.tag}>
               <Text style={styles.tagText}>{tag}</Text>
             </View>
@@ -201,7 +202,7 @@ export function HeroCard({ recipe, onFavoriteToggle }: HeroCardProps) {
       {/* Text */}
       <View style={styles.heroText}>
         <View style={styles.tagsRow}>
-          {recipe.tags.slice(0, 3).map((tag) => (
+          {visibleRecipeTags(recipe.tags).slice(0, 3).map((tag) => (
             <View key={tag} style={[styles.tag, styles.tagHero]}>
               <Text style={styles.tagText}>{tag}</Text>
             </View>
