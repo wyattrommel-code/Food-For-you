@@ -34,3 +34,4 @@ Thumbs.db
 supabase/.temp/
 artifacts/ui-qa/
 artifacts/household-ui/
+artifacts/release-1.0.5-export/

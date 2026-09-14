@@ -2,7 +2,7 @@
   "expo": {
     "name": "Mealsolved",
     "slug": "food-for-you",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "orientation": "default",
     "icon": "./assets/icon.png",
     "scheme": "foodforyou",
@@ -15,7 +15,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.wyattrommel.foodforyou",
-      "buildNumber": "10"
+      "buildNumber": "11"
     },
     "android": {
       "adaptiveIcon": {
@@ -23,7 +23,7 @@
         "backgroundColor": "#0f0f0f"
       },
       "package": "com.wyattrommel.foodforyou",
-      "versionCode": 10
+      "versionCode": 11
     },
     "web": {
       "bundler": "metro",
