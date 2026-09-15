@@ -6,7 +6,7 @@ Use the small handle on a recipe card to drag it to another day in the visible w
 
 The home sweet-treat button has no description. Smoothies & Shakes now appears as a recipe carousel with the other categories. Discovery recognizes both the `smoothie` meal type and the existing `smoothies-and-shakes` tag; preferences and recent-recipe rotation still apply.
 
-No database migration, additional dependency, subscription, or app release is required for the code change. This work is staged for review and has not been published to Google Play.
+No database migration, additional dependency or subscription is required. Published to Google Play internal testing in [version 1.0.7](testing-release-1.0.7.md).
 
 ## Verification
 
@@ -16,4 +16,4 @@ No database migration, additional dependency, subscription, or app release is re
 
 The browser check reads the public recipe catalog but intercepts account API traffic and all mutations. It uses a synthetic account and temporary plans; it does not change a real user’s plans, groceries, or pantry.
 
-Coverage: day-to-day dragging and auto-scroll, canceling a drop outside the agenda, failed move preservation, recipe-page scheduling, calendar month boundaries, meal slots, deletion, 320/390/844-pixel layouts, daily/weekly/all grocery links, pantry completion/retry/deduplication, local-date rollover, home category placement, and light/dark screenshots. Native Android touch gestures and system insets still need a physical-device check before release.
+Coverage: day-to-day dragging and auto-scroll, canceling a drop outside the agenda, failed move preservation, recipe-page scheduling, calendar month boundaries, meal slots, deletion, 320/390/844-pixel layouts, daily/weekly/all grocery links, pantry completion/retry/deduplication, local-date rollover, home category placement, and light/dark screenshots. Native Android touch gestures and system insets remain part of internal tester review on physical devices.
