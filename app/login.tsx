@@ -73,7 +73,7 @@ export default function LoginScreen() {
         });
         if (error) throw error;
         setSuccessMessage(
-          "We've sent a confirmation email. Please verify your address, then log in."
+          "If your email needs confirmation, check your inbox and spam folder for a link. Already have an account? Sign in with your existing password or use Forgot your password."
         );
         setMode('login');
         setPassword('');
