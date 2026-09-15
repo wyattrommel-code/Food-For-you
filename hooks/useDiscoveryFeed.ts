@@ -2,7 +2,7 @@ import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import type {MealTime, Recipe} from '@/lib/types';
 import {freshOrder, rememberIds} from '@/lib/discovery';
-const sections: MealTime[]=['breakfast','lunch','dinner','snack','dessert','sides'];
+const sections: MealTime[]=['breakfast','lunch','dinner','snack','dessert','sides','smoothie'];
 type Order=Partial<Record<MealTime,string[]>>;
 export function useDiscoveryFeed(recipes: Recipe[], userId: string|null, preferenceKey: string) {
   const key=`discovery:v1:${userId ?? 'guest'}`;
@@ -20,7 +20,7 @@ export function useDiscoveryFeed(recipes: Recipe[], userId: string|null, prefere
     if(readyKey!==key || liveKey.current!==key)return;
     const next:Order={};
     for(const s of sections){const history=rememberIds((orders.current[s]??[]).slice(0,6),recent.current[s]??[]);recent.current[s]=history;
-      next[s]=freshOrder(latest.current.filter(r=>r.meal_time.includes(s)),history).map(r=>r.id);}
+      next[s]=freshOrder(latest.current.filter(r=>r.meal_time.includes(s)||(s==='smoothie'&&r.tags.includes('smoothies-and-shakes'))),history).map(r=>r.id);}
     orders.current=next;setState({key,orders:next});
     // Save the leading cards now so reopening the app can start with fresh ideas.
     const persisted=Object.fromEntries(sections.map(s=>[s,rememberIds((next[s]??[]).slice(0,6),recent.current[s]??[])]));

@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useCallback, useRef, useEffect } from 'react';
+import React, { useMemo, useState, useCallback, useEffect } from 'react';
 import {
   View,
   Text,
@@ -20,9 +20,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '@/context/ThemeContext';
 import type { AppColors } from '@/constants/Colors';
 import {
-  applyMealTimePreferencePool,
   getMealTimeForHour,
-  getPreferredMealTimesForHour,
   MEAL_TIME_META,
   MealTime,
   Recipe,
@@ -31,10 +29,8 @@ import { useSession } from '@/hooks/useSession';
 import { usePreferences } from '@/hooks/usePreferences';
 import { supabase } from '@/lib/supabase';
 import { useDiscoveryFeed } from '@/hooks/useDiscoveryFeed';
-import { freshOrder } from '@/lib/discovery';
 import { useRecipes } from '@/hooks/useRecipes';
 import {
-  HeroCard,
   RecipeCard,
   CAROUSEL_CARD_WIDTH_PHONE,
   CAROUSEL_CARD_WIDTH_TABLET,
@@ -43,99 +39,6 @@ import { SectionHeader } from '@/components/SectionHeader';
 import { LoadingScreen } from '@/components/LoadingScreen';
 import { useIsLandscape, useIsTablet } from '@/hooks/useIsTablet';
 import { RecipeImage } from '@/components/RecipeImage';
-
-// ─── Types ────────────────────────────────────────────────────
-import { hungryCandidates, pickTreats, TREAT_LABELS } from '@/lib/treats';
-
-type ActiveMode = 'pickForMe' | 'hungryNow' | 'feelingBold' | 'sweetTreat' | null;
-
-type HungryHeadingKind = '30' | '45' | 'any';
-
-// ─── Helpers ─────────────────────────────────────────────────
-
-function pickForMeSetKey(ids: string[]): string {
-  return ids.join('\0');
-}
-
-/**
- * Soft time-of-day: prefer meal_time overlap with current window; if that yields
- * fewer than `minKeep` recipes, use the full `base` list (still prep-filtered).
- */
-function applySoftMealPreference(
-  base: Recipe[],
-  hour: number,
-  minKeep = 3
-): Recipe[] {
-  if (base.length === 0) return base;
-  const preferred = getPreferredMealTimesForHour(hour);
-  if (preferred === null) return base;
-
-  const matched = base.filter(
-    (r) =>
-      Array.isArray(r.meal_time) && r.meal_time.some((mt) => preferred.includes(mt))
-  );
-  return matched.length >= minKeep ? matched : base;
-}
-
-/**
- * Build pool: prep cap (30, 45, or none), then soft meal-time preference.
- */
-function buildHungryPool(
-  visibleRecipes: Recipe[],
-  hour: number,
-  maxPrep: number | null
-): Recipe[] {
-  const byPrep = hungryCandidates(visibleRecipes, maxPrep);
-  return applySoftMealPreference(byPrep, hour, 3);
-}
-
-function rollHungryNowTrio(
-  visibleRecipes: Recipe[],
-  hour: number,
-  lastSetKey: string | null
-): { trio: Recipe[]; headingKind: HungryHeadingKind } {
-  if (visibleRecipes.length === 0) {
-    return { trio: [], headingKind: '30' };
-  }
-
-  let pool = buildHungryPool(visibleRecipes, hour, 30);
-  let headingKind: HungryHeadingKind = '30';
-  if (pool.length < 3) {
-    pool = buildHungryPool(visibleRecipes, hour, 45);
-    headingKind = '45';
-  }
-  if (pool.length < 3) {
-    pool = buildHungryPool(visibleRecipes, hour, null);
-    headingKind = 'any';
-  }
-
-  const want = Math.min(3, pool.length);
-  if (want === 0) {
-    return { trio: [], headingKind };
-  }
-
-  const trio = freshOrder(pool, lastSetKey?.split('\0') ?? []).slice(0, want);
-  return { trio, headingKind };
-}
-
-function hungryResultsTitle(kind: HungryHeadingKind): string {
-  if (kind === '30') return 'Ready in 30 minutes or less';
-  if (kind === '45') return 'Ready in 45 minutes or less';
-  return 'Ideas from your menu';
-}
-
-/** Challenge difficulty (effort_score === 3) only; no time-of-day filter. */
-function rollFeelingBoldTrio(
-  visibleRecipes: Recipe[],
-  lastSetKey: string | null
-): Recipe[] {
-  const pool = visibleRecipes.filter((r) => r.effort_score === 3);
-  const want = Math.min(3, pool.length);
-  if (want === 0) return [];
-
-  const trio = freshOrder(pool, lastSetKey?.split('\0') ?? []).slice(0, want);
-  return trio;
-}
 
 function getGreeting(hour: number): string {
   if (hour < 12) return 'Good morning';
@@ -276,48 +179,6 @@ function FeedSectionHeader({
   );
 }
 
-// ─── Pill re-roll / dismiss button ───────────────────────────
-function PillButton({
-  label,
-  color,
-  onPress,
-}: {
-  label:   string;
-  color:   string;
-  onPress: () => void;
-}) {
-  return (
-    <Pressable
-      style={({ pressed }) => [
-        pillStyles.pill,
-        { borderColor: color, backgroundColor: color + '18' },
-        pressed && pillStyles.pillPressed,
-      ]}
-      onPress={onPress}
-      hitSlop={6}
-    >
-      <Text style={[pillStyles.pillText, { color }]}>{label}</Text>
-    </Pressable>
-  );
-}
-
-const pillStyles = StyleSheet.create({
-  pill: {
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 20,
-    borderWidth: 1,
-  },
-  pillPressed: {
-    opacity: 0.7,
-    transform: [{ scale: 0.95 }],
-  },
-  pillText: {
-    fontSize: 12,
-    fontWeight: '700',
-  },
-});
-
 // ─── Horizontal carousel ─────────────────────────────────────
 function HCarousel({
   recipes,
@@ -448,7 +309,7 @@ export default function HomeScreen() {
   } = useRecipes(userId, preferences);
   const {getCarouselRecipes,reroll} = useDiscoveryFeed(visibleRecipes,userId,JSON.stringify(preferences));
   const refreshFeed = useCallback(async () => {
-    reroll(); setPickedRecipes([]); setActiveMode(null);
+    reroll();
     await refresh();
   }, [reroll,refresh]);
 
@@ -478,14 +339,6 @@ export default function HomeScreen() {
     });
   }, [searchQuery, visibleRecipes]);
 
-  // ── Mode state ────────────────────────────────────────────
-  const [activeMode, setActiveMode]       = useState<ActiveMode>(null);
-  const [pickedRecipes, setPickedRecipes] = useState<Recipe[]>([]);
-  const [hungryHeadingKind, setHungryHeadingKind] = useState<HungryHeadingKind>('30');
-  const lastHungrySetKey                  = useRef<string | null>(null);
-  const lastBoldSetKey                    = useRef<string | null>(null);
-  const lastPickForMeKey                  = useRef<string | null>(null);
-
   // ── Derived recipe lists ──────────────────────────────────
   const breakfastRecipes = useMemo(
     () => getCarouselRecipes('breakfast'),
@@ -511,6 +364,10 @@ export default function HomeScreen() {
     () => getCarouselRecipes('dessert'),
     [getCarouselRecipes]
   );
+  const smoothieRecipes = useMemo(
+    () => getCarouselRecipes('smoothie'),
+    [getCarouselRecipes]
+  );
 
   const mealSections = useMemo((): MealTime[] => {
     if (currentMealTime === 'breakfast') return ['breakfast', 'lunch', 'dinner'];
@@ -528,119 +385,17 @@ export default function HomeScreen() {
     smoothie: [],
   };
 
-  const [treats,setTreats] = useState<ReturnType<typeof pickTreats>>([]);
-  const lastTreats = useRef<string[]>([]);
-  const rollTreats = useCallback(()=>{
-    const next=pickTreats(visibleRecipes,lastTreats.current);
-    lastTreats.current=next.flatMap(p=>p.recipe?[p.recipe.id]:[]);
-    setTreats(next);setPickedRecipes([]);setActiveMode('sweetTreat');setSearchQuery('');
-  },[visibleRecipes]);
-  const sweetButton = <Pressable accessibilityRole="button" accessibilityLabel="I need a sweet treat" onPress={rollTreats} style={{minHeight:56,padding:12,borderRadius:16,borderWidth:1,borderColor:Colors.dessert,backgroundColor:Colors.surface,marginVertical:8}}>
+  const openChoices = useCallback((mode: 'hungryNow'|'sweetTreat'|'pickForMe'|'feelingBold') => {
+    router.push({pathname:'/meal-choices',params:{mode}} as Href);
+  },[router]);
+  const sweetButton = <Pressable accessibilityRole="button" accessibilityLabel="I need a sweet treat" onPress={()=>openChoices('sweetTreat')} style={{minHeight:48,padding:12,justifyContent:'center',borderRadius:16,borderWidth:1,borderColor:Colors.dessert,backgroundColor:Colors.surface,marginVertical:8}}>
     <Text style={{color:Colors.textPrimary,fontSize:17,fontWeight:'700'}}>I need a sweet treat</Text>
-    <Text style={{color:Colors.textSecondary,fontSize:13}}>1 hot · 1 cold · 1 quick & easy</Text>
   </Pressable>;
-
-  // ── Handlers ──────────────────────────────────────────────
-  const handleHungry = useCallback(() => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
-    if (visibleRecipes.length === 0) return;
-
-    if (activeMode === 'hungryNow') {
-      setActiveMode(null);
-      setPickedRecipes([]);
-      return;
-    }
-
-    const h = new Date().getHours();
-    const { trio, headingKind } = rollHungryNowTrio(
-      visibleRecipes,
-      h,
-      lastHungrySetKey.current
-    );
-    if (trio.length === 0) return;
-
-    lastHungrySetKey.current = pickForMeSetKey(trio.map((r) => r.id));
-    setHungryHeadingKind(headingKind);
-    setPickedRecipes(trio);
-    setActiveMode('hungryNow');
-  }, [visibleRecipes, activeMode]);
-
-  const rerollHungry = useCallback(() => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    if (visibleRecipes.length === 0) return;
-    const h = new Date().getHours();
-    const { trio, headingKind } = rollHungryNowTrio(
-      visibleRecipes,
-      h,
-      lastHungrySetKey.current
-    );
-    if (trio.length === 0) return;
-    lastHungrySetKey.current = pickForMeSetKey(trio.map((r) => r.id));
-    setHungryHeadingKind(headingKind);
-    setPickedRecipes(trio);
-  }, [visibleRecipes]);
 
   const handleCookWhatIHave = useCallback(() => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     router.push('/(tabs)/pantry' as never);
   }, [router]);
-
-  const rollPickForMe = useCallback((): Recipe[] => {
-    if (visibleRecipes.length === 0) return [];
-
-    const h    = new Date().getHours();
-    const pool = applyMealTimePreferencePool(visibleRecipes, h);
-    const picks = freshOrder(pool, lastPickForMeKey.current?.split('\0') ?? []).slice(0, 1);
-    lastPickForMeKey.current = pickForMeSetKey(picks.map(r => r.id));
-    return picks;
-  }, [visibleRecipes]);
-
-  const handlePickForMe = useCallback(() => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
-    if (activeMode === 'pickForMe') {
-      setActiveMode(null);
-      setPickedRecipes([]);
-      return;
-    }
-    setPickedRecipes(rollPickForMe());
-    setActiveMode('pickForMe');
-  }, [activeMode, rollPickForMe]);
-
-  const rerollPick = useCallback(() => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    setPickedRecipes(rollPickForMe());
-  }, [rollPickForMe]);
-
-  const handleFeelingBold = useCallback(() => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-    if (visibleRecipes.length === 0) return;
-
-    if (activeMode === 'feelingBold') {
-      setActiveMode(null);
-      setPickedRecipes([]);
-      return;
-    }
-
-    const trio = rollFeelingBoldTrio(visibleRecipes, lastBoldSetKey.current);
-    if (trio.length === 0) return;
-
-    lastBoldSetKey.current = pickForMeSetKey(trio.map((r) => r.id));
-    setPickedRecipes(trio);
-    setActiveMode('feelingBold');
-  }, [visibleRecipes, activeMode]);
-
-  const rerollBold = useCallback(() => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    if (visibleRecipes.length === 0) return;
-    const trio = rollFeelingBoldTrio(visibleRecipes, lastBoldSetKey.current);
-    if (trio.length === 0) return;
-    lastBoldSetKey.current = pickForMeSetKey(trio.map((r) => r.id));
-    setPickedRecipes(trio);
-  }, [visibleRecipes]);
-
-  useEffect(() => {
-    setPickedRecipes(previous => previous.map(r=>visibleRecipes.find(v=>v.id===r.id)).filter((r):r is Recipe=>!!r));
-  }, [visibleRecipes]);
 
   if (loading) {
     return <LoadingScreen message="Loading your personalized menu..." />;
@@ -720,10 +475,9 @@ export default function HomeScreen() {
                     styles.tabletActionCell,
                     styles.tabletHungryBtn,
                     isLandscape && styles.tabletHungryBtnLandscape,
-                    activeMode === 'hungryNow' && styles.hungryBtnActiveRing,
                     pressed && styles.bigBtnPressed,
                   ]}
-                  onPress={handleHungry}
+                  accessibilityRole="button" accessibilityLabel="I'm Hungry Now" onPress={()=>openChoices('hungryNow')}
                 >
                   <Text style={styles.tabletHungryTitle}>I'm Hungry Now</Text>
                   <Text style={styles.tabletHungrySub}>30 min or less · 3 picks</Text>
@@ -732,10 +486,9 @@ export default function HomeScreen() {
                   style={({ pressed }) => [
                     styles.tabletActionCell,
                     styles.secondBtn,
-                    activeMode === 'pickForMe' && styles.secondBtnActive,
                     pressed && styles.secondBtnPressed,
                   ]}
-                  onPress={handlePickForMe}
+                  accessibilityRole="button" accessibilityLabel="Pick For Me" onPress={()=>openChoices('pickForMe')}
                 >
                   <Text style={styles.secondTitle}>Pick For Me</Text>
                   <Text style={styles.secondSub}>One perfect dish</Text>
@@ -744,10 +497,9 @@ export default function HomeScreen() {
                   style={({ pressed }) => [
                     styles.tabletActionCell,
                     styles.secondBtn,
-                    activeMode === 'feelingBold' && styles.secondBtnActive,
                     pressed && styles.secondBtnPressed,
                   ]}
-                  onPress={handleFeelingBold}
+                  accessibilityRole="button" accessibilityLabel="Feeling Bold" onPress={()=>openChoices('feelingBold')}
                 >
                   <Text style={styles.secondTitle}>Feeling Bold</Text>
                   <Text style={styles.secondSub}>Challenge · 3 picks</Text>
@@ -772,10 +524,9 @@ export default function HomeScreen() {
               <Pressable
                 style={({ pressed }) => [
                   styles.bigBtn,
-                  activeMode === 'hungryNow' && styles.hungryBtnActiveRing,
                   pressed && styles.bigBtnPressed,
                 ]}
-                onPress={handleHungry}
+                accessibilityRole="button" accessibilityLabel="I'm Hungry Now" onPress={()=>openChoices('hungryNow')}
               >
                 <View style={styles.bigBtnLeft}>
                   <Text style={styles.bigBtnTitle}>I'm Hungry Now</Text>
@@ -788,10 +539,9 @@ export default function HomeScreen() {
                 <Pressable
                   style={({ pressed }) => [
                     styles.secondBtn,
-                    activeMode === 'pickForMe' && styles.secondBtnActive,
                     pressed && styles.secondBtnPressed,
                   ]}
-                  onPress={handlePickForMe}
+                  accessibilityRole="button" accessibilityLabel="Pick For Me" onPress={()=>openChoices('pickForMe')}
                 >
                   <Text style={styles.secondTitle}>Pick For Me</Text>
                   <Text style={styles.secondSub}>One perfect dish</Text>
@@ -800,10 +550,9 @@ export default function HomeScreen() {
                 <Pressable
                   style={({ pressed }) => [
                     styles.secondBtn,
-                    activeMode === 'feelingBold' && styles.secondBtnActive,
                     pressed && styles.secondBtnPressed,
                   ]}
-                  onPress={handleFeelingBold}
+                  accessibilityRole="button" accessibilityLabel="Feeling Bold" onPress={()=>openChoices('feelingBold')}
                 >
                   <Text style={styles.secondTitle}>Feeling Bold</Text>
                   <Text style={styles.secondSub}>Challenge · 3 picks</Text>
@@ -826,15 +575,6 @@ export default function HomeScreen() {
           )}
         </View>
 
-        <View style={{paddingHorizontal:20,gap:10,marginBottom:16}}>
-          <Pressable accessibilityRole="button" accessibilityLabel="Smoothies & Shakes" onPress={()=>router.push('/browse?category=smoothie&title=Smoothies%20%26%20Shakes' as Href)} style={{minHeight:48,padding:14,borderRadius:16,backgroundColor:Colors.surface,borderWidth:1,borderColor:Colors.border}}>
-            <Text style={{color:Colors.textPrimary,fontSize:17,fontWeight:'700'}}>🥤 Smoothies & Shakes →</Text>
-          </Pressable>
-        </View>
-        {searchResults===null && activeMode==='sweetTreat' && <View style={{paddingHorizontal:20,gap:16}}>
-          <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between'}}><Text style={{fontSize:22,fontWeight:'800',color:Colors.textPrimary}}>Something sweet</Text><PillButton label="Re-roll" color={Colors.dessert} onPress={rollTreats}/></View>
-          {treats.map(({kind,recipe})=><View key={kind} style={{gap:8}}><Text style={{color:Colors.dessert,fontWeight:'800',fontSize:18}}>{TREAT_LABELS[kind]}</Text>{recipe?<HeroCard recipe={recipe} onFavoriteToggle={toggleFavorite}/>:<Text style={{color:Colors.textSecondary}}>No {TREAT_LABELS[kind].toLowerCase()} matches your food preferences yet.</Text>}</View>)}
-        </View>}
         {/* ── Search results ────────────────────────────── */}
         {searchResults !== null && (
           <>
@@ -865,77 +605,8 @@ export default function HomeScreen() {
           </>
         )}
 
-        {/* ── I'm Hungry Now — 3 quick picks ───────────────── */}
-        {searchResults === null && activeMode === 'hungryNow' && pickedRecipes.length > 0 && (
-          <>
-            <FeedSectionHeader
-              title={hungryResultsTitle(hungryHeadingKind)}
-              accentColor={Colors.accent}
-              compact={isLandscape}
-              rightAction={
-                <PillButton label="Re-roll" color={Colors.accent} onPress={rerollHungry} />
-              }
-            />
-            <View style={[styles.heroPad, styles.pickForMeHeroStack]}>
-              {pickedRecipes.map((recipe) => (
-                <HeroCard
-                  key={recipe.id}
-                  recipe={recipe}
-                  onFavoriteToggle={toggleFavorite}
-                />
-              ))}
-            </View>
-          </>
-        )}
-
-        {/* ── Pick For Me ───────────────────────────────── */}
-        {searchResults === null && activeMode === 'pickForMe' && pickedRecipes.length > 0 && (
-          <>
-            <FeedSectionHeader
-              title="Here's Your Pick"
-              accentColor={Colors.info}
-              compact={isLandscape}
-              rightAction={
-                <PillButton label="Re-roll" color={Colors.info} onPress={rerollPick} />
-              }
-            />
-            <View style={[styles.heroPad, styles.pickForMeHeroStack]}>
-              {pickedRecipes.map((recipe) => (
-                <HeroCard
-                  key={recipe.id}
-                  recipe={recipe}
-                  onFavoriteToggle={toggleFavorite}
-                />
-              ))}
-            </View>
-          </>
-        )}
-
-        {/* ── Feeling Bold — Challenge picks ────────────── */}
-        {searchResults === null && activeMode === 'feelingBold' && pickedRecipes.length > 0 && (
-          <>
-            <FeedSectionHeader
-              title="Think you can handle these?"
-              accentColor={Colors.accent}
-              compact={isLandscape}
-              rightAction={
-                <PillButton label="Re-roll" color={Colors.accent} onPress={rerollBold} />
-              }
-            />
-            <View style={[styles.heroPad, styles.pickForMeHeroStack]}>
-              {pickedRecipes.map((recipe) => (
-                <HeroCard
-                  key={recipe.id}
-                  recipe={recipe}
-                  onFavoriteToggle={toggleFavorite}
-                />
-              ))}
-            </View>
-          </>
-        )}
-
         {/* ── Default feed — meal-time carousels ────────── */}
-        {searchResults === null && activeMode === null && (
+        {searchResults === null && (
           <>
             {mealSections.map((mt) => {
               const recipes = carouselMap[mt];
@@ -964,6 +635,23 @@ export default function HomeScreen() {
                 </React.Fragment>
               );
             })}
+
+            {smoothieRecipes.length > 0 && (
+              <>
+                <FeedSectionHeader
+                  title="Smoothies & Shakes"
+                  accentColor={Colors.info}
+                  compact={isLandscape}
+                  onSeeAll={() => router.push('/browse?category=smoothie&title=Smoothies%20%26%20Shakes' as Href)}
+                />
+                <HCarousel
+                  recipes={smoothieRecipes}
+                  onFavoriteToggle={toggleFavorite}
+                  cardWidth={carouselCardW}
+                  snapInterval={carouselSnap}
+                />
+              </>
+            )}
 
             {snackRecipes.length > 0 && (
               <>
@@ -1332,10 +1020,6 @@ function makeMainStyles(Colors: AppColors) {
       transform: [{ scale: 0.97 }],
       opacity: 0.9,
     },
-    hungryBtnActiveRing: {
-      borderWidth: 2,
-      borderColor: 'rgba(255,255,255,0.95)',
-    },
     bigBtnLeft: {
       gap: 4,
     },
@@ -1369,10 +1053,6 @@ function makeMainStyles(Colors: AppColors) {
       shadowOpacity: 0.2,
       shadowRadius: 4,
       elevation: 2,
-    },
-    secondBtnActive: {
-      borderColor: Colors.textSecondary,
-      backgroundColor: Colors.surfaceElevated,
     },
     secondBtnPressed: {
       transform: [{ scale: 0.96 }],
@@ -1428,13 +1108,6 @@ function makeMainStyles(Colors: AppColors) {
     },
 
     // ── Hero padding ─────────────────────────────────────────────
-    heroPad: {
-      paddingHorizontal: 20,
-      marginTop: 4,
-    },
-    pickForMeHeroStack: {
-      gap: 14,
-    },
 
     // ── Empty states ─────────────────────────────────────────────
     emptyCard: {

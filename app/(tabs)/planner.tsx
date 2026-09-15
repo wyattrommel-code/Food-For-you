@@ -1,117 +1,253 @@
 import React, {useEffect, useMemo, useRef, useState} from 'react';
-import {View,Text,Pressable,ScrollView,TextInput,Modal,ActivityIndicator,StyleSheet} from 'react-native';
+import {View, Text, Pressable, ScrollView, TextInput, Modal, ActivityIndicator, StyleSheet, PanResponder} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {useLocalSearchParams,useRouter} from 'expo-router';
+import {Ionicons} from '@expo/vector-icons';
+import {useLocalSearchParams, useRouter} from 'expo-router';
 import {useSession} from '@/hooks/useSession';
 import {usePreferences} from '@/hooks/usePreferences';
 import {usePlanner} from '@/hooks/usePlanner';
 import {useTheme} from '@/context/ThemeContext';
-import {supabase} from '@/lib/supabase';
-import {DbRecipe,isRecipeBanned} from '@/lib/types';
 import {useLocalToday} from '@/hooks/useLocalToday';
-import {monthBounds,monthWeeks,shiftMonth} from '@/lib/plannerShopping';
-import {dateKey,parseDay,weekDays,shiftDay,dayLabel,PLAN_SLOTS,PlanSlot,PlanEntry} from '@/lib/planner';
+import {RecipeImage} from '@/components/RecipeImage';
+import {supabase} from '@/lib/supabase';
+import {DbRecipe, isRecipeBanned} from '@/lib/types';
+import {monthWeeks, shiftMonth} from '@/lib/plannerShopping';
+import {parseDay, weekDays, shiftDay, dayLabel, PLAN_SLOTS, PlanSlot, PlanEntry} from '@/lib/planner';
+
+type RecipeChoice = {id:string; title:string};
+type Sheet = 'calendar'|'recipes'|'schedule'|'actions'|'shopping'|null;
+type Drag = {entry:PlanEntry; originY:number; pointerY:number; originScroll:number; offset:number; target:string|null};
+
+// The handle owns the gesture; the rest of a recipe card remains scrollable and tappable.
+function DragHandle({label, disabled, start, move, end, cancel, onAccessibleMove, color}: {
+  label:string; disabled:boolean; start:(y:number)=>void; move:(y:number)=>void;
+  end:(y:number)=>void; cancel:()=>void; onAccessibleMove:()=>void; color:string;
+}) {
+  const current=useRef({disabled,start,move,end,cancel});
+  current.current={disabled,start,move,end,cancel};
+  const responder=useMemo(()=>PanResponder.create({
+    onStartShouldSetPanResponder:()=>!current.current.disabled,
+    onMoveShouldSetPanResponder:()=>!current.current.disabled,
+    onPanResponderGrant:(e)=>current.current.start(e.nativeEvent.pageY),
+    onPanResponderMove:(e)=>current.current.move(e.nativeEvent.pageY),
+    onPanResponderRelease:(e)=>current.current.end(e.nativeEvent.pageY),
+    onPanResponderTerminate:()=>current.current.cancel(),
+    onPanResponderTerminationRequest:()=>false,
+  }),[]);
+  return <View {...responder.panHandlers} accessible accessibilityRole="button" accessibilityLabel={label}
+    accessibilityHint="Drag to another day, or activate to choose a date."
+    accessibilityActions={[{name:'activate',label:'Choose a date'}]} onAccessibilityAction={onAccessibleMove}
+    style={{width:44,minHeight:64,alignItems:'center',justifyContent:'center',touchAction:'none'}}>
+    <Ionicons name="reorder-two-outline" size={22} color={color}/>
+  </View>;
+}
 
 export default function PlannerScreen(){
   const {userId}=useSession();
   return <Planner key={userId??'guest'} userId={userId}/>;
 }
-function Planner({userId}:{userId:string|null}){
-  const router=useRouter(),{Colors}=useTheme();
-  const params=useLocalSearchParams<{recipeId?:string}>();
-  const recipeId=typeof params.recipeId==='string'?params.recipeId:undefined;
+
+function Planner({userId}:{userId:string|null}) {
+  const router=useRouter(), {Colors}=useTheme();
+  const {recipeId}=useLocalSearchParams<{recipeId?:string}>();
   const {preferences}=usePreferences(userId);
   const today=useLocalToday();
-  const [day,setDay]=useState(today),[view,setView]=useState<'today'|'week'>('today');
+  const [anchor,setAnchor]=useState(today), [calendarMonth,setCalendarMonth]=useState(today);
   const previousToday=useRef(today);
-  useEffect(()=>{if(day===previousToday.current)setDay(today);previousToday.current=today;},[today,day]);
-  const weeks=useMemo(()=>monthWeeks(day),[day]);
-  const month=monthBounds(day);
-  const monthTitle=parseDay(day).toLocaleDateString(undefined,{month:'long',year:'numeric'});
-  const days=useMemo(()=>weekDays(day),[day]);
+  const days=useMemo(()=>weekDays(anchor),[anchor]);
   const planner=usePlanner(userId,days[0],days[6]);
-  const groceries=(scope:'day'|'week'|'all',date=day)=>router.push({pathname:'/(tabs)/grocery',params:{scope,day:date}} as never);
-  const [slot,setSlot]=useState<PlanSlot>('menu');
-  const [candidate,setCandidate]=useState<{id:string;title:string}|null>(null);
-  const [moving,setMoving]=useState<PlanEntry|null>(null);
-  const [picker,setPicker]=useState(false),[query,setQuery]=useState('');
-  const [catalog,setCatalog]=useState<DbRecipe[]>([]),[catalogLoading,setCatalogLoading]=useState(false),[catalogError,setCatalogError]=useState('');
-  const [message,setMessage]=useState(''),[actionError,setActionError]=useState('');
-  const [retry,setRetry]=useState(0);
-  const scroll=useRef<ScrollView>(null);
-  useEffect(()=>{if(candidate)scroll.current?.scrollTo({y:0,animated:true});},[candidate]);
+  const [sheet,setSheet]=useState<Sheet>(null), [selected,setSelected]=useState<PlanEntry|null>(null);
+  const [candidate,setCandidate]=useState<RecipeChoice|null>(null), [moving,setMoving]=useState<PlanEntry|null>(null);
+  const [date,setDate]=useState(today), [slot,setSlot]=useState<PlanSlot>('menu'), [query,setQuery]=useState('');
+  const [catalog,setCatalog]=useState<DbRecipe[]>([]), [catalogLoading,setCatalogLoading]=useState(false), [catalogError,setCatalogError]=useState('');
+  const [retry,setRetry]=useState(0), [error,setError]=useState(''), [message,setMessage]=useState('');
+  const scroll=useRef<ScrollView>(null), viewport=useRef<View>(null);
+  const scrollY=useRef(0), contentHeight=useRef(0), frame=useRef({y:0,height:0});
+  const dayLayouts=useRef<Record<string,{y:number;height:number}>>({});
+  const dragRef=useRef<Drag|null>(null), [drag,setDrag]=useState<Drag|null>(null);
+  useEffect(()=>{if(!message)return;const timer=setTimeout(()=>setMessage(''),4500);return()=>clearTimeout(timer);},[message]);
+  useEffect(()=>{
+    if(anchor===previousToday.current)setAnchor(today);
+    previousToday.current=today;
+  },[today,anchor]);
+  useEffect(()=>{scroll.current?.scrollTo({y:0,animated:false});scrollY.current=0;},[days[0]]);
   useEffect(()=>{
     if(!userId)return;
     let active=true;setCatalogLoading(true);setCatalogError('');
-    // RLS restricts this query to the shared catalog and this account's private recipes.
-    supabase.from('recipes').select('*').order('title').then(({data,error})=>{
-      if(!active)return;
-      setCatalogLoading(false);
-      if(error){setCatalogError('Could not load recipes. Please retry.');return;}
+    // Existing RLS supplies the shared catalog plus this account's private recipes.
+    supabase.from('recipes').select('*').order('title').then(({data,error:loadError})=>{
+      if(!active)return;setCatalogLoading(false);
+      if(loadError){setCatalogError('Could not load recipe photos or search. Please retry.');return;}
       setCatalog(data??[]);
-      if(recipeId){const recipe=data?.find(r=>r.id===recipeId);if(recipe)setCandidate(recipe);else setCatalogError('This recipe is no longer available to your account.');}
     });
     return()=>{active=false;};
-  },[userId,recipeId,retry]);
-  const results=useMemo(()=>catalog.filter(r=>!isRecipeBanned(r,preferences)&&`${r.title} ${r.tags.join(' ')}`.toLowerCase().includes(query.toLowerCase().trim())),[catalog,preferences,query]);
+  },[userId,retry]);
+  const handledRecipe=useRef<string|null>(null);
+  useEffect(()=>{
+    if(!recipeId){handledRecipe.current=null;return;}
+    if(catalogLoading||!catalog.length||handledRecipe.current===recipeId)return;
+    handledRecipe.current=recipeId;
+    const recipe=catalog.find(r=>r.id===recipeId);
+    if(recipe){setCandidate(recipe);setMoving(null);setDate(today);setCalendarMonth(today);setSlot('menu');setSheet('schedule');setError('');}
+    else setError('This recipe is no longer available to your account.');
+  },[recipeId,catalog,catalogLoading,today]);
+  const byId=useMemo(()=>new Map(catalog.map(r=>[r.id,r])),[catalog]);
+  const results=useMemo(()=>catalog.filter(r=>!isRecipeBanned(r,preferences)&&`${r.title} ${r.tags.join(' ')}`.toLowerCase().includes(query.trim().toLowerCase())),[catalog,preferences,query]);
+  const monthTitle=parseDay(anchor).toLocaleDateString(undefined,{month:'long',year:'numeric'});
+  const weeks=useMemo(()=>monthWeeks(calendarMonth),[calendarMonth]);
+  const thisWeek=days[0]===weekDays(today)[0];
   const s=useMemo(()=>StyleSheet.create({
-    page:{flex:1,backgroundColor:Colors.background},content:{padding:20,gap:16,width:'100%',maxWidth:800,alignSelf:'center'},
-    row:{flexDirection:'row',alignItems:'center',gap:10,flexWrap:'wrap'},title:{fontSize:28,fontWeight:'800',color:Colors.textPrimary},text:{color:Colors.textPrimary,fontSize:16},muted:{color:Colors.textSecondary,fontSize:14},
-    button:{minHeight:44,paddingHorizontal:14,paddingVertical:12,borderRadius:14,backgroundColor:Colors.surface,borderWidth:1,borderColor:Colors.border,justifyContent:'center'},
-    chosen:{borderColor:Colors.accent,backgroundColor:Colors.accent},chosenText:{color:'#fff',fontWeight:'700'},
-    box:{backgroundColor:Colors.surface,borderRadius:18,padding:16,gap:12,borderWidth:1,borderColor:Colors.border},input:{minHeight:48,padding:12,borderWidth:1,borderColor:Colors.border,borderRadius:12,color:Colors.textPrimary},
+    page:{flex:1,backgroundColor:Colors.background}, header:{paddingHorizontal:20,paddingTop:12,paddingBottom:12,width:'100%',maxWidth:720,alignSelf:'center',gap:12},
+    row:{flexDirection:'row',alignItems:'center',gap:10}, spread:{flexDirection:'row',alignItems:'center',justifyContent:'space-between',gap:8},
+    title:{fontSize:24,fontWeight:'800',color:Colors.textPrimary}, text:{fontSize:16,color:Colors.textPrimary}, muted:{fontSize:13,color:Colors.textSecondary},
+    icon:{width:44,height:44,alignItems:'center',justifyContent:'center',borderRadius:22},
+    content:{paddingHorizontal:20,paddingBottom:28,width:'100%',maxWidth:720,alignSelf:'center'},
+    day:{paddingTop:16,paddingBottom:18,borderTopWidth:1,borderColor:Colors.border,minHeight:88,gap:8},
+    date:{width:42,alignItems:'center',gap:2}, dateNumber:{fontSize:22,fontWeight:'800',color:Colors.textPrimary}, weekday:{fontSize:11,fontWeight:'700',color:Colors.textSecondary},
+    dayTitle:{fontSize:17,fontWeight:'700',color:Colors.textPrimary}, empty:{color:Colors.textMuted,fontSize:13,marginLeft:52,marginTop:-6},
+    card:{flexDirection:'row',alignItems:'center',backgroundColor:Colors.surface,borderWidth:1,borderColor:Colors.border,borderRadius:16,minHeight:82},
+    cardMain:{flex:1,minWidth:0,flexDirection:'row',alignItems:'center',gap:12,padding:10}, thumb:{width:58,height:58,borderRadius:11}, cardTitle:{fontSize:15,fontWeight:'700',color:Colors.textPrimary,lineHeight:20},
+    pill:{paddingHorizontal:12,minHeight:40,justifyContent:'center',borderRadius:20,backgroundColor:Colors.surface},
+    backdrop:{flex:1,backgroundColor:'rgba(0,0,0,0.42)',justifyContent:'flex-end'}, sheet:{backgroundColor:Colors.background,borderTopLeftRadius:24,borderTopRightRadius:24,maxHeight:'90%',width:'100%',maxWidth:640,alignSelf:'center'},
+    sheetContent:{padding:20,gap:16,paddingBottom:28}, sheetTitle:{fontSize:22,fontWeight:'800',color:Colors.textPrimary,flex:1},
+    button:{minHeight:48,padding:14,borderRadius:12,backgroundColor:Colors.surface,justifyContent:'center'}, primary:{backgroundColor:Colors.accent}, white:{color:'#fff',fontWeight:'700',textAlign:'center',fontSize:16},
+    input:{minHeight:48,borderWidth:1,borderColor:Colors.border,borderRadius:12,padding:12,color:Colors.textPrimary,fontSize:16},
+    calendarRow:{flexDirection:'row'}, cell:{width:'14.285714%',minHeight:44,alignItems:'center',justifyContent:'center',borderRadius:12,gap:3},
+    selected:{backgroundColor:Colors.accent}, chipRow:{flexDirection:'row',flexWrap:'wrap',gap:8}, chip:{padding:12,minHeight:44,borderRadius:12,backgroundColor:Colors.surface},
+    notice:{paddingHorizontal:20,paddingVertical:8}, error:{color:Colors.accent,fontSize:14},
   }),[Colors]);
-  const button=(label:string,onPress:()=>void,selected=false,disabled=false,accessibilityLabel=label)=><Pressable accessibilityRole="button" accessibilityLabel={accessibilityLabel} accessibilityState={{selected,disabled}} disabled={disabled} onPress={onPress} style={[s.button,selected&&s.chosen,disabled&&{opacity:0.5}]}><Text style={selected?s.chosenText:s.text}>{label}</Text></Pressable>;
+  function close(){if(planner.busy)return;setSheet(null);setCandidate(null);setMoving(null);setSelected(null);setError('');router.setParams({recipeId:undefined});}
+  function chooseDay(d:string){setDate(d);setSlot('menu');setCandidate(null);setMoving(null);setQuery('');setError('');setSheet('recipes');}
+  function editEntry(entry:PlanEntry){setSelected(entry);setError('');setSheet('actions');}
+  function schedule(entry:PlanEntry){setDate(entry.plan_date);setSlot(entry.meal_slot);setCandidate({id:entry.recipe_id,title:entry.recipe_title});setMoving(entry);setCalendarMonth(entry.plan_date);setSheet('schedule');setError('');}
   async function save(){
-    if(!candidate)return;setActionError('');setMessage('');
-    try{if(moving)await planner.move(moving,day,slot);else await planner.add(day,slot,candidate);setMessage(`${candidate.title} ${moving?'moved':'added'} to ${dayLabel(day)} · ${PLAN_SLOTS[slot]}.`);if(day!==today)setView('week');setCandidate(null);setMoving(null);router.setParams({recipeId:undefined});}
-    catch(e){setActionError(e instanceof Error?e.message:'Could not save. Try again.');}
+    if(!candidate)return;setError('');
+    try{
+      if(moving)await planner.move(moving,date,slot);else await planner.add(date,slot,candidate);
+      setAnchor(date);setMessage(`${candidate.title} ${moving?'moved':'added'} to ${dayLabel(date)}.`);
+      setSheet(null);setCandidate(null);setMoving(null);router.setParams({recipeId:undefined});
+    }catch(e){setError(e instanceof Error?e.message:'Could not save your meal. Please retry.');}
   }
-  function choose(date:string){setDay(date);setSlot('menu');setMoving(null);setCandidate(null);setQuery('');setPicker(true);setActionError('');}
+  async function remove(){
+    if(!selected)return;setError('');
+    try{await planner.remove(selected);setMessage(`${selected.recipe_title} removed from ${dayLabel(selected.plan_date)}.`);setSheet(null);setSelected(null);}
+    catch(e){setError(e instanceof Error?e.message:'Could not remove your meal. Please retry.');}
+  }
+  function groceries(scope:'day'|'week'|'all',d=anchor){setSheet(null);router.push({pathname:'/(tabs)/grocery',params:{scope,day:d}} as never);}
+  function targetAt(y:number){
+    if(y<frame.current.y||y>frame.current.y+frame.current.height)return null;
+    const local=y-frame.current.y+scrollY.current;
+    return days.find(d=>{const box=dayLayouts.current[d];return box&&local>=box.y&&local<box.y+box.height;})??null;
+  }
+  function updateDrag(y:number){
+    const current=dragRef.current;if(!current)return;
+    const next={...current,pointerY:y,offset:y-current.originY+scrollY.current-current.originScroll,target:targetAt(y)};
+    dragRef.current=next;setDrag(next);
+  }
+  function startDrag(entry:PlanEntry,y:number){
+    if(planner.busy)return;
+    viewport.current?.measureInWindow((_x,top,_w,height)=>{frame.current={y:top,height};});
+    const value={entry,originY:y,pointerY:y,originScroll:scrollY.current,offset:0,target:entry.plan_date};
+    dragRef.current=value;setDrag(value);setError('');setMessage('');
+  }
+  function cancelDrag(){dragRef.current=null;setDrag(null);}
+  async function endDrag(y:number){
+    const current=dragRef.current;const target=targetAt(y);cancelDrag();
+    if(!current)return;
+    if(Math.abs(y-current.originY)<5&&scrollY.current===current.originScroll){schedule(current.entry);return;}
+    if(!target||target===current.entry.plan_date)return;
+    try{await planner.move(current.entry,target,current.entry.meal_slot);setMessage(`${current.entry.recipe_title} moved to ${dayLabel(target)}.`);}
+    catch(e){setError(e instanceof Error?e.message:'Could not move your meal. Please retry.');}
+  }
+  useEffect(()=>{
+    if(!drag)return;
+    const timer=setInterval(()=>{
+      const current=dragRef.current;if(!current)return;
+      const relative=current.pointerY-frame.current.y;
+      const step=relative<60?-12:relative>frame.current.height-60?12:0;
+      if(!step)return;
+      const next=Math.max(0,Math.min(contentHeight.current-frame.current.height,scrollY.current+step));
+      if(next===scrollY.current)return;
+      scrollY.current=next;scroll.current?.scrollTo({y:next,animated:false});updateDrag(current.pointerY);
+    },50);
+    return()=>clearInterval(timer);
+  },[!!drag,days]);
+  const icon=(name:React.ComponentProps<typeof Ionicons>['name'],label:string,action:()=>void,disabled=false)=><Pressable accessibilityRole="button" accessibilityLabel={label} disabled={disabled} onPress={action} style={[s.icon,disabled&&{opacity:0.4}]}><Ionicons name={name} size={22} color={Colors.textPrimary}/></Pressable>;
+  const action=(label:string,fn:()=>void,primary=false)=><Pressable accessibilityRole="button" accessibilityLabel={label} disabled={planner.busy} onPress={fn} style={[s.button,primary&&s.primary,planner.busy&&{opacity:0.5}]}><Text style={primary?s.white:s.text}>{label}</Text></Pressable>;
+  const calendar=(selectedDate:string,onSelect:(d:string)=>void)=><View style={{gap:8}}>
+    <View style={s.spread}>{icon('chevron-back','Previous month',()=>setCalendarMonth(shiftMonth(calendarMonth,-1)),planner.busy)}<Text style={[s.text,{fontWeight:'700'}]}>{parseDay(calendarMonth).toLocaleDateString(undefined,{month:'long',year:'numeric'})}</Text>{icon('chevron-forward','Next month',()=>setCalendarMonth(shiftMonth(calendarMonth,1)),planner.busy)}</View>
+    <View style={s.calendarRow}>{['M','T','W','T','F','S','S'].map((d,i)=><View key={i} style={[s.cell,{minHeight:24}]}><Text style={s.muted}>{d}</Text></View>)}</View>
+    {weeks.map(w=><View key={w[0]} style={s.calendarRow}>{w.map(d=><Pressable key={d} accessibilityRole="button" accessibilityLabel={`Choose ${dayLabel(d)}, ${parseDay(d).getFullYear()}`} accessibilityState={{selected:d===selectedDate}} disabled={planner.busy} onPress={()=>onSelect(d)} style={[s.cell,d===selectedDate&&s.selected]}><Text style={[s.text,d===selectedDate?{color:'#fff',fontWeight:'700'}:d.slice(0,7)!==calendarMonth.slice(0,7)?{color:Colors.textMuted}:null]}>{parseDay(d).getDate()}</Text>{d===today&&<View style={{width:4,height:4,borderRadius:2,backgroundColor:d===selectedDate?'#fff':Colors.accent}}/>}</Pressable>)}</View>)}
+  </View>;
   return <SafeAreaView style={s.page} edges={['top']}>
-    <ScrollView ref={scroll} contentContainerStyle={s.content} keyboardShouldPersistTaps="handled">
-      <Text style={s.title}>Meal planner</Text><Text style={s.muted}>{dayLabel(today)} · Plan a month, one week at a time.</Text>
-      <View style={s.row}>{button('Today',()=>{setDay(today);setView('today');},view==='today')}{button('Week view',()=>setView('week'),view==='week')}</View>
-      {!userId?<><Text style={s.text}>Sign in to save your weekly menu.</Text>{button('Sign in',()=>router.push('/login'))}</>:<>
-      {(view==='week'||candidate)&&<>
-      <View style={[s.row,{justifyContent:'space-between'}]}>{button('‹',()=>setDay(shiftMonth(day,-1)),false,planner.busy,'Previous month')}<Text style={[s.text,{fontSize:20,fontWeight:'800'}]}>{monthTitle}</Text>{button('›',()=>setDay(shiftMonth(day,1)),false,planner.busy,'Next month')}</View>
-      <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{gap:8}}>{weeks.map(w=><View key={w[0]}>{button(`${dayLabel(w[0])} – ${dayLabel(w[6])}`,()=>setDay(w[0]<month.start?month.start:w[0]),w[0]===days[0],planner.busy,`Plan week ${w[0]}`)}</View>)}</ScrollView>
-      <View style={s.row}>{button('Previous week',()=>setDay(shiftDay(day,-7)),false,planner.busy)}{button('This week',()=>setDay(dateKey(new Date())),false,planner.busy)}{button('Next week',()=>setDay(shiftDay(day,7)),false,planner.busy)}</View>
-      <Text style={s.text}>{dayLabel(days[0])} – {dayLabel(days[6])}</Text></>}
-      {catalogLoading&&recipeId&&<ActivityIndicator accessibilityLabel="Loading recipe"/>}
-      {!!catalogError&&<View><Text accessibilityRole="alert" style={s.text}>{catalogError}</Text>{button('Retry recipes',()=>setRetry(n=>n+1))}</View>}
-      {candidate&&<View style={s.box}>
-        <Text style={s.title}>{moving?'Move recipe':'Add to planner'}</Text><Text style={s.text}>{candidate.title}</Text>
-        <Text style={s.muted}>Choose a day</Text><View style={s.row}>{days.map(d=><View key={d}>{button(dayLabel(d),()=>setDay(d),d===day,planner.busy)}</View>)}</View>
-        <Text style={s.muted}>Choose a meal or the day’s menu</Text><View style={s.row}>{(Object.keys(PLAN_SLOTS) as PlanSlot[]).map(k=><View key={k}>{button(PLAN_SLOTS[k],()=>setSlot(k),k===slot,planner.busy)}</View>)}</View>
-        {button(planner.busy?'Saving…':moving?'Move recipe':'Save to day',()=>void save(),true,planner.busy)}
-        {button('Cancel',()=>{setCandidate(null);setMoving(null);router.setParams({recipeId:undefined});},false,planner.busy)}
-      </View>}
-      {!!actionError&&<Text accessibilityRole="alert" style={s.text}>{actionError}</Text>}
-      {!!message&&<Text accessibilityLiveRegion="polite" style={s.text}>{message}</Text>}
-      {!!planner.error&&<View><Text accessibilityRole="alert" style={s.text}>{planner.error}</Text>{button('Retry menu',()=>void planner.reload())}</View>}
-      {planner.loading?<ActivityIndicator accessibilityLabel="Loading weekly menu"/>:(view==='today'&&!candidate?[today]:days).map(date=><View key={date} style={s.box}>
-        <Text style={[s.text,{fontWeight:'800'}]}>{dayLabel(date)}{date===today?' · Today':''}</Text>
-        {planner.entries.filter(e=>e.plan_date===date).length===0&&<Text style={s.muted}>No recipes planned yet.</Text>}
-        {(Object.keys(PLAN_SLOTS) as PlanSlot[]).flatMap(k=>planner.entries.filter(e=>e.plan_date===date&&e.meal_slot===k).map(entry=><View key={entry.id} style={{gap:6}}>
-          <Text style={s.muted}>{PLAN_SLOTS[k]}</Text>
-          {button(entry.recipe_title,()=>router.push(`/recipe/${entry.recipe_id}`))}
-          <View style={s.row}>{button('Move',()=>{setDay(date);setSlot(entry.meal_slot);setCandidate({id:entry.recipe_id,title:entry.recipe_title});setMoving(entry);setActionError('');},false,planner.busy,`Move ${entry.recipe_title}`)}{button('Remove',()=>{setActionError('');void planner.remove(entry).catch(e=>setActionError(e.message));},false,planner.busy,`Remove ${entry.recipe_title}`)}</View>
-        </View>))}
-        <View style={s.row}>{button('+ Add recipe',()=>choose(date),false,planner.busy,`Add recipe to ${dayLabel(date)}`)}{button('Day’s groceries',()=>groceries('day',date),false,false,`Groceries for ${dayLabel(date)}`)}</View>
-      </View>)}
-      <View style={s.box}><Text style={[s.text,{fontWeight:'800'}]}>Shopping for your plan</Text><View style={s.row}>{button('Today’s groceries',()=>groceries('day',today))}{button('This week’s groceries',()=>groceries('week',view==='today'?today:day))}{button('Entire grocery list',()=>groceries('all'))}</View><Text style={s.muted}>Your planned ingredients update when you add, move or remove meals.</Text></View>
-      </>}
-    </ScrollView>
-    <Modal visible={picker} animationType="slide" onRequestClose={()=>setPicker(false)}>
-      <SafeAreaView style={s.page}><ScrollView contentContainerStyle={s.content} keyboardShouldPersistTaps="handled">
-        <Text style={s.title}>Choose a recipe</Text><Text style={s.muted}>{dayLabel(day)} · Matches your food preferences. Includes your own recipes.</Text>
-        {button('Close recipe picker',()=>setPicker(false))}
-        <TextInput accessibilityLabel="Search planner recipes" placeholder="Search recipes" placeholderTextColor={Colors.textMuted} value={query} onChangeText={setQuery} style={s.input}/>
-        {catalogLoading?<ActivityIndicator/>:results.map(r=><View key={r.id}>{button(r.title,()=>{setCandidate(r);setPicker(false);})}</View>)}
-        {!catalogLoading&&results.length===0&&<Text style={s.text}>No matching recipes. Try another search or add your own recipe in Create.</Text>}
-        {!!catalogError&&<><Text accessibilityRole="alert" style={s.text}>{catalogError}</Text>{button('Retry recipe list',()=>setRetry(n=>n+1))}</>}
-      </ScrollView></SafeAreaView>
+    <View style={s.header}>
+      <View style={s.spread}><Text accessibilityRole="header" style={s.title}>Meal planner</Text><View style={s.row}>
+        <Pressable accessibilityRole="button" accessibilityLabel="Go to today" onPress={()=>{setAnchor(today);scroll.current?.scrollTo({y:Math.max(0,(dayLayouts.current[today]?.y??0)-8),animated:true});}} style={s.pill}><Text style={[s.muted,{fontWeight:'700'}]}>Today</Text></Pressable>
+        {icon('cart-outline','Planner shopping lists',()=>setSheet('shopping'),!userId)}
+      </View></View>
+      <View style={s.spread}>
+        {icon('chevron-back','Previous week',()=>setAnchor(shiftDay(anchor,-7)),planner.busy||!!drag)}
+        <Pressable accessibilityRole="button" accessibilityLabel="Choose calendar date" onPress={()=>{setCalendarMonth(anchor);setSheet('calendar');}} style={{flex:1,alignItems:'center',minHeight:48,justifyContent:'center',gap:3}}>
+          <View style={s.row}><Text style={[s.text,{fontWeight:'700'}]}>{thisWeek?'This week':`${parseDay(days[0]).toLocaleDateString(undefined,{month:'short',day:'numeric'})} – ${parseDay(days[6]).toLocaleDateString(undefined,{month:'short',day:'numeric'})}`}</Text><Ionicons name="chevron-down" size={14} color={Colors.textSecondary}/></View>
+          <Text style={s.muted}>{monthTitle}</Text>
+        </Pressable>
+        {icon('chevron-forward','Next week',()=>setAnchor(shiftDay(anchor,7)),planner.busy||!!drag)}
+      </View>
+    </View>
+    {!userId?<View style={[s.content,{gap:16}]}><Text style={s.text}>Sign in to plan your meals.</Text>{action('Sign in',()=>router.push('/login'),true)}</View>:<>
+      {!!message&&!sheet&&<Text accessibilityLiveRegion="polite" style={[s.muted,s.notice]}>{message}</Text>}
+      {!!error&&!sheet&&<Text accessibilityRole="alert" style={[s.error,s.notice]}>{error}</Text>}
+      {!!planner.error&&<View style={s.notice}><Text accessibilityRole="alert" style={s.error}>{planner.error}</Text>{action('Retry menu',()=>void planner.reload())}</View>}
+      {!!catalogError&&!sheet&&<View style={s.notice}><Text accessibilityRole="alert" style={s.error}>{catalogError}</Text>{action('Retry recipes',()=>setRetry(n=>n+1))}</View>}
+      <View ref={viewport} style={{flex:1}} onLayout={()=>viewport.current?.measureInWindow((_x,y,_w,height)=>{frame.current={y,height};})}>
+        <ScrollView ref={scroll} scrollEnabled={!drag} scrollEventThrottle={16} onScroll={e=>{scrollY.current=e.nativeEvent.contentOffset.y;}} onContentSizeChange={(_w,h)=>{contentHeight.current=h;}} contentContainerStyle={s.content}>
+          {planner.loading?<ActivityIndicator accessibilityLabel="Loading weekly menu" style={{margin:24}}/>:days.map(d=>{
+            const entries=planner.entries.filter(e=>e.plan_date===d).sort((a,b)=>Object.keys(PLAN_SLOTS).indexOf(a.meal_slot)-Object.keys(PLAN_SLOTS).indexOf(b.meal_slot));
+            const isToday=d===today, isDragging=drag?.entry.plan_date===d;
+            return <View key={d} testID={`planner-day-${d}`} onLayout={e=>{dayLayouts.current[d]=e.nativeEvent.layout;}} style={[s.day,isDragging&&{zIndex:5},drag?.target===d&&{backgroundColor:Colors.surface,borderColor:Colors.accent}]}>
+              <View style={s.spread}><View style={s.row}><View style={s.date}><Text style={s.weekday}>{parseDay(d).toLocaleDateString(undefined,{weekday:'short'}).toUpperCase()}</Text><Text style={[s.dateNumber,isToday&&{color:Colors.accent}]}>{parseDay(d).getDate()}</Text></View><Text style={[s.dayTitle,d<today&&{color:Colors.textSecondary}]}>{isToday?'Today':d===shiftDay(today,1)?'Tomorrow':d===shiftDay(today,-1)?'Yesterday':parseDay(d).toLocaleDateString(undefined,{weekday:'long'})}</Text></View>{icon('add',`Add recipe to ${dayLabel(d)}`,()=>chooseDay(d),planner.busy||!!drag)}</View>
+              {entries.length===0&&isToday&&<Text style={s.empty}>What sounds good today?</Text>}
+              {entries.map(entry=><View key={entry.id} style={[s.card,drag?.entry.id===entry.id&&{transform:[{translateY:drag.offset}],zIndex:10,elevation:8,opacity:0.9,borderColor:Colors.accent}]}>
+                <Pressable accessibilityRole="button" accessibilityLabel={`Options for ${entry.recipe_title}`} onPress={()=>editEntry(entry)} disabled={planner.busy||!!drag} style={s.cardMain}>
+                  <RecipeImage url={byId.get(entry.recipe_id)?.image_url} style={s.thumb} iconSize={24} accessibilityLabel={entry.recipe_title}/>
+                  <View style={{flex:1,minWidth:0,gap:4}}><Text numberOfLines={2} style={s.cardTitle}>{entry.recipe_title}</Text><Text style={s.muted}>{PLAN_SLOTS[entry.meal_slot]}</Text></View>
+                  <Ionicons name="ellipsis-horizontal" size={18} color={Colors.textMuted}/>
+                </Pressable>
+                <DragHandle label={`Move ${entry.recipe_title}`} color={Colors.textMuted} disabled={planner.busy} start={y=>startDrag(entry,y)} move={updateDrag} end={y=>void endDrag(y)} cancel={cancelDrag} onAccessibleMove={()=>schedule(entry)}/>
+              </View>)}
+            </View>;
+          })}
+        </ScrollView>
+      </View>
+    </>}
+    <Modal visible={sheet!==null} transparent animationType="slide" onRequestClose={close}>
+      <View style={s.backdrop}><Pressable accessibilityRole="button" accessibilityLabel="Dismiss planner dialog" onPress={close} style={StyleSheet.absoluteFill}/><SafeAreaView edges={['bottom']} style={s.sheet}>
+        <ScrollView contentContainerStyle={s.sheetContent} keyboardShouldPersistTaps="handled">
+          <View style={s.spread}><Text accessibilityRole="header" style={s.sheetTitle}>{sheet==='calendar'?'Choose a date':sheet==='recipes'?'Add a meal':sheet==='schedule'?(moving?'Move meal':'Plan this meal'):sheet==='shopping'?'Shopping lists':'Meal options'}</Text>{icon('close','Close planner dialog',close,planner.busy)}</View>
+          {sheet==='calendar'&&<>{calendar(anchor,d=>{setAnchor(d);setSheet(null);})}{action('Back to this week',()=>{setAnchor(today);setSheet(null);})}</>}
+          {sheet==='recipes'&&<>
+            <Text style={s.muted}>{dayLabel(date)}</Text><TextInput style={s.input} value={query} onChangeText={setQuery} placeholder="Find a recipe" placeholderTextColor={Colors.textMuted} accessibilityLabel="Search planner recipes"/>
+            {catalogLoading?<ActivityIndicator accessibilityLabel="Loading recipes"/>:results.slice(0,50).map(r=><Pressable key={r.id} accessibilityRole="button" accessibilityLabel={`Plan ${r.title}`} onPress={()=>{setCandidate(r);setCalendarMonth(date);setSheet('schedule');}} style={s.cardMain}><RecipeImage url={r.image_url} style={s.thumb} iconSize={24}/><View style={{flex:1,minWidth:0,gap:4}}><Text style={s.cardTitle}>{r.title}</Text><Text style={s.muted}>{r.prep_time_mins} min</Text></View><Ionicons name="add" size={20} color={Colors.accent}/></Pressable>)}
+            {!catalogLoading&&!results.length&&!catalogError&&<Text style={s.muted}>No matches. Try another search.</Text>}
+            {!catalogLoading&&results.length>50&&<Text style={s.muted}>Search to find more recipes.</Text>}
+            {!!catalogError&&<><Text accessibilityRole="alert" style={s.error}>{catalogError}</Text>{action('Retry recipe list',()=>setRetry(n=>n+1))}</>}
+          </>}
+          {sheet==='schedule'&&candidate&&<>
+            <View style={s.row}><RecipeImage url={byId.get(candidate.id)?.image_url} style={s.thumb} iconSize={24}/><Text style={[s.cardTitle,{flex:1}]}>{candidate.title}</Text></View>
+            {calendar(date,setDate)}<Text style={[s.text,{fontWeight:'700'}]}>Meal</Text><View style={s.chipRow}>{(Object.keys(PLAN_SLOTS) as PlanSlot[]).map(k=><Pressable key={k} accessibilityRole="button" accessibilityLabel={PLAN_SLOTS[k]} accessibilityState={{selected:k===slot}} disabled={planner.busy} onPress={()=>setSlot(k)} style={[s.chip,k===slot&&s.selected]}><Text style={[s.muted,k===slot&&{color:'#fff',fontWeight:'700'}]}>{PLAN_SLOTS[k]}</Text></Pressable>)}</View>
+            {action(planner.busy?'Saving…':moving?'Move meal':'Save meal',()=>void save(),true)}
+          </>}
+          {sheet==='actions'&&selected&&<>
+            <View style={s.row}><RecipeImage url={byId.get(selected.recipe_id)?.image_url} style={s.thumb} iconSize={24}/><View style={{flex:1,gap:4}}><Text style={s.cardTitle}>{selected.recipe_title}</Text><Text style={s.muted}>{dayLabel(selected.plan_date)} · {PLAN_SLOTS[selected.meal_slot]}</Text></View></View>
+            {action('View recipe',()=>{setSheet(null);router.push(`/recipe/${selected.recipe_id}`);})}
+            {action('Move or change meal',()=>schedule(selected))}
+            {action('Groceries for this day',()=>groceries('day',selected.plan_date))}
+            {action('Remove from plan',()=>void remove())}
+          </>}
+          {sheet==='shopping'&&<>{action('Today’s groceries',()=>groceries('day',today))}{action(thisWeek?'This week’s groceries':'Selected week’s groceries',()=>groceries('week'))}{action('Entire grocery list',()=>groceries('all'))}</>}
+          {!!error&&<Text accessibilityRole="alert" style={s.error}>{error}</Text>}
+        </ScrollView>
+      </SafeAreaView></View>
     </Modal>
   </SafeAreaView>;
 }
