@@ -2,6 +2,19 @@ const {test}=require('node:test'),assert=require('node:assert/strict'),fs=requir
 const modules=new Map();function load(file){const filename=path.resolve(__dirname,'..',file);if(modules.has(filename))return modules.get(filename).exports;const m=new Module(filename,module);modules.set(filename,m);m.require=id=>id.startsWith('.')?load(path.relative(path.resolve(__dirname,'..'),path.resolve(path.dirname(filename),id)+'.ts')):require(id);m._compile(ts.transpileModule(fs.readFileSync(filename,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2020}}).outputText,filename);return m.exports;}
 const {monthBounds,monthWeeks,shiftMonth,plannedShopping,purchaseKey}=load('lib/plannerShopping.ts');
 const plan=(id,date,lines=['1 cup milk'])=>({id,plan_date:date,recipe_id:'same-recipe',recipe_title:'Simple meal',recipes:{ingredients_list:lines,shopping_list:lines}});
+const {upcomingDays}=load('lib/planner.ts');
+
+test('upcoming planner starts today even on Sunday and crosses month, year, leap and DST dates',()=>{
+ for(const [start,end] of [['2026-09-20','2026-09-26'],['2026-09-29','2026-10-05'],['2026-12-29','2027-01-04'],['2028-02-27','2028-03-04'],['2026-10-30','2026-11-05']]){
+  const days=upcomingDays(start);assert.equal(days.length,7);assert.equal(days[0],start);assert.equal(days[6],end);assert.equal(new Set(days).size,7);
+ }
+});
+test('planner grocery shortcut uses exactly its seven visible dates, without changing calendar-week lists',()=>{
+ const plans=[plan('past','2026-09-14'),plan('today','2026-09-16'),plan('nextMonday','2026-09-21'),plan('last','2026-09-22'),plan('outside','2026-09-23')];
+ const rolling=plannedShopping(plans,[],'week','2026-09-16','2026-09-16',true)[0];
+ assert.equal(rolling.count,3);assert.deepEqual(rolling.references.map(r=>r.plan_id),['today','nextMonday','last']);
+ assert.equal(plannedShopping(plans,[],'week','2026-09-16','2026-09-16')[0].count,2);
+});
 test('calendar months include every boundary week and leap day',()=>{
  assert.deepEqual(monthBounds('2028-02-10'),{start:'2028-02-01',end:'2028-02-29'});assert.equal(shiftMonth('2026-12-31',1),'2027-01-01');
  const weeks=monthWeeks('2026-09-14');assert.equal(weeks[0][0],'2026-08-31');assert.equal(weeks.at(-1)[6],'2026-10-04');assert.equal(new Set(weeks.flat()).size,35);

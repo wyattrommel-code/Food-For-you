@@ -21,7 +21,11 @@ export function usePlanner(userId:string|null,start:string,end:string,scope:Plan
         if(result.error)throw result.error;rows.push(...(result.data??[]));if((result.data?.length??0)<500)break;
       }
       if(alive.current&&ticket===revision.current&&live.current===key)setSnapshot({key,entries:rows});
-    }catch{if(alive.current&&ticket===revision.current&&live.current===key){setError('Could not load this planner. Check your connection and retry.');setSnapshot({key,entries:[]});}}
+    }catch(failure){if(alive.current&&ticket===revision.current&&live.current===key){
+      const code=(failure as {code?:string})?.code;
+      if(code==='42501'||code?.startsWith('PGRST30'))setSnapshot({key,entries:[]});
+      setError('Could not refresh this planner. Check your connection and retry.');
+    }}
     finally{if(alive.current&&ticket===revision.current&&live.current===key)setLoading(false);}
   },[userId,target.table,target.column,target.id,start,end,key]);
   useFocusEffect(useCallback(()=>{
@@ -45,7 +49,7 @@ export function usePlanner(userId:string|null,start:string,end:string,scope:Plan
   const filterEntry=(entry:PlanEntry)=>{
     if((scope==='household'?entry.household_id:entry.user_id)!==target.id)throw Error('This meal belongs to another planner.');
   };
-  return {entries:snapshot.key===key?snapshot.entries:[],loading:loading||snapshot.key!==key,error,busy,reload:()=>load(),
+  return {entries:snapshot.key===key?snapshot.entries:[],loading:snapshot.key!==key&&!error,refreshing:loading,error,busy,reload:()=>load(),
     add:(date:string,slot:PlanSlot,recipe:{id:string;title:string},destination:PlannerScope=scope)=>{parseDay(date);const to=plannerDestination(userId,destination,householdId);if(!to.id)throw Error('This planner is unavailable. Check household access.');return change(token=>supabase.from(to.table).upsert({[to.column]:to.id,...(destination==='household'?{created_by:userId}:{}),plan_date:date,meal_slot:slot,recipe_id:recipe.id,recipe_title:recipe.title},{onConflict:`${to.column},plan_date,meal_slot,recipe_id`,ignoreDuplicates:true}).setHeader('Authorization','Bearer '+token));},
     move:(entry:PlanEntry,date:string,slot:PlanSlot)=>{parseDay(date);filterEntry(entry);return change(token=>supabase.from(target.table).update({plan_date:date,meal_slot:slot}).eq('id',entry.id).eq(target.column,target.id!).eq('plan_date',entry.plan_date).eq('meal_slot',entry.meal_slot).select().single().setHeader('Authorization','Bearer '+token));},
     remove:(entry:PlanEntry)=>{filterEntry(entry);return change(token=>supabase.from(target.table).delete().eq('id',entry.id).eq(target.column,target.id!).eq('plan_date',entry.plan_date).eq('meal_slot',entry.meal_slot).select().single().setHeader('Authorization','Bearer '+token));},

@@ -12,6 +12,7 @@ import {SessionProvider} from '@/context/SessionContext';
 import {HouseholdProvider} from '@/context/HouseholdContext';
 import {GroceryProvider} from '@/context/GroceryContext';
 import {HouseholdPlanningProvider} from '@/context/HouseholdPlanningContext';
+import {RecipeCatalogProvider} from '@/context/RecipeCatalogContext';
 import {CookingProvider} from '@/context/CookingContext';
 import { useSession } from '@/hooks/useSession';
 import { PreferencesProvider } from '@/context/PreferencesContext';
@@ -202,5 +203,5 @@ export default function RootLayout() {
 
 function AccountProviders(){
   const {userId}=useSession();
-  return <HouseholdProvider key={userId||'signed-out'}><GroceryProvider><RootLayoutInner /></GroceryProvider></HouseholdProvider>;
+  return <HouseholdProvider key={userId||'signed-out'}><GroceryProvider><RecipeCatalogProvider userId={userId}><RootLayoutInner /></RecipeCatalogProvider></GroceryProvider></HouseholdProvider>;
 }

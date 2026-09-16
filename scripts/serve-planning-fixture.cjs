@@ -13,6 +13,7 @@ const recipes=[make('44444444-4444-4444-8444-444444444441','Bean and Rice Bowl',
 const tables={meal_plans:[{id:randomUUID(),user_id:a,plan_date:today,meal_slot:'snack',recipe_id:recipes[3].id,recipe_title:recipes[3].title,created_at:now}],meal_plan_purchases:[],household_meal_plans:[],household_meal_plan_purchases:[],household_grocery_items:[],user_ingredients:[]};
 const household={id:h,name:'QA household',ownerId:a,inviteExpiresAt:null,members:[{userId:a,name:'Alex',isOwner:true},{userId:b,name:'Blair',isOwner:false}]};
 let preferenceWrites=0;
+const reads={};
 function user(id){return {id,email:id===b?'blair@example.invalid':'alex@example.invalid',aud:'authenticated',role:'authenticated',created_at:now,app_metadata:{provider:'email'},user_metadata:{}};}
 function session(id){const token=Buffer.from('{"alg":"HS256","typ":"JWT"}').toString('base64url')+'.'+Buffer.from(JSON.stringify({sub:id,role:'authenticated',exp:Math.floor(Date.now()/1000)+3600})).toString('base64url')+'.local-fixture';return {access_token:token,refresh_token:id,token_type:'bearer',expires_in:3600,user:user(id)};}
 function actor(req){try{return JSON.parse(Buffer.from(req.headers.authorization.split('.')[1],'base64url')).sub;}catch{return null;}}
@@ -24,7 +25,7 @@ const server=http.createServer(async(req,res)=>{
  const send=(data,status=200)=>{res.writeHead(status,{'Content-Type':'application/json'});res.end(JSON.stringify(data));};
  try{
  if(p==='/photo.jpg'){res.writeHead(200,{'Content-Type':'image/jpeg'});return res.end(fs.readFileSync(path.resolve(__dirname,'../assets/recipe-photos/turkey-and-cheddar-sandwich-with-chips-3822fcb4ceef.jpg')));}
- if(p==='/fixture-state')return send({settings,tables,preferenceWrites});
+ if(p==='/fixture-state')return send({settings,tables,preferenceWrites,reads});
  if(!p.startsWith('/auth/')&&!p.startsWith('/rest/')){
   const root=path.resolve(__dirname,'../artifacts/household-ui/export');const requested=path.resolve(root,'.'+decodeURIComponent(p));
   if(!requested.startsWith(root+path.sep)&&requested!==root)return send({},403);
@@ -38,6 +39,8 @@ const server=http.createServer(async(req,res)=>{
  if(p.endsWith('/rpc/household_action'))return send({household});
  if(p.endsWith('/rpc/household_planning_action')){if(input.p_settings){Object.assign(settings[id],input.p_settings);if(!settings[id].enabled)settings[id].defaultPlanner='personal';}return send({householdId:h,settings:settings[id],members:household.members.map(m=>({userId:m.userId,name:m.name,planningEnabled:settings[m.userId].enabled,sharingPreferences:settings[m.userId].sharePreferences,preferences:settings[m.userId].sharePreferences?prefs[m.userId]:null}))});}
  let data=[];const table=p.split('/').pop();
+ if(req.method==='GET')reads[table]=(reads[table]||0)+1;
+ if(req.method==='GET'&&table==='meal_plans'&&process.env.FIXTURE_PLAN_DELAY_MS)await new Promise(resolve=>setTimeout(resolve,Number(process.env.FIXTURE_PLAN_DELAY_MS)));
  if(table==='recipes')data=recipes.filter(r=>!r.is_user_created||r.user_id===id);
  else if(table==='users')data=[{id,name:id===b?'Blair':'Alex'}];
  else if(table==='user_preferences'){if(req.method!=='GET'){preferenceWrites++;Object.assign(prefs[id],input);}data=[prefs[id]];}

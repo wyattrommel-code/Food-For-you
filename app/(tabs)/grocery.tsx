@@ -10,23 +10,24 @@ import {usePlannedGroceries} from '@/hooks/usePlannedGroceries';
 import {useLocalToday} from '@/hooks/useLocalToday';
 import {useHouseholdPlanning} from '@/context/HouseholdPlanningContext';
 import {PlannerScopeControl} from '@/components/PlannerScopeControl';
-import {dayLabel,parseDay,shiftDay,weekDays} from '@/lib/planner';
+import {dayLabel,parseDay,shiftDay,weekDays,upcomingDays} from '@/lib/planner';
 import {plannedShopping,purchaseKey,type ShoppingScope,type PlannedItem} from '@/lib/plannerShopping';
 import {CATEGORY_ORDER,CATEGORY_META,categorizeIngredient,type GroceryItem} from '@/lib/groceryHelpers';
 import {mergeIngredientsIntoUserPantry,parseGroceryLineToPantryIngredients} from '@/lib/groceryPantrySync';
 
 export default function GroceryScreen(){const {userId}=useSession(),planning=useHouseholdPlanning();return <Groceries key={`${userId??'guest'}:${planning.activePlanner}:${planning.householdId}`} userId={userId}/>;}
 function Groceries({userId}:{userId:string|null}){
- const {Colors}=useTheme(),router=useRouter(),params=useLocalSearchParams<{scope?:string;day?:string}>(),today=useLocalToday();
+ const {Colors}=useTheme(),router=useRouter(),params=useLocalSearchParams<{scope?:string;day?:string;window?:string}>(),today=useLocalToday();
  const [scope,setScope]=useState<ShoppingScope>('all'),[day,setDay]=useState(today),[input,setInput]=useState('');
  const previousToday=useRef(today);
  useEffect(()=>{if(day===previousToday.current)setDay(today);previousToday.current=today;},[today,day]);
  useEffect(()=>{if(['day','week','all'].includes(params.scope??''))setScope(params.scope as ShoppingScope);if(params.day){try{parseDay(params.day);setDay(params.day);}catch{setDay(today);}}},[params.scope,params.day]);
- const week=weekDays(day),start=week[0]<today?week[0]:today;
+ const rolling=params.window==='rolling';
+ const week=rolling?upcomingDays(day):weekDays(day),start=week[0]<today?week[0]:today;
  const planning=useHouseholdPlanning();
  const planned=usePlannedGroceries(userId,start,planning.activePlanner,planning.householdId),list=useGroceryList();
  useFocusEffect(useCallback(()=>{void list.reload();},[list.reload]));
- const rows=useMemo(()=>plannedShopping(planned.plans,planned.checks,scope,day,today),[planned.plans,planned.checks,scope,day,today]);
+ const rows=useMemo(()=>plannedShopping(planned.plans,planned.checks,scope,day,today,rolling),[planned.plans,planned.checks,scope,day,today,rolling]);
  const extras=scope==='all'?list.items:[];
  const [error,setError]=useState(''),[notice,setNotice]=useState(''),[working,setWorking]=useState(false);
  const [ack,setAck]=useState<string[]>([]),[ackLoaded,setAckLoaded]=useState(false),[popup,setPopup]=useState<{ids:string[];names:string[]}|null>(null);
@@ -57,7 +58,7 @@ function Groceries({userId}:{userId:string|null}){
   <Text style={{...text,fontSize:28,fontWeight:'800'}}>Grocery List</Text><Text style={muted}>{remaining} remaining · {selectedTitle}</Text>
   <PlannerScopeControl value={planning.activePlanner} onChange={planning.setActivePlanner} disabled={working||planned.busy}/>
   <View style={{flexDirection:'row',gap:8,flexWrap:'wrap'}}>{button('Day',()=>setScope('day'),scope==='day')}{button('Week',()=>setScope('week'),scope==='week')}{button('All',()=>setScope('all'),scope==='all')}</View>
-  {scope!=='all'&&<View style={{flexDirection:'row',gap:8,flexWrap:'wrap'}}>{button(scope==='day'?'Previous day':'Previous week',()=>setDay(shiftDay(day,scope==='day'?-1:-7)))}{button(scope==='day'?'Today':'This week',()=>setDay(today))}{button(scope==='day'?'Next day':'Next week',()=>setDay(shiftDay(day,scope==='day'?1:7)))}</View>}
+  {scope!=='all'&&<View style={{flexDirection:'row',gap:8,flexWrap:'wrap'}}>{button(scope==='day'?'Previous day':'Previous week',()=>setDay(shiftDay(day,scope==='day'?-1:-7)))}{button(scope==='day'?'Today':rolling?'Next 7 days':'This week',()=>setDay(today))}{button(scope==='day'?'Next day':'Next week',()=>setDay(shiftDay(day,scope==='day'?1:7)))}</View>}
   <Text style={muted}>{scope==='all'?'Includes future planned meals and your added shopping items.':"Shopping for the selected dates. Manually added and household items are under All."} Repeated quantities appear as “2 × 1 cup milk”.</Text>
   {!!error&&<Text accessibilityRole="alert" style={{...text,color:Colors.accent}}>{error}</Text>}{!!notice&&<Text accessibilityLiveRegion="polite" style={text}>{notice}</Text>}
   {!!planned.error&&<View style={box}><Text accessibilityRole="alert" style={text}>{planned.error}</Text>{button('Retry planned groceries',()=>void planned.reload())}</View>}

@@ -73,7 +73,7 @@ export default function RecipeDetailScreen() {
     getRecipeById,
     toggleFavorite,
     isFavorited,
-    refresh,
+    invalidateCatalog,
   } = useRecipes(userId, preferences);
   const { addRecipe, removeRecipe, hasRecipe, reload: reloadGrocery } = useGroceryList();
 
@@ -228,13 +228,13 @@ export default function RecipeDetailScreen() {
               Alert.alert('Could not delete', error.message);
               return;
             }
-            await refresh();
+            await invalidateCatalog();
             router.replace('/(tabs)/favorites');
           },
         },
       ]
     );
-  }, [recipe, canDeleteRecipe, refresh, router]);
+  }, [recipe, canDeleteRecipe, invalidateCatalog, router]);
 
   useEffect(() => {
     if (!recipe) return;

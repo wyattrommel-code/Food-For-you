@@ -39,6 +39,7 @@ import { SectionHeader } from '@/components/SectionHeader';
 import { LoadingScreen } from '@/components/LoadingScreen';
 import { useIsLandscape, useIsTablet } from '@/hooks/useIsTablet';
 import { RecipeImage } from '@/components/RecipeImage';
+import {QuickPlanButton} from '@/components/QuickPlanButton';
 import {CookingForControl} from '@/components/CookingForControl';
 import {useCooking} from '@/context/CookingContext';
 
@@ -103,11 +104,15 @@ function HomeRecipeCard({
         end={{ x: 0, y: 1 }}
       />
 
+      <QuickPlanButton recipe={recipe} overlay/>
       {/* Fav button */}
       <Pressable
         style={hcard.favBtn}
         hitSlop={12}
-        onPress={() => {
+        accessibilityRole="button"
+        accessibilityLabel={`${recipe.is_favorited ? 'Unsave' : 'Save'} ${recipe.title}`}
+        onPress={(event) => {
+          event.stopPropagation();
           Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
           onFavoriteToggle(recipe.id);
         }}
@@ -301,7 +306,6 @@ export default function HomeScreen() {
       .maybeSingle();
     if (data) setProfile({ name: data.name ?? null, avatarUrl: data.avatar_url ?? null });
   }, [userId]);
-  useEffect(() => { fetchProfile(); }, [fetchProfile]);
 
   const {
     loading,
@@ -320,9 +324,8 @@ export default function HomeScreen() {
   useFocusEffect(
     useCallback(() => {
       refreshPreferences();
-      refresh();
       fetchProfile();
-    }, [refreshPreferences, refresh, fetchProfile])
+    }, [refreshPreferences, fetchProfile])
   );
 
   const hour            = new Date().getHours();
@@ -681,6 +684,7 @@ export default function HomeScreen() {
                   decelerationRate="fast"
                   renderItem={({ item }) => (
                     <RecipeCard
+                      quickPlan
                       recipe={item}
                       onFavoriteToggle={toggleFavorite}
                       carouselWidth={carouselCardW}
@@ -713,6 +717,7 @@ export default function HomeScreen() {
                   decelerationRate="fast"
                   renderItem={({ item }) => (
                     <RecipeCard
+                      quickPlan
                       recipe={item}
                       onFavoriteToggle={toggleFavorite}
                       carouselWidth={carouselCardW}
@@ -745,6 +750,7 @@ export default function HomeScreen() {
                   decelerationRate="fast"
                   renderItem={({ item }) => (
                     <RecipeCard
+                      quickPlan
                       recipe={item}
                       onFavoriteToggle={toggleFavorite}
                       carouselWidth={carouselCardW}

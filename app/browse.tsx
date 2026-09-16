@@ -1,290 +1,51 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import {
-  View,
-  Text,
-  FlatList,
-  Pressable,
-  StyleSheet,
-  ActivityIndicator,
-  useWindowDimensions,
-} from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { useFocusEffect, useLocalSearchParams, useRouter } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
-import * as Haptics from 'expo-haptics';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
-import { useTheme } from '@/context/ThemeContext';
-import type { AppColors } from '@/constants/Colors';
-import { supabase } from '@/lib/supabase';
-import type { DbRecipe, MealTime, Recipe } from '@/lib/types';
-import { isRecipeBanned } from '@/lib/types';
-import { useSession } from '@/hooks/useSession';
-import { usePreferences } from '@/hooks/usePreferences';
-import { useRecipes } from '@/hooks/useRecipes';
-import { useIsTablet } from '@/hooks/useIsTablet';
-import { RecipeCard } from '@/components/RecipeCard';
+import React,{useMemo} from 'react';
+import {View,Text,FlatList,Pressable,ActivityIndicator,RefreshControl} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {useLocalSearchParams,useRouter} from 'expo-router';
+import {Ionicons} from '@expo/vector-icons';
+import {useTheme} from '@/context/ThemeContext';
+import {useSession} from '@/hooks/useSession';
+import {usePreferences} from '@/hooks/usePreferences';
+import {useRecipes} from '@/hooks/useRecipes';
+import {RecipeImage} from '@/components/RecipeImage';
+import {QuickPlanButton} from '@/components/QuickPlanButton';
 import {useCooking} from '@/context/CookingContext';
 import {CookingForControl} from '@/components/CookingForControl';
-import {matchesAudience} from '@/lib/householdPlanning';
+import {difficultyLabel,type MealTime} from '@/lib/types';
 
-const VALID_MEALS: MealTime[] = [
-  'breakfast',
-  'lunch',
-  'dinner',
-  'snack',
-  'dessert',
-  'sides',
-  'smoothie',
-];
-
-function paramString(v: string | string[] | undefined): string {
-  if (v == null) return '';
-  return Array.isArray(v) ? (v[0] ?? '') : v;
-}
-
-export default function BrowseScreen() {
-  const { Colors } = useTheme();
-  const styles = useMemo(() => makeStyles(Colors), [Colors]);
-  const router = useRouter();
-  const { width } = useWindowDimensions();
-  const isTablet = useIsTablet();
-  const raw = useLocalSearchParams<{ category?: string; title?: string }>();
-  const category = paramString(raw.category).toLowerCase() as MealTime;
-  const title = paramString(raw.title) || 'Browse';
-
-  const { userId } = useSession();
-  const { preferences } = usePreferences(userId);
-  const cooking=useCooking();
-  const { toggleFavorite } = useRecipes(userId, preferences);
-
-  const [recipes, setRecipes] = useState<Recipe[]>([]);
-  const [error,setError]=useState('');
-  const [loading, setLoading] = useState(true);
-
-  const favsKey = userId ? `favs:${userId}` : null;
-
-  const loadFavSet = useCallback(async (): Promise<Set<string>> => {
-    if (!favsKey) return new Set();
-    try {
-      const rawJson = await AsyncStorage.getItem(favsKey);
-      const ids = rawJson ? (JSON.parse(rawJson) as string[]) : [];
-      return new Set(Array.isArray(ids) ? ids : []);
-    } catch {
-      return new Set();
-    }
-  }, [favsKey]);
-
-  const fetchCategory = useCallback(async () => {
-    if (!VALID_MEALS.includes(category)) {
-      setRecipes([]);
-      setLoading(false);
-      return;
-    }
-
-    setLoading(true);setError('');
-    try {
-      const runQuery = () => {
-        const query = supabase
-          .from('recipes')
-          .select('*')
-          .or(category === 'smoothie'
-            ? `and(or(is_user_created.eq.false${userId ? `,user_id.eq.${userId}` : ''}),or(meal_time.cs.{smoothie},tags.cs.{smoothies-and-shakes}))`
-            : 'is_user_created.eq.false');
-        // Public drinks retain legacy meal labels so installed 1.0.4 clients can open them.
-        return (category === 'smoothie' ? query : query.contains('meal_time', [category]))
-          .order('title', { ascending: true });
-      };
-
-      let res = await runQuery();
-      const msg = res.error?.message ?? '';
-      const code = (res.error as { code?: string } | null)?.code;
-      if (res.error && (code === 'PGRST303' || msg.includes('JWT expired'))) {
-        const { data, error: refreshErr } = await supabase.auth.refreshSession();
-        if (!refreshErr && data.session) {
-          res = await runQuery();
-        } else {
-          await supabase.auth.signOut();
-          res = await runQuery();
-        }
-      }
-
-      const favSet = await loadFavSet();
-      if (res.error) {
-        setError('Could not load recipes. Check your connection and retry.');
-        setRecipes([]);
-        return;
-      }
-
-      const rows = (res.data ?? []) as DbRecipe[];
-      const mapped: Recipe[] = rows
-        .map((r) => ({
-          ...r,
-          is_favorited: favSet.has(r.id),
-        }));
-
-      setRecipes(mapped);
-    } catch {
-      setError('Could not load recipes. Check your connection and retry.');
-      setRecipes([]);
-    } finally {
-      setLoading(false);
-    }
-  }, [category, loadFavSet, userId]);
-
-  useFocusEffect(useCallback(() => { void fetchCategory(); }, [fetchCategory]));
-  const visibleRecipes=useMemo(()=>cooking.ready?recipes.filter(r=>cooking.group?matchesAudience(r,cooking.profiles):!isRecipeBanned(r,preferences)):[],[recipes,preferences,cooking.ready,cooking.group,cooking.profiles]);
-
-  const horizontalPad = 20;
-  const columnGap = 14;
-  const cardWidth = useMemo(() => {
-    if (isTablet) {
-      return (width - horizontalPad * 2 - columnGap) / 2;
-    }
-    return width - horizontalPad * 2;
-  }, [width, isTablet]);
-
-  const onFavoriteToggle = useCallback(
-    (id: string) => {
-      void toggleFavorite(id);
-      setRecipes((prev) =>
-        prev.map((r) =>
-          r.id === id ? { ...r, is_favorited: !r.is_favorited } : r
-        )
-      );
-    },
-    [toggleFavorite]
-  );
-
-  const numColumns = isTablet ? 2 : 1;
-
-  return (
-    <SafeAreaView style={styles.safe} edges={['top','bottom','left','right']}>
-      <View style={styles.header}>
-        <Pressable
-          onPress={() => {
-            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-            router.back();
-          }}
-          style={styles.backBtn}
-          hitSlop={12}
-        >
-          <Ionicons name="chevron-back" size={24} color={Colors.textPrimary} />
-        </Pressable>
-        <Text style={styles.headerTitle} numberOfLines={1}>
-          {title}
-        </Text>
-        <View style={styles.headerSpacer} />
+export default function BrowseScreen(){
+  const {Colors}=useTheme(),router=useRouter();
+  const {category:rawCategory,title:rawTitle}=useLocalSearchParams<{category?:string;title?:string}>();
+  const category=(Array.isArray(rawCategory)?rawCategory[0]:rawCategory) as MealTime;
+  const title=(Array.isArray(rawTitle)?rawTitle[0]:rawTitle)||'Browse';
+  const {userId}=useSession(),{preferences}=usePreferences(userId),cooking=useCooking();
+  const {visibleRecipes,loading,refreshing,error,refresh,toggleFavorite}=useRecipes(userId,preferences,cooking,category==='smoothie');
+  const recipes=useMemo(()=>visibleRecipes.filter(r=>r.meal_time.includes(category)||(category==='smoothie'&&r.tags.includes('smoothies-and-shakes'))).sort((a,b)=>a.title.localeCompare(b.title)),[visibleRecipes,category]);
+  const muted={color:Colors.textSecondary,fontSize:13} as const;
+  return <SafeAreaView edges={['top','bottom','left','right']} style={{flex:1,backgroundColor:Colors.background}}>
+    <View style={{width:'100%',maxWidth:720,alignSelf:'center',flex:1}}>
+      <View style={{padding:12,flexDirection:'row',alignItems:'center',gap:8}}>
+        <Pressable accessibilityRole="button" accessibilityLabel="Back" onPress={()=>router.back()} style={{width:44,height:44,alignItems:'center',justifyContent:'center'}}><Ionicons name="chevron-back" size={24} color={Colors.textPrimary}/></Pressable>
+        <Text accessibilityRole="header" style={{flex:1,fontSize:22,fontWeight:'800',color:Colors.textPrimary}}>{title}</Text>
       </View>
-
-      <View style={{paddingHorizontal:20,paddingBottom:10,gap:8}}><CookingForControl/>{!!cooking.message&&<Text accessibilityRole="alert" style={{color:Colors.textSecondary}}>{cooking.message}</Text>}</View>
-      {category==='smoothie'&&<Pressable accessibilityRole="button" accessibilityLabel="Add a smoothie or shake" onPress={()=>router.push('/(tabs)/create?category=smoothie' as never)} style={{minHeight:48,padding:16}}><Text style={{color:Colors.accent,fontWeight:'700'}}>+ Add a smoothie or shake</Text></Pressable>}
-      {error?<View style={styles.centered}><Text accessibilityRole="alert" style={styles.emptyText}>{error}</Text><Pressable accessibilityRole="button" onPress={()=>void fetchCategory()} style={{minHeight:48,padding:12}}><Text style={{color:Colors.accent}}>Retry</Text></Pressable></View>:loading ? (
-        <View style={styles.centered}>
-          <ActivityIndicator size="large" color={Colors.accent} />
-        </View>
-      ) : !VALID_MEALS.includes(category) ? (
-        <View style={styles.centered}>
-          <Text style={styles.emptyText}>No recipes here yet — check back soon!</Text>
-        </View>
-      ) : visibleRecipes.length === 0 ? (
-        <View style={styles.centered}>
-          <Text style={styles.emptyText}>{category==='smoothie'?'No smoothies or shakes match yet. Add your own using the button above.':'No recipes here yet — check back soon!'}</Text>
-        </View>
-      ) : (
-        <>
-          <Text style={styles.countLine}>
-            {visibleRecipes.length} recipe{visibleRecipes.length !== 1 ? 's' : ''}
-          </Text>
-          <FlatList
-            key={numColumns === 2 ? 'grid' : 'list'}
-            data={visibleRecipes}
-            keyExtractor={(item) => item.id}
-            numColumns={numColumns}
-            columnWrapperStyle={numColumns === 2 ? styles.columnWrap : undefined}
-            contentContainerStyle={styles.listContent}
-            showsVerticalScrollIndicator={false}
-            renderItem={({ item }) => (
-              <View style={[styles.cardCell, { width: cardWidth }]}>
-                <RecipeCard
-                  recipe={item}
-                  carouselWidth={cardWidth}
-                  onFavoriteToggle={onFavoriteToggle}
-                  style={{ marginRight: 0 }}
-                />
-              </View>
-            )}
-          />
-        </>
-      )}
-    </SafeAreaView>
-  );
-}
-
-function makeStyles(Colors: AppColors) {
-  return StyleSheet.create({
-    safe: {
-      flex: 1,
-      backgroundColor: Colors.background,
-      width: '100%',
-      alignSelf: 'stretch',
-    },
-    header: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      paddingHorizontal: 12,
-      paddingVertical: 10,
-      borderBottomWidth: 1,
-      borderBottomColor: Colors.border,
-    },
-    backBtn: {
-      width: 40,
-      height: 40,
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    headerTitle: {
-      flex: 1,
-      color: Colors.textPrimary,
-      fontSize: 18,
-      fontWeight: '800',
-      textAlign: 'center',
-    },
-    headerSpacer: {
-      width: 40,
-    },
-    countLine: {
-      color: Colors.textSecondary,
-      fontSize: 14,
-      fontWeight: '600',
-      paddingHorizontal: 20,
-      paddingTop: 12,
-      paddingBottom: 8,
-    },
-    listContent: {
-      paddingHorizontal: 20,
-      paddingBottom: 32,
-    },
-    columnWrap: {
-      gap: 14,
-      justifyContent: 'space-between',
-    },
-    cardCell: {
-      alignItems: 'center',
-      marginBottom: 14,
-    },
-    centered: {
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-      paddingHorizontal: 32,
-    },
-    emptyText: {
-      color: Colors.textSecondary,
-      fontSize: 16,
-      fontWeight: '600',
-      textAlign: 'center',
-      lineHeight: 22,
-    },
-  });
+      <View style={{paddingHorizontal:20,paddingBottom:12,gap:8}}><CookingForControl/>{!!cooking.message&&<Text accessibilityRole="alert" style={muted}>{cooking.message}</Text>}</View>
+      {category==='smoothie'&&<Pressable accessibilityRole="button" accessibilityLabel="Add a smoothie or shake" onPress={()=>router.push('/(tabs)/create?category=smoothie' as never)} style={{minHeight:48,paddingHorizontal:20,justifyContent:'center'}}><Text style={{color:Colors.accent,fontWeight:'700'}}>+ Add a smoothie or shake</Text></Pressable>}
+      {!!error&&<View style={{padding:20}}><Text accessibilityRole="alert" style={muted}>{error}</Text><Pressable accessibilityRole="button" onPress={()=>void refresh()} style={{minHeight:44,justifyContent:'center'}}><Text style={{color:Colors.accent}}>Retry recipes</Text></Pressable></View>}
+      {loading?<ActivityIndicator accessibilityLabel="Loading recipes" color={Colors.accent}/>:<FlatList
+        data={recipes} keyExtractor={item=>item.id} initialNumToRender={10} maxToRenderPerBatch={10} windowSize={7}
+        contentContainerStyle={{paddingHorizontal:20,paddingBottom:24,gap:10}} showsVerticalScrollIndicator={false}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={()=>void refresh()}/>}
+        ListHeaderComponent={<Text style={{...muted,paddingBottom:4}}>{recipes.length} recipe{recipes.length===1?'':'s'}</Text>}
+        ListEmptyComponent={<Text style={{...muted,paddingVertical:24}}>{category==='smoothie'?'No matching smoothies or shakes yet. You can add your own above.':'No recipes match these preferences yet.'}</Text>}
+        renderItem={({item})=><View testID="category-recipe-row" style={{flexDirection:'row',alignItems:'center',minHeight:82,borderRadius:16,borderWidth:1,borderColor:Colors.border,backgroundColor:Colors.surface,paddingRight:10}}>
+          <Pressable accessibilityRole="button" accessibilityLabel={`View ${item.title}`} onPress={()=>router.push(`/recipe/${item.id}`)} style={{flex:1,minWidth:0,flexDirection:'row',alignItems:'center',padding:10,gap:12}}>
+            <RecipeImage url={item.image_url} accessibilityLabel={item.title} style={{width:58,height:58,borderRadius:11}} iconSize={24}/>
+            <View style={{flex:1,minWidth:0,gap:4}}><Text numberOfLines={2} style={{fontSize:15,lineHeight:20,fontWeight:'700',color:Colors.textPrimary}}>{item.title}</Text><Text style={muted}>{item.prep_time_mins} min · {difficultyLabel(item.effort_score)}</Text></View>
+          </Pressable>
+          <Pressable accessibilityRole="button" accessibilityLabel={`${item.is_favorited?'Unsave':'Save'} ${item.title}`} onPress={()=>void toggleFavorite(item.id)} style={{width:44,minHeight:44,alignItems:'center',justifyContent:'center'}}><Ionicons name={item.is_favorited?'heart':'heart-outline'} size={21} color={item.is_favorited?Colors.accent:Colors.textSecondary}/></Pressable>
+          <QuickPlanButton recipe={item}/>
+        </View>}
+      />}
+    </View>
+  </SafeAreaView>;
 }

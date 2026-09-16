@@ -15,3 +15,6 @@ export function parseDay(key: string): Date {
 export function shiftDay(key: string, days: number) { const date=parseDay(key); date.setDate(date.getDate()+days); return dateKey(date); }
 export function weekDays(key: string): string[] { const day=parseDay(key); const start=shiftDay(key,-((day.getDay()+6)%7)); return Array.from({length:7},(_,i)=>shiftDay(start,i)); }
 export function dayLabel(key: string) { return parseDay(key).toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric'}); }
+
+/** A rolling week, starting on the selected local date (today by default). */
+export function upcomingDays(start:string):string[]{return Array.from({length:7},(_,i)=>shiftDay(start,i));}

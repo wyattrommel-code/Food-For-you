@@ -1,10 +1,10 @@
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { discoveryBonus, weightedShuffle } from '@/lib/discovery';
-import { supabase } from '@/lib/supabase';
+import {useFocusEffect} from 'expo-router';
+import {useRecipeCatalog} from '@/context/RecipeCatalogContext';
 import {matchesAudience,audienceScore} from '@/lib/householdPlanning';
 import {
-  DbRecipe,
   Recipe,
   UserPreferences,
   MealTime,
@@ -23,71 +23,22 @@ import {
 export function useRecipes(
   userId: string | null,
   preferences: UserPreferences,
-  audience?: {profiles:UserPreferences[];ready:boolean;group:boolean}
+  audience?: {profiles:UserPreferences[];ready:boolean;group:boolean},
+  includePrivate=false
 ) {
-  const [allRecipes, setAllRecipes] = useState<DbRecipe[]>([]);
+  const catalog=useRecipeCatalog();
+  const allRecipes=useMemo(()=>catalog.rows.filter(r=>!r.is_user_created||(includePrivate&&r.user_id===userId)),[catalog.rows,includePrivate,userId]);
   const [favoriteIds, setFavoriteIds] = useState<Set<string>>(new Set());
-  const [loading, setLoading] = useState(true);
-  const [refreshing, setRefreshing] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
   const favsKey = userId ? `favs:${userId}` : null;
-
-  // ── Fetch all recipes from Supabase + favorites from AsyncStorage ──
-  const fetchData = useCallback(async () => {
-    try {
-      setRefreshing(true);
-      setError(null);
-
-      const runQuery = () =>
-        supabase
-          .from('recipes')
-          .select('*')
-          .eq('is_user_created', false)
-          .order('created_at', { ascending: false });
-
-      const favsPromise = favsKey
-        ? AsyncStorage.getItem(favsKey).then((raw) =>
-            raw ? (JSON.parse(raw) as string[]) : []
-          )
-        : Promise.resolve([] as string[]);
-
-      let [recipesRes, favIds] = await Promise.all([
-        runQuery(),
-        favsPromise,
-      ]);
-
-      // PGRST303 / JWT expired: refresh session once and retry (e.g. after app resume).
-      const msg = recipesRes.error?.message ?? '';
-      const code = (recipesRes.error as { code?: string } | null)?.code;
-      if (
-        recipesRes.error &&
-        (code === 'PGRST303' || msg.includes('JWT expired'))
-      ) {
-        const { data, error: refreshErr } = await supabase.auth.refreshSession();
-        if (!refreshErr && data.session) {
-          recipesRes = await runQuery();
-        } else {
-          await supabase.auth.signOut();
-          recipesRes = await runQuery();
-        }
-      }
-
-      if (recipesRes.error) throw recipesRes.error;
-
-      setAllRecipes(recipesRes.data ?? []);
-      setFavoriteIds(new Set(favIds));
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to load recipes');
-    } finally {
-      setLoading(false);
-      setRefreshing(false);
-    }
-  }, [favsKey]);
-
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+  const loadFavorites=useCallback(async()=>{
+    try{
+      const raw=favsKey?await AsyncStorage.getItem(favsKey):null;
+      const ids=raw?JSON.parse(raw):[];
+      setFavoriteIds(new Set(Array.isArray(ids)?ids:[]));
+    }catch{setFavoriteIds(new Set());}
+  },[favsKey]);
+  useFocusEffect(useCallback(()=>{void loadFavorites();},[loadFavorites]));
+  const fetchData=useCallback(async()=>{await Promise.all([catalog.refresh(),loadFavorites()]);},[catalog.refresh,loadFavorites]);
 
   // ── Derive favorite tags for affinity scoring ────────────────
   const favoriteTags = useMemo(() => {
@@ -175,9 +126,9 @@ export function useRecipes(
   );
 
   return {
-    loading,
-    refreshing,
-    error,
+    loading: !catalog.loaded && (catalog.refreshing || !catalog.error),
+    refreshing: catalog.refreshing,
+    error: catalog.loaded ? null : catalog.error,
     visibleRecipes,
     getRNGChoices,
     getCarouselRecipes,
@@ -185,5 +136,6 @@ export function useRecipes(
     isFavorited,
     getRecipeById,
     refresh: fetchData,
+    invalidateCatalog: catalog.invalidate,
   };
 }

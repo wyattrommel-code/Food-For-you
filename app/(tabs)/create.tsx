@@ -1,3 +1,4 @@
+import {useRecipeCatalog} from '@/context/RecipeCatalogContext';
 import React, { useEffect, useState, useCallback, useRef, useMemo } from 'react';
 import {
   View,
@@ -115,6 +116,7 @@ function AddButton({ label, onPress }: { label: string; onPress: () => void }) {
 }
 
 export default function CreateScreen() {
+  const catalog=useRecipeCatalog();
   const { Colors } = useTheme();
   const styles = useMemo(() => makeStyles(Colors), [Colors]);
 
@@ -264,6 +266,7 @@ export default function CreateScreen() {
       });
 
       if (error) throw error;
+      void catalog.invalidate();
 
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       showToast();
@@ -300,6 +303,7 @@ export default function CreateScreen() {
     ingredients,
     steps,
     showToast,
+    catalog.invalidate,
   ]);
 
   return (

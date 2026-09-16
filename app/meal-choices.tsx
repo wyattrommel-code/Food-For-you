@@ -1,8 +1,8 @@
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {Ionicons} from '@expo/vector-icons';
-import {useFocusEffect, useLocalSearchParams, useRouter} from 'expo-router';
+import {useLocalSearchParams, useRouter} from 'expo-router';
 import {useTheme} from '@/context/ThemeContext';
 import {useSession} from '@/hooks/useSession';
 import {usePreferences} from '@/hooks/usePreferences';
@@ -37,12 +37,6 @@ function MealChoices({mode,userId}:{mode:ChoiceMode;userId:string|null}) {
   const historyKey=`${userId??'guest'}:${mode}:${cooking.key}`;
   const byId=useMemo(()=>new Map(visibleRecipes.map(r=>[r.id,r])),[visibleRecipes]);
   const eligibleKey=visibleRecipes.map(r=>r.id).sort().join(',');
-  const seenFocus=useRef(false);
-  useFocusEffect(useCallback(()=>{
-    if(seenFocus.current)void refresh();
-    seenFocus.current=true;
-  },[refresh]));
-
   function commit(next:Selection){current.current=next;setSelection(next);}
   function roll(preserveAll=false) {
     const previous=current.current;

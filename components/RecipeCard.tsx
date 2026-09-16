@@ -7,6 +7,7 @@ import * as Haptics from 'expo-haptics';
 import { useRouter } from 'expo-router';
 import { useTheme } from '@/context/ThemeContext';
 import { Recipe, difficultyLabel } from '@/lib/types';
+import {QuickPlanButton} from '@/components/QuickPlanButton';
 import { RecipeImage } from '@/components/RecipeImage';
 import { TABLET_BREAKPOINT } from '@/hooks/useIsTablet';
 
@@ -19,6 +20,7 @@ export const CARD_WIDTH  = CAROUSEL_CARD_WIDTH_PHONE;
 export const CARD_HEIGHT = CAROUSEL_CARD_WIDTH_PHONE * 1.18;
 
 interface RecipeCardProps {
+  quickPlan?: boolean;
   recipe: Recipe;
   onFavoriteToggle?: (id: string) => void;
   style?: object;
@@ -37,6 +39,7 @@ export function RecipeCard({
   carouselWidth,
   badgeText,
   onNavigate,
+  quickPlan=false,
 }: RecipeCardProps) {
   const router     = useRouter();
   const { Colors } = useTheme();
@@ -82,6 +85,7 @@ export function RecipeCard({
         end={{ x: 0, y: 1 }}
       />
 
+      {quickPlan&&<QuickPlanButton recipe={recipe} overlay/>}
       {/* Favorite button */}
       <Pressable style={styles.favBtn} onPress={handleFav} hitSlop={12}>
         <Ionicons
