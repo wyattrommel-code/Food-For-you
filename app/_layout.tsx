@@ -11,6 +11,8 @@ import { ThemeProvider, useTheme } from '@/context/ThemeContext';
 import {SessionProvider} from '@/context/SessionContext';
 import {HouseholdProvider} from '@/context/HouseholdContext';
 import {GroceryProvider} from '@/context/GroceryContext';
+import {HouseholdPlanningProvider} from '@/context/HouseholdPlanningContext';
+import {CookingProvider} from '@/context/CookingContext';
 import { useSession } from '@/hooks/useSession';
 import { PreferencesProvider } from '@/context/PreferencesContext';
 import { PreferenceOnboardingGate } from '@/components/PreferenceOnboardingGate';
@@ -116,10 +118,12 @@ function RootLayoutInner() {
 
   return (
     <PreferencesProvider key={session?.user.id ?? 'guest'} userId={session?.user.id ?? null}>
+    <HouseholdPlanningProvider><CookingProvider>
     <View style={{ flex: 1, width: '100%', alignSelf: 'stretch' }}>
       <PreferenceOnboardingGate />
       <StatusBar style={isDark ? 'light' : 'dark'} backgroundColor={Colors.background} />
       <Stack
+        initialRouteName="(tabs)"
         screenOptions={{
           headerShown:  false,
           contentStyle: {
@@ -184,7 +188,7 @@ function RootLayoutInner() {
         />
       </Stack>
     </View>
-    </PreferencesProvider>
+    </CookingProvider></HouseholdPlanningProvider></PreferencesProvider>
   );
 }
 

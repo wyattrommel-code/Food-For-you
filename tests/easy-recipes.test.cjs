@@ -12,7 +12,7 @@ test('50 new meals have complete reviewed photos and do not duplicate existing t
  assert.equal(new Set(rows.map(r=>r.image_url)).size,50);
  for(const r of batch.recipes){assert.ok(!old.has(normalizeTitle(r.title)));validateImageFile(r.review.photo,path.resolve(__dirname,'..'));}
  assert.equal(batch.recipes.filter(r=>r.review.photo.kind==='generated').length,0);
- assert.equal(fs.readFileSync(path.join(__dirname,'../data/recipes/easy-050.sql'),'utf8'),importSql(rows));
+ assert.equal(fs.readFileSync(path.join(__dirname,'../data/recipes/easy-050.sql'),'utf8').replace(/\r\n/g,'\n'),importSql(rows));
 });
 for(const [name,mutate] of [
  ['blank photo',b=>b.recipes[0].image_url=''],

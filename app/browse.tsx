@@ -17,13 +17,16 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useTheme } from '@/context/ThemeContext';
 import type { AppColors } from '@/constants/Colors';
 import { supabase } from '@/lib/supabase';
-import type { DbRecipe, MealTime, Recipe, UserPreferences } from '@/lib/types';
+import type { DbRecipe, MealTime, Recipe } from '@/lib/types';
 import { isRecipeBanned } from '@/lib/types';
 import { useSession } from '@/hooks/useSession';
 import { usePreferences } from '@/hooks/usePreferences';
 import { useRecipes } from '@/hooks/useRecipes';
 import { useIsTablet } from '@/hooks/useIsTablet';
 import { RecipeCard } from '@/components/RecipeCard';
+import {useCooking} from '@/context/CookingContext';
+import {CookingForControl} from '@/components/CookingForControl';
+import {matchesAudience} from '@/lib/householdPlanning';
 
 const VALID_MEALS: MealTime[] = [
   'breakfast',
@@ -52,6 +55,7 @@ export default function BrowseScreen() {
 
   const { userId } = useSession();
   const { preferences } = usePreferences(userId);
+  const cooking=useCooking();
   const { toggleFavorite } = useRecipes(userId, preferences);
 
   const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -113,9 +117,7 @@ export default function BrowseScreen() {
       }
 
       const rows = (res.data ?? []) as DbRecipe[];
-      const prefs: UserPreferences = preferences;
       const mapped: Recipe[] = rows
-        .filter((r) => !isRecipeBanned(r, prefs))
         .map((r) => ({
           ...r,
           is_favorited: favSet.has(r.id),
@@ -128,9 +130,10 @@ export default function BrowseScreen() {
     } finally {
       setLoading(false);
     }
-  }, [category, preferences, loadFavSet, userId]);
+  }, [category, loadFavSet, userId]);
 
   useFocusEffect(useCallback(() => { void fetchCategory(); }, [fetchCategory]));
+  const visibleRecipes=useMemo(()=>cooking.ready?recipes.filter(r=>cooking.group?matchesAudience(r,cooking.profiles):!isRecipeBanned(r,preferences)):[],[recipes,preferences,cooking.ready,cooking.group,cooking.profiles]);
 
   const horizontalPad = 20;
   const columnGap = 14;
@@ -174,6 +177,7 @@ export default function BrowseScreen() {
         <View style={styles.headerSpacer} />
       </View>
 
+      <View style={{paddingHorizontal:20,paddingBottom:10,gap:8}}><CookingForControl/>{!!cooking.message&&<Text accessibilityRole="alert" style={{color:Colors.textSecondary}}>{cooking.message}</Text>}</View>
       {category==='smoothie'&&<Pressable accessibilityRole="button" accessibilityLabel="Add a smoothie or shake" onPress={()=>router.push('/(tabs)/create?category=smoothie' as never)} style={{minHeight:48,padding:16}}><Text style={{color:Colors.accent,fontWeight:'700'}}>+ Add a smoothie or shake</Text></Pressable>}
       {error?<View style={styles.centered}><Text accessibilityRole="alert" style={styles.emptyText}>{error}</Text><Pressable accessibilityRole="button" onPress={()=>void fetchCategory()} style={{minHeight:48,padding:12}}><Text style={{color:Colors.accent}}>Retry</Text></Pressable></View>:loading ? (
         <View style={styles.centered}>
@@ -183,18 +187,18 @@ export default function BrowseScreen() {
         <View style={styles.centered}>
           <Text style={styles.emptyText}>No recipes here yet — check back soon!</Text>
         </View>
-      ) : recipes.length === 0 ? (
+      ) : visibleRecipes.length === 0 ? (
         <View style={styles.centered}>
           <Text style={styles.emptyText}>{category==='smoothie'?'No smoothies or shakes match yet. Add your own using the button above.':'No recipes here yet — check back soon!'}</Text>
         </View>
       ) : (
         <>
           <Text style={styles.countLine}>
-            {recipes.length} recipe{recipes.length !== 1 ? 's' : ''}
+            {visibleRecipes.length} recipe{visibleRecipes.length !== 1 ? 's' : ''}
           </Text>
           <FlatList
             key={numColumns === 2 ? 'grid' : 'list'}
-            data={recipes}
+            data={visibleRecipes}
             keyExtractor={(item) => item.id}
             numColumns={numColumns}
             columnWrapperStyle={numColumns === 2 ? styles.columnWrap : undefined}

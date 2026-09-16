@@ -39,6 +39,8 @@ import { SectionHeader } from '@/components/SectionHeader';
 import { LoadingScreen } from '@/components/LoadingScreen';
 import { useIsLandscape, useIsTablet } from '@/hooks/useIsTablet';
 import { RecipeImage } from '@/components/RecipeImage';
+import {CookingForControl} from '@/components/CookingForControl';
+import {useCooking} from '@/context/CookingContext';
 
 function getGreeting(hour: number): string {
   if (hour < 12) return 'Good morning';
@@ -237,13 +239,14 @@ function SearchBar({
 
   return (
     <View style={styles.searchWrap}>
-      <View style={styles.searchRow}>
+      <View style={{flexDirection:'row',alignItems:'stretch',gap:8}}><View style={[styles.searchRow,{flex:1,minWidth:0}]}>
         <Ionicons name="search" size={16} color={Colors.textMuted} />
         <TextInput
           style={styles.searchInput}
           value={value}
           onChangeText={onChangeText}
-          placeholder="Search recipes, ingredients..."
+          accessibilityLabel="Search recipes, ingredients..."
+          placeholder="Search recipes…"
           placeholderTextColor={Colors.textMuted}
           returnKeyType="search"
           autoCapitalize="none"
@@ -254,7 +257,7 @@ function SearchBar({
             <Ionicons name="close-circle" size={17} color={Colors.textMuted} />
           </Pressable>
         )}
-      </View>
+      </View><CookingForControl compact/></View>
     </View>
   );
 }
@@ -283,6 +286,7 @@ export default function HomeScreen() {
 
   const { userId } = useSession();
   const { preferences, refresh: refreshPreferences } = usePreferences(userId);
+  const cooking=useCooking();
 
   // ── Profile avatar ────────────────────────────────────────
   const [profile, setProfile] = useState<{ name: string | null; avatarUrl: string | null }>({
@@ -306,8 +310,8 @@ export default function HomeScreen() {
     error,
     toggleFavorite,
     refresh,
-  } = useRecipes(userId, preferences);
-  const {getCarouselRecipes,reroll} = useDiscoveryFeed(visibleRecipes,userId,JSON.stringify(preferences));
+  } = useRecipes(userId, preferences,cooking);
+  const {getCarouselRecipes,reroll} = useDiscoveryFeed(visibleRecipes,userId,JSON.stringify([preferences,cooking.key,cooking.profiles]));
   const refreshFeed = useCallback(async () => {
     reroll();
     await refresh();
@@ -460,6 +464,7 @@ export default function HomeScreen() {
         />
 
         <View style={{paddingHorizontal:20,marginTop:10,alignItems:'flex-start'}}>
+          {!!cooking.message&&<Text accessibilityRole="alert" style={{color:Colors.textSecondary,lineHeight:20}}>{cooking.message}</Text>}
           <Pressable accessibilityRole="button" accessibilityLabel="Refresh meal ideas" onPress={refreshFeed} disabled={refreshing} style={{minHeight:44,justifyContent:'center',paddingHorizontal:4}}>
             <Text style={{color:Colors.accent,fontWeight:'700'}}>{refreshing?'Refreshing…':'↻ New meal ideas'}</Text>
           </Pressable>
@@ -945,10 +950,11 @@ function makeMainStyles(Colors: AppColors) {
       borderWidth: 1,
       borderColor: Colors.border,
       paddingHorizontal: 13,
-      height: 46,
+      minHeight: 58,
     },
     searchInput: {
       flex: 1,
+      minWidth: 0,
       color: Colors.textPrimary,
       fontSize: 15,
       fontWeight: '500',

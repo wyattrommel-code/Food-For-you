@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useMemo } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { discoveryBonus, weightedShuffle } from '@/lib/discovery';
 import { supabase } from '@/lib/supabase';
+import {matchesAudience,audienceScore} from '@/lib/householdPlanning';
 import {
   DbRecipe,
   Recipe,
@@ -21,7 +22,8 @@ import {
 
 export function useRecipes(
   userId: string | null,
-  preferences: UserPreferences
+  preferences: UserPreferences,
+  audience?: {profiles:UserPreferences[];ready:boolean;group:boolean}
 ) {
   const [allRecipes, setAllRecipes] = useState<DbRecipe[]>([]);
   const [favoriteIds, setFavoriteIds] = useState<Set<string>>(new Set());
@@ -98,14 +100,15 @@ export function useRecipes(
 
   // ── Filter: apply strict bans, then attach affinity score ────
   const visibleRecipes = useMemo((): Recipe[] => {
+    if(audience&&!audience.ready)return [];
     return allRecipes
-      .filter((r) => !isRecipeBanned(r, preferences))
+      .filter((r) => audience?.group?matchesAudience(r,audience.profiles):!isRecipeBanned(r, preferences))
       .map((r) => ({
         ...r,
         is_favorited: favoriteIds.has(r.id),
-        _score: recipeAffinityScore(r, preferences, favoriteTags) + discoveryBonus(r, preferences),
+        _score: audience?.group?audienceScore(r,audience.profiles):recipeAffinityScore(r, preferences, favoriteTags) + discoveryBonus(r, preferences),
       }));
-  }, [allRecipes, preferences, favoriteIds, favoriteTags]);
+  }, [allRecipes, preferences, favoriteIds, favoriteTags,audience?.ready,audience?.group,audience?.profiles]);
 
   // ── RNG: 3 weighted random recipes for a given meal time ─────
   const getRNGChoices = useCallback(

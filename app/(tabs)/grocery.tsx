@@ -8,12 +8,14 @@ import {useSession} from '@/hooks/useSession';
 import {useGroceryList} from '@/hooks/useGroceryList';
 import {usePlannedGroceries} from '@/hooks/usePlannedGroceries';
 import {useLocalToday} from '@/hooks/useLocalToday';
+import {useHouseholdPlanning} from '@/context/HouseholdPlanningContext';
+import {PlannerScopeControl} from '@/components/PlannerScopeControl';
 import {dayLabel,parseDay,shiftDay,weekDays} from '@/lib/planner';
 import {plannedShopping,purchaseKey,type ShoppingScope,type PlannedItem} from '@/lib/plannerShopping';
 import {CATEGORY_ORDER,CATEGORY_META,categorizeIngredient,type GroceryItem} from '@/lib/groceryHelpers';
 import {mergeIngredientsIntoUserPantry,parseGroceryLineToPantryIngredients} from '@/lib/groceryPantrySync';
 
-export default function GroceryScreen(){const {userId}=useSession();return <Groceries key={userId??'guest'} userId={userId}/>;}
+export default function GroceryScreen(){const {userId}=useSession(),planning=useHouseholdPlanning();return <Groceries key={`${userId??'guest'}:${planning.activePlanner}:${planning.householdId}`} userId={userId}/>;}
 function Groceries({userId}:{userId:string|null}){
  const {Colors}=useTheme(),router=useRouter(),params=useLocalSearchParams<{scope?:string;day?:string}>(),today=useLocalToday();
  const [scope,setScope]=useState<ShoppingScope>('all'),[day,setDay]=useState(today),[input,setInput]=useState('');
@@ -21,7 +23,8 @@ function Groceries({userId}:{userId:string|null}){
  useEffect(()=>{if(day===previousToday.current)setDay(today);previousToday.current=today;},[today,day]);
  useEffect(()=>{if(['day','week','all'].includes(params.scope??''))setScope(params.scope as ShoppingScope);if(params.day){try{parseDay(params.day);setDay(params.day);}catch{setDay(today);}}},[params.scope,params.day]);
  const week=weekDays(day),start=week[0]<today?week[0]:today;
- const planned=usePlannedGroceries(userId,start),list=useGroceryList();
+ const planning=useHouseholdPlanning();
+ const planned=usePlannedGroceries(userId,start,planning.activePlanner,planning.householdId),list=useGroceryList();
  useFocusEffect(useCallback(()=>{void list.reload();},[list.reload]));
  const rows=useMemo(()=>plannedShopping(planned.plans,planned.checks,scope,day,today),[planned.plans,planned.checks,scope,day,today]);
  const extras=scope==='all'?list.items:[];
@@ -52,20 +55,21 @@ function Groceries({userId}:{userId:string|null}){
  const selectedTitle=scope==='all'?'All upcoming meals + added items':scope==='day'?dayLabel(day):`${dayLabel(week[0])} – ${dayLabel(week[6])}`;
  return <SafeAreaView edges={['top']} style={{flex:1,backgroundColor:Colors.background}}><ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={{padding:20,gap:16,maxWidth:850,width:'100%',alignSelf:'center',paddingBottom:32}}>
   <Text style={{...text,fontSize:28,fontWeight:'800'}}>Grocery List</Text><Text style={muted}>{remaining} remaining · {selectedTitle}</Text>
+  <PlannerScopeControl value={planning.activePlanner} onChange={planning.setActivePlanner} disabled={working||planned.busy}/>
   <View style={{flexDirection:'row',gap:8,flexWrap:'wrap'}}>{button('Day',()=>setScope('day'),scope==='day')}{button('Week',()=>setScope('week'),scope==='week')}{button('All',()=>setScope('all'),scope==='all')}</View>
   {scope!=='all'&&<View style={{flexDirection:'row',gap:8,flexWrap:'wrap'}}>{button(scope==='day'?'Previous day':'Previous week',()=>setDay(shiftDay(day,scope==='day'?-1:-7)))}{button(scope==='day'?'Today':'This week',()=>setDay(today))}{button(scope==='day'?'Next day':'Next week',()=>setDay(shiftDay(day,scope==='day'?1:7)))}</View>}
   <Text style={muted}>{scope==='all'?'Includes future planned meals and your added shopping items.':"Shopping for the selected dates. Manually added and household items are under All."} Repeated quantities appear as “2 × 1 cup milk”.</Text>
   {!!error&&<Text accessibilityRole="alert" style={{...text,color:Colors.accent}}>{error}</Text>}{!!notice&&<Text accessibilityLiveRegion="polite" style={text}>{notice}</Text>}
   {!!planned.error&&<View style={box}><Text accessibilityRole="alert" style={text}>{planned.error}</Text>{button('Retry planned groceries',()=>void planned.reload())}</View>}
   {planned.loading?<ActivityIndicator accessibilityLabel="Loading planned groceries"/>:<>
-   <Text style={{...text,fontWeight:'800'}}>From your meal plan</Text>
+   <Text style={{...text,fontWeight:'800'}}>{planning.activePlanner==='household'?'From the household plan':'From your personal plan'}</Text>
    {!rows.length&&<View style={box}><Text style={text}>No ingredients planned for these dates.</Text>{button('Open planner',()=>router.push('/(tabs)/planner' as never))}</View>}
    {CATEGORY_ORDER.map(category=>{const group=rows.filter(r=>categorizeIngredient(r.name)===category);return group.length?<View key={category} style={box}><Text style={{...text,fontWeight:'700'}}>{CATEGORY_META[category].emoji} {CATEGORY_META[category].label}</Text>{group.map(r=>groceryRow('plan:'+r.id,r.count>1?`${r.count} × ${r.name}`:r.name,`${r.sources.join('\n')}\n${r.references.filter(p=>p.checked).length}/${r.count} bought`,r.checked,()=>void togglePlan(r),working||planned.busy||!!planned.error))}</View>:null;})}
   </>}
   {scope==='all'&&<View style={box}>
    <Text style={{...text,fontWeight:'800'}}>{list.household?list.household.name+' · Shared shopping':'Added shopping items'}</Text>
    {button(list.household?'Manage household':'Share a list with your household',()=>router.push('/household'))}
-   <Text style={muted}>{list.pending.length?`${list.pending.length} changes waiting to sync`:list.syncing?'Syncing shared list…':list.household?'Household list is shared. Calendar purchases above are personal.':'Extra items are saved on this phone.'}</Text>
+   <Text style={muted}>{list.pending.length?`${list.pending.length} changes waiting to sync`:list.syncing?'Syncing shared list…':list.household?'These added items are shared. Planned ingredients above belong to the selected planner.':'Extra items are saved on this phone.'}</Text>
    {list.error&&<><Text accessibilityRole="alert" style={text}>{list.error}</Text>{button('Retry added items',()=>void list.reload())}</>}
    {list.importCount>0&&button(`Import saved items (${list.importCount})`,()=>setConfirm('import'))}
    <View style={{flexDirection:'row',gap:8}}><TextInput accessibilityLabel="Grocery item" placeholder="Add an item…" placeholderTextColor={Colors.textMuted} value={input} onChangeText={setInput} maxLength={200} style={{...text,flex:1,borderWidth:1,borderColor:Colors.border,borderRadius:12,padding:12,minWidth:0}}/>{button('Add',()=>void run(async()=>{await list.addItem(input);setInput('');}),false,working||!input.trim())}</View>

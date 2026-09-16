@@ -9,6 +9,10 @@ import {usePlanner} from '@/hooks/usePlanner';
 import {useTheme} from '@/context/ThemeContext';
 import {useLocalToday} from '@/hooks/useLocalToday';
 import {RecipeImage} from '@/components/RecipeImage';
+import {PlannerScopeControl} from '@/components/PlannerScopeControl';
+import {useHouseholdPlanning} from '@/context/HouseholdPlanningContext';
+import {useCooking} from '@/context/CookingContext';
+import {matchesAudience,type PlannerScope} from '@/lib/householdPlanning';
 import {supabase} from '@/lib/supabase';
 import {DbRecipe, isRecipeBanned} from '@/lib/types';
 import {monthWeeks, shiftMonth} from '@/lib/plannerShopping';
@@ -51,11 +55,13 @@ function Planner({userId}:{userId:string|null}) {
   const router=useRouter(), {Colors}=useTheme();
   const {recipeId}=useLocalSearchParams<{recipeId?:string}>();
   const {preferences}=usePreferences(userId);
+  const planning=useHouseholdPlanning(),cooking=useCooking(),activePlanner=planning.activePlanner;
+  const [saveScope,setSaveScope]=useState<PlannerScope>(activePlanner);
   const today=useLocalToday();
   const [anchor,setAnchor]=useState(today), [calendarMonth,setCalendarMonth]=useState(today);
   const previousToday=useRef(today);
   const days=useMemo(()=>weekDays(anchor),[anchor]);
-  const planner=usePlanner(userId,days[0],days[6]);
+  const planner=usePlanner(userId,days[0],days[6],activePlanner,planning.householdId);
   const [sheet,setSheet]=useState<Sheet>(null), [selected,setSelected]=useState<PlanEntry|null>(null);
   const [candidate,setCandidate]=useState<RecipeChoice|null>(null), [moving,setMoving]=useState<PlanEntry|null>(null);
   const [date,setDate]=useState(today), [slot,setSlot]=useState<PlanSlot>('menu'), [query,setQuery]=useState('');
@@ -85,14 +91,14 @@ function Planner({userId}:{userId:string|null}) {
   const handledRecipe=useRef<string|null>(null);
   useEffect(()=>{
     if(!recipeId){handledRecipe.current=null;return;}
-    if(catalogLoading||!catalog.length||handledRecipe.current===recipeId)return;
+    if(planning.loading||catalogLoading||!catalog.length||handledRecipe.current===recipeId)return;
     handledRecipe.current=recipeId;
     const recipe=catalog.find(r=>r.id===recipeId);
-    if(recipe){setCandidate(recipe);setMoving(null);setDate(today);setCalendarMonth(today);setSlot('menu');setSheet('schedule');setError('');}
+    if(recipe){setCandidate(recipe);setSaveScope(recipe.is_user_created?'personal':activePlanner);setMoving(null);setDate(today);setCalendarMonth(today);setSlot('menu');setSheet('schedule');setError('');}
     else setError('This recipe is no longer available to your account.');
-  },[recipeId,catalog,catalogLoading,today]);
+  },[recipeId,catalog,catalogLoading,today,planning.loading,activePlanner]);
   const byId=useMemo(()=>new Map(catalog.map(r=>[r.id,r])),[catalog]);
-  const results=useMemo(()=>catalog.filter(r=>!isRecipeBanned(r,preferences)&&`${r.title} ${r.tags.join(' ')}`.toLowerCase().includes(query.trim().toLowerCase())),[catalog,preferences,query]);
+  const results=useMemo(()=>catalog.filter(r=>(activePlanner==='personal'||!r.is_user_created)&&cooking.ready&&(cooking.group?matchesAudience(r,cooking.profiles):!isRecipeBanned(r,preferences))&&`${r.title} ${r.tags.join(' ')}`.toLowerCase().includes(query.trim().toLowerCase())),[catalog,preferences,query,activePlanner,cooking.ready,cooking.group,cooking.profiles]);
   const monthTitle=parseDay(anchor).toLocaleDateString(undefined,{month:'long',year:'numeric'});
   const weeks=useMemo(()=>monthWeeks(calendarMonth),[calendarMonth]);
   const thisWeek=days[0]===weekDays(today)[0];
@@ -117,13 +123,16 @@ function Planner({userId}:{userId:string|null}) {
     notice:{paddingHorizontal:20,paddingVertical:8}, error:{color:Colors.accent,fontSize:14},
   }),[Colors]);
   function close(){if(planner.busy)return;setSheet(null);setCandidate(null);setMoving(null);setSelected(null);setError('');router.setParams({recipeId:undefined});}
-  function chooseDay(d:string){setDate(d);setSlot('menu');setCandidate(null);setMoving(null);setQuery('');setError('');setSheet('recipes');}
+  function chooseDay(d:string){setSaveScope(activePlanner);setDate(d);setSlot('menu');setCandidate(null);setMoving(null);setQuery('');setError('');setSheet('recipes');}
   function editEntry(entry:PlanEntry){setSelected(entry);setError('');setSheet('actions');}
-  function schedule(entry:PlanEntry){setDate(entry.plan_date);setSlot(entry.meal_slot);setCandidate({id:entry.recipe_id,title:entry.recipe_title});setMoving(entry);setCalendarMonth(entry.plan_date);setSheet('schedule');setError('');}
+  function schedule(entry:PlanEntry){setSaveScope(activePlanner);setDate(entry.plan_date);setSlot(entry.meal_slot);setCandidate({id:entry.recipe_id,title:entry.recipe_title});setMoving(entry);setCalendarMonth(entry.plan_date);setSheet('schedule');setError('');}
   async function save(){
-    if(!candidate)return;setError('');
+    if(!candidate||planning.loading)return;setError('');
     try{
-      if(moving)await planner.move(moving,date,slot);else await planner.add(date,slot,candidate);
+      if(saveScope==='household'&&(!planning.settings.enabled||!planning.householdId))throw Error('Enable household planning before saving here.');
+      if(saveScope==='household'&&byId.get(candidate.id)?.is_user_created)throw Error('Personal recipes stay in your personal planner. Choose Personal to save this recipe.');
+      if(moving)await planner.move(moving,date,slot);else await planner.add(date,slot,candidate,saveScope);
+      planning.setActivePlanner(saveScope);
       setAnchor(date);setMessage(`${candidate.title} ${moving?'moved':'added'} to ${dayLabel(date)}.`);
       setSheet(null);setCandidate(null);setMoving(null);router.setParams({recipeId:undefined});
     }catch(e){setError(e instanceof Error?e.message:'Could not save your meal. Please retry.');}
@@ -185,6 +194,7 @@ function Planner({userId}:{userId:string|null}) {
         <Pressable accessibilityRole="button" accessibilityLabel="Go to today" onPress={()=>{setAnchor(today);scroll.current?.scrollTo({y:Math.max(0,(dayLayouts.current[today]?.y??0)-8),animated:true});}} style={s.pill}><Text style={[s.muted,{fontWeight:'700'}]}>Today</Text></Pressable>
         {icon('cart-outline','Planner shopping lists',()=>setSheet('shopping'),!userId)}
       </View></View>
+      <PlannerScopeControl value={activePlanner} onChange={value=>{cancelDrag();setSheet(null);setError('');setMessage('');planning.setActivePlanner(value);}} disabled={planner.busy||!!drag}/>
       <View style={s.spread}>
         {icon('chevron-back','Previous week',()=>setAnchor(shiftDay(anchor,-7)),planner.busy||!!drag)}
         <Pressable accessibilityRole="button" accessibilityLabel="Choose calendar date" onPress={()=>{setCalendarMonth(anchor);setSheet('calendar');}} style={{flex:1,alignItems:'center',minHeight:48,justifyContent:'center',gap:3}}>
@@ -201,7 +211,7 @@ function Planner({userId}:{userId:string|null}) {
       {!!catalogError&&!sheet&&<View style={s.notice}><Text accessibilityRole="alert" style={s.error}>{catalogError}</Text>{action('Retry recipes',()=>setRetry(n=>n+1))}</View>}
       <View ref={viewport} style={{flex:1}} onLayout={()=>viewport.current?.measureInWindow((_x,y,_w,height)=>{frame.current={y,height};})}>
         <ScrollView ref={scroll} scrollEnabled={!drag} scrollEventThrottle={16} onScroll={e=>{scrollY.current=e.nativeEvent.contentOffset.y;}} onContentSizeChange={(_w,h)=>{contentHeight.current=h;}} contentContainerStyle={s.content}>
-          {planner.loading?<ActivityIndicator accessibilityLabel="Loading weekly menu" style={{margin:24}}/>:days.map(d=>{
+          {planner.loading||planning.loading?<ActivityIndicator accessibilityLabel="Loading weekly menu" style={{margin:24}}/>:days.map(d=>{
             const entries=planner.entries.filter(e=>e.plan_date===d).sort((a,b)=>Object.keys(PLAN_SLOTS).indexOf(a.meal_slot)-Object.keys(PLAN_SLOTS).indexOf(b.meal_slot));
             const isToday=d===today, isDragging=drag?.entry.plan_date===d;
             return <View key={d} testID={`planner-day-${d}`} onLayout={e=>{dayLayouts.current[d]=e.nativeEvent.layout;}} style={[s.day,isDragging&&{zIndex:5},drag?.target===d&&{backgroundColor:Colors.surface,borderColor:Colors.accent}]}>
@@ -226,6 +236,8 @@ function Planner({userId}:{userId:string|null}) {
           <View style={s.spread}><Text accessibilityRole="header" style={s.sheetTitle}>{sheet==='calendar'?'Choose a date':sheet==='recipes'?'Add a meal':sheet==='schedule'?(moving?'Move meal':'Plan this meal'):sheet==='shopping'?'Shopping lists':'Meal options'}</Text>{icon('close','Close planner dialog',close,planner.busy)}</View>
           {sheet==='calendar'&&<>{calendar(anchor,d=>{setAnchor(d);setSheet(null);})}{action('Back to this week',()=>{setAnchor(today);setSheet(null);})}</>}
           {sheet==='recipes'&&<>
+            <Text style={s.muted}>Cooking for: {cooking.label}</Text>
+            {!!cooking.message&&<Text accessibilityRole="alert" style={s.muted}>{cooking.message}</Text>}
             <Text style={s.muted}>{dayLabel(date)}</Text><TextInput style={s.input} value={query} onChangeText={setQuery} placeholder="Find a recipe" placeholderTextColor={Colors.textMuted} accessibilityLabel="Search planner recipes"/>
             {catalogLoading?<ActivityIndicator accessibilityLabel="Loading recipes"/>:results.slice(0,50).map(r=><Pressable key={r.id} accessibilityRole="button" accessibilityLabel={`Plan ${r.title}`} onPress={()=>{setCandidate(r);setCalendarMonth(date);setSheet('schedule');}} style={s.cardMain}><RecipeImage url={r.image_url} style={s.thumb} iconSize={24}/><View style={{flex:1,minWidth:0,gap:4}}><Text style={s.cardTitle}>{r.title}</Text><Text style={s.muted}>{r.prep_time_mins} min</Text></View><Ionicons name="add" size={20} color={Colors.accent}/></Pressable>)}
             {!catalogLoading&&!results.length&&!catalogError&&<Text style={s.muted}>No matches. Try another search.</Text>}
@@ -234,6 +246,8 @@ function Planner({userId}:{userId:string|null}) {
           </>}
           {sheet==='schedule'&&candidate&&<>
             <View style={s.row}><RecipeImage url={byId.get(candidate.id)?.image_url} style={s.thumb} iconSize={24}/><Text style={[s.cardTitle,{flex:1}]}>{candidate.title}</Text></View>
+            {!moving&&<PlannerScopeControl label="Save to" value={saveScope} onChange={setSaveScope} disabled={planner.busy}/>}
+            <Text style={s.muted}>{saveScope==='household'?'Shared with household members who use planning.':'Only you can see this meal.'}</Text>
             {calendar(date,setDate)}<Text style={[s.text,{fontWeight:'700'}]}>Meal</Text><View style={s.chipRow}>{(Object.keys(PLAN_SLOTS) as PlanSlot[]).map(k=><Pressable key={k} accessibilityRole="button" accessibilityLabel={PLAN_SLOTS[k]} accessibilityState={{selected:k===slot}} disabled={planner.busy} onPress={()=>setSlot(k)} style={[s.chip,k===slot&&s.selected]}><Text style={[s.muted,k===slot&&{color:'#fff',fontWeight:'700'}]}>{PLAN_SLOTS[k]}</Text></Pressable>)}</View>
             {action(planner.busy?'Saving…':moving?'Move meal':'Save meal',()=>void save(),true)}
           </>}

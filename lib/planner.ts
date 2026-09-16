@@ -1,6 +1,6 @@
 export const PLAN_SLOTS = { menu: "Day’s menu", breakfast: 'Breakfast', lunch: 'Lunch', dinner: 'Dinner', snack: 'Snack', dessert: 'Dessert', smoothie: 'Smoothie / shake' };
 export type PlanSlot = keyof typeof PLAN_SLOTS;
-export interface PlanEntry { id: string; user_id: string; plan_date: string; meal_slot: PlanSlot; recipe_id: string; recipe_title: string; created_at: string }
+export interface PlanEntry { id: string; user_id?: string; household_id?:string; created_by?:string|null; plan_date: string; meal_slot: PlanSlot; recipe_id: string; recipe_title: string; created_at: string }
 // Local calendar dates, never UTC timestamps: adding a recipe must not shift its day.
 export function dateKey(date: Date): string {
   return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;

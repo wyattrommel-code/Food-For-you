@@ -19,7 +19,7 @@ test('50 everyday additions have verified assets and no collisions with the 219-
   assert.ok(Math.max(r.review.photo.width,r.review.photo.height)>=380,r.title+': thumbnail too small');
   if(r.review.photo.license_verification?.confirmed!==undefined) assert.equal(r.review.photo.license_verification.confirmed,true);
  }
- assert.equal(fs.readFileSync(path.join(__dirname,'../data/recipes/easy-100.sql'),'utf8'),importSql(rows));
+ assert.equal(fs.readFileSync(path.join(__dirname,'../data/recipes/easy-100.sql'),'utf8').replace(/\r\n/g,'\n'),importSql(rows));
 });
 
 test('oven dessert discloses its real elapsed time and the remaining 49 dishes are quick',()=>{

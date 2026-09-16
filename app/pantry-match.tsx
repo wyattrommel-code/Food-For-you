@@ -10,6 +10,8 @@ import type { AppColors } from '@/constants/Colors';
 import { useSession } from '@/hooks/useSession';
 import { usePreferences } from '@/hooks/usePreferences';
 import { useRecipes } from '@/hooks/useRecipes';
+import {useCooking} from '@/context/CookingContext';
+import {CookingForControl} from '@/components/CookingForControl';
 import { useUserPantry } from '@/hooks/useUserPantry';
 import { rankRecipesByPantry } from '@/lib/pantryMatch';
 import type { Recipe } from '@/lib/types';
@@ -79,7 +81,8 @@ export default function PantryMatchScreen() {
 
   const { userId } = useSession();
   const { preferences } = usePreferences(userId);
-  const { loading, visibleRecipes, toggleFavorite } = useRecipes(userId, preferences);
+  const cooking=useCooking();
+  const { loading, visibleRecipes, toggleFavorite } = useRecipes(userId, preferences,cooking);
   const { pantryNames, load } = useUserPantry();
 
   useFocusEffect(
@@ -155,6 +158,8 @@ export default function PantryMatchScreen() {
           <View style={{ flex: 1 }} />
         </View>
 
+        <CookingForControl/>
+        {!!cooking.message&&<Text accessibilityRole="alert" style={{color:Colors.textSecondary,paddingVertical:12}}>{cooking.message}</Text>}
         <Text style={[styles.sub, { color: Colors.textMuted }]}>
           {pantryNames.length} item{pantryNames.length === 1 ? '' : 's'} in your pantry · ranked by match
         </Text>

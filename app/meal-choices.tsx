@@ -7,6 +7,8 @@ import {useTheme} from '@/context/ThemeContext';
 import {useSession} from '@/hooks/useSession';
 import {usePreferences} from '@/hooks/usePreferences';
 import {useRecipes} from '@/hooks/useRecipes';
+import {useCooking} from '@/context/CookingContext';
+import {CookingForControl} from '@/components/CookingForControl';
 import {RecipeImage} from '@/components/RecipeImage';
 import {difficultyLabel} from '@/lib/types';
 import {rememberIds} from '@/lib/discovery';
@@ -21,16 +23,18 @@ export default function MealChoicesScreen() {
   const {mode:requestedMode}=useLocalSearchParams<{mode?:string}>();
   const {userId}=useSession();
   const mode=choiceMode(requestedMode);
-  return <MealChoices key={`${userId??'guest'}:${mode}`} mode={mode} userId={userId}/>;
+  const cooking=useCooking();
+  return <MealChoices key={`${userId??'guest'}:${mode}:${cooking.key}`} mode={mode} userId={userId}/>;
 }
 
 function MealChoices({mode,userId}:{mode:ChoiceMode;userId:string|null}) {
   const router=useRouter(),{Colors}=useTheme();
   const {preferences}=usePreferences(userId);
-  const {visibleRecipes,loading,error,refresh,toggleFavorite}=useRecipes(userId,preferences);
+  const cooking=useCooking();
+  const {visibleRecipes,loading,error,refresh,toggleFavorite}=useRecipes(userId,preferences,cooking);
   const [selection,setSelection]=useState<Selection|null>(null);
   const current=useRef<Selection|null>(null);
-  const historyKey=`${userId??'guest'}:${mode}`;
+  const historyKey=`${userId??'guest'}:${mode}:${cooking.key}`;
   const byId=useMemo(()=>new Map(visibleRecipes.map(r=>[r.id,r])),[visibleRecipes]);
   const eligibleKey=visibleRecipes.map(r=>r.id).sort().join(',');
   const seenFocus=useRef(false);
@@ -95,6 +99,8 @@ function MealChoices({mode,userId}:{mode:ChoiceMode;userId:string|null}) {
       <Pressable accessibilityRole="button" accessibilityLabel="Refresh choices" accessibilityHint="Replace only recipes that are not held." disabled={loading||!!error||allHeld||count===0} onPress={()=>roll()} style={[s.refresh,(loading||!!error||allHeld||count===0)&&{opacity:0.45}]}><Ionicons name="refresh" size={17} color="#fff"/><Text style={s.refreshText}>Refresh</Text></Pressable>
     </View>
     <ScrollView contentContainerStyle={s.content}>
+      <CookingForControl/>
+      {!!cooking.message&&<Text accessibilityRole="alert" style={s.hint}>{cooking.message}</Text>}
       {loading?<ActivityIndicator accessibilityLabel="Finding your choices" style={{marginTop:36}}/>:error?<View style={s.empty}><Text accessibilityRole="alert" style={s.hint}>Could not load your choices. Please try again.</Text><Pressable accessibilityRole="button" accessibilityLabel="Retry choices" onPress={()=>void refresh()} style={s.control}><Text style={s.heldText}>Try again</Text></Pressable></View>:<>
         <View style={{gap:5}}><Text style={s.description}>{selection?.result.description}</Text><Text accessibilityLiveRegion="polite" style={s.hint}>{allHeld?'All choices held. Release one to refresh it.':heldCount?`${heldCount} held. Refresh will change the others.`:'Like an option? Hold it and refresh the rest.'}</Text></View>
         {count===0?<View style={s.empty}><Text style={s.description}>No matching recipes yet</Text><Text style={s.hint}>Try another meal button or review your food preferences in Settings.</Text></View>:choices.map(choice=>{

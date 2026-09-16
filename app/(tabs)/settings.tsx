@@ -462,7 +462,7 @@ export default function SettingsScreen() {
           <SettingRow
             icon="people-outline"
             title="Household"
-            subtitle="Share a grocery list with your household"
+            subtitle="Shared plans, groceries and food preferences"
             onPress={() => router.push('/household')}
             Colors={Colors}
           />
