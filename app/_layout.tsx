@@ -12,6 +12,7 @@ import {SessionProvider} from '@/context/SessionContext';
 import {HouseholdProvider} from '@/context/HouseholdContext';
 import {GroceryProvider} from '@/context/GroceryContext';
 import {HouseholdPlanningProvider} from '@/context/HouseholdPlanningContext';
+import {RecipeDislikesProvider} from '@/context/RecipeDislikesContext';
 import {RecipeCatalogProvider} from '@/context/RecipeCatalogContext';
 import {CookingProvider} from '@/context/CookingContext';
 import { useSession } from '@/hooks/useSession';
@@ -119,7 +120,7 @@ function RootLayoutInner() {
 
   return (
     <PreferencesProvider key={session?.user.id ?? 'guest'} userId={session?.user.id ?? null}>
-    <HouseholdPlanningProvider><CookingProvider>
+    <RecipeDislikesProvider><HouseholdPlanningProvider><CookingProvider>
     <View style={{ flex: 1, width: '100%', alignSelf: 'stretch' }}>
       <PreferenceOnboardingGate />
       <StatusBar style={isDark ? 'light' : 'dark'} backgroundColor={Colors.background} />
@@ -189,7 +190,7 @@ function RootLayoutInner() {
         />
       </Stack>
     </View>
-    </CookingProvider></HouseholdPlanningProvider></PreferencesProvider>
+    </CookingProvider></HouseholdPlanningProvider></RecipeDislikesProvider></PreferencesProvider>
   );
 }
 

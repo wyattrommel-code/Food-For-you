@@ -72,3 +72,34 @@ test('local save failure stays incomplete and account stores remain isolated',as
  assert.equal(await f.store.update({onboarding_completed_at:'2026-09-12T00:00:00Z'}),false);assert.equal(f.store.getSnapshot().preferences.onboarding_completed_at,null);assert.equal(f.data.writes.length,0);
  const other=fixture();await other.store.update({household_size:6});assert.equal(f.store.getSnapshot().preferences.household_size,null);
 });
+
+const recipeA='44444444-4444-4444-8444-444444444441',recipeB='44444444-4444-4444-8444-444444444442';
+test('recipe dislikes are unique valid UUIDs, survive cache reload, and do not cap at ingredient limits',()=>{
+ const ids=Array.from({length:501},(_,i)=>`44444444-4444-4444-8444-${String(i).padStart(12,'0')}`);
+ const normalized=normalizePreferences({disliked_recipe_ids:[...ids,ids[0],'invalid',null]});
+ assert.equal(normalized.disliked_recipe_ids.length,501);
+ assert.deepEqual(readPreferenceCache(JSON.stringify({preferences:normalized,pending:true})).preferences.disliked_recipe_ids,ids);
+ assert.deepEqual(normalizePreferences(null).disliked_recipe_ids,[]);
+});
+test('dislike excludes a recipe without excluding similar recipes; restoring preserves food restrictions',()=>{
+ const a={id:recipeA,title:'Rice bowl',ingredients_list:['rice'],tags:[],cuisine:'American'},b={...a,id:recipeB};
+ const prefs=normalizePreferences({disliked_recipe_ids:[recipeA],disliked_ingredients:['egg'],liked_cuisines:['american']});
+ assert.equal(isRecipeBanned(a,prefs),true);assert.equal(isRecipeBanned(b,prefs),false);
+ const restored=normalizePreferences({...prefs,disliked_recipe_ids:[]});assert.equal(isRecipeBanned(a,restored),false);
+ assert.deepEqual(restored.disliked_ingredients,['egg']);assert.deepEqual(restored.liked_cuisines,['american']);
+});
+test('quick dislike then undo persists the restored state and unrelated preferences',async()=>{
+ let disk=null,cloud=null;const store=createPreferenceStore({readCache:async()=>disk,writeCache:async v=>{disk=v;},readCloud:async()=>cloud,writeCloud:async v=>{cloud=v;}});
+ await store.refresh();const hide=store.update({disliked_recipe_ids:[recipeA],prefer_easy:true});
+ const undo=store.update(current=>({disliked_recipe_ids:current.disliked_recipe_ids.filter(id=>id!==recipeA)}));
+ await Promise.all([hide,undo]);assert.deepEqual(cloud.disliked_recipe_ids,[]);assert.equal(cloud.prefer_easy,true);
+ assert.deepEqual(readPreferenceCache(disk).preferences.disliked_recipe_ids,[]);
+});
+test('offline dislikes survive restart and synchronize on reconnect without affecting a second account',async()=>{
+ let disk=null,cloud=null,offline=true;
+ const io={readCache:async()=>disk,writeCache:async v=>{disk=v;},readCloud:async()=>{if(offline)throw Error('offline');return cloud;},writeCloud:async v=>{if(offline)throw Error('offline');cloud=v;}};
+ const first=createPreferenceStore(io);await first.refresh();assert.equal(await first.update({disliked_recipe_ids:[recipeA]}),true);
+ const next=createPreferenceStore(io);await next.refresh();assert.deepEqual(next.getSnapshot().preferences.disliked_recipe_ids,[recipeA]);
+ offline=false;await next.refresh();assert.deepEqual(cloud.disliked_recipe_ids,[recipeA]);
+ const other=createPreferenceStore({...io,readCache:async()=>null,readCloud:async()=>null});await other.refresh();assert.deepEqual(other.getSnapshot().preferences.disliked_recipe_ids,[]);
+});

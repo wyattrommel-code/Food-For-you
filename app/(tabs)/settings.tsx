@@ -52,6 +52,8 @@ function SettingRow({
 
   return (
     <Pressable
+      accessibilityRole="button"
+      accessibilityLabel={title}
       style={({ pressed }) => [
         styles.row,
         !isLast && styles.rowBorder,
@@ -542,6 +544,7 @@ export default function SettingsScreen() {
         </Section>
 
         <Section label="MORE FOOD SETTINGS" Colors={Colors}>
+          <SettingRow icon="thumbs-down-outline" title="Disliked recipes" subtitle={`${preferences.disliked_recipe_ids?.length??0} hidden · Restore recipes anytime`} onPress={()=>router.push('/disliked-recipes' as never)} Colors={Colors}/>
           <SettingRow icon="heart-outline" title="Ingredients & cuisines" subtitle="Edit detailed likes and dislikes" onPress={()=>router.push('/taste-engine')} isLast Colors={Colors}/>
         </Section>
         {syncError && <Pressable accessibilityRole="button" onPress={retryPreferences} style={{padding:20,minHeight:48}}><Text style={{color:Colors.accent}}>{syncError} Tap to retry.</Text></Pressable>}

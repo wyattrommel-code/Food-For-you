@@ -1,6 +1,7 @@
 import type { UserPreferences } from './types';
 import { MEAL_STYLES } from './discovery';
 export const DEFAULT_PREFERENCES: UserPreferences = {
+  disliked_recipe_ids: [],
   disliked_ingredients: [], disliked_cuisines: [], liked_ingredients: [], liked_cuisines: [],
   diet_style: 'any', preferred_meal_styles: [], max_cook_time_mins: null,
   prefer_easy: false, household_size: null, onboarding_completed_at: null,
@@ -10,6 +11,7 @@ const words = (value: unknown): string[] => Array.isArray(value)
 export function normalizePreferences(raw: Partial<UserPreferences> | null | undefined): UserPreferences {
   const p=raw ?? {};
   return {
+    disliked_recipe_ids: Array.isArray(p.disliked_recipe_ids)?[...new Set(p.disliked_recipe_ids.filter((id):id is string=>typeof id==='string'&&/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id)).map(id=>id.toLowerCase()))]:[],
     disliked_ingredients: words(p.disliked_ingredients), disliked_cuisines: words(p.disliked_cuisines),
     liked_ingredients: words(p.liked_ingredients), liked_cuisines: words(p.liked_cuisines),
     diet_style: ['vegetarian','vegan'].includes(p.diet_style ?? '') ? p.diet_style! : 'any',

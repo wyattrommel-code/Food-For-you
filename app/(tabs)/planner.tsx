@@ -13,6 +13,7 @@ import {PlannerScopeControl} from '@/components/PlannerScopeControl';
 import {useHouseholdPlanning} from '@/context/HouseholdPlanningContext';
 import {useCooking} from '@/context/CookingContext';
 import {matchesAudience,type PlannerScope} from '@/lib/householdPlanning';
+import {useRecipeDislikes} from '@/context/RecipeDislikesContext';
 import {useRecipeCatalog} from '@/context/RecipeCatalogContext';
 import {isRecipeBanned} from '@/lib/types';
 import {monthWeeks, shiftMonth} from '@/lib/plannerShopping';
@@ -55,6 +56,7 @@ function Planner({userId}:{userId:string|null}) {
   const router=useRouter(), {Colors}=useTheme();
   const {recipeId}=useLocalSearchParams<{recipeId?:string}>();
   const {preferences}=usePreferences(userId);
+  const dislikes=useRecipeDislikes();
   const planning=useHouseholdPlanning(),cooking=useCooking(),activePlanner=planning.activePlanner;
   const [saveScope,setSaveScope]=useState<PlannerScope>(activePlanner);
   const today=useLocalToday();
@@ -91,7 +93,7 @@ function Planner({userId}:{userId:string|null}) {
     else setError('This recipe is no longer available to your account.');
   },[recipeId,catalog,catalogLoading,today,planning.loading,activePlanner]);
   const byId=useMemo(()=>new Map(catalog.map(r=>[r.id,r])),[catalog]);
-  const results=useMemo(()=>catalog.filter(r=>(activePlanner==='personal'||!r.is_user_created)&&cooking.ready&&(cooking.group?matchesAudience(r,cooking.profiles):!isRecipeBanned(r,preferences))&&`${r.title} ${r.tags.join(' ')}`.toLowerCase().includes(query.trim().toLowerCase())),[catalog,preferences,query,activePlanner,cooking.ready,cooking.group,cooking.profiles]);
+  const results=useMemo(()=>catalog.filter(r=>!dislikes.ids.has(r.id)&&(activePlanner==='personal'||!r.is_user_created)&&cooking.ready&&(cooking.group?matchesAudience(r,cooking.profiles):!isRecipeBanned(r,preferences))&&`${r.title} ${r.tags.join(' ')}`.toLowerCase().includes(query.trim().toLowerCase())),[catalog,preferences,query,activePlanner,dislikes.ids,cooking.ready,cooking.group,cooking.profiles]);
   const monthTitle=parseDay(anchor).toLocaleDateString(undefined,{month:'long',year:'numeric'});
   const weeks=useMemo(()=>monthWeeks(calendarMonth),[calendarMonth]);
   const thisWeek=days[0]===today;
@@ -249,6 +251,7 @@ function Planner({userId}:{userId:string|null}) {
             {action('View recipe',()=>{setSheet(null);router.push(`/recipe/${selected.recipe_id}`);})}
             {action('Move or change meal',()=>schedule(selected))}
             {action('Groceries for this day',()=>groceries('day',selected.plan_date))}
+            {action(dislikes.ids.has(selected.recipe_id)?'Restore recipe to ideas':'Dislike recipe',()=>{void dislikes.setDisliked({id:selected.recipe_id,title:selected.recipe_title},!dislikes.ids.has(selected.recipe_id));close();})}
             {action('Remove from plan',()=>void remove())}
           </>}
           {sheet==='shopping'&&<>{action('Today’s groceries',()=>groceries('day',today))}{action(thisWeek?'These 7 days':'Selected week’s groceries',()=>groceries('week'))}{action('Entire grocery list',()=>groceries('all'))}</>}

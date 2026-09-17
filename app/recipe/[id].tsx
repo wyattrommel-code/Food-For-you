@@ -29,6 +29,7 @@ import {
   type DbRecipe,
 } from '@/lib/types';
 import { getRecipeSource, splitRecipeDescription } from '@/lib/recipeSource';
+import {RecipeDislikeButton} from '@/components/RecipeDislikeButton';
 import { RecipeImage } from '@/components/RecipeImage';
 import { supabase } from '@/lib/supabase';
 import { useSession } from '@/hooks/useSession';
@@ -535,6 +536,7 @@ export default function RecipeDetailScreen() {
       </View>
 
       <Text style={styles.title}>{recipe.title}</Text>
+      <View style={{alignSelf:'flex-start'}}><RecipeDislikeButton recipe={recipe} label/></View>
       <Pressable accessibilityRole="button" accessibilityLabel="Add to planner" onPress={()=>router.push({pathname:'/planner',params:{recipeId:recipe.id}} as never)} style={{minHeight:48,padding:12,borderRadius:12,borderWidth:1,borderColor:Colors.accent,marginVertical:12,alignItems:'center'}}>
         <Text style={{color:Colors.accent,fontWeight:'700'}}>Add to planner</Text>
       </Pressable>

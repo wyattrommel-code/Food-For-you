@@ -77,6 +77,8 @@ export interface Recipe extends DbRecipe {
 
 /** Full preferences object — front-end facing */
 export interface UserPreferences {
+  /** Private, recipe-specific exclusions; never shared with household members. */
+  disliked_recipe_ids?: string[];
   diet_style?: 'any' | 'vegetarian' | 'vegan';
   preferred_meal_styles?: string[];
   max_cook_time_mins?: number | null;
@@ -258,6 +260,7 @@ function expandDislike(raw: string): string[] {
 }
 
 export function isRecipeBanned(recipe: DbRecipe, prefs: UserPreferences): boolean {
+  if(prefs.disliked_recipe_ids?.includes(recipe.id))return true;
   if (recipe.cuisine && prefs.disliked_cuisines.some((c) =>
     containsIngredient(recipe.cuisine!, c))) return true;
   const diet = prefs.diet_style && prefs.diet_style !== 'any' ? [prefs.diet_style] : [];

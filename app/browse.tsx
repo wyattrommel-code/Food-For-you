@@ -1,5 +1,5 @@
 import React,{useMemo} from 'react';
-import {View,Text,FlatList,Pressable,ActivityIndicator,RefreshControl} from 'react-native';
+import {View,Text,FlatList,Pressable,ActivityIndicator,RefreshControl,useWindowDimensions} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useLocalSearchParams,useRouter} from 'expo-router';
 import {Ionicons} from '@expo/vector-icons';
@@ -8,6 +8,7 @@ import {useSession} from '@/hooks/useSession';
 import {usePreferences} from '@/hooks/usePreferences';
 import {useRecipes} from '@/hooks/useRecipes';
 import {RecipeImage} from '@/components/RecipeImage';
+import {RecipeDislikeButton} from '@/components/RecipeDislikeButton';
 import {QuickPlanButton} from '@/components/QuickPlanButton';
 import {useCooking} from '@/context/CookingContext';
 import {CookingForControl} from '@/components/CookingForControl';
@@ -15,6 +16,7 @@ import {difficultyLabel,type MealTime} from '@/lib/types';
 
 export default function BrowseScreen(){
   const {Colors}=useTheme(),router=useRouter();
+  const narrow=useWindowDimensions().width<360;
   const {category:rawCategory,title:rawTitle}=useLocalSearchParams<{category?:string;title?:string}>();
   const category=(Array.isArray(rawCategory)?rawCategory[0]:rawCategory) as MealTime;
   const title=(Array.isArray(rawTitle)?rawTitle[0]:rawTitle)||'Browse';
@@ -37,12 +39,13 @@ export default function BrowseScreen(){
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={()=>void refresh()}/>}
         ListHeaderComponent={<Text style={{...muted,paddingBottom:4}}>{recipes.length} recipe{recipes.length===1?'':'s'}</Text>}
         ListEmptyComponent={<Text style={{...muted,paddingVertical:24}}>{category==='smoothie'?'No matching smoothies or shakes yet. You can add your own above.':'No recipes match these preferences yet.'}</Text>}
-        renderItem={({item})=><View testID="category-recipe-row" style={{flexDirection:'row',alignItems:'center',minHeight:82,borderRadius:16,borderWidth:1,borderColor:Colors.border,backgroundColor:Colors.surface,paddingRight:10}}>
-          <Pressable accessibilityRole="button" accessibilityLabel={`View ${item.title}`} onPress={()=>router.push(`/recipe/${item.id}`)} style={{flex:1,minWidth:0,flexDirection:'row',alignItems:'center',padding:10,gap:12}}>
+        renderItem={({item})=><View testID="category-recipe-row" style={{flexDirection:'row',alignItems:'center',flexWrap:narrow?'wrap':'nowrap',minHeight:82,borderRadius:16,borderWidth:1,borderColor:Colors.border,backgroundColor:Colors.surface,paddingRight:10}}>
+          <Pressable accessibilityRole="button" accessibilityLabel={`View ${item.title}`} onPress={()=>router.push(`/recipe/${item.id}`)} style={{flex:narrow?undefined:1,width:narrow?'100%':undefined,minWidth:0,flexDirection:'row',alignItems:'center',padding:10,gap:12}}>
             <RecipeImage url={item.image_url} accessibilityLabel={item.title} style={{width:58,height:58,borderRadius:11}} iconSize={24}/>
             <View style={{flex:1,minWidth:0,gap:4}}><Text numberOfLines={2} style={{fontSize:15,lineHeight:20,fontWeight:'700',color:Colors.textPrimary}}>{item.title}</Text><Text style={muted}>{item.prep_time_mins} min · {difficultyLabel(item.effort_score)}</Text></View>
           </Pressable>
           <Pressable accessibilityRole="button" accessibilityLabel={`${item.is_favorited?'Unsave':'Save'} ${item.title}`} onPress={()=>void toggleFavorite(item.id)} style={{width:44,minHeight:44,alignItems:'center',justifyContent:'center'}}><Ionicons name={item.is_favorited?'heart':'heart-outline'} size={21} color={item.is_favorited?Colors.accent:Colors.textSecondary}/></Pressable>
+          <RecipeDislikeButton recipe={item}/>
           <QuickPlanButton recipe={item}/>
         </View>}
       />}

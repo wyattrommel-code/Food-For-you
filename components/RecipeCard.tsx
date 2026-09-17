@@ -7,6 +7,7 @@ import * as Haptics from 'expo-haptics';
 import { useRouter } from 'expo-router';
 import { useTheme } from '@/context/ThemeContext';
 import { Recipe, difficultyLabel } from '@/lib/types';
+import {RecipeDislikeButton} from '@/components/RecipeDislikeButton';
 import {QuickPlanButton} from '@/components/QuickPlanButton';
 import { RecipeImage } from '@/components/RecipeImage';
 import { TABLET_BREAKPOINT } from '@/hooks/useIsTablet';
@@ -86,6 +87,7 @@ export function RecipeCard({
       />
 
       {quickPlan&&<QuickPlanButton recipe={recipe} overlay/>}
+      <RecipeDislikeButton recipe={recipe} overlay/>
       {/* Favorite button */}
       <Pressable style={styles.favBtn} onPress={handleFav} hitSlop={12}>
         <Ionicons
@@ -194,6 +196,7 @@ export function HeroCard({ recipe, onFavoriteToggle }: HeroCardProps) {
         end={{ x: 0, y: 1 }}
       />
 
+      <RecipeDislikeButton recipe={recipe} overlay/>
       {/* Fav button */}
       <Pressable style={styles.heroFavBtn} onPress={handleFav} hitSlop={12}>
         <Ionicons
@@ -266,6 +269,7 @@ export function ChoiceCard({ recipe, index, onFavoriteToggle }: ChoiceCardProps)
         start={{ x: 0, y: 0.3 }}
         end={{ x: 0, y: 1 }}
       />
+      <RecipeDislikeButton recipe={recipe} overlay/>
       {/* Number badge */}
       <View style={[styles.numberBadge, { backgroundColor: Colors.accent }]}>
         <Text style={styles.numberText}>{index + 1}</Text>

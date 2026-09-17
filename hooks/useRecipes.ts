@@ -2,6 +2,7 @@ import { useState, useCallback, useMemo } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { discoveryBonus, weightedShuffle } from '@/lib/discovery';
 import {useFocusEffect} from 'expo-router';
+import {useRecipeDislikes} from '@/context/RecipeDislikesContext';
 import {useRecipeCatalog} from '@/context/RecipeCatalogContext';
 import {matchesAudience,audienceScore} from '@/lib/householdPlanning';
 import {
@@ -27,6 +28,7 @@ export function useRecipes(
   includePrivate=false
 ) {
   const catalog=useRecipeCatalog();
+  const dislikes=useRecipeDislikes();
   const allRecipes=useMemo(()=>catalog.rows.filter(r=>!r.is_user_created||(includePrivate&&r.user_id===userId)),[catalog.rows,includePrivate,userId]);
   const [favoriteIds, setFavoriteIds] = useState<Set<string>>(new Set());
   const favsKey = userId ? `favs:${userId}` : null;
@@ -51,15 +53,16 @@ export function useRecipes(
 
   // ── Filter: apply strict bans, then attach affinity score ────
   const visibleRecipes = useMemo((): Recipe[] => {
-    if(audience&&!audience.ready)return [];
+    if(!dislikes.ready||(audience&&!audience.ready))return [];
     return allRecipes
+      .filter(r=>!dislikes.ids.has(r.id))
       .filter((r) => audience?.group?matchesAudience(r,audience.profiles):!isRecipeBanned(r, preferences))
       .map((r) => ({
         ...r,
         is_favorited: favoriteIds.has(r.id),
         _score: audience?.group?audienceScore(r,audience.profiles):recipeAffinityScore(r, preferences, favoriteTags) + discoveryBonus(r, preferences),
       }));
-  }, [allRecipes, preferences, favoriteIds, favoriteTags,audience?.ready,audience?.group,audience?.profiles]);
+  }, [allRecipes, preferences, favoriteIds, favoriteTags,dislikes.ids,dislikes.ready,audience?.ready,audience?.group,audience?.profiles]);
 
   // ── RNG: 3 weighted random recipes for a given meal time ─────
   const getRNGChoices = useCallback(
@@ -126,7 +129,7 @@ export function useRecipes(
   );
 
   return {
-    loading: !catalog.loaded && (catalog.refreshing || !catalog.error),
+    loading: !dislikes.ready || !catalog.loaded && (catalog.refreshing || !catalog.error),
     refreshing: catalog.refreshing,
     error: catalog.loaded ? null : catalog.error,
     visibleRecipes,

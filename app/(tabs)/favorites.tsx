@@ -17,6 +17,7 @@ import { useTheme } from '@/context/ThemeContext';
 import type { AppColors } from '@/constants/Colors';
 import { useSession } from '@/hooks/useSession';
 import { usePreferences } from '@/hooks/usePreferences';
+import {useRecipeDislikes} from '@/context/RecipeDislikesContext';
 import { useRecipes } from '@/hooks/useRecipes';
 import { RecipeCard } from '@/components/RecipeCard';
 import { LoadingScreen } from '@/components/LoadingScreen';
@@ -36,6 +37,7 @@ export default function FavoritesScreen() {
     numColumns === 2 ? (SCREEN_W - pad * 2 - gap) / 2 : SCREEN_W - pad * 2;
 
   const { userId } = useSession();
+  const dislikes=useRecipeDislikes();
   const { preferences } = usePreferences(userId);
   const { loading, visibleRecipes, toggleFavorite, refresh } = useRecipes(
     userId,
@@ -128,7 +130,7 @@ export default function FavoritesScreen() {
           color={Colors.accent}
           style={{ marginVertical: 16 }}
         />
-      ) : myRecipes.length === 0 ? (
+      ) : myRecipes.filter(r=>!dislikes.ids.has(r.id)).length === 0 ? (
         <Text style={styles.myEmpty}>
           Recipes you create will appear here
         </Text>
@@ -139,7 +141,7 @@ export default function FavoritesScreen() {
             isTablet && styles.myGridTablet,
           ]}
         >
-          {myRecipes.map((item) => (
+          {myRecipes.filter(r=>!dislikes.ids.has(r.id)).map((item) => (
             <RecipeCard
               key={item.id}
               recipe={item}
@@ -176,7 +178,7 @@ export default function FavoritesScreen() {
   );
 
   const fullEmpty =
-    favorites.length === 0 && myRecipes.length === 0 && !myLoading;
+    favorites.length === 0 && myRecipes.filter(r=>!dislikes.ids.has(r.id)).length === 0 && !myLoading;
 
   if (fullEmpty) {
     return (

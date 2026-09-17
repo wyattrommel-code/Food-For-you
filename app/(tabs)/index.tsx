@@ -39,6 +39,7 @@ import { SectionHeader } from '@/components/SectionHeader';
 import { LoadingScreen } from '@/components/LoadingScreen';
 import { useIsLandscape, useIsTablet } from '@/hooks/useIsTablet';
 import { RecipeImage } from '@/components/RecipeImage';
+import {RecipeDislikeButton} from '@/components/RecipeDislikeButton';
 import {QuickPlanButton} from '@/components/QuickPlanButton';
 import {CookingForControl} from '@/components/CookingForControl';
 import {useCooking} from '@/context/CookingContext';
@@ -105,6 +106,7 @@ function HomeRecipeCard({
       />
 
       <QuickPlanButton recipe={recipe} overlay/>
+      <RecipeDislikeButton recipe={recipe} overlay/>
       {/* Fav button */}
       <Pressable
         style={hcard.favBtn}
