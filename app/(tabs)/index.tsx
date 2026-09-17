@@ -211,6 +211,10 @@ function HCarousel({
   return (
     <FlatList
       horizontal
+      initialNumToRender={4}
+      maxToRenderPerBatch={4}
+      windowSize={3}
+      getItemLayout={(_,index)=>({length:snapInterval,offset:20+snapInterval*index,index})}
       data={recipes}
       keyExtractor={(r) => r.id}
       showsHorizontalScrollIndicator={false}
@@ -675,6 +679,10 @@ export default function HomeScreen() {
                 />
                 <FlatList
                   horizontal
+                  initialNumToRender={4}
+                  maxToRenderPerBatch={4}
+                  windowSize={3}
+                  getItemLayout={(_,index)=>({length:carouselSnap,offset:20+carouselSnap*index,index})}
                   data={snackRecipes}
                   keyExtractor={(item) => item.id}
                   showsHorizontalScrollIndicator={false}
@@ -708,6 +716,10 @@ export default function HomeScreen() {
                 />
                 <FlatList
                   horizontal
+                  initialNumToRender={4}
+                  maxToRenderPerBatch={4}
+                  windowSize={3}
+                  getItemLayout={(_,index)=>({length:carouselSnap,offset:20+carouselSnap*index,index})}
                   data={sidesRecipes}
                   keyExtractor={(item) => item.id}
                   showsHorizontalScrollIndicator={false}
@@ -741,6 +753,10 @@ export default function HomeScreen() {
                 />
                 <FlatList
                   horizontal
+                  initialNumToRender={4}
+                  maxToRenderPerBatch={4}
+                  windowSize={3}
+                  getItemLayout={(_,index)=>({length:carouselSnap,offset:20+carouselSnap*index,index})}
                   data={dessertRecipes}
                   keyExtractor={(item) => item.id}
                   showsHorizontalScrollIndicator={false}

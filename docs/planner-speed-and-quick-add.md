@@ -8,6 +8,7 @@ Implemented September 16, 2026.
 - Home carousel/search cards and category rows have a Plan button. It opens the existing planner date/meal picker, including Personal/Household destination. Saving a meal within the visible date range keeps Today at the top.
 - Catalog reads are shared in memory within one signed-in account, deduplicated while in flight, and refreshed on focus after five minutes. Explicit refresh bypasses the age limit. Catalog pages are fetched in batches of 500 to avoid silently cutting off growth. Own private recipes stay scoped to that account and are filtered out of public discovery. No recipe cache is persisted to disk.
 - Recipe creation/deletion invalidates the catalog after any older in-flight read finishes. Account changes destroy the provider and cache. A background network failure retains the last successful catalog, while an initial failure exposes Retry.
+- Home carousels render four cards initially and keep a three-viewport window. Fixed card measurements avoid measuring every offscreen item. Scrolling still reaches the complete category.
 - Planner focus refreshes no longer replace already-loaded days with a blocking spinner. Shared plans continue polling and all mutations still use existing authorization and concurrency safeguards.
 
 ## Verification
