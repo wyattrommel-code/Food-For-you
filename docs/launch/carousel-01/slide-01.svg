@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1350" viewBox="0 0 1080 1350" role="img" aria-labelledby="title desc">
+<title id="title">Dinner can be simple.</title><desc id="desc">Three familiar ideas for a low-energy evening.</desc>
+<rect width="1080" height="1350" fill="#fffaf5"/>
+<circle cx="1050" cy="80" r="220" fill="#ffe3d9"/>
+<rect x="88" y="120" width="70" height="8" rx="4" fill="#ff3a2d"/>
+<text x="88" y="205" font-family="Arial,sans-serif" font-size="28" font-weight="700" letter-spacing="2" fill="#a52520">TOO TIRED TO DECIDE?</text>
+<text font-family="Arial,sans-serif" font-size="94" font-weight="700" letter-spacing="-3" fill="#191919"><tspan x="88" y="380">Dinner can</tspan><tspan x="88" y="498">be simple.</tspan></text>
+<text font-family="Arial,sans-serif" font-size="36" fill="#55504c"><tspan x="88" y="730">Three familiar ideas for</tspan><tspan x="88" y="792">a low-energy evening.</tspan></text>
+<rect x="88" y="965" width="904" height="132" rx="28" fill="#ff3a2d"/>
+<text x="130" y="1045" font-family="Arial,sans-serif" font-size="34" font-weight="700" fill="white">Swipe for ideas</text>
+<text x="88" y="1230" font-family="Arial,sans-serif" font-size="32" font-weight="700" fill="#191919">Mealsolved</text>
+<text x="992" y="1230" text-anchor="end" font-family="Arial,sans-serif" font-size="26" fill="#77706a">1 / 5</text>
+</svg>

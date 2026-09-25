@@ -10,6 +10,8 @@ Prepared September 25, 2026. Use after Android 1.0.9 is available to internal te
 4. Publish four original videos weekly, adapting the same clean export for TikTok, Instagram Reels and Facebook Reels. Reuse the best two on YouTube Shorts.
 5. Use [calendar.md](calendar.md) for the 30-day schedule and [results-template.md](results-template.md) for weekly review.
 
+The first carousel is ready as five 1080 × 1350 PNGs in [carousel-01](carousel-01/), with editable SVG originals. Upload slide-01.png through slide-05.png in order. Caption: “Familiar food counts. Save these for a low-energy evening. Want help choosing? Join Mealsolved's Android test through our profile.” These are original text graphics; real food footage can be added to later posts.
+
 ## Positioning
 
 **Less deciding. More eating.** Mealsolved helps answer “What should I eat?” with three choices, filters, and the ability to keep one choice while refreshing the others. Familiar home meals are the subject. Saving money is a possible side effect, not a promised result.
