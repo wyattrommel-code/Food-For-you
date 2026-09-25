@@ -2,6 +2,10 @@
 
 ## Access and launch gates
 
+Current implementation: local landing-page update in the Mealsolvedwebsite checkout; SOURCE, FEEDBACK and MARKETING created and enabled in the existing Mailchimp embed. The first owner-approved signup reached the audience. Optional-field receipt needs a second verified submission after the embed correction. The hosted thank-you page has stale June 15 copy that must be corrected before promotion. Website publication remains pending these checks.
+
+Marketing rule: send general news only to contacts whose MARKETING field is exactly Yes and whose Mailchimp email status permits sending. Blank or No means no optional marketing. Tester-access updates are the separately requested purpose. Do not use the entire subscribed audience for a newsletter.
+
 - Social publishing waits for Wyatt to connect accounts. Do not request passwords in chat. Confirm account handles, business type, available free scheduling tools, and profile links when access arrives.
 - mealsolved.app currently uses the Mealsolvedwebsite repository and a Mailchimp embedded signup form. Existing copy contains outdated launch dates and removed features; corrected website work belongs in that repository.
 - Before advertising signup, confirm the form submits to the intended audience and stores source/consent fields correctly. A form that merely looks successful is not sufficient.
