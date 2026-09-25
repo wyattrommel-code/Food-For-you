@@ -3,6 +3,7 @@ import {freshOrder, rememberIds} from './discovery';
 import {hungryCandidates, treatKinds, TREAT_LABELS, type TreatKind} from './treats';
 
 export const CHOICE_TITLES = {
+  helpMeDecide: 'Help Me Decide',
   hungryNow: "I'm hungry now",
   sweetTreat: 'A sweet treat',
   pickForMe: 'Pick for me',
@@ -30,6 +31,8 @@ export function rollMealChoices(
     pool=forTime(hungryCandidates(recipes,30));description='Ready in 30 minutes or less';
     if(pool.length<3){pool=forTime(hungryCandidates(recipes,45));description='Ready in 45 minutes or less';}
     if(pool.length<3){pool=forTime(hungryCandidates(recipes,null));description='Ideas that fit your food preferences';}
+  } else if(mode==='helpMeDecide') {
+    description='Three ideas for you';
   } else if(mode==='pickForMe') {
     keys=['0'];pool=applyMealTimePreferencePool(recipes,hour);description='One idea to make the decision easier';
   } else if(mode==='feelingBold') {

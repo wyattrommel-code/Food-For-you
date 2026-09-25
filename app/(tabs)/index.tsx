@@ -279,7 +279,6 @@ export default function HomeScreen() {
   const { width: winW } = useWindowDimensions();
   const isTablet   = useIsTablet();
   const isLandscape = useIsLandscape();
-  const useThreeActionColumns = isTablet || isLandscape;
 
   const carouselGap = 14;
   const carouselHPad = 40;
@@ -396,13 +395,9 @@ export default function HomeScreen() {
     smoothie: [],
   };
 
-  const openChoices = useCallback((mode: 'hungryNow'|'sweetTreat'|'pickForMe'|'feelingBold') => {
+  const openChoices = useCallback((mode: 'hungryNow'|'sweetTreat'|'helpMeDecide') => {
     router.push({pathname:'/meal-choices',params:{mode}} as Href);
   },[router]);
-  const sweetButton = <Pressable accessibilityRole="button" accessibilityLabel="I need a sweet treat" onPress={()=>openChoices('sweetTreat')} style={{minHeight:48,padding:12,justifyContent:'center',borderRadius:16,borderWidth:1,borderColor:Colors.dessert,backgroundColor:Colors.surface,marginVertical:8}}>
-    <Text style={{color:Colors.textPrimary,fontSize:17,fontWeight:'700'}}>I need a sweet treat</Text>
-  </Pressable>;
-
   const handleCookWhatIHave = useCallback(() => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     router.push('/(tabs)/pantry' as never);
@@ -478,113 +473,17 @@ export default function HomeScreen() {
           {error && <Text accessibilityRole="alert" style={{color:Colors.textSecondary}}>{visibleRecipes.length?'Could not update the catalog. Showing fresh picks from loaded recipes.':'Could not load recipes. Tap New meal ideas to retry.'}</Text>}
         </View>
         {/* ── Action buttons ──────────────────────────────── */}
-        <View style={[styles.buttonsWrap, isLandscape && styles.buttonsWrapLandscape]}>
-          {useThreeActionColumns ? (
-            <>
-              <View style={styles.tabletActionRow}>
-                <Pressable
-                  style={({ pressed }) => [
-                    styles.tabletActionCell,
-                    styles.tabletHungryBtn,
-                    isLandscape && styles.tabletHungryBtnLandscape,
-                    pressed && styles.bigBtnPressed,
-                  ]}
-                  accessibilityRole="button" accessibilityLabel="I'm Hungry Now" onPress={()=>openChoices('hungryNow')}
-                >
-                  <Text style={styles.tabletHungryTitle}>I'm Hungry Now</Text>
-                  <Text style={styles.tabletHungrySub}>30 min or less · 3 picks</Text>
-                </Pressable>
-                <Pressable
-                  style={({ pressed }) => [
-                    styles.tabletActionCell,
-                    styles.secondBtn,
-                    pressed && styles.secondBtnPressed,
-                  ]}
-                  accessibilityRole="button" accessibilityLabel="Pick For Me" onPress={()=>openChoices('pickForMe')}
-                >
-                  <Text style={styles.secondTitle}>Pick For Me</Text>
-                  <Text style={styles.secondSub}>One perfect dish</Text>
-                </Pressable>
-                <Pressable
-                  style={({ pressed }) => [
-                    styles.tabletActionCell,
-                    styles.secondBtn,
-                    pressed && styles.secondBtnPressed,
-                  ]}
-                  accessibilityRole="button" accessibilityLabel="Feeling Bold" onPress={()=>openChoices('feelingBold')}
-                >
-                  <Text style={styles.secondTitle}>Feeling Bold</Text>
-                  <Text style={styles.secondSub}>Challenge · 3 picks</Text>
-                </Pressable>
-              </View>
-              {sweetButton}
-              <Pressable
-                style={({ pressed }) => [
-                  styles.pantryHomeBtn,
-                  pressed && styles.pantryHomeBtnPressed,
-                ]}
-                onPress={handleCookWhatIHave}
-              >
-                <View style={styles.pantryHomeTextCol}>
-                  <Text style={styles.pantryHomeTitle}>Cook What I Have</Text>
-                  <Text style={styles.pantryHomeSub}>Match recipes to your pantry</Text>
-                </View>
-              </Pressable>
-            </>
-          ) : (
-            <>
-              <Pressable
-                style={({ pressed }) => [
-                  styles.bigBtn,
-                  pressed && styles.bigBtnPressed,
-                ]}
-                accessibilityRole="button" accessibilityLabel="I'm Hungry Now" onPress={()=>openChoices('hungryNow')}
-              >
-                <View style={styles.bigBtnLeft}>
-                  <Text style={styles.bigBtnTitle}>I'm Hungry Now</Text>
-                  <Text style={styles.bigBtnSub}>30 min or less · 3 picks</Text>
-                </View>
-              </Pressable>
-
-              {sweetButton}
-              <View style={styles.secondaryRow}>
-                <Pressable
-                  style={({ pressed }) => [
-                    styles.secondBtn,
-                    pressed && styles.secondBtnPressed,
-                  ]}
-                  accessibilityRole="button" accessibilityLabel="Pick For Me" onPress={()=>openChoices('pickForMe')}
-                >
-                  <Text style={styles.secondTitle}>Pick For Me</Text>
-                  <Text style={styles.secondSub}>One perfect dish</Text>
-                </Pressable>
-
-                <Pressable
-                  style={({ pressed }) => [
-                    styles.secondBtn,
-                    pressed && styles.secondBtnPressed,
-                  ]}
-                  accessibilityRole="button" accessibilityLabel="Feeling Bold" onPress={()=>openChoices('feelingBold')}
-                >
-                  <Text style={styles.secondTitle}>Feeling Bold</Text>
-                  <Text style={styles.secondSub}>Challenge · 3 picks</Text>
-                </Pressable>
-              </View>
-
-              <Pressable
-                style={({ pressed }) => [
-                  styles.pantryHomeBtn,
-                  pressed && styles.pantryHomeBtnPressed,
-                ]}
-                onPress={handleCookWhatIHave}
-              >
-                <View style={styles.pantryHomeTextCol}>
-                  <Text style={styles.pantryHomeTitle}>Cook What I Have</Text>
-                  <Text style={styles.pantryHomeSub}>Match recipes to your pantry</Text>
-                </View>
-              </Pressable>
-            </>
-          )}
+        <View style={styles.buttonsWrap}>
+          <Pressable accessibilityRole="button" accessibilityLabel="I'm Hungry Now" onPress={()=>openChoices('hungryNow')} style={({pressed})=>[styles.compactAction,pressed&&{opacity:0.7}]}>
+            <Ionicons name="restaurant-outline" size={19} color={Colors.accent}/><Text style={styles.compactActionText}>I'm Hungry Now</Text><Ionicons name="chevron-forward" size={17} color={Colors.textMuted}/>
+          </Pressable>
+          <Pressable accessibilityRole="button" accessibilityLabel="Help Me Decide" onPress={()=>openChoices('helpMeDecide')} style={({pressed})=>[styles.compactAction,pressed&&{opacity:0.7}]}>
+            <Ionicons name="shuffle-outline" size={19} color={Colors.accent}/><Text style={styles.compactActionText}>Help Me Decide</Text><Ionicons name="chevron-forward" size={17} color={Colors.textMuted}/>
+          </Pressable>
+          <View style={{flexDirection:'row',gap:8}}>
+            <Pressable accessibilityRole="button" accessibilityLabel="I need a sweet treat" onPress={()=>openChoices('sweetTreat')} style={({pressed})=>[styles.compactAction,{flex:1},pressed&&{opacity:0.7}]}><Text style={styles.compactActionText}>Sweet Treat</Text></Pressable>
+            <Pressable accessibilityRole="button" accessibilityLabel="Cook What I Have" onPress={handleCookWhatIHave} style={({pressed})=>[styles.compactAction,{flex:1},pressed&&{opacity:0.7}]}><Text style={styles.compactActionText}>Cook What I Have</Text></Pressable>
+          </View>
         </View>
 
         {/* ── Search results ────────────────────────────── */}
@@ -982,152 +881,10 @@ function makeMainStyles(Colors: AppColors) {
       fontWeight: '500',
     },
 
-    // ── Action buttons ───────────────────────────────────────────
-    buttonsWrap: {
-      paddingHorizontal: 20,
-      marginTop: 16,
-      gap: 10,
-    },
-    buttonsWrapLandscape: {
-      marginTop: 8,
-    },
-    tabletActionRow: {
-      flexDirection: 'row',
-      alignItems: 'stretch',
-      gap: 10,
-    },
-    tabletActionCell: {
-      flex: 1,
-      minWidth: 0,
-      borderRadius: 16,
-    },
-    tabletHungryBtn: {
-      backgroundColor: Colors.accent,
-      alignItems: 'center',
-      justifyContent: 'center',
-      paddingVertical: 18,
-      paddingHorizontal: 10,
-      gap: 6,
-      shadowColor: Colors.accent,
-      shadowOffset: { width: 0, height: 6 },
-      shadowOpacity: 0.4,
-      shadowRadius: 14,
-      elevation: 8,
-    },
-    tabletHungryBtnLandscape: {
-      paddingVertical: 12,
-    },
-    tabletHungryTitle: {
-      color: '#fff',
-      fontSize: 15,
-      fontWeight: '900',
-      letterSpacing: -0.3,
-      textAlign: 'center',
-    },
-    tabletHungrySub: {
-      color: 'rgba(255,255,255,0.65)',
-      fontSize: 11,
-      fontWeight: '600',
-      textAlign: 'center',
-    },
-    bigBtn: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      backgroundColor: Colors.accent,
-      borderRadius: 18,
-      paddingHorizontal: 22,
-      paddingVertical: 20,
-      shadowColor: Colors.accent,
-      shadowOffset: { width: 0, height: 6 },
-      shadowOpacity: 0.4,
-      shadowRadius: 14,
-      elevation: 8,
-    },
-    bigBtnPressed: {
-      transform: [{ scale: 0.97 }],
-      opacity: 0.9,
-    },
-    bigBtnLeft: {
-      gap: 4,
-    },
-    bigBtnTitle: {
-      color: '#fff',
-      fontSize: 22,
-      fontWeight: '900',
-      letterSpacing: -0.5,
-    },
-    bigBtnSub: {
-      color: 'rgba(255,255,255,0.65)',
-      fontSize: 13,
-      fontWeight: '600',
-    },
-    secondaryRow: {
-      flexDirection: 'row',
-      gap: 10,
-    },
-    secondBtn: {
-      flex: 1,
-      backgroundColor: Colors.surface,
-      borderRadius: 16,
-      borderWidth: 1,
-      borderColor: Colors.border,
-      paddingVertical: 16,
-      paddingHorizontal: 14,
-      alignItems: 'center',
-      gap: 4,
-      shadowColor: '#000',
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.2,
-      shadowRadius: 4,
-      elevation: 2,
-    },
-    secondBtnPressed: {
-      transform: [{ scale: 0.96 }],
-      opacity: 0.85,
-    },
-    secondTitle: {
-      color: Colors.textPrimary,
-      fontSize: 14,
-      fontWeight: '800',
-      letterSpacing: -0.2,
-    },
-    pantryHomeBtn: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      gap: 12,
-      backgroundColor: Colors.surface,
-      borderRadius: 16,
-      borderWidth: 1,
-      borderColor: Colors.border,
-      paddingVertical: 14,
-      paddingHorizontal: 18,
-      marginTop: 4,
-    },
-    pantryHomeBtnPressed: {
-      opacity: 0.88,
-      transform: [{ scale: 0.985 }],
-    },
-    pantryHomeTextCol: {
-      flex: 1,
-      gap: 2,
-    },
-    pantryHomeTitle: {
-      color: Colors.textPrimary,
-      fontSize: 16,
-      fontWeight: '800',
-    },
-    pantryHomeSub: {
-      color: Colors.textMuted,
-      fontSize: 12,
-      fontWeight: '600',
-    },
-    secondSub: {
-      color: Colors.textMuted,
-      fontSize: 11,
-      fontWeight: '600',
-      textAlign: 'center',
-    },
+    // Small consistent controls leave the first recipe row in view.
+    buttonsWrap: {paddingHorizontal:20,marginTop:6,gap:8},
+    compactAction: {minHeight:44,paddingVertical:10,paddingHorizontal:12,borderRadius:14,borderWidth:1,borderColor:Colors.border,backgroundColor:Colors.surface,flexDirection:'row',alignItems:'center',gap:10},
+    compactActionText: {flex:1,color:Colors.textPrimary,fontSize:14,fontWeight:'700'},
 
     // ── Carousels ────────────────────────────────────────────────
     carouselContent: {

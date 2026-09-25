@@ -51,3 +51,25 @@ test('hungry keeps time fallback and dessert exclusion; bold keeps challenge eff
  assert.deepEqual(ids(rollMealChoices('feelingBold',recipes)),['bold']);assert.equal(ids(rollMealChoices('pickForMe',recipes)).length,1);
  assert.equal(choiceMode('sweetTreat'),'sweetTreat');assert.equal(choiceMode('__proto__'),'hungryNow');
 });
+const {filterMealChoices,EMPTY_CHOICE_FILTERS,availableCuisines}=load('lib/choiceFilters.ts');
+test('Help Me Decide includes all meal types and cooking times with three unique choices',()=>{
+ const recipes=[r('dessert',{meal_time:['dessert'],prep_time_mins:90}),r('shake',{meal_time:['smoothie']}),r('dinner',{meal_time:['dinner'],prep_time_mins:120})];
+ assert.equal(choiceMode('helpMeDecide'),'helpMeDecide');
+ assert.deepEqual(new Set(ids(rollMealChoices('helpMeDecide',recipes))),new Set(['dessert','shake','dinner']));
+});
+test('filters combine meal/protein/cuisine/time without widening matching recipes',()=>{
+ const recipes=[r('chicken',{meal_time:['dinner'],ingredients_list:['1 lb chicken breast'],cuisine:' Mexican '}),r('beef',{meal_time:['lunch'],ingredients_list:['1 lb ground beef'],cuisine:'Mexican'}),r('pork',{ingredients_list:['ham'],cuisine:'American'}),r('stock',{ingredients_list:['chicken stock','rice'],cuisine:'Mexican'}),r('slow',{ingredients_list:['chicken breast'],cuisine:'Mexican',prep_time_mins:60})];
+ const filter={...EMPTY_CHOICE_FILTERS,meals:['lunch','dinner'],proteins:['chicken','beef'],cuisines:['mexican'],maxMinutes:30};
+ assert.deepEqual(filterMealChoices(recipes,filter).map(r=>r.id),['chicken','beef']);
+ assert.deepEqual(filterMealChoices(recipes,{...filter,meals:['breakfast']}),[]);
+ assert.deepEqual(filterMealChoices(recipes,EMPTY_CHOICE_FILTERS),recipes);
+ assert.deepEqual(availableCuisines(recipes),['american','mexican']);
+});
+test('applying new filters drops incompatible holds and keeps compatible held choices',()=>{
+ const recipes=[r('keep',{ingredients_list:['chicken']}),r('remove',{ingredients_list:['beef']}),r('other',{ingredients_list:['chicken']}),r('next',{ingredients_list:['chicken']})];
+ const previous=['keep','remove','other'].map((id,i)=>({key:String(i),label:null,recipe:recipes.find(r=>r.id===id)}));
+ const pool=filterMealChoices(recipes,{...EMPTY_CHOICE_FILTERS,proteins:['chicken']});
+ const next=rollMealChoices('helpMeDecide',pool,previous,new Set(['keep','remove']));
+ assert.equal(next.choices[0].recipe.id,'keep');assert.ok(!ids(next).includes('remove'));assert.equal(new Set(ids(next)).size,3);
+ assert.deepEqual(ids(rollMealChoices('helpMeDecide',[],previous,new Set(['keep']))),[]);
+});

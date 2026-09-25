@@ -9,6 +9,8 @@ import {usePreferences} from '@/hooks/usePreferences';
 import {useRecipes} from '@/hooks/useRecipes';
 import {useCooking} from '@/context/CookingContext';
 import {CookingForControl} from '@/components/CookingForControl';
+import {ChoiceFilterSheet} from '@/components/ChoiceFilterSheet';
+import {EMPTY_CHOICE_FILTERS,filterCount,filterMealChoices,type ChoiceFilters} from '@/lib/choiceFilters';
 import {RecipeImage} from '@/components/RecipeImage';
 import {difficultyLabel} from '@/lib/types';
 import {rememberIds} from '@/lib/discovery';
@@ -31,18 +33,22 @@ function MealChoices({mode,userId}:{mode:ChoiceMode;userId:string|null}) {
   const router=useRouter(),{Colors}=useTheme();
   const {preferences}=usePreferences(userId);
   const cooking=useCooking();
-  const {visibleRecipes,loading,error,refresh,toggleFavorite}=useRecipes(userId,preferences,cooking);
+  const {visibleRecipes,loading,error,refresh,toggleFavorite}=useRecipes(userId,preferences,cooking,mode==='helpMeDecide');
+  const [filters,setFilters]=useState<ChoiceFilters>(EMPTY_CHOICE_FILTERS);
+  const filteredRecipes=useMemo(()=>mode==='helpMeDecide'?filterMealChoices(visibleRecipes,filters):visibleRecipes,[visibleRecipes,filters,mode]);
+  const filterKey=JSON.stringify(filters);
+  const appliedFilters=useRef(filterKey);
   const [selection,setSelection]=useState<Selection|null>(null);
   const current=useRef<Selection|null>(null);
   const historyKey=`${userId??'guest'}:${mode}:${cooking.key}`;
-  const byId=useMemo(()=>new Map(visibleRecipes.map(r=>[r.id,r])),[visibleRecipes]);
-  const eligibleKey=visibleRecipes.map(r=>r.id).sort().join(',');
+  const byId=useMemo(()=>new Map(filteredRecipes.map(r=>[r.id,r])),[filteredRecipes]);
+  const eligibleKey=filteredRecipes.map(r=>r.id).sort().join(',');
   function commit(next:Selection){current.current=next;setSelection(next);}
   function roll(preserveAll=false) {
     const previous=current.current;
     const held=new Set([...(previous?.held??[])].filter(id=>byId.has(id)));
     const preserve=preserveAll?new Set(previous?.result.choices.flatMap(c=>c.recipe&&byId.has(c.recipe.id)?[c.recipe.id]:[])??[]):held;
-    const result=rollMealChoices(mode,visibleRecipes,previous?.result.choices,preserve,recentChoices.get(historyKey));
+    const result=rollMealChoices(mode,filteredRecipes,previous?.result.choices,preserve,recentChoices.get(historyKey));
     const ids=result.choices.flatMap(c=>c.recipe?[c.recipe.id]:[]);
     recentChoices.set(historyKey,rememberIds(ids,recentChoices.get(historyKey)??[]));
     const repeated=previous&&result.choices.some(c=>c.recipe&&!held.has(c.recipe.id)&&previous.result.choices.some(p=>p.recipe?.id===c.recipe?.id));
@@ -50,11 +56,12 @@ function MealChoices({mode,userId}:{mode:ChoiceMode;userId:string|null}) {
   }
   useEffect(()=>{
     if(loading||error)return;
-    if(!current.current)roll();
+    if(appliedFilters.current!==filterKey){appliedFilters.current=filterKey;roll();}
+    else if(!current.current)roll();
     else if(current.current.result.choices.some(c=>c.recipe&&!byId.has(c.recipe.id)))roll(true);
     else if(current.current.result.choices.some(c=>!c.recipe))roll(true);
     // A favorite change updates card data but never reshuffles the current choices.
-  },[loading,error,eligibleKey]);
+  },[loading,error,eligibleKey,filterKey]);
 
   const choices=selection?.result.choices.map(c=>({...c,recipe:c.recipe?byId.get(c.recipe.id)??null:null}))??[];
   const count=choices.filter(c=>c.recipe).length;
@@ -70,7 +77,7 @@ function MealChoices({mode,userId}:{mode:ChoiceMode;userId:string|null}) {
     header:{flexDirection:'row',alignItems:'center',gap:8,paddingHorizontal:16,paddingVertical:10,borderBottomWidth:1,borderColor:Colors.border},
     back:{width:44,height:44,alignItems:'center',justifyContent:'center'},
     title:{flex:1,minWidth:0,fontSize:21,fontWeight:'800',color:Colors.textPrimary},
-    refresh:{minHeight:44,flexDirection:'row',alignItems:'center',gap:6,paddingHorizontal:12,borderRadius:22,backgroundColor:Colors.accent},
+    refresh:{minHeight:44,minWidth:44,justifyContent:'center',flexDirection:'row',alignItems:'center',gap:6,paddingHorizontal:12,borderRadius:22,backgroundColor:Colors.accent},
     refreshText:{fontWeight:'700',color:'#fff',fontSize:14},
     content:{padding:16,gap:14,width:'100%',maxWidth:660,alignSelf:'center',paddingBottom:28},
     description:{fontSize:16,fontWeight:'700',color:Colors.textPrimary},
@@ -90,15 +97,17 @@ function MealChoices({mode,userId}:{mode:ChoiceMode;userId:string|null}) {
     <View style={s.header}>
       <Pressable accessibilityRole="button" accessibilityLabel="Back to home" onPress={()=>router.canGoBack()?router.back():router.replace('/(tabs)')} style={s.back}><Ionicons name="arrow-back" size={24} color={Colors.textPrimary}/></Pressable>
       <Text accessibilityRole="header" style={s.title}>{CHOICE_TITLES[mode]}</Text>
-      <Pressable accessibilityRole="button" accessibilityLabel="Refresh choices" accessibilityHint="Replace only recipes that are not held." disabled={loading||!!error||allHeld||count===0} onPress={()=>roll()} style={[s.refresh,(loading||!!error||allHeld||count===0)&&{opacity:0.45}]}><Ionicons name="refresh" size={17} color="#fff"/><Text style={s.refreshText}>Refresh</Text></Pressable>
+      <Pressable accessibilityRole="button" accessibilityLabel="Refresh choices" accessibilityHint="Replace only recipes that are not held." disabled={loading||!!error||allHeld||count===0} onPress={()=>roll()} style={[s.refresh,(loading||!!error||allHeld||count===0)&&{opacity:0.45}]}><Ionicons name="refresh" size={20} color="#fff"/></Pressable>
     </View>
     <ScrollView contentContainerStyle={s.content}>
-      <CookingForControl/>
+      <View style={{flexDirection:'row',alignItems:'center',gap:8}}><View style={{flex:1}}><CookingForControl/></View>{mode==='helpMeDecide'&&<ChoiceFilterSheet recipes={visibleRecipes} value={filters} onApply={setFilters}/>}</View>
+      {mode==='helpMeDecide'&&filterCount(filters)>0&&<Text style={s.hint}>{filteredRecipes.length} recipe{filteredRecipes.length===1?' matches':'s match'} your filters</Text>}
       {!!cooking.message&&<Text accessibilityRole="alert" style={s.hint}>{cooking.message}</Text>}
       {loading?<ActivityIndicator accessibilityLabel="Finding your choices" style={{marginTop:36}}/>:error?<View style={s.empty}><Text accessibilityRole="alert" style={s.hint}>Could not load your choices. Please try again.</Text><Pressable accessibilityRole="button" accessibilityLabel="Retry choices" onPress={()=>void refresh()} style={s.control}><Text style={s.heldText}>Try again</Text></Pressable></View>:<>
         <View style={{gap:5}}><Text style={s.description}>{selection?.result.description}</Text><Text accessibilityLiveRegion="polite" style={s.hint}>{allHeld?'All choices held. Release one to refresh it.':heldCount?`${heldCount} held. Refresh will change the others.`:'Like an option? Hold it and refresh the rest.'}</Text></View>
-        {count===0?<View style={s.empty}><Text style={s.description}>No matching recipes yet</Text><Text style={s.hint}>Try another meal button or review your food preferences in Settings.</Text></View>:choices.map(choice=>{
+        {count===0?<View style={s.empty}><Text style={s.description}>No matching recipes yet</Text><Text style={s.hint}>{mode==='helpMeDecide'?'Open filters and choose fewer options, or tap Reset to start again.':'Try another meal button or review your food preferences in Settings.'}</Text></View>:choices.map(choice=>{
           const recipe=choice.recipe;
+          if(!recipe&&mode==='helpMeDecide')return null;
           if(!recipe)return <View key={choice.key} style={s.empty}><Text style={s.hint}>{choice.label?`No ${choice.label.toLowerCase()} matches your food preferences yet.`:'No additional matching recipe right now.'}</Text></View>;
           const held=selection?.held.has(recipe.id)??false;
           return <View key={choice.key} testID={`choice-${choice.key}`} style={[s.card,held&&{borderColor:Colors.accent}]}>
@@ -112,6 +121,7 @@ function MealChoices({mode,userId}:{mode:ChoiceMode;userId:string|null}) {
             </View>
           </View>;
         })}
+        {mode==='helpMeDecide'&&count>0&&count<3&&<Text style={s.hint}>Only {count} matching recipe{count===1?'':'s'} right now. Open filters to see more options.</Text>}
         {!!selection?.notice&&<Text accessibilityLiveRegion="polite" style={s.hint}>{selection.notice}</Text>}
       </>}
     </ScrollView>
