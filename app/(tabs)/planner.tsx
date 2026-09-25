@@ -251,7 +251,6 @@ function Planner({userId}:{userId:string|null}) {
             {action('View recipe',()=>{setSheet(null);router.push(`/recipe/${selected.recipe_id}`);})}
             {action('Move or change meal',()=>schedule(selected))}
             {action('Groceries for this day',()=>groceries('day',selected.plan_date))}
-            {action(dislikes.ids.has(selected.recipe_id)?'Restore recipe to ideas':'Dislike recipe',()=>{void dislikes.setDisliked({id:selected.recipe_id,title:selected.recipe_title},!dislikes.ids.has(selected.recipe_id));close();})}
             {action('Remove from plan',()=>void remove())}
           </>}
           {sheet==='shopping'&&<>{action('Today’s groceries',()=>groceries('day',today))}{action(thisWeek?'These 7 days':'Selected week’s groceries',()=>groceries('week'))}{action('Entire grocery list',()=>groceries('all'))}</>}

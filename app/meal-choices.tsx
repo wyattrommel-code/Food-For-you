@@ -9,7 +9,6 @@ import {usePreferences} from '@/hooks/usePreferences';
 import {useRecipes} from '@/hooks/useRecipes';
 import {useCooking} from '@/context/CookingContext';
 import {CookingForControl} from '@/components/CookingForControl';
-import {RecipeDislikeButton} from '@/components/RecipeDislikeButton';
 import {RecipeImage} from '@/components/RecipeImage';
 import {difficultyLabel} from '@/lib/types';
 import {rememberIds} from '@/lib/discovery';
@@ -108,7 +107,6 @@ function MealChoices({mode,userId}:{mode:ChoiceMode;userId:string|null}) {
               <View style={{flex:1,minWidth:0,gap:6}}>{choice.label&&<Text style={s.label}>{choice.label}</Text>}<Text numberOfLines={3} style={s.cardTitle}>{recipe.title}</Text><Text style={s.hint}>{recipe.prep_time_mins} min · {difficultyLabel(recipe.effort_score)}</Text></View>
             </Pressable>
             <View style={[s.footer,{flexWrap:'wrap'}]}>
-              <RecipeDislikeButton recipe={recipe} label/>
               <Pressable accessibilityRole="button" accessibilityLabel={`${held?'Release':'Hold'} ${recipe.title}`} accessibilityState={{selected:held}} accessibilityHint={held?'Allow this recipe to change on refresh.':'Keep this recipe when refreshing other choices.'} onPress={()=>toggleHold(recipe.id)} style={s.control}><Ionicons name={held?'lock-closed':'lock-open-outline'} size={18} color={held?Colors.accent:Colors.textSecondary}/><Text style={held?s.heldText:s.hint}>{held?'Held':'Hold'}</Text></Pressable>
               <Pressable accessibilityRole="button" accessibilityLabel={`${recipe.is_favorited?'Unsave':'Save'} ${recipe.title}`} accessibilityState={{selected:recipe.is_favorited}} onPress={()=>void toggleFavorite(recipe.id)} style={s.control}><Ionicons name={recipe.is_favorited?'heart':'heart-outline'} size={19} color={recipe.is_favorited?Colors.accent:Colors.textSecondary}/><Text style={s.hint}>{recipe.is_favorited?'Saved':'Save'}</Text></Pressable>
             </View>

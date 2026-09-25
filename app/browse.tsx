@@ -8,7 +8,6 @@ import {useSession} from '@/hooks/useSession';
 import {usePreferences} from '@/hooks/usePreferences';
 import {useRecipes} from '@/hooks/useRecipes';
 import {RecipeImage} from '@/components/RecipeImage';
-import {RecipeDislikeButton} from '@/components/RecipeDislikeButton';
 import {QuickPlanButton} from '@/components/QuickPlanButton';
 import {useCooking} from '@/context/CookingContext';
 import {CookingForControl} from '@/components/CookingForControl';
@@ -45,7 +44,6 @@ export default function BrowseScreen(){
             <View style={{flex:1,minWidth:0,gap:4}}><Text numberOfLines={2} style={{fontSize:15,lineHeight:20,fontWeight:'700',color:Colors.textPrimary}}>{item.title}</Text><Text style={muted}>{item.prep_time_mins} min · {difficultyLabel(item.effort_score)}</Text></View>
           </Pressable>
           <Pressable accessibilityRole="button" accessibilityLabel={`${item.is_favorited?'Unsave':'Save'} ${item.title}`} onPress={()=>void toggleFavorite(item.id)} style={{width:44,minHeight:44,alignItems:'center',justifyContent:'center'}}><Ionicons name={item.is_favorited?'heart':'heart-outline'} size={21} color={item.is_favorited?Colors.accent:Colors.textSecondary}/></Pressable>
-          <RecipeDislikeButton recipe={item}/>
           <QuickPlanButton recipe={item}/>
         </View>}
       />}
