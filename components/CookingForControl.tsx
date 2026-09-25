@@ -9,7 +9,7 @@ import {useHouseholdPlanning} from '@/context/HouseholdPlanningContext';
 import {useHousehold} from '@/context/HouseholdContext';
 import {useSession} from '@/hooks/useSession';
 
-export function CookingForControl({compact=false}:{compact?:boolean}){
+export function CookingForControl({compact=false,inline=false}:{compact?:boolean;inline?:boolean}){
   const {Colors}=useTheme(),cooking=useCooking(),planning=useHouseholdPlanning(),{household}=useHousehold(),{userId}=useSession(),router=useRouter();
   const [open,setOpen]=useState(false),[selected,setSelected]=useState<string[]>([]);
   useEffect(()=>{if(open)setSelected(ids=>ids.filter(id=>planning.members.some(m=>m.userId===id&&(id===userId||m.sharingPreferences))));},[open,planning.members,userId]);
@@ -17,7 +17,7 @@ export function CookingForControl({compact=false}:{compact?:boolean}){
   const text={color:Colors.textPrimary,fontSize:16} as const;
   const button=(title:string,action:()=>void,active=false,disabled=false)=><Pressable accessibilityRole="button" accessibilityLabel={title} disabled={disabled} onPress={action} style={{padding:14,minHeight:48,borderRadius:14,borderWidth:1,borderColor:active?Colors.accent:Colors.border,backgroundColor:active?Colors.accent:Colors.surface,opacity:disabled?0.45:1,justifyContent:'center'}}><Text style={{...text,color:active?'#fff':Colors.textPrimary,fontWeight:'700'}}>{title}</Text></Pressable>;
   return <>
-    <Pressable accessibilityRole="button" accessibilityLabel={`Cooking for: ${cooking.label}`} onPress={openSheet} style={{minHeight:48,minWidth:64,maxWidth:compact?108:undefined,paddingHorizontal:10,paddingVertical:8,borderRadius:14,backgroundColor:Colors.surface,borderWidth:1,borderColor:cooking.group?Colors.accent:Colors.border,alignItems:'center',justifyContent:'center',gap:3,flexDirection:compact?'column':'row'}}>
+    <Pressable accessibilityRole="button" accessibilityLabel={`Cooking for: ${cooking.label}`} onPress={openSheet} style={{minHeight:inline?44:48,minWidth:64,maxWidth:compact?108:undefined,paddingHorizontal:10,paddingVertical:8,borderRadius:14,backgroundColor:Colors.surface,borderWidth:1,borderColor:cooking.group?Colors.accent:Colors.border,alignItems:'center',justifyContent:'center',gap:3,flexDirection:compact&&!inline?'column':'row'}}>
       <Ionicons name={cooking.group?'people':'person-outline'} size={19} color={Colors.accent}/><Text numberOfLines={1} style={{fontSize:12,fontWeight:'700',color:Colors.textPrimary}}>{compact?cooking.label:`Cooking for: ${cooking.label}`}</Text>
     </Pressable>
     <Modal transparent visible={open} animationType="slide" onRequestClose={()=>setOpen(false)}><View style={{flex:1,backgroundColor:'#0006',justifyContent:'flex-end'}}><SafeAreaView edges={['bottom','left','right']} style={{maxHeight:'90%',backgroundColor:Colors.background,borderTopLeftRadius:24,borderTopRightRadius:24,width:'100%',maxWidth:620,alignSelf:'center'}}><ScrollView contentContainerStyle={{padding:20,gap:14}}>

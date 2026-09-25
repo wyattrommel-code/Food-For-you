@@ -3,6 +3,7 @@ import {
   View,
   Text,
   Image,
+  Keyboard,
   TextInput,
   ScrollView,
   FlatList,
@@ -248,9 +249,10 @@ function SearchBar({
 
   return (
     <View style={styles.searchWrap}>
-      <View style={{flexDirection:'row',alignItems:'stretch',gap:8}}><View style={[styles.searchRow,{flex:1,minWidth:0}]}>
+      <View style={styles.searchRow}>
         <Ionicons name="search" size={16} color={Colors.textMuted} />
         <TextInput
+          autoFocus
           style={styles.searchInput}
           value={value}
           onChangeText={onChangeText}
@@ -262,11 +264,11 @@ function SearchBar({
           autoCorrect={false}
         />
         {value.length > 0 && (
-          <Pressable onPress={onClear} hitSlop={10}>
+          <Pressable onPress={onClear} accessibilityRole="button" accessibilityLabel="Clear search" style={styles.searchClear}>
             <Ionicons name="close-circle" size={17} color={Colors.textMuted} />
           </Pressable>
         )}
-      </View><CookingForControl compact/></View>
+      </View>
     </View>
   );
 }
@@ -336,6 +338,7 @@ export default function HomeScreen() {
 
   // ── Search ─────────────────────────────────────────────────
   const [searchQuery, setSearchQuery] = useState('');
+  const [searchOpen, setSearchOpen] = useState(false);
   const searchResults = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();
     if (!q) return null;
@@ -427,12 +430,26 @@ export default function HomeScreen() {
         {/* ── Header ──────────────────────────────────────── */}
         <View style={[styles.header, isLandscape && styles.headerLandscape]}>
           <View style={styles.headerLeft}>
-            <Text style={styles.greeting}>
+            <Text style={[styles.greeting, winW < 370 && {fontSize:22,lineHeight:28}]}>
               {getGreeting(hour)}
             </Text>
             <Text style={styles.greetingSub}>What are we eating today?</Text>
           </View>
           <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={searchOpen ? 'Close search' : 'Search recipes'}
+            accessibilityState={{expanded:searchOpen}}
+            style={styles.searchToggle}
+            onPress={() => {
+              if (searchOpen) { setSearchQuery(''); Keyboard.dismiss(); }
+              setSearchOpen(open => !open);
+            }}
+          >
+            <Ionicons name={searchOpen ? 'close' : 'search-outline'} size={21} color={Colors.textPrimary}/>
+          </Pressable>
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel="Account settings"
             style={styles.avatarRing}
             onPress={() => {
               Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -459,17 +476,20 @@ export default function HomeScreen() {
         </View>
 
         {/* ── Search bar ──────────────────────────────────── */}
-        <SearchBar
+        {searchOpen && <SearchBar
           value={searchQuery}
           onChangeText={setSearchQuery}
           onClear={() => setSearchQuery('')}
-        />
+        />}
 
         <View style={{paddingHorizontal:20,marginTop:10,alignItems:'flex-start'}}>
           {!!cooking.message&&<Text accessibilityRole="alert" style={{color:Colors.textSecondary,lineHeight:20}}>{cooking.message}</Text>}
+          <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between',width:'100%',gap:8}}>
           <Pressable accessibilityRole="button" accessibilityLabel="Refresh meal ideas" onPress={refreshFeed} disabled={refreshing} style={{minHeight:44,justifyContent:'center',paddingHorizontal:4}}>
             <Text style={{color:Colors.accent,fontWeight:'700'}}>{refreshing?'Refreshing…':'↻ New meal ideas'}</Text>
           </Pressable>
+          <CookingForControl compact inline/>
+          </View>
           {error && <Text accessibilityRole="alert" style={{color:Colors.textSecondary}}>{visibleRecipes.length?'Could not update the catalog. Showing fresh picks from loaded recipes.':'Could not load recipes. Tap New meal ideas to retry.'}</Text>}
         </View>
         {/* ── Action buttons ──────────────────────────────── */}
@@ -817,6 +837,7 @@ function makeMainStyles(Colors: AppColors) {
     },
     headerLeft: {
       flex: 1,
+      minWidth: 0,
     },
     greeting: {
       color: Colors.textPrimary,
@@ -831,13 +852,15 @@ function makeMainStyles(Colors: AppColors) {
       marginTop: 3,
       fontWeight: '500',
     },
+    searchToggle: {width:44,height:44,marginLeft:8,borderRadius:14,borderWidth:1,borderColor:Colors.border,backgroundColor:Colors.surface,alignItems:'center',justifyContent:'center'},
+    searchClear: {width:44,height:44,alignItems:'center',justifyContent:'center'},
     avatarRing: {
       width:        44,
       height:       44,
       borderRadius: 22,
       borderWidth:  2,
       borderColor:  Colors.border,
-      marginLeft:   14,
+      marginLeft:   8,
     },
     avatarInner: {
       flex:            1,
@@ -871,7 +894,7 @@ function makeMainStyles(Colors: AppColors) {
       borderWidth: 1,
       borderColor: Colors.border,
       paddingHorizontal: 13,
-      minHeight: 58,
+      minHeight: 44,
     },
     searchInput: {
       flex: 1,
